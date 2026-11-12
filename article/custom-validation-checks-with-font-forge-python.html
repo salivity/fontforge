@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Validation Checks with FontForge Python - fontforge</title>
+    <meta name="description" content="FontForge provides a robust Python scripting interface that allows type designers and font developers to automate testing and build custom validation checks. By querying glyph geometry, font metrics, metadata, and OpenType tables directly through the font">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/custom-validation-checks-with-font-forge-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Custom Validation Checks with FontForge Python - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/custom-validation-checks-with-font-forge-python" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge provides a robust Python scripting interface that allows type designers and font developers to automate testing and build custom validation checks. By querying glyph geometry, font metrics, metadata, and OpenType tables directly through the font" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="custom-validation-checks-with-fontforge-python">Custom
+Validation Checks with FontForge Python</h1>
+<p>FontForge provides a robust Python scripting interface that allows
+type designers and font developers to automate testing and build custom
+validation checks. By querying glyph geometry, font metrics, metadata,
+and OpenType tables directly through the <code>fontforge</code> Python
+module, you can programmatically detect design flaws, enforce style
+standards, and catch technical errors across entire font families before
+production.</p>
+<h2 id="built-in-validation-via-python">Built-In Validation via
+Python</h2>
+<p>FontForge includes a native validation suite that can be executed
+directly from Python. The <code>glyph.validate()</code> method runs
+standard technical checks on individual glyphs, assessing outline
+validity, path direction, self-intersections, and point placement.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> glyph <span class="kw">in</span> font.glyphs():</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> glyph.validate()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> state <span class="op">!=</span> <span class="dv">0</span>:</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Validation warning on </span><span class="sc">{</span>glyph<span class="sc">.</span>glyphname<span class="sc">}</span><span class="ss">: code </span><span class="sc">{</span>state<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>The returned integer is a bitmask representing specific errors, such
+as missing extrema, open contours, or self-intersecting paths.</p>
+<h2 id="writing-custom-geometric-checks">Writing Custom Geometric
+Checks</h2>
+<p>You are not limited to built-in rules; you can inspect the raw
+coordinates of contours and points to enforce proprietary geometric
+constraints.</p>
+<h3 id="1-detecting-extrema-violations">1. Detecting Extrema
+Violations</h3>
+<p>Glyph curves generally require on-curve control points at their
+horizontal and vertical extrema for proper rasterization and hinting.
+You can iterate through a glyph's layers and contours to inspect control
+points:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_extrema(glyph):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    layer <span class="op">=</span> glyph.layers[glyph.active_layer]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> contour <span class="kw">in</span> layer:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> point <span class="kw">in</span> contour:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Analyze on-curve and off-curve coordinates</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> point.on_curve:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Custom logic for bounding limits</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">pass</span></span></code></pre></div>
+<h3 id="2-checking-minimum-distance-between-points">2. Checking Minimum
+Distance Between Points</h3>
+<p>Coincident or nearly overlapping points can cause rendering
+artifacts. You can compute the Euclidean distance between sequential
+points along a contour to ensure they meet a minimum threshold:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_minimum_distance(glyph, min_dist<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    layer <span class="op">=</span> glyph.layers[glyph.active_layer]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> contour <span class="kw">in</span> layer:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(contour)):</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            p1 <span class="op">=</span> contour[i]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            p2 <span class="op">=</span> contour[(i <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> <span class="bu">len</span>(contour)]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            dist <span class="op">=</span> math.hypot(p2.x <span class="op">-</span> p1.x, p2.y <span class="op">-</span> p1.y)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> dist <span class="op">&lt;</span> min_dist:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>glyph<span class="sc">.</span>glyphname<span class="sc">}</span><span class="ss">: Points too close (</span><span class="sc">{</span>dist<span class="sc">:.2f}</span><span class="ss"> units)&quot;</span>)</span></code></pre></div>
+<h2 id="validating-metrics-and-spacing">Validating Metrics and
+Spacing</h2>
+<p>Custom scripts can evaluate spacing rules across the font to ensure
+uniform appearance:</p>
+<ul>
+<li><strong>Bounding Box Checks:</strong> Verify that glyph paths do not
+exceed the font's <code>ascent</code> or <code>descent</code> limits
+unexpectedly.</li>
+<li><strong>Sidebearing Consistency:</strong> Check that left
+sidebearings (LSB) and right sidebearings (RSB) meet minimum margins or
+adhere to spacing tables.</li>
+<li><strong>Monospace Uniformity:</strong> If building a monospaced
+font, assert that <code>glyph.width</code> is identical for every
+character.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> validate_monospace(font, expected_width<span class="op">=</span><span class="dv">600</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> glyph <span class="kw">in</span> font.glyphs():</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> glyph.width <span class="op">!=</span> expected_width:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f&quot;Width error: </span><span class="sc">{</span>glyph<span class="sc">.</span>glyphname<span class="sc">}</span><span class="ss"> has width </span><span class="sc">{</span>glyph<span class="sc">.</span>width<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<h2 id="verifying-metadata-and-encodings">Verifying Metadata and
+Encodings</h2>
+<p>FontForge Python scripts can inspect font-level properties, OpenType
+features, and Unicode mappings to ensure delivery compliance:</p>
+<ul>
+<li><strong>Required Glyphs:</strong> Verify the existence of essential
+glyphs such as <code>.notdef</code>, <code>space</code>, and standard
+punctuation.</li>
+<li><strong>Unicode Coverage:</strong> Ensure specific blocks (such as
+Basic Latin or accented sets) contain no unmapped gaps.</li>
+<li><strong>Naming Consistency:</strong> Check that the PostScript name,
+family name, and weight strings in <code>font.sfnt_names</code> follow
+the required naming conventions and do not contain illegal
+characters.</li>
+</ul>
+<h2 id="automating-validation-in-build-pipelines">Automating Validation
+in Build Pipelines</h2>
+<p>Because FontForge can be run headless from the command line using
+<code>fontforge -script validator.py</code>, you can integrate custom
+validation scripts directly into continuous integration (CI) workflows.
+By configuring your script to exit with a non-zero status code
+(<code>sys.exit(1)</code>) when a test fails, you prevent faulty font
+binaries from being generated and released.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/custom-validation-checks-with-font-forge-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

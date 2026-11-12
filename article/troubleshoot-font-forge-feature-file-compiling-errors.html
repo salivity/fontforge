@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshoot FontForge Feature File Compiling Errors - fontforge</title>
+    <meta name="description" content="Compiling OpenType feature files (.fea) in FontForge can frequently trigger cryptic syntax or parsing errors due to strict specification requirements, missing glyph mappings, or engine-specific limitations. This guide outlines the essential troubleshootin">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/troubleshoot-font-forge-feature-file-compiling-errors">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Troubleshoot FontForge Feature File Compiling Errors - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/troubleshoot-font-forge-feature-file-compiling-errors" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Compiling OpenType feature files (.fea) in FontForge can frequently trigger cryptic syntax or parsing errors due to strict specification requirements, missing glyph mappings, or engine-specific limitations. This guide outlines the essential troubleshootin" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="troubleshoot-fontforge-feature-file-compiling-errors">Troubleshoot
+FontForge Feature File Compiling Errors</h1>
+<p>Compiling OpenType feature files (<code>.fea</code>) in FontForge can
+frequently trigger cryptic syntax or parsing errors due to strict
+specification requirements, missing glyph mappings, or engine-specific
+limitations. This guide outlines the essential troubleshooting workflow
+to identify error locations, interpret FontForge's error logs, fix
+common OpenType syntax mistakes, and resolve compatibility issues
+between standard Adobe FEA syntax and FontForge's internal parser.</p>
+<h3 id="read-the-error-output-carefully">Read the Error Output
+Carefully</h3>
+<p>When FontForge fails to parse a feature file, it outputs an error
+message either in the pop-up warning dialog or via the standard
+output/terminal if running via command line.</p>
+<ul>
+<li>Look for the specific line number reported. FontForge usually
+specifies the exact line and character offset where parsing broke
+down.</li>
+<li>If FontForge crashes or gives a generic "Parse failed" error without
+a line number, run FontForge from your system terminal
+(<code>fontforge yourfont.sfd</code>) to view raw standard error
+outputs.</li>
+</ul>
+<h3 id="check-for-missing-glyph-names">Check for Missing Glyph
+Names</h3>
+<p>The most frequent cause of compile failure is referencing glyph names
+in the feature file that do not exist in the font database.</p>
+<ul>
+<li><strong>Name Mismatches:</strong> Ensure that all names used in
+substitution (<code>sub</code>) or positioning (<code>pos</code>) rules
+precisely match the PostScript glyph names in your font. Remember that
+glyph names are case-sensitive (e.g., <code>a.sc</code> is distinct from
+<code>A.sc</code>).</li>
+<li><strong>Unencoded Glyphs:</strong> If your glyph lacks a Unicode
+codepoint, confirm it still has a valid PostScript name assigned in the
+Glyph Info panel (<code>Element</code> &gt;
+<code>Glyph Info</code>).</li>
+</ul>
+<h3 id="validate-opentype-syntax-rules">Validate OpenType Syntax
+Rules</h3>
+<p>FontForge's parser expects strict adherence to the Adobe OpenType
+Feature File specification. Ensure basic syntax requirements are
+satisfied:</p>
+<ul>
+<li><strong>Missing Semicolons:</strong> Every statement, rule, and
+class assignment must terminate with a semicolon (<code>;</code>). A
+missing semicolon on line 10 often causes the parser to throw an error
+on line 11 or 12.</li>
+<li><strong>Mismatched Braces and Brackets:</strong> Ensure all glyph
+classes (<code>[...]</code>) and lookup blocks (<code>{...}</code>) are
+properly closed.</li>
+<li><strong>Explicit Lookup Blocks:</strong> If you reference a lookup
+within a feature block, verify that the lookup definition matches the
+lookup type expected by the feature.</li>
+</ul>
+<h3 id="check-glyph-class-symmetry-in-substitutions">Check Glyph Class
+Symmetry in Substitutions</h3>
+<p>When using glyph classes in contextual or ligature substitutions,
+both sides of the rule must match in dimension:</p>
+<ul>
+<li><strong>Equal Class Lengths:</strong> If writing a rule such as
+<code>sub [a b c] by [A.sc B.sc C.sc];</code>, both classes must contain
+the exact same number of glyphs.</li>
+<li><strong>Valid Targets:</strong> In many-to-one substitutions
+(ligatures), ensure the target is a single glyph, not a class, unless
+intentional contextual rules are properly flagged.</li>
+</ul>
+<h3 id="watch-for-fontforge-parser-limitations">Watch for FontForge
+Parser Limitations</h3>
+<p>FontForge's built-in parser does not support every modern feature of
+the Adobe Font Development Kit for OpenType (AFDKO) specification:</p>
+<ul>
+<li><strong>Advanced Statements:</strong> Modern AFDKO syntax
+features—such as inline variable declarations, certain chaining
+contextual rules, or complex Mark-to-Mark anchoring—may fail in older
+FontForge builds.</li>
+<li><strong>Alternative Import:</strong> If a feature file compiles
+cleanly using AFDKO's <code>makeotf</code> tool but fails in FontForge,
+strip optional statements like <code>languagesystem</code>
+redeclarations or simplify complex nested lookups into standalone lookup
+blocks.</li>
+</ul>
+<h3 id="use-the-isolation-binary-search-method">Use the Isolation
+(Binary Search) Method</h3>
+<p>If the error message points to a misleading line number:</p>
+<ol type="1">
+<li>Comment out large sections of the feature file using <code>#</code>
+at the start of each line.</li>
+<li>Re-import the file into FontForge (<code>File</code> &gt;
+<code>Merge Feature Info...</code>).</li>
+<li>Uncomment blocks sequentially (e.g., feature by feature:
+<code>kern</code>, then <code>liga</code>, then <code>calt</code>) until
+the error reappears.</li>
+<li>Once the problematic feature is isolated, narrow it down to the
+exact line causing the parser exception.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/troubleshoot-font-forge-feature-file-compiling-errors';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

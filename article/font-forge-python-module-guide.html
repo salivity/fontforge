@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Python Module Guide - fontforge</title>
+    <meta name="description" content="This article provides an overview of the Python module used to interact with FontForge, identifying its official name, installation methods, and practical applications. It covers how developers can use the module to automate font generation, edit typograp">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-python-module-guide">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Python Module Guide - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-python-module-guide" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of the Python module used to interact with FontForge, identifying its official name, installation methods, and practical applications. It covers how developers can use the module to automate font generation, edit typograp" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-python-module-guide">FontForge Python Module
+Guide</h1>
+<p>This article provides an overview of the Python module used to
+interact with FontForge, identifying its official name, installation
+methods, and practical applications. It covers how developers can use
+the module to automate font generation, edit typographic metrics, and
+convert files through Python scripts.</p>
+<p>The Python module used to interact with FontForge is simply named
+<code>fontforge</code>. It acts as a set of Python bindings for the core
+FontForge font editing engine, allowing programmatic access to the
+application's glyph manipulation, font generation, and hinting
+capabilities.</p>
+<h3 id="installation-and-environment-setup">Installation and Environment
+Setup</h3>
+<p>The <code>fontforge</code> module is generally not installed via
+standard Python package managers like <code>pip</code>. Instead, it is
+distributed directly with the FontForge application or provided through
+system package managers:</p>
+<ul>
+<li><strong>Linux:</strong> Most distributions provide the bindings as
+an official package, such as <code>python3-fontforge</code> on Debian or
+Ubuntu.</li>
+<li><strong>macOS and Windows:</strong> The module comes packaged within
+the official FontForge application bundle.</li>
+</ul>
+<p>To execute Python scripts using the embedded module, run FontForge
+from the command line with the script flag:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-script</span> your_script.py</span></code></pre></div>
+<p>Alternatively, you can launch an interactive Python shell within
+FontForge:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-lang</span><span class="op">=</span>py</span></code></pre></div>
+<h3 id="basic-usage">Basic Usage</h3>
+<p>Once available, the module is imported into scripts using
+<code>import fontforge</code>. It exposes classes such as
+<code>fontforge.font</code> to manage typography assets.</p>
+<p>A standard script to open a font, alter metadata, and export it into
+a different format appears as follows:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open an existing font</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.ttf&quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Modify metadata</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>font.fontname <span class="op">=</span> <span class="st">&quot;MyCustomFont&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>font.familyname <span class="op">=</span> <span class="st">&quot;Custom Family&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a new format</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>font.generate(<span class="st">&quot;MyCustomFont.otf&quot;</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>font.close()</span></code></pre></div>
+<h3 id="common-capabilities">Common Capabilities</h3>
+<p>The <code>fontforge</code> module is primarily utilized for tasks
+that require automation:</p>
+<ul>
+<li><strong>Batch Conversion:</strong> Converting entire directories of
+fonts between TTF, OTF, WOFF, and SVG formats.</li>
+<li><strong>Glyph Manipulation:</strong> Creating, clearing, or merging
+vector contours programmatically.</li>
+<li><strong>Metric Adjustments:</strong> Scripting changes to kerning
+pairs, horizontal advances, and baseline alignment across thousands of
+characters.</li>
+<li><strong>Automated Builds:</strong> Integrating font generation
+directly into continuous integration and build pipelines for custom
+typefaces and icon sets.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-python-module-guide';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

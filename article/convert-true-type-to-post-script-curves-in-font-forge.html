@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert TrueType to PostScript Curves in FontForge - fontforge</title>
+    <meta name="description" content="Converting TrueType curves (quadratic) to PostScript curves (cubic) in FontForge is a straightforward process that changes the underlying mathematical representation of your font&#39;s outlines. This conversion is mathematically lossless because every quadrat">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/convert-true-type-to-post-script-curves-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Convert TrueType to PostScript Curves in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/convert-true-type-to-post-script-curves-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Converting TrueType curves (quadratic) to PostScript curves (cubic) in FontForge is a straightforward process that changes the underlying mathematical representation of your font&#39;s outlines. This conversion is mathematically lossless because every quadrat" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="convert-truetype-to-postscript-curves-in-fontforge">Convert
+TrueType to PostScript Curves in FontForge</h1>
+<p>Converting TrueType curves (quadratic) to PostScript curves (cubic)
+in FontForge is a straightforward process that changes the underlying
+mathematical representation of your font's outlines. This conversion is
+mathematically lossless because every quadratic curve can be perfectly
+represented by a cubic Bézier curve. The process involves opening the
+font properties, switching the layer's spline type from quadratic to
+cubic, and re-generating your font in a PostScript-compatible
+format.</p>
+<h3 id="step-1-open-your-font-and-select-the-glyphs">Step 1: Open Your
+Font and Select the Glyphs</h3>
+<p>Launch FontForge and open your TrueType font file
+(<code>.ttf</code>). Once loaded, press <code>Ctrl + A</code> (or
+<code>Cmd + A</code> on macOS) in the font view window to select every
+glyph in the font. While FontForge can convert the entire layer
+globally, selecting all glyphs ensures that any active transformations
+apply to the full set.</p>
+<h3 id="step-2-change-the-spline-type-to-cubic">Step 2: Change the
+Spline Type to Cubic</h3>
+<ol type="1">
+<li>In the top menu, go to <strong>Element</strong> and select
+<strong>Font Info</strong> (shortcut:
+<code>Ctrl + Shift + F</code>).</li>
+<li>In the sidebar of the Font Info dialog, click on
+<strong>Layers</strong>.</li>
+<li>Locate the <strong>Fore</strong> (Foreground) layer in the list.
+Under the <strong>Type</strong> column, click the dropdown menu and
+change the setting from <strong>Quadratic</strong> to
+<strong>Cubic</strong>.</li>
+<li>Click <strong>OK</strong> at the bottom of the window to apply the
+change.</li>
+</ol>
+<p>FontForge will automatically recalculate the control points for all
+quadratic curves, upgrading them to cubic Bézier curves with distinct
+on-curve and off-curve control handles.</p>
+<h3 id="step-3-adjust-the-em-size-optional-but-recommended">Step 3:
+Adjust the Em Size (Optional but Recommended)</h3>
+<p>TrueType fonts typically use an Em size of 2048 units, whereas
+PostScript (CFF / Type 1) fonts traditionally use 1000 units. To change
+this:</p>
+<ol type="1">
+<li>Return to <strong>Element</strong> &gt; <strong>Font
+Info</strong>.</li>
+<li>Select <strong>General</strong> from the sidebar.</li>
+<li>Change the <strong>Em Size</strong> value to <code>1000</code>.</li>
+<li>Ensure the <strong>Scale Outlines</strong> checkbox is selected so
+your glyphs resize proportionately with the Em square.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<h3 id="step-4-validate-the-geometry">Step 4: Validate the Geometry</h3>
+<p>Because changing curve orders and scaling outlines can occasionally
+introduce minor coordinate rounding issues:</p>
+<ol type="1">
+<li>Go to <strong>Element</strong> &gt; <strong>Simplify</strong> &gt;
+<strong>Simplify</strong> to merge unnecessary collinear points.</li>
+<li>Select <strong>Element</strong> &gt; <strong>Add Extrema</strong> to
+ensure all curve peaks and valleys have explicit on-curve points, which
+is a standard requirement for PostScript fonts.</li>
+<li>Select <strong>Element</strong> &gt; <strong>Correct
+Direction</strong> to ensure all outline contours follow the PostScript
+winding rule (clockwise for outer paths, counter-clockwise for inner
+cutouts).</li>
+</ol>
+<h3 id="step-5-export-as-a-postscript-based-font">Step 5: Export as a
+PostScript-Based Font</h3>
+<ol type="1">
+<li>Go to <strong>File</strong> &gt; <strong>Generate
+Fonts</strong>.</li>
+<li>In the format dropdown menu, select <strong>OpenType (CFF)</strong>
+(<code>.otf</code>) or <strong>PostScript Type 1</strong>.</li>
+<li>Choose a destination directory, name your file, and click
+<strong>Generate</strong>.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/convert-true-type-to-post-script-curves-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

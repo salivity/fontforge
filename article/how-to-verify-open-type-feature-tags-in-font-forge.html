@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Verify OpenType Feature Tags in FontForge - fontforge</title>
+    <meta name="description" content="This guide demonstrates how to verify that your OpenType feature tags comply with official OpenType specifications using FontForge. You will learn how to navigate the Font Info lookups interface, cross-reference feature tags against registered standards,">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-verify-open-type-feature-tags-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Verify OpenType Feature Tags in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-verify-open-type-feature-tags-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide demonstrates how to verify that your OpenType feature tags comply with official OpenType specifications using FontForge. You will learn how to navigate the Font Info lookups interface, cross-reference feature tags against registered standards," />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-verify-opentype-feature-tags-in-fontforge">How to Verify
+OpenType Feature Tags in FontForge</h1>
+<p>This guide demonstrates how to verify that your OpenType feature tags
+comply with official OpenType specifications using FontForge. You will
+learn how to navigate the Font Info lookups interface, cross-reference
+feature tags against registered standards, validate script and language
+system assignments, and use FontForge’s built-in validation tools to
+catch formatting errors before exporting your font.</p>
+<h3 id="opentype-feature-tag-requirements">OpenType Feature Tag
+Requirements</h3>
+<p>OpenType feature tags are four-character identifiers (such as
+<code>liga</code> for standard ligatures, <code>kern</code> for kerning,
+or <code>smcp</code> for small capitals) defined by the OpenType
+specification maintained by Microsoft and Adobe. To comply with the
+standard:</p>
+<ul>
+<li>Tags must be exactly four ASCII characters long (shorter tags must
+be padded with trailing spaces, such as <code>c2sc</code>).</li>
+<li>Standard tags must consist of lowercase alphanumeric
+characters.</li>
+<li>Custom, application-specific tags typically start with an uppercase
+letter or follow private-use conventions, though standard renderers may
+ignore non-registered tags.</li>
+</ul>
+<h3 id="step-1-open-the-lookups-interface">Step 1: Open the Lookups
+Interface</h3>
+<ol type="1">
+<li>Launch FontForge and open your font project (<code>.sfd</code>,
+<code>.otf</code>, or <code>.ttf</code>).</li>
+<li>Go to the menu bar and select <strong>Element</strong> &gt;
+<strong>Font Info</strong> (or press <code>Ctrl+Shift+F</code> on
+Windows/Linux, <code>Cmd+Shift+F</code> on macOS).</li>
+<li>In the sidebar on the left, click on <strong>Lookups</strong>.</li>
+</ol>
+<p>The Lookups panel contains two primary tables: <strong>GSUB</strong>
+(Glyph Substitution) and <strong>GPOS</strong> (Glyph Positioning). Both
+use OpenType feature tags to control typography behavior.</p>
+<h3 id="step-2-inspect-lookup-metadata-and-feature-tags">Step 2: Inspect
+Lookup Metadata and Feature Tags</h3>
+<ol type="1">
+<li>Under either the <strong>GSUB</strong> or <strong>GPOS</strong> tab,
+click the <code>+</code> icon to expand the lookups list.</li>
+<li>Select a lookup and click the <strong>Edit Metadata</strong> button
+on the right (or double-click the lookup).</li>
+<li>Switch to the <strong>Features</strong> tab inside the lookup
+dialog.</li>
+<li>Review the <strong>Feature</strong> column:
+<ul>
+<li>FontForge includes a built-in dropdown menu containing officially
+recognized OpenType tags. Click the field to see if your tag appears
+within FontForge's predefined list.</li>
+<li>If you typed a tag manually, verify that it matches the exact
+4-character casing found in the official OpenType specification.</li>
+<li>Ensure that the feature is mapped to valid Script and Language
+combinations (e.g., <code>latn</code> for Latin script,
+<code>dflt</code> for default language). A feature tag will fail to
+execute if its associated script tag is invalid.</li>
+</ul></li>
+</ol>
+<h3 id="step-3-run-fontforges-built-in-validator">Step 3: Run
+FontForge's Built-in Validator</h3>
+<p>FontForge includes an automated validator to detect structural
+errors, including malformed OpenType tables and broken lookups.</p>
+<ol type="1">
+<li>Close the Font Info window by clicking <strong>OK</strong>.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Validation</strong> &gt;
+<strong>Validate</strong>.</li>
+<li>In the dialog that appears, ensure validation checks for OpenType
+tables and glyph naming are enabled, then click
+<strong>Validate</strong>.</li>
+<li>Examine the results window. If a feature references missing glyphs,
+has invalid script/language syntax, or violates table structures,
+FontForge will flag it with an error or warning pointing directly to the
+offending lookup.</li>
+</ol>
+<h3 id="step-4-verify-via-the-metrics-window">Step 4: Verify via the
+Metrics Window</h3>
+<p>To ensure that layout engines will activate the tag properly:</p>
+<ol type="1">
+<li>Open the Metrics window by navigating to <strong>Metrics</strong>
+&gt; <strong>New Metrics Window</strong>.</li>
+<li>Type the character sequence targeted by your feature.</li>
+<li>Select <strong>View</strong> &gt; <strong>Features</strong> from the
+Metrics menu to view all active and available OpenType features.</li>
+<li>Verify that your feature tag appears in the list and can be toggled
+on and off as expected. If the tag does not appear, check the lookup
+definition in Font Info to ensure it has valid subtable data and glyph
+mappings.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-verify-open-type-feature-tags-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

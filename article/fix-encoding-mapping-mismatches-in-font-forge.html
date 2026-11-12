@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Encoding Mapping Mismatches in FontForge - fontforge</title>
+    <meta name="description" content="Character encoding mapping mismatches in FontForge occur when the internal glyph slots, glyph names, or Unicode code points do not align with standard character maps, causing fonts to display incorrect characters or render as empty tofu boxes. This guide">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/fix-encoding-mapping-mismatches-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fix Encoding Mapping Mismatches in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/fix-encoding-mapping-mismatches-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Character encoding mapping mismatches in FontForge occur when the internal glyph slots, glyph names, or Unicode code points do not align with standard character maps, causing fonts to display incorrect characters or render as empty tofu boxes. This guide" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fix-encoding-mapping-mismatches-in-fontforge">Fix Encoding
+Mapping Mismatches in FontForge</h1>
+<p>Character encoding mapping mismatches in FontForge occur when the
+internal glyph slots, glyph names, or Unicode code points do not align
+with standard character maps, causing fonts to display incorrect
+characters or render as empty tofu boxes. This guide provides a
+straightforward method to diagnose encoding discrepancies, switch to
+standard Unicode vectors, correct misaligned individual glyphs, and
+validate character maps before generating production-ready font
+files.</p>
+<h3 id="1-verify-and-switch-the-encoding-vector">1. Verify and Switch
+the Encoding Vector</h3>
+<p>FontForge allows fonts to be displayed and organized under different
+encoding standards, such as legacy platform encodings or standard
+Unicode. An incorrect view can make mappings appear misaligned.</p>
+<ol type="1">
+<li>Navigate to the top menu and select <strong>Encoding</strong>.</li>
+<li>Check which encoding is active. If it is set to a legacy standard
+(such as ISO-8859 or Mac OS Roman), select <strong>Unicode
+(BMP)</strong> for standard character sets or <strong>Unicode
+(Full)</strong> for expanded sets including emojis or historical
+scripts.</li>
+<li>Choose <strong>Reencode</strong> rather than "Force Encoding" when
+prompted. Selecting <em>Reencode</em> moves glyphs to their designated
+Unicode slots based on their assigned Unicode values, preserving their
+correct identities.</li>
+</ol>
+<h3 id="2-differentiate-between-reencode-and-force-encoding">2.
+Differentiate Between "Reencode" and "Force Encoding"</h3>
+<p>Misusing these two functions is the primary cause of mapping errors
+in FontForge:</p>
+<ul>
+<li><strong>Reencode:</strong> Rearranges the display order inside the
+FontForge font view so that every glyph appears at the slot defined by
+the active encoding table, matching its assigned Unicode value.</li>
+<li><strong>Force Encoding:</strong> Leaves the glyphs in their current
+sequential grid positions and overwrites their character assignments
+with the codepoints of the selected encoding. <strong>Do not use Force
+Encoding</strong> unless you are importing an unencoded raw glyph stream
+that you know matches an exact sequential layout.</li>
+</ul>
+<h3 id="3-correct-individual-glyph-unicode-assignments">3. Correct
+Individual Glyph Unicode Assignments</h3>
+<p>If a specific glyph types the wrong character, its internal Unicode
+assignment is incorrect.</p>
+<ol type="1">
+<li>Locate and double-click the problematic glyph, or right-click it in
+the main font view.</li>
+<li>Select <strong>Element</strong> &gt; <strong>Glyph Info</strong> (or
+press <code>Ctrl + I</code> / <code>Cmd + I</code>).</li>
+<li>In the <strong>Unicode</strong> tab:
+<ul>
+<li>Check the <strong>Unicode Value</strong> field (formatted in
+hexadecimal, such as <code>U+0041</code> for "A").</li>
+<li>Check the <strong>Glyph Name</strong> (standard names like
+<code>A</code>, <code>adieresis</code>, or <code>uni0041</code>).</li>
+</ul></li>
+<li>To fix a mismatch, enter the correct Unicode hexadecimal value or
+standard Adobe Glyph List (AGL) name.</li>
+<li>Click <strong>Set From Name</strong> if the name is correct, or
+update the Unicode value directly.</li>
+<li>Click <strong>OK</strong> to apply.</li>
+</ol>
+<h3 id="4-resolve-name-to-unicode-conflicts-automatically">4. Resolve
+Name-to-Unicode Conflicts Automatically</h3>
+<p>When dealing with multiple imported glyphs containing correct names
+but incorrect Unicode codepoints, automate the repair:</p>
+<ol type="1">
+<li>Select all affected glyphs or select the entire font using
+<code>Ctrl + A</code> / <code>Cmd + A</code>.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Glyph
+Info</strong>.</li>
+<li>Alternatively, navigate to <strong>Encoding</strong> &gt;
+<strong>Rename Glyphs</strong> &gt; <strong>Adobe Glyph List</strong> to
+force standard glyph names.</li>
+<li>Go to <strong>Encoding</strong> &gt; <strong>Assign Unicode to Named
+Glyphs</strong> to re-index all codepoints directly from their standard
+names.</li>
+</ol>
+<h3 id="5-check-for-duplicate-unicode-assignments">5. Check for
+Duplicate Unicode Assignments</h3>
+<p>FontForge will fail to generate valid OpenType/TrueType tables
+properly if two distinct glyphs share the same Unicode slot.</p>
+<ol type="1">
+<li>Go to <strong>Element</strong> &gt; <strong>Validation</strong> &gt;
+<strong>Find Problems</strong>.</li>
+<li>In the dialog, navigate to the <strong>General</strong> or
+<strong>Encoding</strong> section.</li>
+<li>Check the box for <strong>Duplicate Unicode values</strong> and
+<strong>Unencoded glyphs</strong>.</li>
+<li>Click <strong>OK</strong>. FontForge will highlight all conflicting
+glyphs.</li>
+<li>Manually edit or detach the duplicates via <strong>Encoding</strong>
+&gt; <strong>Detach Glyphs</strong>.</li>
+</ol>
+<h3 id="6-generate-clean-font-tables">6. Generate Clean Font Tables</h3>
+<p>Once mappings are corrected, ensure FontForge compiles the proper
+character map (<code>cmap</code>) tables:</p>
+<ol type="1">
+<li>Go to <strong>File</strong> &gt; <strong>Generate
+Fonts</strong>.</li>
+<li>Select your desired output format (OpenType (CFF) <code>.otf</code>
+or TrueType <code>.ttf</code>).</li>
+<li>Click the <strong>Options</strong> button in the file dialog.</li>
+<li>Ensure <strong>OpenType</strong> is selected, which compiles a
+modern Unicode <code>cmap</code> table, ensuring broad cross-platform
+compatibility across operating systems and web browsers.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/fix-encoding-mapping-mismatches-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

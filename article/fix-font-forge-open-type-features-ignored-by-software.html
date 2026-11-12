@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix FontForge OpenType Features Ignored by Software - fontforge</title>
+    <meta name="description" content="Designing custom typography in FontForge and exporting it only to find that your ligatures, kerning, or alternate glyphs do not work in target applications is a common issue. This problem typically stems from improper script and language tagging, missing">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/fix-font-forge-open-type-features-ignored-by-software">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fix FontForge OpenType Features Ignored by Software - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/fix-font-forge-open-type-features-ignored-by-software" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Designing custom typography in FontForge and exporting it only to find that your ligatures, kerning, or alternate glyphs do not work in target applications is a common issue. This problem typically stems from improper script and language tagging, missing" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fix-fontforge-opentype-features-ignored-by-software">Fix
+FontForge OpenType Features Ignored by Software</h1>
+<p>Designing custom typography in FontForge and exporting it only to
+find that your ligatures, kerning, or alternate glyphs do not work in
+target applications is a common issue. This problem typically stems from
+improper script and language tagging, missing OpenType layout tables
+during export, incorrect lookup configurations, or font caching
+conflicts within the host operating system. This guide covers the root
+causes behind ignored OpenType features and how to fix them directly
+within FontForge and your testing environment.</p>
+<h3 id="1-missing-script-and-language-system-tags">1. Missing Script and
+Language System Tags</h3>
+<p>The most frequent reason software ignores OpenType features is
+missing metadata. OpenType shaping engines (such as HarfBuzz,
+DirectWrite, or Core Text) require features to be assigned to specific
+scripts and languages.</p>
+<ul>
+<li>Open <strong>Element &gt; Font Info &gt; Lookups</strong>.</li>
+<li>Select your lookup and click <strong>Edit Metadata</strong>.</li>
+<li>Ensure your lookup is assigned to the correct script (such as
+<code>latn</code> for Latin) and language system (such as
+<code>dflt</code> for Default). If a feature is not mapped to
+<code>dflt</code> or the specific language of the text being typed, the
+rendering engine will skip the lookup entirely.</li>
+</ul>
+<h3 id="2-exporting-without-opentype-layout-tables">2. Exporting Without
+OpenType Layout Tables</h3>
+<p>When generating your font file, FontForge allows you to customize
+which tables are compiled into the binary. If the OpenType substitution
+(GSUB) and positioning (GPOS) tables are omitted, your features will not
+exist in the final file.</p>
+<ul>
+<li>Go to <strong>File &gt; Generate Fonts</strong>.</li>
+<li>Click the <strong>Options</strong> button in the file dialog.</li>
+<li>Ensure that <strong>OpenType</strong> is checked.</li>
+<li>Confirm that options such as <strong>Old style kern</strong> are
+unchecked if you rely on modern OpenType <code>kern</code> feature
+tables, as legacy tables can conflict with modern layout engines.</li>
+</ul>
+<h3 id="3-using-non-standard-feature-tags">3. Using Non-Standard Feature
+Tags</h3>
+<p>Layout engines only automate features registered with standard
+four-character OpenType tags.</p>
+<ul>
+<li>Standard discretionary ligatures must use <code>dlig</code>,
+standard ligatures must use <code>liga</code>, contextual alternates
+must use <code>calt</code>, and kerning must use <code>kern</code>.</li>
+<li>If you create custom or misspelled tags (e.g., naming a ligature
+lookup <code>custom_liga</code> instead of <code>liga</code>), software
+will not execute the substitution automatically unless the host program
+explicitly supports custom feature calls.</li>
+</ul>
+<h3 id="4-application-level-opentype-defaults">4. Application-Level
+OpenType Defaults</h3>
+<p>Even if the font is built correctly, many target applications disable
+advanced OpenType features by default:</p>
+<ul>
+<li><strong>Web Browsers:</strong> Features like <code>liga</code> and
+<code>kern</code> are typically enabled by default, but discretionary
+ligatures (<code>dlig</code>) or stylistic sets (<code>ss01</code>)
+require explicit activation using the CSS property
+<code>font-feature-settings</code>.</li>
+<li><strong>Adobe Creative Cloud:</strong> InDesign and Illustrator
+usually enable standard ligatures, but contextual alternates and
+stylistic sets must be turned on via the <strong>OpenType
+panel</strong>.</li>
+<li><strong>Microsoft Word:</strong> Advanced typography features are
+disabled by default. You must navigate to <strong>Font &gt; Advanced
+&gt; OpenType Features</strong> and set ligatures to "All" and enable
+kerning.</li>
+</ul>
+<h3 id="5-operating-system-font-caching">5. Operating System Font
+Caching</h3>
+<p>Operating systems (especially Windows and macOS) aggressively cache
+font files. If you export a font, test it, find an error, and re-export
+it under the exact same family name and version, the operating system
+may continue serving the cached version that lacked the OpenType
+tables.</p>
+<ul>
+<li>Change the font's <strong>Version</strong> number under
+<strong>Element &gt; Font Info &gt; TTF Names</strong> before
+re-exporting.</li>
+<li>Alternatively, test your exported <code>.otf</code> or
+<code>.ttf</code> files in a private or incognito web browser window
+using a dedicated HTML test page, which bypasses the system-level font
+manager cache.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/fix-font-forge-open-type-features-ignored-by-software';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

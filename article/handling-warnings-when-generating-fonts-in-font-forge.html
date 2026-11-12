@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handling Warnings When Generating Fonts in FontForge - fontforge</title>
+    <meta name="description" content="When generating fonts in FontForge, users frequently encounter warning dialogs flagging validation errors such as overlapping paths, missing extrema, or incorrect contour directions. While some warnings can break font rendering across different operating">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/handling-warnings-when-generating-fonts-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Handling Warnings When Generating Fonts in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/handling-warnings-when-generating-fonts-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When generating fonts in FontForge, users frequently encounter warning dialogs flagging validation errors such as overlapping paths, missing extrema, or incorrect contour directions. While some warnings can break font rendering across different operating" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="handling-warnings-when-generating-fonts-in-fontforge">Handling
+Warnings When Generating Fonts in FontForge</h1>
+<p>When generating fonts in FontForge, users frequently encounter
+warning dialogs flagging validation errors such as overlapping paths,
+missing extrema, or incorrect contour directions. While some warnings
+can break font rendering across different operating systems, others are
+benign design choices that can be safely dismissed. This guide explains
+how to interpret FontForge validation reports, fix the most critical
+geometry and metadata warnings, and configure export settings to ensure
+error-free font files.</p>
+<h2 id="review-the-warnings-dialog">Review the Warnings Dialog</h2>
+<p>When the "Errors detected" dialog appears during font generation, do
+not immediately click "Generate." Instead, click <strong>Review</strong>
+to open the Validation Window.</p>
+<p>The Validation Window provides a list of specific glyphs and the
+precise rules they violate. Double-clicking any listed error will
+automatically open that glyph in the Char View and highlight the
+problematic node or path, allowing you to address issues
+individually.</p>
+<h2 id="fix-geometry-and-outline-errors">Fix Geometry and Outline
+Errors</h2>
+<p>The vast majority of FontForge warnings relate to outline geometry.
+Resolving these ensures your font displays correctly across all
+rendering engines.</p>
+<h3 id="self-intersecting-contours">Self-Intersecting Contours</h3>
+<p>Self-intersecting paths occur when a single vector path crosses over
+itself, which creates rendering artifacts in PostScript and TrueType
+formats.</p>
+<ul>
+<li><strong>Fix:</strong> Open the glyph, select all paths
+(<code>Ctrl + A</code>), and navigate to <strong>Element &gt; Overlap
+&gt; Remove Overlap</strong> (<code>Ctrl + Shift + O</code>).</li>
+</ul>
+<h3 id="missing-extrema">Missing Extrema</h3>
+<p>Rendering engines require on-curve points at the horizontal and
+vertical extremes of every curve to calculate anti-aliasing and hinting
+accurately.</p>
+<ul>
+<li><strong>Fix:</strong> Select the affected paths and go to
+<strong>Element &gt; Add Extrema</strong> (<code>Ctrl + Alt + E</code>).
+If FontForge places an extrema point too close to an existing control
+point, manually delete the redundant point.</li>
+</ul>
+<h3 id="incorrect-path-direction">Incorrect Path Direction</h3>
+<p>Font formats rely on path direction (clockwise vs. counter-clockwise)
+to determine what is filled and what is cut out (such as the counter
+inside an "O").</p>
+<ul>
+<li><strong>Fix:</strong> Select the outline and choose <strong>Element
+&gt; Correct Direction</strong> (<code>Ctrl + Shift + D</code>). For
+TrueType fonts, outer contours should be clockwise; for PostScript/OTF
+fonts, they should be counter-clockwise.</li>
+</ul>
+<h3 id="points-too-close-together">Points Too Close Together</h3>
+<p>Points positioned less than one full font unit apart confuse the
+rasterizer and bloat the file size.</p>
+<ul>
+<li><strong>Fix:</strong> Select the paths and choose <strong>Element
+&gt; Simplify &gt; Simplify</strong> (<code>Ctrl + Shift + M</code>).
+Alternatively, manually zoom in and merge adjacent points using
+<strong>Point &gt; Make First</strong> or deleting excess nodes.</li>
+</ul>
+<h2 id="fix-font-information-and-metadata-errors">Fix Font Information
+and Metadata Errors</h2>
+<p>Warnings related to font properties affect system-level installation
+and font menus.</p>
+<h3 id="missing-essential-glyphs">Missing Essential Glyphs</h3>
+<p>FontForge checks for standard fallback glyphs, specifically
+<code>.notdef</code> (the glyph shown when an unassigned character is
+typed).</p>
+<ul>
+<li><strong>Fix:</strong> Ensure your font contains a
+<code>.notdef</code> character at unicode slot <code>U+FFFD</code> or
+index 0. If it is empty, draw a simple hollow rectangle.</li>
+</ul>
+<h3 id="inconsistent-line-metrics">Inconsistent Line Metrics</h3>
+<p>Errors regarding OS/2 metrics (WinAscent, WinDescent, TypoAscent)
+indicate your glyphs may be visually clipped in applications like
+Microsoft Word or web browsers.</p>
+<ul>
+<li><strong>Fix:</strong> Go to <strong>Element &gt; Font Info &gt; OS/2
+&gt; Metrics</strong>. Click <strong>Calculate Typo Metrics</strong> and
+<strong>Calculate Win Metrics</strong> to let FontForge determine
+appropriate bounding boxes automatically based on your highest and
+lowest glyph coordinates.</li>
+</ul>
+<h2 id="adjusting-generator-preferences">Adjusting Generator
+Preferences</h2>
+<p>If you have verified that your font functions as intended and you
+wish to bypass non-fatal warnings on subsequent builds:</p>
+<ol type="1">
+<li>Navigate to <strong>File &gt; Preferences</strong>.</li>
+<li>Select <strong>Generate</strong>.</li>
+<li>Locate the <strong>Validation</strong> preferences.</li>
+<li>Uncheck non-critical validations, such as warnings for unhinted
+glyphs or intentional path intersections (common in complex
+scripts).</li>
+</ol>
+<h2 id="when-to-ignore-warnings">When to Ignore Warnings</h2>
+<p>You can safely ignore warnings if:</p>
+<ul>
+<li><strong>Overlaps are intentional:</strong> Some modern OpenType-CFF
+workflows and variable fonts retain overlaps intentionally to ease
+master interpolation.</li>
+<li><strong>Decorative elements:</strong> Complex display fonts with
+high node counts may trigger false-positive warnings about complexity
+that modern computers can easily handle.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/handling-warnings-when-generating-fonts-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

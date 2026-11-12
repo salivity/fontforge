@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Overlapping Shapes with FontForge Python - fontforge</title>
+    <meta name="description" content="Yes, you can create overlapping compound shapes using Python scripts in FontForge. FontForge provides a comprehensive Python API that enables you to programmatically draw vector paths, layer multiple intersecting contours within a single glyph, merge shap">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/create-overlapping-shapes-with-font-forge-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create Overlapping Shapes with FontForge Python - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/create-overlapping-shapes-with-font-forge-python" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Yes, you can create overlapping compound shapes using Python scripts in FontForge. FontForge provides a comprehensive Python API that enables you to programmatically draw vector paths, layer multiple intersecting contours within a single glyph, merge shap" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-overlapping-shapes-with-fontforge-python">Create
+Overlapping Shapes with FontForge Python</h1>
+<p>Yes, you can create overlapping compound shapes using Python scripts
+in FontForge. FontForge provides a comprehensive Python API that enables
+you to programmatically draw vector paths, layer multiple intersecting
+contours within a single glyph, merge shapes using boolean operations,
+or assemble complex glyphs using references. This guide explains how to
+construct overlapping paths and manage their interactions via
+scripting.</p>
+<h2 id="drawing-overlapping-contours-in-a-single-glyph">Drawing
+Overlapping Contours in a Single Glyph</h2>
+<p>In FontForge, a glyph's outline consists of one or more closed
+contours. You can add multiple overlapping paths directly to the glyph's
+foreground layer. By default, these paths remain distinct entities
+within the layer unless you explicitly choose to combine them.</p>
+<p>Here is an example of creating a glyph with two overlapping
+rectangular contours:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new font and a target glyph</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.font()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>glyph <span class="op">=</span> font.createChar(<span class="dv">65</span>, <span class="st">&quot;A&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the first contour (a rectangle)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>c1 <span class="op">=</span> fontforge.contour()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>c1.moveTo(<span class="dv">100</span>, <span class="dv">100</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>c1.lineTo(<span class="dv">100</span>, <span class="dv">500</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>c1.lineTo(<span class="dv">400</span>, <span class="dv">500</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>c1.lineTo(<span class="dv">400</span>, <span class="dv">100</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>c1.closed <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the second overlapping contour</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>c2 <span class="op">=</span> fontforge.contour()</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>c2.moveTo(<span class="dv">300</span>, <span class="dv">300</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>c2.lineTo(<span class="dv">300</span>, <span class="dv">700</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>c2.lineTo(<span class="dv">600</span>, <span class="dv">700</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>c2.lineTo(<span class="dv">600</span>, <span class="dv">300</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>c2.closed <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Append both contours to the glyph layer</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> glyph.layers[<span class="st">&#39;Fore&#39;</span>]</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>layer <span class="op">+=</span> c1</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>layer <span class="op">+=</span> c2</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>glyph.layers[<span class="st">&#39;Fore&#39;</span>] <span class="op">=</span> layer</span></code></pre></div>
+<h2 id="merging-overlaps-with-boolean-operations">Merging Overlaps with
+Boolean Operations</h2>
+<p>If your goal is to eliminate intersecting paths and convert them into
+a single, seamless compound boundary, FontForge provides the
+<code>removeOverlap()</code> method. This function performs a boolean
+union on all intersecting contours in the active layer.</p>
+<p>To merge the overlapping geometry created above, execute:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge overlapping contours into a single unified outline</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>glyph.removeOverlap()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Ensure winding directions are correct for font rendering</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>glyph.correctDirection()</span></code></pre></div>
+<p>This transforms the intersecting paths into a single combined
+outline, removing inner intersecting lines.</p>
+<h2 id="creating-compound-glyphs-using-references">Creating Compound
+Glyphs Using References</h2>
+<p>FontForge supports "compound glyphs," which are glyphs constructed
+from references (components) of other glyphs. You can overlap multiple
+referenced glyphs to build a compound structure.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create base component glyphs</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>base1 <span class="op">=</span> font.createChar(<span class="dv">1000</span>, <span class="st">&quot;comp_rect&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>base1.layers[<span class="st">&#39;Fore&#39;</span>] <span class="op">+=</span> c1</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>base2 <span class="op">=</span> font.createChar(<span class="dv">1001</span>, <span class="st">&quot;comp_circle&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># (Define and add geometry to base2 here)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a compound glyph that references both</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>compound <span class="op">=</span> font.createChar(<span class="dv">66</span>, <span class="st">&quot;B&quot;</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>compound.addReference(<span class="st">&quot;comp_rect&quot;</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>compound.addReference(<span class="st">&quot;comp_circle&quot;</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Flatten the references into native editable paths</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>compound.unlinkRef()</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Merge the flattened overlaps</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>compound.removeOverlap()</span></code></pre></div>
+<h2 id="path-direction-and-fill-behavior">Path Direction and Fill
+Behavior</h2>
+<p>When keeping paths overlapping without calling
+<code>removeOverlap()</code>, the visual fill depends on the path
+direction (clockwise vs. counter-clockwise) and the target font format's
+fill rule:</p>
+<ul>
+<li><strong>TrueType (Non-Zero Winding Rule):</strong> Overlapping
+contours drawn in the same direction will fill completely. Contours
+drawn in opposite directions will create a cutout (hole).</li>
+<li><strong>PostScript / OpenType (Even-Odd Rule):</strong> Intersecting
+areas may invert depending on how many paths overlap at any given
+point.</li>
+</ul>
+<p>Use <code>glyph.correctDirection()</code> to automatically orient
+outer boundaries counter-clockwise (or clockwise depending on format
+requirements) to maintain consistent fill appearance across
+rasterizers.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/create-overlapping-shapes-with-font-forge-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

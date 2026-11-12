@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Cross-Platform Font Rendering in FontForge - fontforge</title>
+    <meta name="description" content="Fonts exported from FontForge often render inconsistently across Windows, macOS, and Linux due to divergent font rendering engines, mismatched vertical metrics, and conflicting outline standards. This guide details how to resolve these cross-platform disc">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/fix-cross-platform-font-rendering-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fix Cross-Platform Font Rendering in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/fix-cross-platform-font-rendering-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Fonts exported from FontForge often render inconsistently across Windows, macOS, and Linux due to divergent font rendering engines, mismatched vertical metrics, and conflicting outline standards. This guide details how to resolve these cross-platform disc" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fix-cross-platform-font-rendering-in-fontforge">Fix
+Cross-Platform Font Rendering in FontForge</h1>
+<p>Fonts exported from FontForge often render inconsistently across
+Windows, macOS, and Linux due to divergent font rendering engines,
+mismatched vertical metrics, and conflicting outline standards. This
+guide details how to resolve these cross-platform discrepancies directly
+within FontForge by standardizing vertical metrics, cleaning up glyph
+geometry, configuring proper hinting, and aligning OpenType and TrueType
+table settings.</p>
+<h3 id="1-synchronize-vertical-metrics">1. Synchronize Vertical
+Metrics</h3>
+<p>Windows and macOS read different vertical metric tables, causing
+fonts to display with different line heights or unwanted clipping across
+platforms. To ensure consistent baseline alignment and line spacing:</p>
+<ol type="1">
+<li>Navigate to <strong>Element &gt; Font Info &gt; OS/2 &gt;
+Metrics</strong>.</li>
+<li>Set the three primary metric sets to match harmoniously:
+<ul>
+<li><strong>OS/2 Typo Metrics</strong>: Set <strong>Typo Ascent</strong>
+and <strong>Typo Descent</strong> to match your intended design grid.
+The sum of <code>TypoAscent + abs(TypoDescent) + TypoLineGap</code>
+should equal your target line height.</li>
+<li><strong>Windows Metrics</strong>: Set <strong>Win Ascent</strong>
+and <strong>Win Descent</strong> to represent the absolute highest and
+lowest points of all glyphs (including diacritics) to prevent clipping
+in Windows applications.</li>
+<li><strong>Mac Metrics (HHead)</strong>: Set <strong>HHead
+Ascent</strong> and <strong>HHead Descent</strong> to equal the
+<strong>Win Ascent</strong> and <strong>Win Descent</strong> (or
+<strong>Typo Ascent</strong> and <strong>Typo Descent</strong>,
+depending on whether you follow modern web metrics standards).</li>
+</ul></li>
+<li>Check the <strong>Use Typo Metrics</strong> box (sets bit 7 in
+<code>fsSelection</code>). This forces modern Windows applications to
+respect the Typo metrics instead of relying solely on the Win
+metrics.</li>
+</ol>
+<h3 id="2-correct-path-directions-and-overlaps">2. Correct Path
+Directions and Overlaps</h3>
+<p>Different operating systems and formats expect specific path
+directions. TrueType outlines require clockwise exterior contours, while
+PostScript (OpenType-CFF) outlines require counter-clockwise contours.
+Incorrect contour directions cause glyphs to render hollowed out or with
+missing fills.</p>
+<ol type="1">
+<li>Select all glyphs (<strong>Edit &gt; Select &gt; Select
+All</strong>).</li>
+<li>Go to <strong>Element &gt; Correct Direction</strong> to let
+FontForge orient paths automatically based on the target format.</li>
+<li>Remove internal overlaps by choosing <strong>Element &gt; Overlap
+&gt; Remove</strong>. Merged outlines prevent rendering artifacts in
+rasterizers that handle non-zero winding rules poorly.</li>
+<li>Round coordinates to integers via <strong>Element &gt; Round &gt; To
+Int</strong>. Fractional coordinates frequently cause fuzzy rendering or
+anti-aliasing artifacts on low-DPI displays.</li>
+</ol>
+<h3 id="3-handle-hinting-correctly">3. Handle Hinting Correctly</h3>
+<p>Windows uses ClearType (a sub-pixel hinting engine), Linux uses
+FreeType, and macOS relies almost entirely on CoreText (which largely
+ignores hinting in favor of outline fidelity). Bad hints will severely
+distort outlines on Windows while appearing fine on macOS.</p>
+<ul>
+<li><strong>For TrueType (TTF):</strong> Avoid using FontForge’s native
+TrueType autohinter, as it produces inconsistent results across modern
+Windows renderers. Instead, export the unhinted TTF from FontForge and
+process it through a specialized tool like
+<code>ttfautohint</code>.</li>
+<li><strong>For OpenType-CFF (OTF):</strong> Use FontForge’s PostScript
+hinting by selecting all glyphs and clicking <strong>Hints &gt;
+Autohint</strong>. OpenType PostScript hints are simpler and typically
+render more consistently across platforms.</li>
+</ul>
+<h3 id="4-resolve-name-table-inconsistencies">4. Resolve Name Table
+Inconsistencies</h3>
+<p>Operating systems parse the <code>name</code> table differently,
+causing fonts to show up under incorrect weights, styles, or
+families.</p>
+<ol type="1">
+<li>Open <strong>Element &gt; Font Info &gt; TTF Names</strong>.</li>
+<li>Ensure the <strong>Family</strong>, <strong>Subfamily</strong>,
+<strong>Full Name</strong>, and <strong>PostScript Name</strong> fields
+contain no special characters or trailing spaces.</li>
+<li>Maintain the standard 4-style model (Regular, Italic, Bold, Bold
+Italic) in the primary <code>name</code> entries, and use the
+<strong>Preferred Family</strong> (Typographic Family) and
+<strong>Preferred Styles</strong> fields for extended weights (e.g.,
+Light, Medium, Black).</li>
+</ol>
+<h3 id="5-validate-the-font-before-export">5. Validate the Font Before
+Export</h3>
+<p>Before generating the final font files, run the built-in validator to
+catch structural errors that different operating systems handle
+unpredictably:</p>
+<ol type="1">
+<li>Select all glyphs and go to <strong>Element &gt; Validation &gt;
+Find Problems</strong>.</li>
+<li>Check for missing points at extrema, self-intersecting paths, and
+flipped references.</li>
+<li>Fix all detected errors, then export your binaries via <strong>File
+&gt; Generate Fonts</strong>, choosing either <strong>OpenType
+(CFF)</strong> or <strong>TrueType</strong> depending on your target
+distribution.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/fix-cross-platform-font-rendering-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Autotrace Bitmaps in FontForge - fontforge</title>
+    <meta name="description" content="FontForge allows you to automatically convert bitmap images into vector outlines, but it does not contain a fully native, standalone tracing engine. Instead, it provides a built-in interface that relies on external tracing utilities like Potrace or AutoTr">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-autotrace-bitmaps-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Autotrace Bitmaps in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-autotrace-bitmaps-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge allows you to automatically convert bitmap images into vector outlines, but it does not contain a fully native, standalone tracing engine. Instead, it provides a built-in interface that relies on external tracing utilities like Potrace or AutoTr" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-autotrace-bitmaps-in-fontforge">How to Autotrace Bitmaps
+in FontForge</h1>
+<p>FontForge allows you to automatically convert bitmap images into
+vector outlines, but it does not contain a fully native, standalone
+tracing engine. Instead, it provides a built-in interface that relies on
+external tracing utilities like Potrace or AutoTrace installed on your
+system. This guide covers how this integration works, what tools you
+need to install, and the step-by-step process to trace bitmaps into font
+glyphs automatically.</p>
+<h3 id="the-built-in-autotrace-mechanism">The Built-in Autotrace
+Mechanism</h3>
+<p>FontForge includes an <strong>Autotrace</strong> command under its
+menus, but it acts as a bridge rather than an internal algorithm. When
+you trigger the command, FontForge passes the bitmap data to an external
+program installed on your computer, waits for the vector output, and
+places the resulting Bézier paths into your font layer.</p>
+<p>To use this feature, you must have one of two external programs
+installed and accessible in your system's PATH:</p>
+<ol type="1">
+<li><strong>Potrace:</strong> Ideal for high-contrast, black-and-white
+bitmap tracing. It is fast and widely supported.</li>
+<li><strong>AutoTrace:</strong> Capable of tracing both black-and-white
+and color images with distinct outline options.</li>
+</ol>
+<p>If neither tool is installed, FontForge will show an error indicating
+that the autotracing program cannot be found.</p>
+<h3 id="step-by-step-guide-to-tracing-bitmaps">Step-by-Step Guide to
+Tracing Bitmaps</h3>
+<h4 id="1-configure-the-tracing-program">1. Configure the Tracing
+Program</h4>
+<p>Before tracing, ensure FontForge knows which engine to use:</p>
+<ul>
+<li>Go to <strong>File</strong> &gt; <strong>Preferences</strong> &gt;
+<strong>Apps</strong>.</li>
+<li>Verify that the path to <strong>Autotrace</strong> or
+<strong>Potrace</strong> is set correctly, or confirm that the
+executables are located in your system environment variables.</li>
+</ul>
+<h4 id="2-import-the-bitmap-into-a-glyph">2. Import the Bitmap into a
+Glyph</h4>
+<ul>
+<li>Double-click an empty glyph slot in the Font View to open the Glyph
+Window.</li>
+<li>Switch to the <strong>Back</strong> (Background) layer using the
+Layers palette.</li>
+<li>Go to <strong>File</strong> &gt; <strong>Import</strong>.</li>
+<li>Set the file format filter to an image format (such as PNG, BMP, or
+TIFF) and select your source image.</li>
+</ul>
+<h4 id="3-run-the-autotrace-command">3. Run the Autotrace Command</h4>
+<ul>
+<li>With the image positioned and scaled appropriately in the
+background, go to the top menu.</li>
+<li>Select <strong>Element</strong> &gt; <strong>Autotrace</strong> (or
+press the corresponding shortcut, typically
+<code>Shift + Ctrl + T</code>).</li>
+<li>FontForge will process the image through the external utility and
+generate vector outlines directly in the <strong>Fore</strong>
+(Foreground) layer.</li>
+</ul>
+<h3 id="tips-for-clean-traces">Tips for Clean Traces</h3>
+<ul>
+<li><strong>Use Pure Black and White:</strong> Convert your images to
+high-contrast monochrome before importing. Grayscale or anti-aliased
+edges can produce unwanted artifacts or double outlines.</li>
+<li><strong>Simplify Paths:</strong> Traced paths often generate
+excessive control points. After tracing, select the outlines in the
+Foreground layer and go to <strong>Element</strong> &gt;
+<strong>Simplify</strong> &gt; <strong>Simplify</strong> to optimize
+point placement.</li>
+<li><strong>Check Direction:</strong> Font formats require specific path
+directions for proper rendering. Use <strong>Element</strong> &gt;
+<strong>Correct Direction</strong> to ensure counter-spaces (holes in
+letters) display correctly.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-autotrace-bitmaps-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

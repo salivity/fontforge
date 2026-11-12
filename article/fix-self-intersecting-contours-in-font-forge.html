@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Self-Intersecting Contours in FontForge - fontforge</title>
+    <meta name="description" content="Self-intersecting contour errors in FontForge occur when a glyph&#39;s outline crosses over itself, creating rendering glitches and validation failures in modern font engines. This guide provides quick, actionable methods to resolve these errors using FontFor">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/fix-self-intersecting-contours-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fix Self-Intersecting Contours in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/fix-self-intersecting-contours-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Self-intersecting contour errors in FontForge occur when a glyph&#39;s outline crosses over itself, creating rendering glitches and validation failures in modern font engines. This guide provides quick, actionable methods to resolve these errors using FontFor" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fix-self-intersecting-contours-in-fontforge">Fix
+Self-Intersecting Contours in FontForge</h1>
+<p>Self-intersecting contour errors in FontForge occur when a glyph's
+outline crosses over itself, creating rendering glitches and validation
+failures in modern font engines. This guide provides quick, actionable
+methods to resolve these errors using FontForge's automated repair
+tools, geometry cleanup operations, and manual node adjustments.</p>
+<hr />
+<h3 id="understanding-the-error">Understanding the Error</h3>
+<p>A self-intersecting contour means a single path loops back across its
+own segment, or two overlapping paths exist on the same layer without
+being properly merged into a single boundary. Font validation tools flag
+these because rasterizers cannot reliably determine which side of the
+intersecting path is the inside or outside of the shape.</p>
+<hr />
+<h3 id="method-1-use-the-remove-overlap-command">Method 1: Use the
+"Remove Overlap" Command</h3>
+<p>FontForge includes an automated boolean tool designed specifically to
+merge overlapping paths into clean, unified outlines.</p>
+<ol type="1">
+<li>Double-click the affected glyph in the Font View to open the
+<strong>Glyph Edit Window</strong>.</li>
+<li>Select all contours by pressing <code>Ctrl + A</code> (or
+<code>Cmd + A</code> on macOS).</li>
+<li>Navigate to <strong>Element</strong> in the top menu.</li>
+<li>Select <strong>Overlap</strong> &gt; <strong>Remove Overlap</strong>
+(Shortcut: <code>Ctrl + Shift + O</code> or
+<code>Cmd + Shift + O</code>).</li>
+<li>FontForge will calculate the intersection points, slice the
+overlapping geometry, and combine the shapes into a single
+non-intersecting outline.</li>
+</ol>
+<hr />
+<h3 id="method-2-correct-path-directions">Method 2: Correct Path
+Directions</h3>
+<p>Incorrect path directions (clockwise versus counterclockwise)
+frequently cause false or compound self-intersection warnings.</p>
+<ol type="1">
+<li>In the Glyph Edit Window, select all contours (<code>Ctrl + A</code>
+/ <code>Cmd + A</code>).</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Correct
+Direction</strong> (Shortcut: <code>Ctrl + Shift + D</code> or
+<code>Cmd + Shift + D</code>).</li>
+<li>This ensures exterior contours run clockwise and interior cutouts
+(counters) run counterclockwise, matching TrueType and PostScript
+specifications.</li>
+</ol>
+<hr />
+<h3 id="method-3-simplify-the-path">Method 3: Simplify the Path</h3>
+<p>Sometimes an intersection is caused by micro-loops created by
+adjacent or duplicate points.</p>
+<ol type="1">
+<li>Select the affected area or the entire glyph.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Simplify</strong> &gt;
+<strong>Simplify</strong> (Shortcut: <code>Ctrl + M</code> or
+<code>Cmd + M</code>).</li>
+<li>This command removes redundant nodes and cleans up erratic Bézier
+curve handles that may cross over each other at microscopic levels.</li>
+</ol>
+<hr />
+<h3 id="method-4-manual-node-repair">Method 4: Manual Node Repair</h3>
+<p>If automated tools distort the glyph or fail to clear the error,
+resolve the intersection manually:</p>
+<ol type="1">
+<li>Identify the exact coordinates of the intersection by running
+<strong>Element</strong> &gt; <strong>Validation</strong> &gt;
+<strong>Find Problems</strong>, checking <strong>Self
+Intersection</strong>, and clicking <strong>OK</strong>.</li>
+<li>FontForge will place a marker or highlight the problem node.</li>
+<li>Zoom in closely on the marked area using the magnifying tool or
+<code>+</code> key.</li>
+<li>Look for:
+<ul>
+<li><strong>Collinear handles:</strong> Control handles pulled backward
+through their own on-curve point. Retract or rotate the handle back to
+its proper side.</li>
+<li><strong>Overlapping nodes:</strong> Two points sitting at the exact
+same coordinate. Drag one away or delete the redundant point with the
+<code>Delete</code> key.</li>
+<li><strong>Figure-8 loops:</strong> If a path crosses itself like an
+"8", cut the path using the <strong>Knife</strong> tool, delete the
+intersecting segments, and reconnect the open endpoints manually.</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="verifying-the-fix">Verifying the Fix</h3>
+<p>After applying the changes, confirm the error is cleared:</p>
+<ol type="1">
+<li>Go to <strong>Element</strong> &gt; <strong>Validation</strong> &gt;
+<strong>Validate</strong>.</li>
+<li>Ensure that "Self-intersecting glyph" no longer appears in the
+validation results.</li>
+<li>Save your font file (<code>Ctrl + S</code> /
+<code>Cmd + S</code>).</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/fix-self-intersecting-contours-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

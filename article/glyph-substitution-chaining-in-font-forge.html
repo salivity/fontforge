@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glyph Substitution Chaining in FontForge - fontforge</title>
+    <meta name="description" content="Glyph substitution chaining is an advanced OpenType feature that dynamically swaps glyphs based on their surrounding sequence, allowing type designers to handle complex typographic behaviors such as contextual alternates, script joining, and collision avo">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/glyph-substitution-chaining-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Glyph Substitution Chaining in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/glyph-substitution-chaining-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Glyph substitution chaining is an advanced OpenType feature that dynamically swaps glyphs based on their surrounding sequence, allowing type designers to handle complex typographic behaviors such as contextual alternates, script joining, and collision avo" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="glyph-substitution-chaining-in-fontforge">Glyph Substitution
+Chaining in FontForge</h1>
+<p>Glyph substitution chaining is an advanced OpenType feature that
+dynamically swaps glyphs based on their surrounding sequence, allowing
+type designers to handle complex typographic behaviors such as
+contextual alternates, script joining, and collision avoidance. In
+FontForge, this is handled through OpenType GSUB Lookup Type 6 (Chained
+Contextual Substitution), which enables users to define rules that
+inspect backtrack, input, and lookahead glyphs to determine when a
+specific substitution should execute.</p>
+<h3 id="understanding-glyph-substitution-chaining">Understanding Glyph
+Substitution Chaining</h3>
+<p>Chained contextual substitution modifies a target sequence of glyphs
+only when specific sequences appear immediately before or after it.
+Unlike basic substitutions (such as single substitutions or standard
+ligatures) that apply universally, chained substitutions inspect three
+distinct sequences:</p>
+<ol type="1">
+<li><strong>Backtrack Sequence:</strong> The glyphs that must appear
+immediately <em>before</em> the target glyphs. These glyphs are examined
+for context but are not modified.</li>
+<li><strong>Input Sequence:</strong> The target glyph or sequence of
+glyphs to be replaced or modified.</li>
+<li><strong>Lookahead Sequence:</strong> The glyphs that must appear
+immediately <em>after</em> the target glyphs. Like backtrack glyphs,
+these are only checked for matching conditions and remain
+unchanged.</li>
+</ol>
+<p>When a text engine encounters a match for the backtrack, input, and
+lookahead sequences simultaneously, it applies pre-defined sub-lookups
+(such as single, alternate, or ligature substitutions) specifically to
+the input sequence.</p>
+<h3 id="how-fontforge-handles-chaining-lookups">How FontForge Handles
+Chaining Lookups</h3>
+<p>FontForge exposes OpenType layout features through its Font Info
+interface, allowing designers to visually build or write chained
+contextual rules without requiring a standalone OpenType Feature File
+(FEA) compiler.</p>
+<h4 id="1-creating-the-base-and-nested-lookups">1. Creating the Base and
+Nested Lookups</h4>
+<p>Before configuring a chained substitution in FontForge, the secondary
+lookup that performs the actual replacement must exist. For example, if
+glyph <code>a</code> changes to <code>a.alt</code> when preceded by
+<code>f</code>, a <strong>Single Substitution</strong> lookup must first
+be created to map <code>a</code> to <code>a.alt</code>.</p>
+<h4 id="2-defining-the-chained-contextual-lookup">2. Defining the
+Chained Contextual Lookup</h4>
+<ol type="1">
+<li>Navigate to <strong>Element &gt; Font Info &gt;
+Lookups</strong>.</li>
+<li>Select the <strong>GSUB</strong> tab and click <strong>Add
+Lookup</strong>.</li>
+<li>Set the lookup type to <strong>Chained Contextual
+Substitution</strong>.</li>
+<li>Assign an OpenType feature tag (such as <code>calt</code> for
+Contextual Alternates, or <code>liga</code> for Standard Ligatures) and
+configure the appropriate script and language systems.</li>
+</ol>
+<h4 id="3-setting-up-subtables-and-formats">3. Setting Up Subtables and
+Formats</h4>
+<p>Under the newly created lookup, click <strong>Add Subtable</strong>.
+FontForge supports three formats for defining chaining contexts:</p>
+<ul>
+<li><strong>By Glyphs:</strong> Direct lists of specific glyph names.
+This format is ideal for isolated, one-off substitutions (e.g., swapping
+a specific letter when flanked by punctuation).</li>
+<li><strong>By Classes:</strong> Groups glyphs into defined classes
+(e.g., ascenders, vowels, figures). This format is the most efficient
+and scalable method for complex fonts, as rules are written once for
+entire categories of characters rather than individual glyphs.</li>
+<li><strong>By Coverage:</strong> Sets lists of glyph sets for each
+position in the backtrack, input, and lookahead sequences.</li>
+</ul>
+<h4 id="4-mapping-sequences-to-nested-lookups">4. Mapping Sequences to
+Nested Lookups</h4>
+<p>Within the subtable editor, FontForge provides interface fields for
+each sequence stage:</p>
+<ul>
+<li><strong>Backtrack:</strong> Enter the glyphs or classes that must
+precede the target. Note that OpenType processes backtrack sequences in
+reverse order (closest to the input first); FontForge manages this
+alignment based on the interface specifications.</li>
+<li><strong>Input:</strong> Enter the glyphs or classes that will be
+matched for substitution.</li>
+<li><strong>Lookahead:</strong> Enter the glyphs or classes that must
+follow the target.</li>
+<li><strong>Lookups Applied:</strong> Map the target index within the
+input sequence to the previously created nested lookup (e.g., applying
+the single substitution to Input Position 0).</li>
+</ul>
+<h3 id="compiling-and-testing">Compiling and Testing</h3>
+<p>Once the rules are established, FontForge validates the chained
+context against the font's existing glyph set. During font generation
+(OTF or TTF), FontForge compiles these visual rules directly into the
+font's binary <code>GSUB</code> table. Designers can verify the chaining
+behavior directly inside FontForge using the Metrics Window
+(<strong>Metrics &gt; New Metrics Window</strong>) by typing sample
+strings to confirm that the substitutions trigger under the intended
+contextual conditions.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/glyph-substitution-chaining-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

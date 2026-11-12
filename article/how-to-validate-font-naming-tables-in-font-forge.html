@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Validate Font Naming Tables in FontForge - fontforge</title>
+    <meta name="description" content="Verifying that font naming tables comply with industry standards is essential for ensuring your font installs, renders, and functions predictably across different operating systems and applications. This guide explains how to inspect OpenType and TrueType">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-validate-font-naming-tables-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Validate Font Naming Tables in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-validate-font-naming-tables-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Verifying that font naming tables comply with industry standards is essential for ensuring your font installs, renders, and functions predictably across different operating systems and applications. This guide explains how to inspect OpenType and TrueType" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-validate-font-naming-tables-in-fontforge">How to Validate
+Font Naming Tables in FontForge</h1>
+<p>Verifying that font naming tables comply with industry standards is
+essential for ensuring your font installs, renders, and functions
+predictably across different operating systems and applications. This
+guide explains how to inspect OpenType and TrueType name tables using
+FontForge's built-in interface, validate structural rules against
+OpenType specifications, and detect common metadata conflicts using
+internal validation tools.</p>
+<h3 id="1-access-the-naming-tables">1. Access the Naming Tables</h3>
+<p>FontForge stores standard naming metadata across several tabs within
+the Font Info dialogue:</p>
+<ol type="1">
+<li>Open your font file in FontForge.</li>
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font Info</strong>
+(or press <code>Ctrl+Shift+I</code> on Windows/Linux,
+<code>Cmd+Shift+I</code> on macOS).</li>
+<li>In the left-hand sidebar, locate the primary naming categories:
+<ul>
+<li><strong>PS Names</strong>: Contains the PostScript Font Name, Family
+Name, Name for Humans, and Weight.</li>
+<li><strong>TTF Names</strong>: Contains the OpenType/TrueType
+<code>name</code> table strings, including Family, Subfamily, Unique ID,
+Full Name, Version, and Typographic names.</li>
+</ul></li>
+</ol>
+<h3 id="2-verify-key-standard-name-ids">2. Verify Key Standard Name
+IDs</h3>
+<p>The OpenType specification requires specific standard Name IDs in the
+<code>TTF Names</code> tab. Ensure the following IDs are set and follow
+their standard conventions:</p>
+<ul>
+<li><strong>Name ID 1 (Font Family Name)</strong>: Used for font
+grouping in legacy applications. It must match across styles intended to
+sit under the same four-style family (Regular, Italic, Bold, Bold
+Italic).</li>
+<li><strong>Name ID 2 (Font Subfamily Name)</strong>: Must strictly be
+<code>Regular</code>, <code>Italic</code>, <code>Bold</code>, or
+<code>Bold Italic</code> when paired with standard Name ID 1.</li>
+<li><strong>Name ID 4 (Full Font Name)</strong>: Typically the
+concatenation of Name ID 1 and Name ID 2 (for example, "CustomSans
+Bold").</li>
+<li><strong>Name ID 6 (PostScript Name)</strong>: Must be ASCII-only,
+contain no spaces, and remain strictly under 63 characters (preferably
+under 31 characters for legacy PostScript compatibility). Allowed
+characters are letters, numbers, and hyphens.</li>
+<li><strong>Name ID 16 (Typographic Family Name)</strong> and
+<strong>Name ID 17 (Typographic Subfamily Name)</strong>: Required if
+your font family contains more than four styles (e.g., Light, SemiBold,
+Black). ID 16 holds the overarching family name, while ID 17 holds the
+specific style name.</li>
+</ul>
+<h3 id="3-check-language-and-platform-encodings">3. Check Language and
+Platform Encodings</h3>
+<p>OpenType requires that name table entries provide compatibility for
+both Unicode and Windows platforms:</p>
+<ol type="1">
+<li>In <strong>Element</strong> &gt; <strong>Font Info</strong> &gt;
+<strong>TTF Names</strong>, review the list of string records.</li>
+<li>Ensure strings exist under the <strong>Unicode (Standard)</strong>
+or <strong>Windows</strong> platform headings.</li>
+<li>Remove redundant, empty, or duplicate entries in localized language
+fields unless specific translations are intended. FontForge allows you
+to double-click any field to alter its language tag or platform ID.</li>
+</ol>
+<h3 id="4-run-fontforges-native-validator">4. Run FontForge’s Native
+Validator</h3>
+<p>FontForge includes a validation engine that checks table consistency
+against OpenType and TrueType rules:</p>
+<ol type="1">
+<li>Open <strong>Element</strong> &gt; <strong>Validation</strong> &gt;
+<strong>Validate...</strong>.</li>
+<li>Ensure that the test suite runs on the entire font.</li>
+<li>Review the output window for warnings related to names or OpenType
+tables. Common flag types include:
+<ul>
+<li>Non-ASCII characters in PostScript names.</li>
+<li>Mismatches between the PostScript name in <code>PS Names</code> and
+Name ID 6 in <code>TTF Names</code>.</li>
+<li>Invalid style-linking combinations between Name ID 1 and Name ID
+2.</li>
+<li>Missing required records (such as copyright or unique font
+identifiers).</li>
+</ul></li>
+</ol>
+<h3 id="5-verify-naming-table-consistency-via-python-scripting">5.
+Verify Naming Table Consistency via Python Scripting</h3>
+<p>For exact compliance testing, you can read the font's raw sfnt naming
+records using FontForge's integrated Python engine.</p>
+<p>Open <strong>File</strong> &gt; <strong>Execute Script...</strong>
+and run:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.activeFont()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Print all sfnt name records</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> record <span class="kw">in</span> font.sfnt_names:</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Language: </span><span class="sc">{</span>record[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, NameID: </span><span class="sc">{</span>record[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>record[<span class="dv">2</span>]<span class="sc">}</span><span class="ss">): </span><span class="sc">{</span>record[<span class="dv">3</span>]<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Run internal validation</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>validation_state <span class="op">=</span> font.validate()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> validation_state <span class="op">&amp;</span> <span class="bn">0x40</span>:</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Warning: Naming table or PostScript name is invalid.&quot;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Naming table passed standard FontForge validation checks.&quot;</span>)</span></code></pre></div>
+<p>Any discrepancies reported in the console output indicate
+non-standard encoding, missing IDs, or naming conflicts that must be
+resolved prior to final font generation.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-validate-font-naming-tables-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

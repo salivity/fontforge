@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a New Glyph to a Font in FontForge with Python - fontforge</title>
+    <meta name="description" content="FontForge provides a built-in Python module that allows you to automate font manipulation, including programmatically creating and adding new glyphs to existing or new fonts. This guide outlines the steps required to open a font file, create an empty glyp">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/add-a-new-glyph-to-a-font-in-font-forge-with-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Add a New Glyph to a Font in FontForge with Python - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/add-a-new-glyph-to-a-font-in-font-forge-with-python" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge provides a built-in Python module that allows you to automate font manipulation, including programmatically creating and adding new glyphs to existing or new fonts. This guide outlines the steps required to open a font file, create an empty glyp" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="add-a-new-glyph-to-a-font-in-fontforge-with-python">Add a New
+Glyph to a Font in FontForge with Python</h1>
+<p>FontForge provides a built-in Python module that allows you to
+automate font manipulation, including programmatically creating and
+adding new glyphs to existing or new fonts. This guide outlines the
+steps required to open a font file, create an empty glyph container at a
+target Unicode code point, draw vector outlines using FontForge's pen
+API, set horizontal metrics, and export the modified font to a usable
+file format.</p>
+<h3 id="step-1-initialize-the-font-and-glyph">Step 1: Initialize the
+Font and Glyph</h3>
+<p>To modify a font, open an existing font file or create a blank one
+using the <code>fontforge</code> module. Once the font object is loaded,
+allocate a new glyph using <code>createChar()</code>, specifying the
+desired Unicode value and an optional glyph name.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open an existing font or create a new one</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;source_font.ttf&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Define target Unicode codepoint and glyph name</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>codepoint <span class="op">=</span> <span class="bn">0xE000</span>  <span class="co"># Private Use Area example</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>glyph_name <span class="op">=</span> <span class="st">&quot;custom_square&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the glyph slot</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>glyph <span class="op">=</span> font.createChar(codepoint, glyph_name)</span></code></pre></div>
+<h3 id="step-2-draw-outlines-using-the-glyph-pen">Step 2: Draw Outlines
+Using the Glyph Pen</h3>
+<p>FontForge supports drawing vector contours directly into a glyph
+using its <code>glyphPen</code> interface. You can draw lines, Bézier
+curves, and closed paths by defining coordinates.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the drawing pen</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pen <span class="op">=</span> glyph.glyphPen()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a 500x500 square</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>pen.moveTo((<span class="dv">100</span>, <span class="dv">0</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>pen.lineTo((<span class="dv">600</span>, <span class="dv">0</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>pen.lineTo((<span class="dv">600</span>, <span class="dv">500</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>pen.lineTo((<span class="dv">100</span>, <span class="dv">500</span>))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>pen.closePath()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Release the pen to commit paths to the glyph</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>pen <span class="op">=</span> <span class="va">None</span></span></code></pre></div>
+<p>For curved shapes, use
+<code>pen.curveTo((cx1, cy1), (cx2, cy2), (x, y))</code> to define cubic
+Bézier segments.</p>
+<h3 id="step-3-set-metrics-and-fix-contour-direction">Step 3: Set
+Metrics and Fix Contour Direction</h3>
+<p>After drawing the outline, set the advance width so that subsequent
+characters are placed correctly when rendered. It is also good practice
+to correct contour directions to ensure proper filling according to font
+winding rules.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the advance width</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>glyph.width <span class="op">=</span> <span class="dv">700</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize path winding direction for correct rendering</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>glyph.correctDirection()</span></code></pre></div>
+<h3 id="step-4-export-the-updated-font">Step 4: Export the Updated
+Font</h3>
+<p>Finally, generate the output font file to apply the changes to
+disk.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save changes to a new font file</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>font.generate(<span class="st">&quot;updated_font.ttf&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the font object to free resources</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>font.close()</span></code></pre></div>
+<h3 id="running-the-script">Running the Script</h3>
+<p>Run this script directly through the FontForge command-line
+interpreter:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-script</span> add_glyph.py</span></code></pre></div>
+<p>Alternatively, if your system Python environment has the FontForge
+bindings compiled and configured in <code>sys.path</code>, you can
+execute the script using standard Python:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> add_glyph.py</span></code></pre></div></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/add-a-new-glyph-to-a-font-in-font-forge-with-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snap Control Handles to 45 Degrees in FontForge - fontforge</title>
+    <meta name="description" content="In FontForge, aligning Bezier control handles to precise angles is essential for creating clean, mathematically sound glyph outlines. This guide explains how to constrain control handles to 45-degree angles using standard keyboard shortcuts, numerical coo">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/snap-control-handles-to-45-degrees-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Snap Control Handles to 45 Degrees in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/snap-control-handles-to-45-degrees-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FontForge, aligning Bezier control handles to precise angles is essential for creating clean, mathematically sound glyph outlines. This guide explains how to constrain control handles to 45-degree angles using standard keyboard shortcuts, numerical coo" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="snap-control-handles-to-45-degrees-in-fontforge">Snap Control
+Handles to 45 Degrees in FontForge</h1>
+<p>In FontForge, aligning Bezier control handles to precise angles is
+essential for creating clean, mathematically sound glyph outlines. This
+guide explains how to constrain control handles to 45-degree angles
+using standard keyboard shortcuts, numerical coordinate adjustments, and
+transformation tools during the glyph editing process.</p>
+<h3 id="using-the-shift-key-constraint">Using the Shift Key
+Constraint</h3>
+<p>The fastest method to snap control handles to a 45-degree angle is
+using the constraint shortcut while drawing or editing:</p>
+<ol type="1">
+<li>Open your glyph in the Outline View window.</li>
+<li>Select the <strong>Pointer</strong> tool from the tool palette
+(shortcut: <code>V</code>).</li>
+<li>Click and hold the Bezier control handle you want to adjust.</li>
+<li>Press and hold the <strong>Shift</strong> key on your keyboard
+before moving the mouse.</li>
+<li>Drag the handle. FontForge will automatically constrain the handle's
+movement to multiples of 45 degrees (0°, 45°, 90°, 135°, 180°,
+etc.).</li>
+<li>Release the mouse button first to set the handle position, then
+release the <strong>Shift</strong> key.</li>
+</ol>
+<h3 id="setting-45-degree-handles-numerically">Setting 45-Degree Handles
+Numerically</h3>
+<p>For absolute precision, you can set control handles directly via
+coordinate inputs:</p>
+<ol type="1">
+<li>Right-click the on-curve node associated with the handle and select
+<strong>Get Info</strong> (or press <code>Ctrl + I</code> /
+<code>Cmd + I</code>).</li>
+<li>Navigate to the control point coordinate fields (labeled
+<code>Next CP</code> or <code>Prev CP</code>).</li>
+<li>To achieve an exact 45-degree angle, set the horizontal distance
+(<span class="math inline">\(\Delta X\)</span>) and vertical distance
+(<span class="math inline">\(\Delta Y\)</span>) between the base node
+and the control handle to identical absolute values. For example, if the
+base node is at <code>(100, 100)</code>, placing the control handle at
+<code>(150, 150)</code> sets it to an exact 45-degree angle pointing up
+and to the right.</li>
+<li>Click <strong>OK</strong> to apply the changes.</li>
+</ol>
+<h3 id="aligning-via-the-transform-dialog">Aligning via the Transform
+Dialog</h3>
+<p>If you need to rotate existing handles or point clusters by exactly
+45 degrees:</p>
+<ol type="1">
+<li>Select the points or handles you want to adjust.</li>
+<li>Go to <strong>Element</strong> in the top menu and select
+<strong>Transform</strong> (shortcut: <code>Ctrl + \</code>).</li>
+<li>In the dropdown menu, select <strong>Rotate</strong>.</li>
+<li>Enter <code>45</code> (or <code>-45</code>) degrees.</li>
+<li>Set the origin point to either the selection center or the specific
+node location, then click <strong>OK</strong>.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/snap-control-handles-to-45-degrees-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

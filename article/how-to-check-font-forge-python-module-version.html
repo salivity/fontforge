@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Check FontForge Python Module Version - fontforge</title>
+    <meta name="description" content="Checking the installed version of the FontForge Python extension requires only a few basic commands. This guide provides quick, practical methods to determine your FontForge module version directly through Python code, command-line one-liners, and system">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-check-font-forge-python-module-version">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Check FontForge Python Module Version - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-check-font-forge-python-module-version" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Checking the installed version of the FontForge Python extension requires only a few basic commands. This guide provides quick, practical methods to determine your FontForge module version directly through Python code, command-line one-liners, and system" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-check-fontforge-python-module-version">How to Check
+FontForge Python Module Version</h1>
+<p>Checking the installed version of the FontForge Python extension
+requires only a few basic commands. This guide provides quick, practical
+methods to determine your FontForge module version directly through
+Python code, command-line one-liners, and system package managers.</p>
+<h3 id="method-1-using-the-python-interpreter">Method 1: Using the
+Python Interpreter</h3>
+<p>The most direct way to check the version is by querying the module
+directly in Python. Unlike many Python packages that use a
+<code>__version__</code> attribute, FontForge exposes a dedicated
+<code>version()</code> function.</p>
+<p>Run the following command in your terminal for a quick one-line
+check:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-c</span> <span class="st">&quot;import fontforge; print(fontforge.version())&quot;</span></span></code></pre></div>
+<p>Alternatively, you can open an interactive Python shell:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fontforge.version())</span></code></pre></div>
+<p>This returns a string indicating the release build date (for example,
+<code>20230101</code>), which corresponds to the official release
+version of the FontForge library.</p>
+<h3 id="method-2-checking-the-fontforge-binary">Method 2: Checking the
+FontForge Binary</h3>
+<p>Because the Python module is typically built and distributed
+alongside the core FontForge application, the Python extension version
+matches the installed binary version. You can check the application
+version from your terminal:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">--version</span></span></code></pre></div>
+<p>The output will display the copyright details and the build date
+version number.</p>
+<h3 id="method-3-using-your-system-package-manager">Method 3: Using Your
+System Package Manager</h3>
+<p>If you installed FontForge via a package manager rather than
+compiling it from source, you can query the system repository to find
+the version details.</p>
+<p><strong>Debian / Ubuntu:</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dpkg</span> <span class="at">-s</span> python3-fontforge <span class="kw">|</span> <span class="fu">grep</span> Version</span></code></pre></div>
+<p><strong>macOS (Homebrew):</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> info fontforge</span></code></pre></div>
+<p><strong>Python Pip:</strong> If you installed a community-maintained
+wheel via pip, run:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> show fontforge</span></code></pre></div></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-check-font-forge-python-module-version';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

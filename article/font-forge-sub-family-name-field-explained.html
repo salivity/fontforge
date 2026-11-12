@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge SubFamily Name Field Explained - fontforge</title>
+    <meta name="description" content="This article examines the purpose and importance of the SubFamily name field in FontForge, a key parameter within the OpenType name table. It explains how this metadata field defines a font&#39;s specific style variant—such as Regular, Bold, or Italic—and how">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-sub-family-name-field-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge SubFamily Name Field Explained - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-sub-family-name-field-explained" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article examines the purpose and importance of the SubFamily name field in FontForge, a key parameter within the OpenType name table. It explains how this metadata field defines a font&#39;s specific style variant—such as Regular, Bold, or Italic—and how" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-subfamily-name-field-explained">FontForge SubFamily
+Name Field Explained</h1>
+<p>This article examines the purpose and importance of the SubFamily
+name field in FontForge, a key parameter within the OpenType name table.
+It explains how this metadata field defines a font's specific style
+variant—such as Regular, Bold, or Italic—and how it enables operating
+systems and desktop publishing applications to correctly group, display,
+and toggle different weights and slants within a unified font
+family.</p>
+<p>In FontForge, the SubFamily name field corresponds to Name ID 2 in
+standard TrueType and OpenType font specification tables. Accessible
+through the "Font Info" window under the "TTF Names" category, this
+field identifies the specific style, weight, or slant of an individual
+font file relative to its overarching Family Name (Name ID 1).</p>
+<p>The primary role of the SubFamily name is to establish the style
+hierarchy within software interfaces. When an application loads a font,
+it uses the Family Name to create the main font menu entry and reads the
+SubFamily name to populate the accompanying style selection menu. For
+example, if the Family Name is set to "MyFont" and the SubFamily name is
+set to "Light Italic," modern operating systems will categorize the file
+under the "MyFont" family with "Light Italic" as an available variant
+rather than listing it as a completely detached typeface.</p>
+<p>The SubFamily name is also critical for supporting standard document
+shortcuts and toggle functions. Under the legacy Windows font-family
+model, standard families are restricted to four basic styles: Regular,
+Italic, Bold, and Bold Italic (often abbreviated as the "RIBBI" group).
+Assigning these exact strings in the SubFamily field allows word
+processors and operating systems to accurately map standard user
+commands—such as the <code>Ctrl+B</code> or <code>Ctrl+I</code>
+shortcuts—to the appropriate font files without artificially slanting or
+emboldening the glyphs.</p>
+<p>For extended font families that feature additional weights like Thin,
+Medium, SemiBold, or Black, FontForge relies on this field in
+conjunction with the Typographic SubFamily name (Name ID 17). Setting
+the standard SubFamily correctly ensures that legacy systems do not
+break, while modern design suites can recognize the complete spectrum of
+styles.</p>
+<p>Properly setting the SubFamily name prevents font installation errors
+and system conflicts. If two distinct font files share the same Family
+Name and SubFamily name, the operating system treats them as identical,
+leading to cache conflicts, missing styles, or one font file overwriting
+the other during installation.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-sub-family-name-field-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Contour Direction: PostScript vs TrueType - fontforge</title>
+    <meta name="description" content="Contour direction, or winding order, determines how rendering engines identify solid shapes versus cutouts in digital typography. PostScript and TrueType formats rely on opposite winding conventions to display letterforms correctly. This guide outlines th">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-contour-direction-post-script-vs-true-type">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Contour Direction: PostScript vs TrueType - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-contour-direction-post-script-vs-true-type" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Contour direction, or winding order, determines how rendering engines identify solid shapes versus cutouts in digital typography. PostScript and TrueType formats rely on opposite winding conventions to display letterforms correctly. This guide outlines th" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-contour-direction-postscript-vs-truetype">FontForge
+Contour Direction: PostScript vs TrueType</h1>
+<p>Contour direction, or winding order, determines how rendering engines
+identify solid shapes versus cutouts in digital typography. PostScript
+and TrueType formats rely on opposite winding conventions to display
+letterforms correctly. This guide outlines the specific contour
+direction rules for both PostScript and TrueType formats and
+demonstrates how to inspect, correct, and automate these paths using
+FontForge.</p>
+<h3 id="the-winding-order-rules">The Winding Order Rules</h3>
+<p>Rendering engines evaluate vector paths using winding rules to
+establish what is filled and what is transparent (holes). Each format
+follows a distinct convention:</p>
+<ul>
+<li><strong>PostScript (OTF, CFF, Type 1):</strong> Outer contours must
+run <strong>counter-clockwise (CCW)</strong>. Inner contours (holes,
+such as the center of an "O") must run <strong>clockwise
+(CW)</strong>.</li>
+<li><strong>TrueType (TTF):</strong> Outer contours must run
+<strong>clockwise (CW)</strong>. Inner contours (holes) must run
+<strong>counter-clockwise (CCW)</strong>.</li>
+</ul>
+<p>Failing to follow these conventions can result in rendering
+artifacts, filled-in counters, or rasterization failures across various
+operating systems and rendering engines.</p>
+<h3 id="viewing-contour-direction-in-fontforge">Viewing Contour
+Direction in FontForge</h3>
+<p>By default, FontForge indicates contour direction via directional
+arrows along the path segments in the Glyph Outline View.</p>
+<ol type="1">
+<li>Double-click any glyph in the font matrix to open the Glyph Outline
+Window.</li>
+<li>Observe the vector points. Each selected contour shows directional
+arrows pointing along the direction of the path.</li>
+<li>If the arrows are difficult to see, toggle the fill view by pressing
+<code>Ctrl + D</code> (or <code>Cmd + D</code> on macOS) or selecting
+<strong>View &gt; Fill</strong> to quickly verify whether inner contours
+properly cut out from outer shapes.</li>
+</ol>
+<h3 id="correcting-contours-manually">Correcting Contours Manually</h3>
+<p>FontForge natively edits contours using the PostScript convention
+(outer counter-clockwise, inner clockwise).</p>
+<p>To correct paths across one or multiple glyphs:</p>
+<ol type="1">
+<li>Select the glyphs you wish to fix in the main font view, or select
+all points inside a single glyph editor (<code>Ctrl + A</code>).</li>
+<li>Navigate to <strong>Element &gt; Correct Direction</strong>
+(Shortcut: <code>Ctrl + Shift + D</code> or
+<code>Cmd + Shift + D</code>).</li>
+<li>FontForge will automatically detect nested paths, setting exterior
+boundaries to counter-clockwise and interior cutouts to clockwise.</li>
+</ol>
+<p>If an individual path remains inverted:</p>
+<ol type="1">
+<li>Click a single point on the problematic path to select the
+contour.</li>
+<li>Navigate to <strong>Element &gt; Reverse Direction</strong>.</li>
+</ol>
+<h3 id="managing-formats-during-export">Managing Formats During
+Export</h3>
+<p>Because FontForge maintains PostScript orientation internally, you do
+not need to manually invert your entire font before exporting to
+TrueType. FontForge manages format conversion automatically during
+generation:</p>
+<ol type="1">
+<li>Go to <strong>File &gt; Generate Fonts</strong>.</li>
+<li>Select <strong>TrueType</strong> from the drop-down menu.</li>
+<li>Click the <strong>Options</strong> button next to the format
+selection.</li>
+<li>Ensure that the export routine handles path direction conversion.
+When exporting to TrueType, FontForge automatically reverses the contour
+directions to match TrueType's clockwise standard.</li>
+<li>When exporting to <strong>OpenType (CFF)</strong>, FontForge retains
+the native counter-clockwise PostScript orientation.</li>
+</ol>
+<h3 id="validation-and-problem-detection">Validation and Problem
+Detection</h3>
+<p>Before final export, run FontForge's validation routines to catch any
+stray, flipped, or intersecting paths:</p>
+<ol type="1">
+<li>Select all glyphs in the font view (<code>Ctrl + A</code>).</li>
+<li>Go to <strong>Element &gt; Validation &gt; Find
+Problems</strong>.</li>
+<li>Under the <strong>Paths</strong> tab, check <strong>Check
+Direction</strong> and <strong>Intersecting paths</strong>.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<p>FontForge will review the glyphs and flag any paths where nested
+loops share the same direction or where complex intersections prevent
+predictable filling.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-contour-direction-post-script-vs-true-type';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

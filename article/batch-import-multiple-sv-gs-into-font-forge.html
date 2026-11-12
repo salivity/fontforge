@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Import Multiple SVGs into FontForge - fontforge</title>
+    <meta name="description" content="While FontForge does not allow you to select and import multiple SVG files at once through its standard graphical user interface, you can import them simultaneously using FontForge&#39;s built-in scripting capabilities. By utilizing a simple Python script, yo">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/batch-import-multiple-sv-gs-into-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Batch Import Multiple SVGs into FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/batch-import-multiple-sv-gs-into-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="While FontForge does not allow you to select and import multiple SVG files at once through its standard graphical user interface, you can import them simultaneously using FontForge&#39;s built-in scripting capabilities. By utilizing a simple Python script, yo" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="batch-import-multiple-svgs-into-fontforge">Batch Import Multiple
+SVGs into FontForge</h1>
+<p>While FontForge does not allow you to select and import multiple SVG
+files at once through its standard graphical user interface, you can
+import them simultaneously using FontForge's built-in scripting
+capabilities. By utilizing a simple Python script, you can automatically
+map an entire directory of SVG glyphs to their corresponding character
+slots in a matter of seconds, bypassing the tedious process of importing
+files one by one.</p>
+<h3 id="the-gui-limitation">The GUI Limitation</h3>
+<p>In the standard FontForge interface, navigating to <strong>File &gt;
+Import</strong> only allows you to select a single vector file for the
+currently selected glyph slot. If you highlight multiple glyph slots in
+the font view, the import dialog remains restricted to a single file
+selection. Consequently, native batch importing via the visual interface
+is not supported.</p>
+<h3 id="the-solution-python-scripting">The Solution: Python
+Scripting</h3>
+<p>FontForge includes a robust Python module that allows full automation
+of font creation, including batch outline imports. To import multiple
+SVGs simultaneously, name your SVG files according to their unicode
+value, character name, or decimal code, and run a script to process the
+folder.</p>
+<h4 id="1-name-your-svg-files">1. Name Your SVG Files</h4>
+<p>For the smoothest automated import, name your SVG files based on
+their Unicode character or hexadecimal representation. For example:</p>
+<ul>
+<li><code>uni0041.svg</code> (for uppercase "A")</li>
+<li><code>uni0042.svg</code> (for uppercase "B")</li>
+<li>Alternatively, name them simply as the character itself (e.g.,
+<code>A.svg</code>, <code>B.svg</code>).</li>
+</ul>
+<h4 id="2-run-the-import-script">2. Run the Import Script</h4>
+<p>Open FontForge, create or open your font file, and go to <strong>File
+&gt; Execute Script</strong>. Paste the following script, making sure to
+update the directory path to match the location of your SVG files:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Path to the folder containing your SVG files</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>svg_folder <span class="op">=</span> <span class="st">&quot;/path/to/your/svg/folder&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the currently open font in FontForge</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.activeFont()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> filename <span class="kw">in</span> os.listdir(svg_folder):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> filename.endswith(<span class="st">&quot;.svg&quot;</span>):</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extracts glyph name from filename (e.g., &quot;uni0041&quot; from &quot;uni0041.svg&quot;)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        glyph_name <span class="op">=</span> os.path.splitext(filename)[<span class="dv">0</span>]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create or select the glyph slot</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        glyph <span class="op">=</span> font.createChar(<span class="op">-</span><span class="dv">1</span>, glyph_name)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Import the SVG outline</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        filepath <span class="op">=</span> os.path.join(svg_folder, filename)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        glyph.importOutlines(filepath)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Batch import completed.&quot;</span>)</span></code></pre></div>
+<h4 id="3-command-line-alternative">3. Command-Line Alternative</h4>
+<p>If you prefer not to open the GUI at all, you can save the script
+above as an external <code>.py</code> file and execute it directly from
+your terminal using FontForge's command-line interface:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-script</span> import_svgs.py</span></code></pre></div>
+<p>This method automatically scales, parses, and places all vectors into
+their designated slots, providing a reliable and rapid way to build a
+complete typeface from individual vector assets.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/batch-import-multiple-sv-gs-into-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

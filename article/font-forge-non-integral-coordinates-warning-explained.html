@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Non-Integral Coordinates Warning Explained - fontforge</title>
+    <meta name="description" content="FontForge flags non-integral coordinates as a warning primarily because traditional font formats, rendering engines, and hinting mechanisms rely on discrete integer grids. When glyph points or control handles possess fractional coordinates rather than who">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-non-integral-coordinates-warning-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Non-Integral Coordinates Warning Explained - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-non-integral-coordinates-warning-explained" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge flags non-integral coordinates as a warning primarily because traditional font formats, rendering engines, and hinting mechanisms rely on discrete integer grids. When glyph points or control handles possess fractional coordinates rather than who" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-non-integral-coordinates-warning-explained">FontForge
+Non-Integral Coordinates Warning Explained</h1>
+<p>FontForge flags non-integral coordinates as a warning primarily
+because traditional font formats, rendering engines, and hinting
+mechanisms rely on discrete integer grids. When glyph points or control
+handles possess fractional coordinates rather than whole numbers, it can
+lead to rasterization artifacts, compilation errors, and unexpected
+curve distortions when the font is exported.</p>
+<h3 id="font-format-specifications">Font Format Specifications</h3>
+<p>Standard font outline formats, notably TrueType and older PostScript
+Type 1/CFF outlines, were engineered to store outline coordinates
+strictly as whole integers. While modern formats like CFF2 support
+fractional numbers, the baseline OpenType specification—specifically the
+TrueType <code>glyf</code> table—stores coordinate deltas as integers.
+FontForge warns designers of non-integral coordinates because working
+outside a whole-number grid breaks compatibility with these widespread,
+foundational font specifications.</p>
+<h3 id="automatic-rounding-and-shape-distortion">Automatic Rounding and
+Shape Distortion</h3>
+<p>When a font containing fractional coordinates is exported to an
+integer-only format, the compiler must automatically round those values
+to the nearest whole integer. This automatic rounding frequently alters
+the geometry of the glyph:</p>
+<ul>
+<li><strong>Broken Tangencies:</strong> Smooth connections between curve
+points and their control handles can shift slightly, creating unintended
+kinks or sharp corners.</li>
+<li><strong>Shifted Extrema:</strong> The outermost points of a curve
+(top, bottom, left, right) may shift off their exact axes.</li>
+<li><strong>Stem Inconsistencies:</strong> Parallel stems designed to
+have the exact same width might end up differing by a full unit
+depending on whether their boundaries rounded up or down.</li>
+</ul>
+<h3 id="hinting-and-rasterization-problems">Hinting and Rasterization
+Problems</h3>
+<p>Rasterizers convert vector outlines into pixels on physical displays.
+Font hinting instructions rely heavily on a clean, predictable
+coordinate grid to snap stems, serifs, and baselines to discrete screen
+pixels at small point sizes. Non-integral coordinates disrupt this
+process, often producing asymmetrical stems, uneven baseline alignment,
+or blurry edges when rendered at low resolutions.</p>
+<h3 id="file-size-overhead">File Size Overhead</h3>
+<p>Storing decimal numbers requires more data than storing whole
+integers. Even in formats that technically permit floating-point values,
+encoding fractional coordinates increases the overall binary file size.
+Sticking to integers ensures compact data structures, which is critical
+for web font performance and fast load times.</p>
+<h3 id="how-to-resolve-the-warning">How to Resolve the Warning</h3>
+<p>Fractional coordinates typically appear after scaling, slanting, or
+rotating glyph elements. To resolve the warning, select the affected
+glyphs in FontForge and navigate to <strong>Element &gt; Round &gt; To
+Int</strong>. This rounds all on-curve nodes and off-curve control
+points to the nearest integer grid points, allowing you to review and
+adjust the final geometry before generating the production font
+files.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-non-integral-coordinates-warning-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Import Feature Files into FontForge - fontforge</title>
+    <meta name="description" content="You can import an external Adobe OpenType feature file (.fea) into an existing FontForge project. FontForge natively supports merging these feature definitions into your active font database, allowing you to manage complex OpenType layouts, kerning pairs,">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-import-feature-files-into-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Import Feature Files into FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-import-feature-files-into-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="You can import an external Adobe OpenType feature file (.fea) into an existing FontForge project. FontForge natively supports merging these feature definitions into your active font database, allowing you to manage complex OpenType layouts, kerning pairs," />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-import-feature-files-into-fontforge">How to Import
+Feature Files into FontForge</h1>
+<p>You can import an external Adobe OpenType feature file
+(<code>.fea</code>) into an existing FontForge project. FontForge
+natively supports merging these feature definitions into your active
+font database, allowing you to manage complex OpenType layouts, kerning
+pairs, ligatures, and contextual alternates written outside the program.
+This guide details how to merge a feature file using the graphical
+interface, how to automate the process using FontForge's Python
+scripting, and how to verify that the lookups applied correctly.</p>
+<h3 id="importing-via-the-graphical-interface">Importing via the
+Graphical Interface</h3>
+<p>To import an external <code>.fea</code> file using the FontForge GUI,
+follow these steps:</p>
+<ol type="1">
+<li>Open your existing project (<code>.sfd</code>) or font file in
+FontForge.</li>
+<li>Click on <strong>File</strong> in the main menu bar.</li>
+<li>Select <strong>Merge Feature Info...</strong> from the dropdown
+menu.</li>
+<li>In the file browser dialog that appears, navigate to the directory
+containing your <code>.fea</code> file.</li>
+<li>Select your feature file and click <strong>OK</strong>.</li>
+</ol>
+<p>FontForge will parse the syntax in the file and convert the OpenType
+layout rules into internal FontForge lookups and sub-tables.</p>
+<h3 id="verifying-the-imported-features">Verifying the Imported
+Features</h3>
+<p>After the import completes, verify that your tables, features, and
+lookups were successfully parsed:</p>
+<ol type="1">
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font Info</strong>
+(or press <code>Ctrl+Shift+F</code> on Windows/Linux,
+<code>Cmd+Shift+F</code> on macOS).</li>
+<li>In the left-hand sidebar, select <strong>Lookups</strong>.</li>
+<li>Check both the <strong>GSUB</strong> (Glyph Substitution) and
+<strong>GPOS</strong> (Glyph Positioning) tabs. Your imported
+features—such as <code>kern</code>, <code>liga</code>, or
+<code>calt</code>—will appear here as structured lookup tables.</li>
+<li>Expand any lookup to inspect individual sub-tables and verify the
+glyph mapping rules.</li>
+</ol>
+<h3 id="importing-via-python-scripting">Importing via Python
+Scripting</h3>
+<p>If you automate your font build process, you can merge feature files
+programmatically using FontForge's Python module
+(<code>fontforge</code>).</p>
+<p>Use the <code>mergeFeature</code> method on the font object:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the existing font project</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the external feature file</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>font.mergeFeature(<span class="st">&quot;features.fea&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Save changes or generate the binary font</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>font.save(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>font.generate(<span class="st">&quot;MyFont.otf&quot;</span>)</span></code></pre></div>
+<h3 id="important-considerations">Important Considerations</h3>
+<ul>
+<li><strong>Glyph Name Consistency:</strong> The glyph names referenced
+in your <code>.fea</code> file must match the glyph names inside your
+FontForge font exactly. Any mismatch will cause FontForge to ignore the
+rule or display an error during the parsing stage.</li>
+<li><strong>Overwriting vs. Appending:</strong> Importing a feature file
+merges lookups. If a lookup in the <code>.fea</code> file shares the
+same name as an existing lookup in the font, FontForge may overwrite the
+existing data or append rules depending on the syntax. Keep backups of
+your <code>.sfd</code> file before merging.</li>
+<li><strong>Syntax Support:</strong> FontForge supports the standard
+Adobe OpenType Feature File Specification, but older versions of
+FontForge may struggle with the newest additions to the syntax. Ensure
+you are running an updated release of FontForge if you use advanced
+OpenType 1.8+ formatting.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-import-feature-files-into-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

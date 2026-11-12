@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Overlapping Paths During Font Generation - fontforge</title>
+    <meta name="description" content="When generating a font in FontForge, leaving overlapping black paths unresolved can lead to unexpected rendering bugs, inverted transparent spaces, and rasterization errors in target applications. Font renderers rely on mathematical fill rules and contour">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-overlapping-paths-during-font-generation">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Overlapping Paths During Font Generation - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-overlapping-paths-during-font-generation" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When generating a font in FontForge, leaving overlapping black paths unresolved can lead to unexpected rendering bugs, inverted transparent spaces, and rasterization errors in target applications. Font renderers rely on mathematical fill rules and contour" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-overlapping-paths-during-font-generation">FontForge
+Overlapping Paths During Font Generation</h1>
+<p>When generating a font in FontForge, leaving overlapping black paths
+unresolved can lead to unexpected rendering bugs, inverted transparent
+spaces, and rasterization errors in target applications. Font renderers
+rely on mathematical fill rules and contour directions to determine
+which areas are solid black and which are empty space. Leaving
+overlapping contours unmerged forces the operating system or browser to
+interpret the intersections, often producing visual glitches or failing
+font validation tests.</p>
+<h3 id="fill-rules-and-the-white-hole-effect">Fill Rules and the "White
+Hole" Effect</h3>
+<p>Font rendering engines primarily rely on two algorithms: the Non-Zero
+Winding Rule and the Even-Odd Rule.</p>
+<ul>
+<li><strong>Non-Zero Winding Rule:</strong> The renderer determines
+whether a space is filled by checking the direction (clockwise or
+counter-clockwise) of the bounding path. If two overlapping shapes have
+opposing directions, the overlapping region cancels out, turning into an
+accidental transparent hole.</li>
+<li><strong>Even-Odd Rule:</strong> The renderer draws a ray from a
+point to infinity and counts how many path segments it crosses. An odd
+number fills the area; an even number leaves it empty. Under this rule,
+two overlapping black shapes will invert the intersection area into an
+unintended white knockout, regardless of path direction.</li>
+</ul>
+<h3 id="differences-between-truetype-and-opentype-cff">Differences
+Between TrueType and OpenType (CFF)</h3>
+<p>The consequences of overlapping geometry depend heavily on the export
+format:</p>
+<ul>
+<li><strong>OpenType-CFF (PostScript):</strong> PostScript outlines
+historically prohibit self-intersecting paths and overlapping contours
+within a glyph. While modern PostScript engines handle overlaps better
+than legacy RIPs (Raster Image Processors), exporting overlaps in CFF
+fonts frequently triggers rasterization artifacts, miscalculated
+anti-aliasing on screens, or rejection by professional print
+engines.</li>
+<li><strong>TrueType (TTF):</strong> The TrueType specification permits
+overlapping contours, and modern variable fonts even rely on overlapping
+components to keep point counts consistent across design axes. However,
+in static fonts, overlapping paths can still interfere with automatic
+hinting, lead to inconsistent outlines at small point sizes, and produce
+inconsistent rendering across different operating systems.</li>
+</ul>
+<h3 id="fontforge-export-warnings">FontForge Export Warnings</h3>
+<p>When you generate a font (<code>File &gt; Generate Fonts</code>) with
+unresolved overlaps, FontForge typically runs a pre-flight validation
+check. If overlapping paths exist, the program will flag an alert
+regarding:</p>
+<ul>
+<li>Intersecting paths</li>
+<li>Self-intersecting contours</li>
+<li>Missing or incorrect path directions</li>
+</ul>
+<p>Ignoring these warnings generates the file with the raw, separate
+paths preserved, leaving the interpretation entirely to the end-user’s
+rasterizer.</p>
+<h3 id="how-to-resolve-overlaps-in-fontforge">How to Resolve Overlaps in
+FontForge</h3>
+<p>To ensure predictable rendering across all platforms, static font
+glyphs should be flattened into single, unified outlines prior to
+generation:</p>
+<ol type="1">
+<li><strong>Select the Contours:</strong> Open the glyph in the outline
+view and select all overlapping elements (<code>Ctrl + A</code>).</li>
+<li><strong>Apply Remove Overlap:</strong> Navigate to <strong>Element
+&gt; Overlap &gt; Remove Overlap</strong> (or press
+<code>Ctrl + Shift + O</code>). FontForge will calculate the boolean
+union of the paths, merging intersecting shapes into a single boundary
+and eliminating interior nodes.</li>
+<li><strong>Correct Direction:</strong> Navigate to <strong>Element &gt;
+Correct Direction</strong> (or press <code>Ctrl + Shift + D</code>).
+This ensures that external paths run in the standard direction and
+internal cutouts (such as the counter in an "O" or "P") run in the
+opposite direction.</li>
+<li><strong>Simplify Points:</strong> Merging overlapping paths can
+create redundant anchor points at intersections. Run <strong>Element
+&gt; Simplify &gt; Simplify</strong> (<code>Ctrl + Shift + M</code>) to
+remove unnecessary points and clean up the path geometry.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-overlapping-paths-during-font-generation';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Maximum Kerning Pairs Limit - fontforge</title>
+    <meta name="description" content="This article explores the kerning pair capacity of FontForge, detailing how the software handles pair limits internally and when exporting to standard font formats. While FontForge itself does not impose a strict hardcoded maximum on kerning pairs within">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-maximum-kerning-pairs-limit">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Maximum Kerning Pairs Limit - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-maximum-kerning-pairs-limit" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the kerning pair capacity of FontForge, detailing how the software handles pair limits internally and when exporting to standard font formats. While FontForge itself does not impose a strict hardcoded maximum on kerning pairs within" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-maximum-kerning-pairs-limit">FontForge Maximum Kerning
+Pairs Limit</h1>
+<p>This article explores the kerning pair capacity of FontForge,
+detailing how the software handles pair limits internally and when
+exporting to standard font formats. While FontForge itself does not
+impose a strict hardcoded maximum on kerning pairs within its native
+format, practical limits are dictated by the target font formats—namely
+OpenType (GPOS) and legacy TrueType (kern) tables.</p>
+<h3 id="internal-fontforge-capacity">Internal FontForge Capacity</h3>
+<p>Within FontForge's native Spline Font Database (<code>.sfd</code>)
+format, kerning pairs are stored dynamically in memory. There is no
+predetermined arbitrary ceiling such as 5,000 or 10,000 pairs. The
+software can theoretically handle hundreds of thousands of kerning pairs
+during the design phase, limited strictly by your computer’s available
+RAM and processing power.</p>
+<h3 id="legacy-truetype-kern-table-limits">Legacy TrueType Kern Table
+Limits</h3>
+<p>When exporting a font that utilizes the legacy flat
+<code>'kern'</code> table (Format 0), a strict architectural limit
+applies:</p>
+<ul>
+<li><strong>Maximum Capacity:</strong> 10,920 kerning pairs per
+subtable.</li>
+<li><strong>The Constraint:</strong> The legacy table format uses a
+16-bit unsigned integer to record the subtable length (maximum of 65,535
+bytes). With a 14-byte subtable header and each individual kerning pair
+occupying 6 bytes, the mathematical ceiling is
+<code>(65,536 - 14) / 6 = 10,920</code> pairs. Exceeding this amount in
+a single legacy subtable causes data truncation or generation
+errors.</li>
+</ul>
+<h3 id="opentype-gpos-limits">OpenType GPOS Limits</h3>
+<p>Modern fonts utilize the OpenType <code>'GPOS'</code> (Glyph
+Positioning) table to handle kerning rather than the legacy table.</p>
+<ul>
+<li><strong>Subtable Limit:</strong> Like the legacy table, individual
+GPOS subtables are constrained by 16-bit offsets to a maximum size of 64
+KB.</li>
+<li><strong>Multiple Subtables:</strong> Unlike basic TrueType tables,
+FontForge can automatically split pair-by-pair kerning data across
+multiple GPOS subtables during generation. This allows fonts to
+technically contain tens of thousands of individual kerning pairs.</li>
+<li><strong>Class-Based Kerning:</strong> FontForge strongly favors
+class-based kerning for large sets. By grouping glyphs with identical
+spacing into classes (such as matching all accented variants to a base
+letter), millions of potential visual combinations can be compressed
+into a few hundred bytes, bypassing standard file size and subtable
+constraints entirely.</li>
+</ul>
+<p>In summary, while FontForge allows virtually unlimited kerning
+definitions in design mode, practical export limits dictate a maximum of
+10,920 pairs for legacy <code>'kern'</code> tables, while modern
+OpenType exports can scale significantly higher via automatic GPOS
+subtable division and class-based kerning.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-maximum-kerning-pairs-limit';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

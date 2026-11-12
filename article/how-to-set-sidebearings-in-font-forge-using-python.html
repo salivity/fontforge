@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Set Sidebearings in FontForge Using Python - fontforge</title>
+    <meta name="description" content="Setting sidebearings programmatically in FontForge allows type designers to automate the spacing process, apply uniform metrics, and batch-process entire font families efficiently. This article provides a direct guide to accessing glyphs and adjusting Lef">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-set-sidebearings-in-font-forge-using-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Set Sidebearings in FontForge Using Python - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-set-sidebearings-in-font-forge-using-python" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Setting sidebearings programmatically in FontForge allows type designers to automate the spacing process, apply uniform metrics, and batch-process entire font families efficiently. This article provides a direct guide to accessing glyphs and adjusting Lef" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-set-sidebearings-in-fontforge-using-python">How to Set
+Sidebearings in FontForge Using Python</h1>
+<p>Setting sidebearings programmatically in FontForge allows type
+designers to automate the spacing process, apply uniform metrics, and
+batch-process entire font families efficiently. This article provides a
+direct guide to accessing glyphs and adjusting Left Sidebearings (LSB)
+and Right Sidebearings (RSB) using the FontForge Python API, covering
+both direct value assignments and batch operations.</p>
+<h2 id="understanding-the-properties">Understanding the Properties</h2>
+<p>In the FontForge Python module, each glyph object provides direct
+attributes to read and modify sidebearings:</p>
+<ul>
+<li><code>glyph.left_side_bearing</code>: Sets the distance from the
+glyph origin (x = 0) to the leftmost point of the glyph outline.</li>
+<li><code>glyph.right_side_bearing</code>: Sets the distance from the
+rightmost point of the glyph outline to the advance width marker.</li>
+<li><code>glyph.width</code>: Represents the total advance width of the
+glyph, which is calculated as
+<code>left_side_bearing + bounding_box_width + right_side_bearing</code>.
+Changing a sidebearing automatically adjusts the width, while changing
+the width alters the right sidebearing by default.</li>
+</ul>
+<h2 id="setting-sidebearings-on-an-individual-glyph">Setting
+Sidebearings on an Individual Glyph</h2>
+<p>To modify sidebearings, open a font file, retrieve the target glyph
+by its name or unicode value, assign the new metrics values, and save
+the font.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the font file</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Access a specific glyph</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>glyph <span class="op">=</span> font[<span class="st">&quot;A&quot;</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set absolute sidebearing values in font design units</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>glyph.left_side_bearing <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>glyph.right_side_bearing <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Save changes to the original file</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>font.save(<span class="st">&quot;MyFont_Spaced.sfd&quot;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>font.close()</span></code></pre></div>
+<h2 id="batch-setting-sidebearings-across-multiple-glyphs">Batch Setting
+Sidebearings Across Multiple Glyphs</h2>
+<p>To apply consistent sidebearings across a set of glyphs or the entire
+font, iterate through the glyphs in the font object.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># List of glyph names to modify</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>target_glyphs <span class="op">=</span> [<span class="st">&quot;H&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;N&quot;</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> glyph_name <span class="kw">in</span> target_glyphs:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> glyph_name <span class="kw">in</span> font:</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        glyph <span class="op">=</span> font[glyph_name]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        glyph.left_side_bearing <span class="op">=</span> <span class="dv">60</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        glyph.right_side_bearing <span class="op">=</span> <span class="dv">60</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternatively, iterate through all printable glyphs</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> glyph <span class="kw">in</span> font.glyphs():</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Avoid modifying empty spaces or non-marking glyphs if desired</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> glyph.isWorthOutputting():</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Example: Add 10 units of padding to existing sidebearings</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        glyph.left_side_bearing <span class="op">+=</span> <span class="dv">10</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        glyph.right_side_bearing <span class="op">+=</span> <span class="dv">10</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a new font binary</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>font.generate(<span class="st">&quot;MyFont_Spaced.otf&quot;</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>font.close()</span></code></pre></div>
+<h2 id="automating-sidebearings-with-auto-spacing">Automating
+Sidebearings with Auto-Spacing</h2>
+<p>If you prefer FontForge to calculate spacing automatically using
+optical algorithms rather than static values, use the built-in
+<code>autoWidth</code> method:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Automatically calculate the width based on an optical target spacing value</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> glyph <span class="kw">in</span> font.glyphs():</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> glyph.isWorthOutputting():</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        glyph.autoWidth(<span class="dv">100</span>)  <span class="co"># 100 is the desired optical separation</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>font.save()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>font.close()</span></code></pre></div>
+<h2 id="running-the-script">Running the Script</h2>
+<p>Run the script directly through the FontForge command-line interface
+to ensure the native <code>fontforge</code> module is available:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-script</span> set_spacing.py</span></code></pre></div></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-set-sidebearings-in-font-forge-using-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

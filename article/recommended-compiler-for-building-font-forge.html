@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommended Compiler for Building FontForge - fontforge</title>
+    <meta name="description" content="Building FontForge directly from its GitHub repository requires a modern C and C++ compiler compatible with the project&#39;s CMake build system. This guide covers the recommended compilers across supported operating systems, the required standards, and the o">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/recommended-compiler-for-building-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Recommended Compiler for Building FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/recommended-compiler-for-building-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Building FontForge directly from its GitHub repository requires a modern C and C++ compiler compatible with the project&#39;s CMake build system. This guide covers the recommended compilers across supported operating systems, the required standards, and the o" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="recommended-compiler-for-building-fontforge">Recommended
+Compiler for Building FontForge</h1>
+<p>Building FontForge directly from its GitHub repository requires a
+modern C and C++ compiler compatible with the project's CMake build
+system. This guide covers the recommended compilers across supported
+operating systems, the required standards, and the optimal environment
+setup to ensure a successful compilation.</p>
+<h3 id="the-recommended-compilers-gcc-and-clang">The Recommended
+Compilers: GCC and Clang</h3>
+<p>For building FontForge on Unix-like environments, the officially
+supported and recommended compilers are <strong>GCC (GNU Compiler
+Collection)</strong> and <strong>Clang (LLVM)</strong>. FontForge's
+codebase relies on modern language standards, requiring a compiler that
+supports at least C99 for C source files and C++11 (or newer) for C++
+components.</p>
+<h3 id="recommendations-by-operating-system">Recommendations by
+Operating System</h3>
+<ul>
+<li><strong>Linux:</strong> <strong>GCC</strong> is the standard and
+most tested compiler for building FontForge on Linux distributions such
+as Ubuntu, Debian, Fedora, and Arch Linux. Alternatively,
+<strong>Clang</strong> is fully supported and frequently used for
+testing and development. Most package managers allow you to install GCC
+via packages like <code>build-essential</code> (Debian/Ubuntu) or
+<code>gcc</code> and <code>gcc-c++</code> (Fedora/RHEL).</li>
+<li><strong>macOS:</strong> <strong>Apple Clang</strong> provided
+through the Xcode Command Line Tools is the primary recommended
+compiler. It can be installed using the command
+<code>xcode-select --install</code>. You can also use LLVM or GCC
+installed via Homebrew or MacPorts.</li>
+<li><strong>Windows:</strong> The officially documented and
+community-recommended method for compiling FontForge on Windows is using
+<strong>GCC via MinGW-w64</strong> inside an <strong>MSYS2</strong>
+environment. This setup provides a Unix-like toolchain and handles
+dependencies cleanly. While experimental support for Microsoft Visual
+C++ (MSVC) exists, MinGW-w64 remains the standard and most reliable
+choice for building from the GitHub repository.</li>
+</ul>
+<h3 id="build-tool-requirements">Build Tool Requirements</h3>
+<p>Regardless of the compiler chosen, FontForge utilizes
+<strong>CMake</strong> (version 3.14 or later) to generate the build
+configuration. When invoking CMake, it will automatically detect the
+system's default C and C++ compilers. You can explicitly specify your
+preferred compiler using environment variables or CMake flags:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="at">-DCMAKE_C_COMPILER</span><span class="op">=</span>gcc <span class="at">-DCMAKE_CXX_COMPILER</span><span class="op">=</span>g++</span></code></pre></div>
+<p>Using up-to-date versions of GCC or Clang ensures complete
+compatibility with FontForge’s dependencies, including FreeType, Cairo,
+Pango, and Libxml2.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/recommended-compiler-for-building-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

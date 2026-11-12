@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Default Glyph Grid Size in FontForge - fontforge</title>
+    <meta name="description" content="This guide explains the default glyph grid size in the FontForge font editor, detailing the standard Em unit measurements, ascent and descent splits, and how to adjust these settings for different font formats. When you create a new font in FontForge, the">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/default-glyph-grid-size-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Default Glyph Grid Size in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/default-glyph-grid-size-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains the default glyph grid size in the FontForge font editor, detailing the standard Em unit measurements, ascent and descent splits, and how to adjust these settings for different font formats. When you create a new font in FontForge, the" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="default-glyph-grid-size-in-fontforge">Default Glyph Grid Size in
+FontForge</h1>
+<p>This guide explains the default glyph grid size in the FontForge font
+editor, detailing the standard Em unit measurements, ascent and descent
+splits, and how to adjust these settings for different font formats.</p>
+<h2 id="the-default-grid-1000-units-per-em">The Default Grid: 1000 Units
+per Em</h2>
+<p>When you create a new font in FontForge, the default glyph canvas or
+grid size is set to an <strong>Em size of 1000 units</strong> (also
+known as Units per Em, or UPM).</p>
+<p>This 1000-unit Em square is partitioned into two primary vertical
+metrics:</p>
+<ul>
+<li><strong>Ascent:</strong> 800 units (the space above the
+baseline)</li>
+<li><strong>Descent:</strong> 200 units (the space below the
+baseline)</li>
+</ul>
+<p>In addition to the Em boundary, FontForge snaps coordinate points to
+an integer grid where the default snap resolution is <strong>1
+unit</strong>.</p>
+<h2 id="why-fontforge-uses-1000-units">Why FontForge Uses 1000
+Units</h2>
+<p>The 1000 UPM standard originates from Adobe PostScript Type 1 and
+OpenType-CFF (<code>.otf</code>) font specifications. A base-10 value of
+1000 simplifies decimal scaling and layout calculations.</p>
+<p>By contrast, TrueType fonts (<code>.ttf</code>) traditionally use
+power-of-two sizes, typically <strong>2048 units</strong> (or
+occasionally 1024 units), to maximize rendering efficiency in TrueType
+rasterizers.</p>
+<h2 id="how-to-change-the-grid-size-in-fontforge">How to Change the Grid
+Size in FontForge</h2>
+<p>If you are developing a TrueType font or need a custom grid scale,
+you can change the default dimensions at any time:</p>
+<ol type="1">
+<li>Open your project in FontForge.</li>
+<li>Go to the top menu and select <strong>Element</strong> &gt;
+<strong>Font Info</strong>.</li>
+<li>In the sidebar of the Font Info dialog, click
+<strong>General</strong>.</li>
+<li>Locate the <strong>Em Size</strong> field. Enter your desired value
+(such as <code>2048</code>).</li>
+<li>Adjust the <strong>Ascent</strong> and <strong>Descent</strong>
+values accordingly (for a 2048 grid, a common split is 1638 ascent and
+410 descent).</li>
+<li>Click <strong>OK</strong> to apply the changes. FontForge will offer
+to automatically rescale your existing glyph outlines to fit the new
+grid dimensions.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/default-glyph-grid-size-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

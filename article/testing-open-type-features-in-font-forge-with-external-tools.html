@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing OpenType Features in FontForge with External Tools - fontforge</title>
+    <meta name="description" content="This article explains how to test OpenType features when working with FontForge, covering its built-in shaping capabilities, its limitations regarding direct GUI plugin integration, and how to effectively connect third-party testing tools using FontForge&#39;">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/testing-open-type-features-in-font-forge-with-external-tools">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Testing OpenType Features in FontForge with External Tools - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/testing-open-type-features-in-font-forge-with-external-tools" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how to test OpenType features when working with FontForge, covering its built-in shaping capabilities, its limitations regarding direct GUI plugin integration, and how to effectively connect third-party testing tools using FontForge&#39;" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="testing-opentype-features-in-fontforge-with-external-tools">Testing
+OpenType Features in FontForge with External Tools</h1>
+<p>This article explains how to test OpenType features when working with
+FontForge, covering its built-in shaping capabilities, its limitations
+regarding direct GUI plugin integration, and how to effectively connect
+third-party testing tools using FontForge's Python scripting interface
+and external workflows.</p>
+<p>While FontForge does not have a native plugin system that embeds
+third-party graphical testing interfaces directly inside its main
+window, you can seamlessly integrate external testing tools using
+FontForge’s embedded Python scripting environment or by establishing an
+automated external build pipeline.</p>
+<h3 id="fontforges-native-testing-environment">FontForge's Native
+Testing Environment</h3>
+<p>Before configuring external tools, consider FontForge's built-in
+Metrics Window (<code>Window &gt; New Metrics Window</code>). Modern
+distributions of FontForge utilize the HarfBuzz shaping engine under the
+hood. By navigating to the Metrics Window, you can enable specific
+OpenType features (such as ligatures, kerning, small caps, and
+contextual alternates) directly from the <strong>Features</strong> menu
+to preview how glyphs interact in real time.</p>
+<h3 id="integrating-third-party-tools-via-python">Integrating
+Third-Party Tools via Python</h3>
+<p>FontForge provides a powerful Python module (<code>fontforge</code>)
+that allows you to automate exports and interface directly with external
+testing suites. Through Python scripts executed within FontForge or via
+the command line, you can generate test fonts and immediately pass them
+to external shaping and inspection tools:</p>
+<ul>
+<li><strong>HarfBuzz (<code>hb-shape</code> and
+<code>hb-view</code>):</strong> HarfBuzz is the text-shaping engine used
+by Chrome, Firefox, Android, and many operating systems. You can write a
+FontForge Python script that generates a temporary <code>.otf</code> or
+<code>.ttf</code> file and calls <code>hb-shape</code> or
+<code>hb-view</code> via Python's <code>subprocess</code> module. This
+renders precise command-line or visual text-shaping outputs to verify
+glyph substitution (GSUB) and positioning (GPOS).</li>
+<li><strong>FontTools and TTX:</strong> You can pair FontForge with the
+FontTools Python library to decompile generated fonts into XML (TTX)
+format. This allows you to verify that OpenType lookup tables, script
+definitions, and feature tags were compiled correctly by FontForge’s
+OpenType tables engine.</li>
+<li><strong>Crowbar:</strong> Crowbar is an external OpenType debugging
+tool built on top of HarfBuzz. While not run inside FontForge, you can
+configure a script in FontForge to automatically compile and launch
+Crowbar targeted at your output font, allowing you to step through
+feature execution lookup by lookup.</li>
+</ul>
+<h3 id="web-browser-and-desktop-application-testing">Web Browser and
+Desktop Application Testing</h3>
+<p>Real-world application testing is necessary because software engines
+handle OpenType features differently (for example, CoreText on macOS,
+DirectWrite on Windows, and FreeType/HarfBuzz on Linux).</p>
+<p>You can automate this workflow by writing a FontForge script
+that:</p>
+<ol type="1">
+<li>Generates <code>.woff2</code> and <code>.otf</code> binaries.</li>
+<li>Updates a local HTML/CSS test page configured with
+<code>font-feature-settings</code>.</li>
+<li>Opens the page automatically in target web browsers to verify
+contextual substitutions and mark-to-base positioning in real-world
+rendering engines.</li>
+</ol>
+<p>In summary, you cannot embed third-party graphical test panels
+directly into FontForge's native user interface, but you can achieve
+robust third-party testing integration by using FontForge's Python API
+to automate font compilation and trigger external shapers and inspection
+tools.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/testing-open-type-features-in-font-forge-with-external-tools';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

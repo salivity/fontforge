@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check If a Glyph Is Empty in FontForge Python - fontforge</title>
+    <meta name="description" content="This guide explains how to determine whether a glyph contains no visual vector data using FontForge&#39;s Python scripting interface. Checking for empty glyphs is essential when auditing fonts, cleaning up unused unicode slots, or automating font generation p">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/check-if-a-glyph-is-empty-in-font-forge-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Check If a Glyph Is Empty in FontForge Python - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/check-if-a-glyph-is-empty-in-font-forge-python" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to determine whether a glyph contains no visual vector data using FontForge&#39;s Python scripting interface. Checking for empty glyphs is essential when auditing fonts, cleaning up unused unicode slots, or automating font generation p" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="check-if-a-glyph-is-empty-in-fontforge-python">Check If a Glyph
+Is Empty in FontForge Python</h1>
+<p>This guide explains how to determine whether a glyph contains no
+visual vector data using FontForge's Python scripting interface.
+Checking for empty glyphs is essential when auditing fonts, cleaning up
+unused unicode slots, or automating font generation pipelines. You will
+learn the most reliable ways to detect empty glyphs by inspecting
+outline contours, component references, and glyph bounding boxes.</p>
+<h3 id="method-1-checking-contours-and-references-recommended">Method 1:
+Checking Contours and References (Recommended)</h3>
+<p>In FontForge, a glyph is visually empty if it contains neither native
+contours in its foreground layer nor references to other glyphs
+(components).</p>
+<p>You can check both properties directly on the <code>glyph</code>
+object:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_glyph_empty(glyph):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check if the foreground layer contains any contours</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    has_contours <span class="op">=</span> <span class="bu">len</span>(glyph.foreground) <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check if the glyph references other glyphs</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    has_references <span class="op">=</span> <span class="bu">len</span>(glyph.references) <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The glyph is empty if it has neither contours nor references</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">not</span> (has_contours <span class="kw">or</span> has_references)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> glyph <span class="kw">in</span> font.glyphs():</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_glyph_empty(glyph):</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Glyph &#39;</span><span class="sc">{</span>glyph<span class="sc">.</span>glyphname<span class="sc">}</span><span class="ss">&#39; (Unicode: </span><span class="sc">{</span>glyph<span class="sc">.</span><span class="bu">unicode</span><span class="sc">}</span><span class="ss">) is empty.&quot;</span>)</span></code></pre></div>
+<h3 id="method-2-checking-the-bounding-box">Method 2: Checking the
+Bounding Box</h3>
+<p>Another quick method to determine if a glyph is empty is to inspect
+its bounding box coordinates using the <code>boundingBox()</code>
+method. A glyph with no drawn content has a bounding box of all zeros:
+<code>(0.0, 0.0, 0.0, 0.0)</code>.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_bbox_empty(glyph):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    xmin, ymin, xmax, ymax <span class="op">=</span> glyph.boundingBox()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xmin <span class="op">==</span> <span class="fl">0.0</span> <span class="kw">and</span> ymin <span class="op">==</span> <span class="fl">0.0</span> <span class="kw">and</span> xmax <span class="op">==</span> <span class="fl">0.0</span> <span class="kw">and</span> ymax <span class="op">==</span> <span class="fl">0.0</span></span></code></pre></div>
+<p><em>Note:</em> Standard whitespace characters (such as the space
+character <code>U+0020</code>) also return
+<code>(0.0, 0.0, 0.0, 0.0)</code> for their bounding box, even though
+they possess a positive advance width. If you want to preserve
+whitespace characters, filter them out by Unicode codepoint before
+checking.</p>
+<h3 id="method-3-using-isworthoutputting">Method 3: Using
+<code>isWorthOutputting()</code></h3>
+<p>FontForge provides a built-in method called
+<code>isWorthOutputting()</code>. This method checks whether FontForge
+considers the glyph necessary to include in an exported font file.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> glyph.isWorthOutputting():</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Glyph &#39;</span><span class="sc">{</span>glyph<span class="sc">.</span>glyphname<span class="sc">}</span><span class="ss">&#39; has no graphical data and is not worth outputting.&quot;</span>)</span></code></pre></div>
+<p><code>isWorthOutputting()</code> returns <code>False</code> for empty
+glyphs, but returns <code>True</code> if the glyph has contours,
+references, or is a functional whitespace character (such as
+<code>space</code> or <code>non-breaking space</code>) with an advance
+width.</p>
+<h3 id="batch-processing-example">Batch Processing Example</h3>
+<p>To iterate through a font, identify empty non-whitespace glyphs, and
+optionally clear or report them:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.ttf&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set of standard whitespace codepoints to ignore</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>WHITESPACE_UNICODES <span class="op">=</span> {<span class="bn">0x0020</span>, <span class="bn">0x00A0</span>, <span class="bn">0x2000</span>, <span class="bn">0x2001</span>, <span class="bn">0x2002</span>, <span class="bn">0x2003</span>, <span class="bn">0x2004</span>, <span class="bn">0x2005</span>, <span class="bn">0x2006</span>, <span class="bn">0x2007</span>, <span class="bn">0x2008</span>, <span class="bn">0x2009</span>, <span class="bn">0x200A</span>, <span class="bn">0x200B</span>, <span class="bn">0x3000</span>}</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>empty_glyphs <span class="op">=</span> []</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> glyph <span class="kw">in</span> font.glyphs():</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> glyph.<span class="bu">unicode</span> <span class="kw">in</span> WHITESPACE_UNICODES:</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(glyph.foreground) <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> <span class="bu">len</span>(glyph.references) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        empty_glyphs.append(glyph.glyphname)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Found </span><span class="sc">{</span><span class="bu">len</span>(empty_glyphs)<span class="sc">}</span><span class="ss"> empty glyphs:&quot;</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;, &quot;</span>.join(empty_glyphs))</span></code></pre></div></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/check-if-a-glyph-is-empty-in-font-forge-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

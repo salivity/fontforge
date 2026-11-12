@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Set a License URL in FontForge Metadata - fontforge</title>
+    <meta name="description" content="You can set a license URL in FontForge&#39;s metadata tables by accessing the OpenType name table settings within the application. OpenType specifications designate Name ID 14 specifically for the License Info URL, and FontForge allows you to define this reco">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-set-a-license-url-in-font-forge-metadata">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Set a License URL in FontForge Metadata - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-set-a-license-url-in-font-forge-metadata" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="You can set a license URL in FontForge&#39;s metadata tables by accessing the OpenType name table settings within the application. OpenType specifications designate Name ID 14 specifically for the License Info URL, and FontForge allows you to define this reco" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-set-a-license-url-in-fontforge-metadata">How to Set a
+License URL in FontForge Metadata</h1>
+<p>You can set a license URL in FontForge's metadata tables by accessing
+the OpenType <code>name</code> table settings within the application.
+OpenType specifications designate Name ID 14 specifically for the
+License Info URL, and FontForge allows you to define this record either
+through the graphical user interface or via its Python scripting engine.
+This guide explains how to locate the proper metadata fields and embed
+your license link directly into your font files.</p>
+<h3 id="setting-the-license-url-using-the-gui">Setting the License URL
+Using the GUI</h3>
+<p>To configure the license URL using the FontForge graphical interface,
+follow these steps:</p>
+<ol type="1">
+<li>Open your font file in FontForge.</li>
+<li>Navigate to the main menu and select <strong>Element</strong> &gt;
+<strong>Font Info</strong> (or press <code>Ctrl+Shift+F</code> on
+Windows/Linux, <code>Cmd+Shift+F</code> on macOS).</li>
+<li>In the sidebar of the Font Info dialog, click on <strong>TTF
+Names</strong>.</li>
+<li>Look through the list of entries for <strong>License URL</strong>
+(corresponding to Name ID 14).</li>
+<li>If <strong>License URL</strong> already exists, double-click the
+string value next to your target language (typically "English (US)") and
+paste your complete URL (for example,
+<code>https://openfontlicense.org</code>).</li>
+<li>If the entry does not exist, click the <strong>Add</strong> or
+<strong>New</strong> button, select <strong>License URL</strong> from
+the dropdown menu, set the language, and enter your URL.</li>
+<li>Click <strong>OK</strong> to save the metadata changes.</li>
+<li>Export your updated font by selecting <strong>File</strong> &gt;
+<strong>Generate Fonts...</strong> to write the changes to the compiled
+binary (<code>.ttf</code>, <code>.otf</code>, or
+<code>.woff</code>).</li>
+</ol>
+<h3 id="setting-the-license-url-using-python-scripting">Setting the
+License URL Using Python Scripting</h3>
+<p>If you automate your font builds, you can assign the license URL
+using FontForge's Python API:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the font file</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Append or replace the License URL (Name ID 14) in the SFNT name table</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters: (Language, String Name / ID, Value)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>font.appendSFNTName(<span class="st">&quot;English (US)&quot;</span>, <span class="st">&quot;License URL&quot;</span>, <span class="st">&quot;https://example.com/license&quot;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the output font</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>font.generate(<span class="st">&quot;MyFont.ttf&quot;</span>)</span></code></pre></div>
+<h3 id="why-name-id-14-matters">Why Name ID 14 Matters</h3>
+<p>OpenType font specifications define Name ID 14 as the standardized
+location where software, operating systems, and web repositories look
+for remote licensing terms. While Name ID 13 provides the full text of
+the license agreement, Name ID 14 should strictly contain a valid,
+accessible web address referencing the full terms.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-set-a-license-url-in-font-forge-metadata';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Width vs Sidebearing in FontForge - fontforge</title>
+    <meta name="description" content="In FontForge, understanding the distinction between advance width and sidebearings is fundamental to mastering font spacing and horizontal metrics. Advance width refers to the total horizontal distance the text cursor moves forward when a character is typ">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/advance-width-vs-sidebearing-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Advance Width vs Sidebearing in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/advance-width-vs-sidebearing-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FontForge, understanding the distinction between advance width and sidebearings is fundamental to mastering font spacing and horizontal metrics. Advance width refers to the total horizontal distance the text cursor moves forward when a character is typ" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="advance-width-vs-sidebearing-in-fontforge">Advance Width vs
+Sidebearing in FontForge</h1>
+<p>In FontForge, understanding the distinction between advance width and
+sidebearings is fundamental to mastering font spacing and horizontal
+metrics. Advance width refers to the total horizontal distance the text
+cursor moves forward when a character is typed, while sidebearings
+represent the empty margins placed to the left and right of the glyph's
+visible outline. Together, these two metrics determine how characters
+sit beside one another, preventing text from appearing crowded or
+disconnected.</p>
+<h3 id="what-is-advance-width">What Is Advance Width?</h3>
+<p>The advance width is the total allocated horizontal footprint of a
+glyph. It encompasses not only the visible shape (the glyph outline or
+bounding box) but also the whitespace surrounding it.</p>
+<p>When a text-rendering engine places characters in a line, it uses the
+advance width to determine the insertion point for the next consecutive
+character. In FontForge, the advance width is demarcated by a vertical
+line to the right of the glyph canvas. If you alter the advance width
+without changing the position of the glyph, you directly affect how
+closely following characters will appear.</p>
+<h3 id="what-are-sidebearings">What Are Sidebearings?</h3>
+<p>Sidebearings are the margins of whitespace flanking the visible
+contours of a glyph. There are two distinct sidebearings for horizontal
+text:</p>
+<ul>
+<li><strong>Left Sidebearing (LSB):</strong> The distance between the
+glyph origin (the zero coordinate line on the horizontal axis) and the
+leftmost point of the glyph's visual outline.</li>
+<li><strong>Right Sidebearing (RSB):</strong> The distance between the
+rightmost point of the glyph's visual outline and the advance width
+marker line.</li>
+</ul>
+<p>Sidebearings prevent visual collisions between adjacent letters. In
+FontForge, sidebearings can be positive, zero, or negative:</p>
+<ul>
+<li><strong>Positive sidebearing:</strong> Leaves empty space between
+the character outline and the boundary.</li>
+<li><strong>Zero sidebearing:</strong> The character outline touches the
+origin or advance line.</li>
+<li><strong>Negative sidebearing:</strong> The character outline extends
+past the origin or advance line, allowing visual overlap (common in
+italics, swashes, or certain accents).</li>
+</ul>
+<h3 id="the-mathematical-relationship">The Mathematical
+Relationship</h3>
+<p>Advance width and sidebearings are mathematically dependent on one
+another and the glyph's physical outline:</p>
+<p><span class="math display">\[\text{Advance Width} = \text{Left
+Sidebearing} + \text{Glyph Width (Bounding Box)} + \text{Right
+Sidebearing}\]</span></p>
+<p>Because of this relationship, modifying one value often recalculates
+another in FontForge:</p>
+<ul>
+<li>Changing the <strong>LSB</strong> typically shifts the glyph outline
+relative to the origin, which will alter the RSB unless the advance
+width is also adjusted.</li>
+<li>Changing the <strong>RSB</strong> directly alters the advance width
+while keeping the glyph outline and LSB unchanged.</li>
+<li>Changing the <strong>advance width</strong> directly expands or
+contracts the RSB, provided the glyph outline remains fixed.</li>
+</ul>
+<h3 id="managing-them-in-fontforge">Managing Them in FontForge</h3>
+<p>In FontForge, these values can be adjusted in two primary
+environments:</p>
+<ol type="1">
+<li><strong>The Glyph Window:</strong> By opening an individual glyph,
+you can manually drag the vertical advance width line or use the
+transform tools to shift the glyph outline to modify the LSB.</li>
+<li><strong>The Metrics Window (Window &gt; Open Metrics
+Window):</strong> This window allows you to preview multiple characters
+side-by-side. You can click and drag the boundary lines representing the
+LSB and advance width or type exact numerical values into the metric
+cells at the bottom of the window for precise adjustments.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/advance-width-vs-sidebearing-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

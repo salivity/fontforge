@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Simplify Command Explained - fontforge</title>
+    <meta name="description" content="The Simplify command in FontForge is an optimization tool designed to reduce the total number of points on a glyph&#39;s contour while preserving its original shape as closely as possible. This article explains how the command functions, why point reduction i">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-simplify-command-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Simplify Command Explained - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-simplify-command-explained" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Simplify command in FontForge is an optimization tool designed to reduce the total number of points on a glyph&#39;s contour while preserving its original shape as closely as possible. This article explains how the command functions, why point reduction i" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-simplify-command-explained">FontForge Simplify Command
+Explained</h1>
+<p>The Simplify command in FontForge is an optimization tool designed to
+reduce the total number of points on a glyph's contour while preserving
+its original shape as closely as possible. This article explains how the
+command functions, why point reduction is critical in digital
+typography, and how FontForge determines which points to eliminate.</p>
+<h3 id="how-the-simplify-command-operates">How the Simplify Command
+Operates</h3>
+<p>When you run the Simplify command (accessible via <strong>Element
+&gt; Simplify &gt; Simplify</strong> or the shortcut
+<code>Ctrl+Shift+M</code>), FontForge analyzes the selected Bézier
+curves and contours. It evaluates sequences of connected curve segments
+to see if they can be mathematically replaced by fewer, longer Bézier
+curves without exceeding an internal error threshold.</p>
+<p>If the new, simplified curve deviates from the original path by less
+than the defined margin of error, FontForge removes the intermediate
+on-curve points and adjusts the off-curve directional handles
+accordingly.</p>
+<h3 id="key-actions-performed-by-simplify">Key Actions Performed by
+Simplify</h3>
+<ul>
+<li><strong>Removes Redundant Points:</strong> Autotraced artwork or
+digitized scans often contain hundreds of unnecessary nodes. Simplify
+eliminates clustered or collinear points along straight lines and gentle
+curves.</li>
+<li><strong>Preserves Corners and Extremities:</strong> The algorithm
+detects sharp directional changes (corners) and retains the points that
+define them, preventing corners from turning into unintended rounded
+arcs.</li>
+<li><strong>Straightens Near-Lines:</strong> If a series of points forms
+a curve that is nearly flat, the command straightens the segment and
+discards the unnecessary curve handles.</li>
+<li><strong>Recalculates Control Handles:</strong> When points are
+removed between curves, FontForge recalculates the remaining off-curve
+handles to maintain the contour’s original curvature and smoothness
+(continuity).</li>
+</ul>
+<h3 id="why-simplify-is-important-in-font-creation">Why Simplify is
+Important in Font Creation</h3>
+<ol type="1">
+<li><strong>Smaller File Sizes:</strong> Every node and control point in
+a glyph requires data. Fewer points reduce the final compiled font file
+size (such as TTF or OTF).</li>
+<li><strong>Better Rendering and Rasterization:</strong> Modern font
+engines render outlines faster and with fewer rendering artifacts when
+curves are defined cleanly with minimal, well-placed points.</li>
+<li><strong>Easier Manual Editing:</strong> Reducing a path to its
+essential extrema makes adjusting, scaling, and interpolating glyphs far
+more manageable for the designer.</li>
+<li><strong>Optimized Hinting:</strong> Font hinting works best when
+contours are clean and devoid of stray points, especially on straight
+stems and baseline curves.</li>
+</ol>
+<h3 id="standard-simplify-vs-simplify-more">Standard Simplify vs.
+Simplify More</h3>
+<p>In addition to the standard command, FontForge includes
+<strong>Simplify More</strong>. While standard Simplify uses fixed
+default values, Simplify More opens a dialog box allowing you to adjust
+specific parameters:</p>
+<ul>
+<li><strong>Error Threshold:</strong> Defines how far (in font units)
+the new path is allowed to stray from the original contour before
+FontForge refuses to remove a point.</li>
+<li><strong>Angle Limits:</strong> Specifies the threshold angle at
+which a point is recognized as a sharp corner and protected from
+smoothing.</li>
+<li><strong>Handle Length Limits:</strong> Prevents FontForge from
+generating disproportionately long Bézier handles that can cause
+rendering glitches or self-intersecting loops.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-simplify-command-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

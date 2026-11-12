@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Find a Glyph by Name in FontForge - fontforge</title>
+    <meta name="description" content="Finding a specific glyph in a massive font file can be tedious when scrolling manually. FontForge provides a built-in search tool called the &quot;Goto&quot; function, allowing you to instantly locate and highlight any character by typing its PostScript glyph name.">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-find-a-glyph-by-name-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Find a Glyph by Name in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-find-a-glyph-by-name-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Finding a specific glyph in a massive font file can be tedious when scrolling manually. FontForge provides a built-in search tool called the &quot;Goto&quot; function, allowing you to instantly locate and highlight any character by typing its PostScript glyph name." />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-find-a-glyph-by-name-in-fontforge">How to Find a Glyph by
+Name in FontForge</h1>
+<p>Finding a specific glyph in a massive font file can be tedious when
+scrolling manually. FontForge provides a built-in search tool called the
+"Goto" function, allowing you to instantly locate and highlight any
+character by typing its PostScript glyph name. This guide explains how
+to quickly search for glyphs by name using keyboard shortcuts and menu
+navigation.</p>
+<h3 id="using-the-goto-tool">Using the Goto Tool</h3>
+<p>The fastest and most reliable way to jump to a specific glyph by its
+name is using the <strong>Goto</strong> dialog:</p>
+<ol type="1">
+<li>Open your font project in FontForge to view the main Font View
+window (the grid of characters).</li>
+<li>Open the <strong>Goto</strong> dialog by selecting
+<strong>View</strong> &gt; <strong>Goto</strong> from the top menu, or
+by pressing the keyboard shortcut:
+<ul>
+<li><strong>Windows / Linux:</strong> <code>Ctrl</code> +
+<code>Shift</code> + <code>&gt;</code></li>
+<li><strong>macOS:</strong> <code>Cmd</code> + <code>Shift</code> +
+<code>&gt;</code></li>
+</ul></li>
+<li>In the dialog box that appears, select the <strong>Name</strong>
+option (or radio button).</li>
+<li>Type the exact name of the glyph you are searching for (for example,
+<code>adieresis</code>, <code>ampersand</code>, or
+<code>copyright</code>).</li>
+<li>Click <strong>OK</strong> or press <code>Enter</code>.</li>
+</ol>
+<p>FontForge will instantly jump the grid display to the designated
+glyph and highlight it. Double-click the highlighted cell to open the
+glyph in the editing window.</p>
+<h3 id="selecting-glyphs-by-name-or-wildcard">Selecting Glyphs by Name
+or Wildcard</h3>
+<p>If you want to find multiple glyphs at once or do not remember the
+exact name, use the <strong>Select By Name</strong> feature:</p>
+<ol type="1">
+<li>In the Font View window, navigate to <strong>Edit</strong> &gt;
+<strong>Select</strong> &gt; <strong>By Name...</strong> (or
+<strong>Select By Wildcard...</strong> depending on your FontForge
+version).</li>
+<li>Enter the glyph name or a wildcard pattern (such as <code>a*</code>
+to select all glyphs beginning with the letter "a").</li>
+<li>Click <strong>OK</strong>. FontForge will select all matching glyphs
+across the character map.</li>
+</ol>
+<h3 id="important-naming-considerations">Important Naming
+Considerations</h3>
+<ul>
+<li><strong>Case Sensitivity:</strong> Glyph names in FontForge are
+case-sensitive. Searching for <code>A</code> will return the uppercase
+letter, while searching for <code>a</code> will return the lowercase
+letter.</li>
+<li><strong>Standard Naming:</strong> FontForge generally uses standard
+PostScript naming conventions. For example, accented characters often
+follow the format of the base letter plus the accent name (e.g.,
+<code>eacute</code> for <em>é</em>).</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-find-a-glyph-by-name-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

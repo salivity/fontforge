@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Adjust Baseline Offset in FontForge - fontforge</title>
+    <meta name="description" content="Adjusting the baseline offset for specific characters in FontForge involves shifting the vertical position of individual glyph contours relative to the font&#39;s global baseline at the y=0 coordinate. This guide explains how to reposition single or multiple">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-adjust-baseline-offset-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Adjust Baseline Offset in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-adjust-baseline-offset-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Adjusting the baseline offset for specific characters in FontForge involves shifting the vertical position of individual glyph contours relative to the font&#39;s global baseline at the y=0 coordinate. This guide explains how to reposition single or multiple" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-adjust-baseline-offset-in-fontforge">How to Adjust
+Baseline Offset in FontForge</h1>
+<p>Adjusting the baseline offset for specific characters in FontForge
+involves shifting the vertical position of individual glyph contours
+relative to the font's global baseline at the y=0 coordinate. This guide
+explains how to reposition single or multiple glyphs vertically using
+precise transformation values or manual adjustments, ensuring consistent
+vertical alignment across your typeface without altering global font
+metrics.</p>
+<h3 id="understanding-the-baseline-in-fontforge">Understanding the
+Baseline in FontForge</h3>
+<p>In digital font design, the baseline is a fixed horizontal line
+located at <code>Y = 0</code>. You cannot move the baseline for an
+individual character directly; instead, you move the character's vector
+outlines above or below this <code>Y = 0</code> line to achieve the
+desired offset.</p>
+<h3 id="method-1-precise-offset-using-the-transform-tool">Method 1:
+Precise Offset Using the Transform Tool</h3>
+<p>Using numeric transformations is the most accurate way to raise or
+lower specific glyphs by an exact number of units.</p>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>In the <strong>Font View</strong> window, click on the glyph you
+want to adjust. To select multiple characters, hold <code>Ctrl</code>
+(or <code>Cmd</code> on macOS) and click each character, or hold
+<code>Shift</code> to select a range.</li>
+<li>Navigate to the top menu and select <strong>Element</strong> &gt;
+<strong>Transformations</strong> &gt; <strong>Transform...</strong> (or
+press <code>Ctrl+\</code>).</li>
+<li>In the dialog box, set the dropdown menu to
+<strong>Move</strong>.</li>
+<li>Set the <strong>X</strong> value to <code>0</code> to keep
+horizontal positioning unchanged.</li>
+<li>Enter your desired vertical offset in the <strong>Y</strong> field:
+<ul>
+<li>Enter a <strong>positive number</strong> to raise the character
+above the baseline (e.g., superscripts or high punctuation).</li>
+<li>Enter a <strong>negative number</strong> to lower the character
+below the baseline (e.g., subscripts or descenders).</li>
+</ul></li>
+<li>Ensure the transform origin is set appropriately (typically
+<strong>Glyph Origin</strong>), then click <strong>OK</strong>.</li>
+</ol>
+<h3 id="method-2-manual-adjustment-in-the-glyph-window">Method 2: Manual
+Adjustment in the Glyph Window</h3>
+<p>If you prefer visual adjustments, you can move outlines directly
+within the glyph editor.</p>
+<ol type="1">
+<li>Double-click the glyph in the <strong>Font View</strong> to open the
+<strong>Glyph Window</strong>.</li>
+<li>Press <code>Ctrl+A</code> to select all points and contours within
+the glyph.</li>
+<li>Use the arrow keys to adjust the vertical position:
+<ul>
+<li>Press <code>Up Arrow</code> or <code>Down Arrow</code> to nudge by 1
+unit.</li>
+<li>Hold <code>Shift</code> while pressing an arrow key to move the
+selection in larger increments (typically 10 or 50 units, depending on
+your preferences).</li>
+</ul></li>
+<li>Monitor the coordinates in the top information bar to verify the new
+Y positions.</li>
+</ol>
+<h3 id="method-3-handling-accents-and-composite-glyphs">Method 3:
+Handling Accents and Composite Glyphs</h3>
+<p>If the character you are adjusting is a composite glyph (such as an
+accented letter made of a base letter and a diacritic reference):</p>
+<ol type="1">
+<li>Right-click the character in the <strong>Font View</strong> and
+select <strong>Unlink Reference</strong> if you only want to shift the
+accent or the base independently without affecting the original source
+glyphs.</li>
+<li>Open the glyph and apply the vertical transformation specifically to
+the relevant contours.</li>
+</ol>
+<h3 id="post-adjustment-checks">Post-Adjustment Checks</h3>
+<p>After shifting glyphs vertically, verify your changes to maintain
+layout integrity:</p>
+<ul>
+<li><strong>Check Sidebearings:</strong> Ensure that moving the glyph
+did not unintentionally alter the left or right sidebearings.</li>
+<li><strong>Update Kerning:</strong> Verify that pairs involving the
+shifted glyph still align naturally with surrounding letters.</li>
+<li><strong>Test in Metrics View:</strong> Go to
+<strong>Metrics</strong> &gt; <strong>New Metrics Window</strong> and
+type words containing the modified characters alongside standard
+baseline letters (like <code>x</code> and <code>H</code>) to evaluate
+alignment in real-time text strings.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-adjust-baseline-offset-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

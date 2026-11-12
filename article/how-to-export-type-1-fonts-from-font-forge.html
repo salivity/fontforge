@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Export Type 1 Fonts from FontForge - fontforge</title>
+    <meta name="description" content="Exporting a font as a Type 1 PostScript font in FontForge involves preparing your glyph outlines, verifying standard PostScript font metrics, and using the &quot;Generate Fonts&quot; dialog to output the files. This guide walks you through the exact steps to config">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-export-type-1-fonts-from-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Export Type 1 Fonts from FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-export-type-1-fonts-from-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Exporting a font as a Type 1 PostScript font in FontForge involves preparing your glyph outlines, verifying standard PostScript font metrics, and using the &quot;Generate Fonts&quot; dialog to output the files. This guide walks you through the exact steps to config" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-export-type-1-fonts-from-fontforge">How to Export Type 1
+Fonts from FontForge</h1>
+<p>Exporting a font as a Type 1 PostScript font in FontForge involves
+preparing your glyph outlines, verifying standard PostScript font
+metrics, and using the "Generate Fonts" dialog to output the files. This
+guide walks you through the exact steps to configure your settings and
+export your typography project into either binary (.pfb) or ASCII (.pfa)
+Type 1 format.</p>
+<h3 id="step-1-prepare-your-outlines">Step 1: Prepare Your Outlines</h3>
+<p>Before exporting to PostScript Type 1, ensure your glyphs meet
+standard PostScript requirements:</p>
+<ol type="1">
+<li>Open your project in FontForge.</li>
+<li>Select all glyphs by pressing <strong>Ctrl + A</strong> (or
+<strong>Cmd + A</strong> on macOS).</li>
+<li>Correct the path directions by navigating to <strong>Element &gt;
+Correct Direction</strong>.</li>
+<li>Remove overlap issues by selecting <strong>Element &gt; Overlap &gt;
+Remove Overlap</strong>.</li>
+<li>Ensure your font uses a 1000-unit Em size, which is standard for
+PostScript fonts. Go to <strong>Element &gt; Font Info &gt;
+General</strong> and verify the <strong>Em Size</strong> is set to
+<code>1000</code>.</li>
+</ol>
+<h3 id="step-2-configure-font-information">Step 2: Configure Font
+Information</h3>
+<p>Type 1 fonts require specific naming conventions without spaces in
+technical fields:</p>
+<ol type="1">
+<li>Go to <strong>Element &gt; Font Info</strong>.</li>
+<li>Under the <strong>PS Names</strong> tab, verify the following
+fields:
+<ul>
+<li><strong>Fontname</strong>: The internal PostScript name. Do not
+include spaces or special characters (e.g.,
+<code>MyFont-Regular</code>).</li>
+<li><strong>Family Name</strong>: The name of the font family (e.g.,
+<code>MyFont</code>).</li>
+<li><strong>Weight</strong>: The style weight (e.g.,
+<code>Regular</code>, <code>Bold</code>).</li>
+</ul></li>
+<li>Click <strong>OK</strong> to save changes.</li>
+</ol>
+<h3 id="step-3-open-the-generate-fonts-window">Step 3: Open the Generate
+Fonts Window</h3>
+<ol type="1">
+<li>Navigate to the top menu and select <strong>File &gt; Generate
+Fonts...</strong> (or press <strong>Ctrl + Shift + G</strong> /
+<strong>Cmd + Shift + G</strong>).</li>
+<li>Choose the destination directory where you want to save the exported
+font files.</li>
+</ol>
+<h3 id="step-4-select-the-type-1-format">Step 4: Select the Type 1
+Format</h3>
+<ol type="1">
+<li>Locate the file type dropdown menu beneath the file browser.</li>
+<li>Select one of the Type 1 options:
+<ul>
+<li><strong>PostScript Type 1 (Binary)</strong>: Generates a
+<code>.pfb</code> file, commonly used in Windows and Unix
+environments.</li>
+<li><strong>PostScript Type 1 (ASCII)</strong>: Generates a
+<code>.pfa</code> file, typically used in Unix printing
+environments.</li>
+</ul></li>
+<li>Next to the file format dropdown, click the <strong>Options</strong>
+button if you need to generate font metrics:
+<ul>
+<li>Check <strong>AFM</strong> to generate an Adobe Font Metrics file
+(<code>.afm</code>), which is often required alongside Type 1 fonts to
+store kerning and spacing data.</li>
+<li>Click <strong>OK</strong>.</li>
+</ul></li>
+</ol>
+<h3 id="step-5-generate-and-export">Step 5: Generate and Export</h3>
+<ol type="1">
+<li>Verify the filename in the text field at the top of the dialog.</li>
+<li>Click the <strong>Generate</strong> button.</li>
+<li>If FontForge detects minor technical errors (such as missing points
+or intersecting coordinates), a warning dialog will appear. Review the
+warnings and select <strong>Generate</strong> to proceed with the
+export.</li>
+</ol>
+<p>FontForge will compile the font and output your <code>.pfb</code> or
+<code>.pfa</code> file, along with the corresponding <code>.afm</code>
+file, to the selected folder.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-export-type-1-fonts-from-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

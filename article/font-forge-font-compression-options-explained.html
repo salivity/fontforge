@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Font Compression Options Explained - fontforge</title>
+    <meta name="description" content="FontForge offers several compression methods and format-specific settings to reduce font file sizes during the export process. When exporting through the Generate Fonts interface, compression is achieved either through dedicated compressed web font wrappe">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-font-compression-options-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Font Compression Options Explained - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-font-compression-options-explained" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge offers several compression methods and format-specific settings to reduce font file sizes during the export process. When exporting through the Generate Fonts interface, compression is achieved either through dedicated compressed web font wrappe" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-font-compression-options-explained">FontForge Font
+Compression Options Explained</h1>
+<p>FontForge offers several compression methods and format-specific
+settings to reduce font file sizes during the export process. When
+exporting through the Generate Fonts interface, compression is achieved
+either through dedicated compressed web font wrappers like WOFF and
+WOFF2, compression-enabled legacy formats like SVGZ, or internal outline
+optimizations such as CFF subroutinization.</p>
+<h3 id="woff-web-open-font-format">WOFF (Web Open Font Format)</h3>
+<p>When selecting Web Open Font Format (WOFF) from the Generate Fonts
+dropdown, FontForge applies table-level compression to the font's
+underlying sfnt structure.</p>
+<ul>
+<li><strong>Compression Algorithm:</strong> WOFF uses standard
+<code>zlib</code> (deflate) compression.</li>
+<li><strong>Functionality:</strong> Each table within the font (such as
+<code>glyf</code>, <code>loca</code>, or <code>CFF</code>) is compressed
+individually before being packaged into the WOFF container.</li>
+<li><strong>Compatibility:</strong> Supported natively across all modern
+and legacy web browsers without requiring third-party command-line
+compression tools.</li>
+</ul>
+<h3 id="woff2-web-open-font-format-20">WOFF2 (Web Open Font Format
+2.0)</h3>
+<p>WOFF2 is the successor to WOFF and offers significantly higher
+compression ratios, often reducing file sizes by an additional 30%
+compared to standard WOFF.</p>
+<ul>
+<li><strong>Compression Algorithm:</strong> WOFF2 uses the Brotli
+compression algorithm combined with table-specific preprocessing
+transforms.</li>
+<li><strong>Requirements:</strong> FontForge must be built with
+<code>libbrotli</code> support enabled. If compiled without Brotli
+libraries, the WOFF2 option may be disabled or missing from the format
+selection menu.</li>
+<li><strong>Preprocessing:</strong> It transforms the <code>glyf</code>
+and <code>loca</code> tables into a unified, more compact stream prior
+to Brotli compression.</li>
+</ul>
+<h3 id="svgz-compressed-svg-fonts">SVGZ (Compressed SVG Fonts)</h3>
+<p>For legacy vector web formats, FontForge allows exporting fonts as
+SVG.</p>
+<ul>
+<li><strong>Compression Algorithm:</strong> Selecting SVGZ applies
+standard <code>gzip</code> compression directly to the XML-based SVG
+font file.</li>
+<li><strong>Use Case:</strong> Primarily used for older mobile platforms
+(such as legacy iOS versions) that required vector SVG glyph definitions
+without the overhead of uncompressed text-based XML.</li>
+</ul>
+<h3 id="cff-subroutinization-internal-outline-compression">CFF
+Subroutinization (Internal Outline Compression)</h3>
+<p>When generating PostScript-flavored OpenType fonts
+(<code>.otf</code>), FontForge provides internal data compression
+through Compact Font Format (CFF) subroutinization rather than
+container-level file compression.</p>
+<ul>
+<li><strong>How It Works:</strong> In the Generate Fonts "Options"
+dialog, checking the subroutinize option instructs FontForge to search
+for identical path sequences across different glyphs and replace them
+with shared subroutines.</li>
+<li><strong>Impact:</strong> This reduces the overall size of the
+<code>CFF</code> table without altering the format extension or
+requiring decompression software in the target environment.</li>
+</ul>
+<h3 id="pcf--bitmap-font-compression">PCF / Bitmap Font Compression</h3>
+<p>When generating bitmap distributions (such as X11 PCF fonts),
+FontForge provides direct compression options in the font generation
+dialog:</p>
+<ul>
+<li><strong>Formats:</strong> PCF fonts can be output with
+<code>.pcf.Z</code> (Unix <code>compress</code>) or <code>.pcf.gz</code>
+(<code>gzip</code>) compression.</li>
+<li><strong>Use Case:</strong> Reduces disk usage for system bitmap
+fonts in Unix/Linux terminal environments.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-font-compression-options-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

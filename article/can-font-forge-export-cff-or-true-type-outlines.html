@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can FontForge Export CFF or TrueType Outlines? - fontforge</title>
+    <meta name="description" content="FontForge fully supports exporting fonts with both Compact Font Format (CFF) and TrueType outlines. This guide explains how FontForge handles cubic and quadratic curve formats, how to choose between them, and the direct steps required to generate .otf (CF">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/can-font-forge-export-cff-or-true-type-outlines">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Can FontForge Export CFF or TrueType Outlines? - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/can-font-forge-export-cff-or-true-type-outlines" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge fully supports exporting fonts with both Compact Font Format (CFF) and TrueType outlines. This guide explains how FontForge handles cubic and quadratic curve formats, how to choose between them, and the direct steps required to generate .otf (CF" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="can-fontforge-export-cff-or-truetype-outlines">Can FontForge
+Export CFF or TrueType Outlines?</h1>
+<p>FontForge fully supports exporting fonts with both Compact Font
+Format (CFF) and TrueType outlines. This guide explains how FontForge
+handles cubic and quadratic curve formats, how to choose between them,
+and the direct steps required to generate <code>.otf</code> (CFF) or
+<code>.ttf</code> (TrueType) font files from your project.</p>
+<h3 id="outline-formats-in-fontforge">Outline Formats in FontForge</h3>
+<p>FontForge is capable of creating and converting both primary digital
+outline types:</p>
+<ul>
+<li><strong>CFF (PostScript) Outlines:</strong> These use cubic Bézier
+curves (each curve segment has two control points). When compiled into
+OpenType fonts, these files typically use the <code>.otf</code>
+extension. CFF outlines are standard for graphic design, print
+workflows, and high-end typography.</li>
+<li><strong>TrueType Outlines:</strong> These use quadratic Bézier
+curves (each curve segment has one control point). When exported, these
+files typically use the <code>.ttf</code> extension. TrueType outlines
+are widely used for digital displays, operating system system fonts, and
+web fonts.</li>
+</ul>
+<h3 id="internal-curve-modes-vs-export-formats">Internal Curve Modes vs.
+Export Formats</h3>
+<p>While FontForge can export to either format at any time, fonts
+internally store vectors in either cubic or quadratic mode:</p>
+<ul>
+<li>To check or change your internal editing mode, navigate to
+<strong>Element</strong> &gt; <strong>Font Info</strong> &gt;
+<strong>Layers</strong>.</li>
+<li>If you design using cubic splines and export to TrueType, FontForge
+will automatically convert the curves from cubic to quadratic.</li>
+<li>If you design using quadratic splines and export to CFF, FontForge
+will convert them from quadratic to cubic.</li>
+<li>For the cleanest rendering and file sizes, it is best to set your
+internal spline mode to match your intended export target before
+fine-tuning control points and hints.</li>
+</ul>
+<h3 id="how-to-export-cff-outlines">How to Export CFF Outlines</h3>
+<p>To export a font with CFF outlines:</p>
+<ol type="1">
+<li>Open your project in FontForge.</li>
+<li>Go to <strong>File</strong> &gt; <strong>Generate
+Fonts...</strong></li>
+<li>Choose the destination directory and name your file.</li>
+<li>Open the format dropdown menu under the file name.</li>
+<li>Select <strong>OpenType (CFF)</strong>.</li>
+<li>Click <strong>Generate</strong> to save your <code>.otf</code> font
+file.</li>
+</ol>
+<h3 id="how-to-export-truetype-outlines">How to Export TrueType
+Outlines</h3>
+<p>To export a font with TrueType outlines:</p>
+<ol type="1">
+<li>Open your project in FontForge.</li>
+<li>Go to <strong>File</strong> &gt; <strong>Generate
+Fonts...</strong></li>
+<li>Choose the destination directory and name your file.</li>
+<li>Open the format dropdown menu under the file name.</li>
+<li>Select <strong>TrueType</strong>.</li>
+<li>Click <strong>Generate</strong> to save your <code>.ttf</code> font
+file.</li>
+</ol>
+<p>FontForge gives you complete control over font generation, allowing
+you to produce standard, production-ready fonts using whichever outline
+technology best matches your deployment needs.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/can-font-forge-export-cff-or-true-type-outlines';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

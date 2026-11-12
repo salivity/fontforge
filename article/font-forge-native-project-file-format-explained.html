@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Native Project File Format Explained - fontforge</title>
+    <meta name="description" content="This article provides a concise overview of the native project file format used by FontForge, the open-source font editor. While FontForge can export to standard delivery formats like TrueType (TTF) and OpenType (OTF), it relies on its own proprietary for">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-native-project-file-format-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Native Project File Format Explained - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-native-project-file-format-explained" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a concise overview of the native project file format used by FontForge, the open-source font editor. While FontForge can export to standard delivery formats like TrueType (TTF) and OpenType (OTF), it relies on its own proprietary for" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-native-project-file-format-explained">FontForge Native
+Project File Format Explained</h1>
+<p>This article provides a concise overview of the native project file
+format used by FontForge, the open-source font editor. While FontForge
+can export to standard delivery formats like TrueType (TTF) and OpenType
+(OTF), it relies on its own proprietary format to store work-in-progress
+font designs. Below, you will learn about the Spline Font Database
+(.sfd) format, its key characteristics, its benefits for font designers,
+and its modern directory-based alternative.</p>
+<h3 id="the-spline-font-database-sfd">The Spline Font Database
+(.sfd)</h3>
+<p>The primary native file format used by FontForge is the
+<strong>Spline Font Database</strong>, which uses the <code>.sfd</code>
+file extension. When you create or edit a font in FontForge and choose
+"Save" or "Save As," FontForge stores the project in this format rather
+than generating an installable font file.</p>
+<h3 id="key-characteristics-of-sfd">Key Characteristics of SFD</h3>
+<ul>
+<li><strong>Plain-Text Structure:</strong> An <code>.sfd</code> file is
+a human-readable ASCII text file. It organizes font information using
+simple key-value pairs and structured data blocks, making it possible to
+inspect and edit font data using a standard text editor.</li>
+<li><strong>Lossless Editing State:</strong> Standard compiled formats
+such as TTF, OTF, and WOFF discard specific design data to optimize file
+size for end users. The <code>.sfd</code> format preserves all
+editor-specific information, including non-integral coordinate points,
+undo histories, custom guides, background tracing layers, hinting
+instructions, and unfinished glyph components.</li>
+<li><strong>Vector Path Representation:</strong> Spline Font Database
+files store outlines using Bézier curves (both quadratic and cubic
+splines), allowing you to convert between different curve types without
+prematurely flattening or distorting your glyph paths.</li>
+</ul>
+<h3 id="version-control-and-the-sfdir-format">Version Control and the
+SFDIR Format</h3>
+<p>Because <code>.sfd</code> is a monolithic text file, large font
+projects can result in massive files that are difficult to merge when
+multiple designers collaborate. To solve this, FontForge also supports a
+directory-based variant called <strong>SFDIR</strong>
+(<code>.sfdir</code>).</p>
+<p>An <code>.sfdir</code> project replaces the single <code>.sfd</code>
+file with a structured folder. In this format, global font metrics and
+settings are stored in a main configuration file, while each individual
+glyph is saved as its own separate <code>.glyph</code> text file. This
+modular structure makes SFDIR ideal for version control systems like
+Git, as edits to one glyph do not cause merge conflicts across the rest
+of the typeface.</p>
+<h3 id="saving-vs-generating-fonts">Saving vs. Generating Fonts</h3>
+<p>In FontForge, there is a clear distinction between saving a project
+and exporting a finished font:</p>
+<ul>
+<li><strong>Save / Save As:</strong> Saves the work as an
+<code>.sfd</code> or <code>.sfdir</code> project to preserve all
+construction data for future editing.</li>
+<li><strong>Generate Fonts:</strong> Converts the native vector data
+into compiled, production-ready formats such as OpenType (CFF),
+TrueType, SVG, or web fonts (WOFF/WOFF2). Once generated, these files
+should not be used as the primary editing source, as reverse-engineering
+them back into FontForge can result in lost metadata and altered curve
+approximations.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-native-project-file-format-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Missing Metrics for New Glyphs in FontForge - fontforge</title>
+    <meta name="description" content="When you add new glyphs or import vector outlines into FontForge, they often lack proper advance widths and side bearings, causing characters to overlap or display incorrectly. This guide explains how to restore and configure missing metric values for new">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/fix-missing-metrics-for-new-glyphs-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fix Missing Metrics for New Glyphs in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/fix-missing-metrics-for-new-glyphs-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When you add new glyphs or import vector outlines into FontForge, they often lack proper advance widths and side bearings, causing characters to overlap or display incorrectly. This guide explains how to restore and configure missing metric values for new" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fix-missing-metrics-for-new-glyphs-in-fontforge">Fix Missing
+Metrics for New Glyphs in FontForge</h1>
+<p>When you add new glyphs or import vector outlines into FontForge,
+they often lack proper advance widths and side bearings, causing
+characters to overlap or display incorrectly. This guide explains how to
+restore and configure missing metric values for newly created glyphs
+using FontForge’s manual input options, interactive Metrics View, and
+automated width tools.</p>
+<h3 id="why-metrics-go-missing">Why Metrics Go Missing</h3>
+<p>When drawing a glyph from scratch or pasting an SVG/EPS outline into
+an empty slot, FontForge typically defaults the horizontal advance width
+to zero or to the font’s default width without adjusting the Left Side
+Bearing (LSB) or Right Side Bearing (RSB). Without defined bearings, the
+glyph has no spacing boundaries relative to neighboring characters.</p>
+<h3 id="method-1-using-the-metrics-window">Method 1: Using the Metrics
+Window</h3>
+<p>The interactive Metrics Window is the most intuitive way to visually
+inspect and assign metric values alongside reference characters.</p>
+<ol type="1">
+<li>Select your newly added glyph in the font view.</li>
+<li>Hold <code>Shift</code> and select a few standard reference glyphs
+(such as "H", "O", or "n") to compare spacing.</li>
+<li>Go to the top menu and select <strong>Metrics</strong> &gt;
+<strong>Open Metrics Window</strong> (or press <code>Ctrl + K</code> /
+<code>Cmd + K</code>).</li>
+<li>In the table below the visual preview, locate your new glyph's
+column.</li>
+<li>Click directly into the <strong>LBearing</strong>,
+<strong>RBearing</strong>, or <strong>Width</strong> fields to type
+specific numerical values.</li>
+<li>Alternatively, click and drag the vertical boundary lines in the
+preview pane to set the LSB and advance width interactively.</li>
+</ol>
+<h3 id="method-2-setting-metric-values-via-glyph-info">Method 2: Setting
+Metric Values via Glyph Info</h3>
+<p>If you already know the exact units you need for advance width:</p>
+<ol type="1">
+<li>Right-click the new glyph in the main grid view and select
+<strong>Glyph Info</strong>.</li>
+<li>Navigate to the <strong>Horizontal</strong> tab on the left
+sidebar.</li>
+<li>Check the <strong>Set Width</strong> box and enter your desired
+advance width in font units.</li>
+<li>Click <strong>OK</strong> to save the changes.</li>
+</ol>
+<h3 id="method-3-using-auto-width">Method 3: Using Auto Width</h3>
+<p>For bulk adjustments or quick estimation based on existing glyph
+standards, FontForge can automatically calculate side bearings based on
+the contours of the artwork.</p>
+<ol type="1">
+<li>Select the newly created glyphs in the font view window.</li>
+<li>Navigate to <strong>Metrics</strong> in the top menu bar.</li>
+<li>Select <strong>Auto Width...</strong>.</li>
+<li>In the dialog, set a target spacing value (this specifies the
+optical distance between adjacent glyphs).</li>
+<li>Click <strong>OK</strong>. FontForge will calculate appropriate LSB
+and RSB values according to the shape of each outline.</li>
+</ol>
+<h3 id="method-4-correcting-transform-offsets">Method 4: Correcting
+Transform Offsets</h3>
+<p>If a glyph appears outside its designated bounding box:</p>
+<ol type="1">
+<li>Double-click the glyph to enter the Outline Editing window.</li>
+<li>Press <code>Ctrl + A</code> to select all points.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Transformations</strong>
+&gt; <strong>Transform</strong>.</li>
+<li>Choose <strong>Move</strong> to reposition the artwork so the
+leftmost point aligns properly with the origin axis (x = 0),
+establishing a clean baseline for the Left Side Bearing.</li>
+<li>Close the outline window and adjust the advance width line manually
+or via the Metrics menu.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/fix-missing-metrics-for-new-glyphs-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

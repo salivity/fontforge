@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use GPOS Lookup Tables in FontForge - fontforge</title>
+    <meta name="description" content="This article provides a concise overview of OpenType Glyph Positioning (GPOS) lookup tables and explains how to create, configure, and apply them using FontForge. You will learn the fundamental purpose of GPOS within font engineering, the distinction betw">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-use-gpos-lookup-tables-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use GPOS Lookup Tables in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-use-gpos-lookup-tables-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a concise overview of OpenType Glyph Positioning (GPOS) lookup tables and explains how to create, configure, and apply them using FontForge. You will learn the fundamental purpose of GPOS within font engineering, the distinction betw" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-gpos-lookup-tables-in-fontforge">How to Use GPOS
+Lookup Tables in FontForge</h1>
+<p>This article provides a concise overview of OpenType Glyph
+Positioning (GPOS) lookup tables and explains how to create, configure,
+and apply them using FontForge. You will learn the fundamental purpose
+of GPOS within font engineering, the distinction between lookups and
+subtables, and step-by-step instructions for implementing pair
+positioning (kerning) and mark-to-base positioning in your font
+projects.</p>
+<hr />
+<h3 id="what-is-a-gpos-lookup-table">What Is a GPOS Lookup Table?</h3>
+<p>The GPOS (Glyph Positioning) table is an OpenType layout table that
+defines precise spacing, shifting, and alignment between glyphs without
+altering their identities. Unlike the GSUB (Glyph Substitution) table,
+which replaces glyphs (such as creating ligatures), GPOS adjusts
+horizontal and vertical coordinates dynamically.</p>
+<p>A GPOS table is organized into a hierarchy:</p>
+<ol type="1">
+<li><strong>Features:</strong> User-facing behaviors or language
+requirements defined by four-character tags (e.g., <code>kern</code> for
+kerning, <code>mark</code> for diacritic placement).</li>
+<li><strong>Lookups:</strong> Individual processing units linked to a
+feature that define <em>how</em> positioning should be calculated.</li>
+<li><strong>Subtables:</strong> Specific datasets within a lookup
+containing glyph pairs, anchor points, or positioning offsets.</li>
+</ol>
+<p>Common GPOS lookup types include:</p>
+<ul>
+<li><strong>Single Adjustment:</strong> Modifies the advance width or
+placement of an individual glyph.</li>
+<li><strong>Pair Adjustment:</strong> Adjusts the distance between two
+specific glyphs (the foundation of kerning).</li>
+<li><strong>Mark-to-Base:</strong> Aligns combining marks (such as
+accents) onto base glyphs using coordinated anchor points.</li>
+<li><strong>Cursive Attachment:</strong> Connects adjacent glyphs
+seamlessly in connected scripts like Arabic.</li>
+</ul>
+<hr />
+<h3
+id="step-by-step-creating-a-gpos-kerning-lookup-in-fontforge">Step-by-Step:
+Creating a GPOS Kerning Lookup in FontForge</h3>
+<p>Pair kerning is the most common use of GPOS in FontForge. Follow
+these steps to implement a horizontal kerning lookup:</p>
+<h4 id="1-open-the-lookups-window">1. Open the Lookups Window</h4>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Font Info</strong> from
+the top menu.</li>
+<li>In the sidebar, select <strong>Lookups</strong>, then click the
+<strong>GPOS</strong> tab at the top.</li>
+</ol>
+<h4 id="2-add-a-new-lookup">2. Add a New Lookup</h4>
+<ol type="1">
+<li>Click the <strong>Add Lookup</strong> button on the right side.</li>
+<li>In the <strong>Type</strong> dropdown, select <strong>Pair Position
+(kerning)</strong>.</li>
+<li>Under <strong>Feature</strong>, select or type <code>kern</code>
+(Horizontal Kerning).</li>
+<li>Set the script and language systems (typically <code>latn</code>
+with default language, or select specific scripts as needed).</li>
+<li>Leave the lookup name as generated, or assign a descriptive name.
+Click <strong>OK</strong>.</li>
+</ol>
+<h4 id="3-add-a-subtable">3. Add a Subtable</h4>
+<ol type="1">
+<li>Select the newly created lookup row.</li>
+<li>Click <strong>Add Subtable</strong>.</li>
+<li>Choose whether to kern by <strong>individual pairs</strong> (manual
+pairs) or by <strong>classes</strong> (grouping visually similar glyphs
+like <code>O</code>, <code>C</code>, <code>G</code>, <code>Q</code> to
+save file size).</li>
+<li>Name the subtable and click <strong>OK</strong>.</li>
+</ol>
+<h4 id="4-define-kerning-values">4. Define Kerning Values</h4>
+<ul>
+<li>If using <strong>Classes</strong>: Define your left-hand and
+right-hand glyph classes, then input kerning values in the matrix
+view.</li>
+<li>If using <strong>Individual Pairs</strong>: Use
+<strong>Metrics</strong> &gt; <strong>New Metrics Window</strong> from
+the main FontForge interface. Type your target character pairs (e.g.,
+<code>AV</code>, <code>To</code>), drag the spacing manually between
+them, or enter a numeric kerning offset in the kerning field. FontForge
+automatically updates your GPOS subtable.</li>
+</ul>
+<hr />
+<h3 id="implementing-mark-to-base-positioning">Implementing Mark-to-Base
+Positioning</h3>
+<p>To anchor accents dynamically over letters:</p>
+<ol type="1">
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font Info</strong>
+&gt; <strong>Lookups</strong> &gt; <strong>GPOS</strong>.</li>
+<li>Click <strong>Add Lookup</strong> and choose <strong>Mark to Base
+Position</strong> as the <strong>Type</strong>.</li>
+<li>Assign the <code>mark</code> feature tag, select your target script,
+and click <strong>OK</strong>.</li>
+<li>Select the lookup and click <strong>Add Subtable</strong>.</li>
+<li>Define anchor classes (e.g., <code>top</code> for accents placed
+above letters).</li>
+<li>Open your base glyphs (such as <code>e</code>) and mark glyphs (such
+as <code>acutecomb</code>), then go to <strong>Point</strong> &gt;
+<strong>Add Anchor</strong> to assign coordinates where the mark and
+base should attach.</li>
+</ol>
+<hr />
+<h3 id="validating-and-generating">Validating and Generating</h3>
+<p>Once your GPOS lookups are configured:</p>
+<ol type="1">
+<li>Preview your rules directly in FontForge using
+<strong>Metrics</strong> &gt; <strong>New Metrics Window</strong>.</li>
+<li>Toggle OpenType features on and off within the Metrics window via
+the <strong>Features</strong> menu to ensure your GPOS tables behave
+correctly.</li>
+<li>Generate your font via <strong>File</strong> &gt; <strong>Generate
+Fonts</strong>, ensuring you export as an OpenType format
+(<code>OTF</code> or <code>TTF</code>) to retain the compiled GPOS
+binary data.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-use-gpos-lookup-tables-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

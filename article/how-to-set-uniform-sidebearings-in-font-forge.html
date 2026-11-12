@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Set Uniform Sidebearings in FontForge - fontforge</title>
+    <meta name="description" content="Setting uniform sidebearings across multiple glyphs in FontForge is a fast way to standardize horizontal spacing across a typeface. By selecting a target range of characters in the main Font View and applying FontForge’s batch metrics commands, you can ap">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-set-uniform-sidebearings-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Set Uniform Sidebearings in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-set-uniform-sidebearings-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Setting uniform sidebearings across multiple glyphs in FontForge is a fast way to standardize horizontal spacing across a typeface. By selecting a target range of characters in the main Font View and applying FontForge’s batch metrics commands, you can ap" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-set-uniform-sidebearings-in-fontforge">How to Set Uniform
+Sidebearings in FontForge</h1>
+<p>Setting uniform sidebearings across multiple glyphs in FontForge is a
+fast way to standardize horizontal spacing across a typeface. By
+selecting a target range of characters in the main Font View and
+applying FontForge’s batch metrics commands, you can apply identical
+Left Sidebearings (LSB) and Right Sidebearings (RSB) simultaneously
+without having to adjust each character individually.</p>
+<h2 id="selecting-the-target-glyphs">Selecting the Target Glyphs</h2>
+<ol type="1">
+<li>Open your font project in FontForge to view the main glyph grid
+(Font View).</li>
+<li>Click on the first glyph in the range you want to adjust.</li>
+<li>Hold down the <strong>Shift</strong> key and click the last glyph in
+the sequence to highlight the entire continuous range.</li>
+<li>To select non-contiguous glyphs, hold down the
+<strong>Control</strong> key (or <strong>Command</strong> on macOS)
+while clicking individual glyphs.</li>
+</ol>
+<h2 id="setting-the-left-sidebearing-lsb">Setting the Left Sidebearing
+(LSB)</h2>
+<ol type="1">
+<li>With the desired glyphs selected, navigate to the top menu and click
+<strong>Metrics</strong>.</li>
+<li>Select <strong>Set LBearing...</strong> from the dropdown menu.</li>
+<li>In the dialog box that appears, choose the <strong>Set to</strong>
+option.</li>
+<li>Enter your desired numerical value in font units.</li>
+<li>Click <strong>OK</strong> to apply the uniform left sidebearing to
+all highlighted glyphs.</li>
+</ol>
+<h2 id="setting-the-right-sidebearing-rsb">Setting the Right Sidebearing
+(RSB)</h2>
+<ol type="1">
+<li>Keep the same glyphs selected in the Font View.</li>
+<li>Navigate back to the <strong>Metrics</strong> menu.</li>
+<li>Select <strong>Set RBearing...</strong> from the list.</li>
+<li>Choose the <strong>Set to</strong> option in the pop-up window.</li>
+<li>Enter the desired numerical value in font units.</li>
+<li>Click <strong>OK</strong> to finalize the right sidebearing
+adjustment across the selection.</li>
+</ol>
+<h2 id="verifying-the-metrics">Verifying the Metrics</h2>
+<p>To inspect your changes across the modified range:</p>
+<ol type="1">
+<li>Keep the glyphs selected and go to <strong>Metrics</strong> &gt;
+<strong>Open Metrics Window</strong> (or press <strong>Ctrl + K</strong>
+/ <strong>Cmd + K</strong>).</li>
+<li>Review the glyphs side-by-side to ensure the uniform spacing renders
+correctly across typical letter combinations.</li>
+<li>If necessary, you can make global incremental adjustments to the
+selected group by returning to <strong>Metrics</strong> &gt; <strong>Set
+LBearing...</strong> or <strong>Set RBearing...</strong> and selecting
+the <strong>Increment by</strong> option instead of "Set to."</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-set-uniform-sidebearings-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Export a Font Subset Using FontForge - fontforge</title>
+    <meta name="description" content="Subsetting a font allows you to strip away unused glyphs, significantly reducing file sizes for faster web performance and cleaner font management. This guide outlines the straightforward process of importing your font into the free, open-source FontForge">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-export-a-font-subset-using-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Export a Font Subset Using FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-export-a-font-subset-using-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Subsetting a font allows you to strip away unused glyphs, significantly reducing file sizes for faster web performance and cleaner font management. This guide outlines the straightforward process of importing your font into the free, open-source FontForge" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-export-a-font-subset-using-fontforge">How to Export a
+Font Subset Using FontForge</h1>
+<p>Subsetting a font allows you to strip away unused glyphs,
+significantly reducing file sizes for faster web performance and cleaner
+font management. This guide outlines the straightforward process of
+importing your font into the free, open-source FontForge editor,
+selecting your desired characters, removing unwanted glyphs, and
+exporting the streamlined, subsetted font file in your preferred
+format.</p>
+<h3 id="step-1-open-your-font-in-fontforge">Step 1: Open Your Font in
+FontForge</h3>
+<ol type="1">
+<li>Launch FontForge.</li>
+<li>Go to <strong>File</strong> &gt; <strong>Open</strong>.</li>
+<li>Locate and select the font file (<code>.ttf</code>,
+<code>.otf</code>, or <code>.woff</code>) you wish to subset, then click
+<strong>OK</strong>.</li>
+</ol>
+<h3 id="step-2-select-the-glyphs-you-want-to-keep">Step 2: Select the
+Glyphs You Want to Keep</h3>
+<p>Before deleting unneeded characters, you must identify the characters
+you intend to keep.</p>
+<ul>
+<li><strong>Manual Selection:</strong> Hold <code>Ctrl</code> (or
+<code>Cmd</code> on macOS) and click on individual glyphs, or hold
+<code>Shift</code> to select contiguous ranges.</li>
+<li><strong>Range Selection:</strong> Go to <strong>Edit</strong> &gt;
+<strong>Select</strong> &gt; <strong>Select by Wildcard...</strong> or
+use Unicode ranges to select predefined blocks, such as Basic
+Latin.</li>
+</ul>
+<h3 id="step-3-invert-the-selection">Step 3: Invert the Selection</h3>
+<p>Once your desired characters are highlighted, reverse the selection
+to target all the glyphs you want to discard:</p>
+<ol type="1">
+<li>Click <strong>Edit</strong> in the top menu bar.</li>
+<li>Navigate to <strong>Select</strong> &gt; <strong>Invert
+Selection</strong>.</li>
+<li>All glyphs <em>except</em> the ones you intend to keep will now be
+highlighted.</li>
+</ol>
+<h3 id="step-4-delete-the-unwanted-glyphs">Step 4: Delete the Unwanted
+Glyphs</h3>
+<ol type="1">
+<li>With the unneeded glyphs highlighted, go to <strong>Edit</strong>
+&gt; <strong>Clear</strong>.</li>
+<li>Alternatively, press the <code>Delete</code> or
+<code>Backspace</code> key.</li>
+<li>The selected glyph slots will now be empty.</li>
+</ol>
+<h3 id="step-5-optional-detach-glyphs-from-the-encoding">Step 5:
+(Optional) Detach Glyphs from the Encoding</h3>
+<p>To ensure the empty slots are completely removed from the font layout
+rather than remaining as empty spaces:</p>
+<ol type="1">
+<li>Go to <strong>Encoding</strong> &gt; <strong>Compact</strong>.</li>
+<li>This collapses the view so that only the remaining glyphs are
+displayed.</li>
+</ol>
+<h3 id="step-6-generate-the-subsetted-font">Step 6: Generate the
+Subsetted Font</h3>
+<ol type="1">
+<li>Go to <strong>File</strong> &gt; <strong>Generate
+Fonts...</strong></li>
+<li>In the dialog box, choose a destination folder and enter a new name
+for your font (it is best practice not to overwrite your original
+file).</li>
+<li>Select your output format from the dropdown menu (e.g.,
+<strong>TrueType</strong>, <strong>OpenType (CFF)</strong>, or
+<strong>Web Open Font Format (WOFF/WOFF2)</strong>).</li>
+<li>Click <strong>Generate</strong>.</li>
+<li>If FontForge displays a warning regarding non-standard glyph names
+or minor validation errors, review them and click
+<strong>Generate</strong> to proceed with the export.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-export-a-font-subset-using-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

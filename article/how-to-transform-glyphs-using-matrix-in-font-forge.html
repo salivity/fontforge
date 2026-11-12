@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Transform Glyphs Using Matrix in FontForge - fontforge</title>
+    <meta name="description" content="This guide explains how to apply mathematical 2D transformation matrices to glyph contours in FontForge. You will learn the mechanics behind FontForge&#39;s six-element affine transformation arrays, how to input custom matrix values through the graphical user">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-transform-glyphs-using-matrix-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Transform Glyphs Using Matrix in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-transform-glyphs-using-matrix-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to apply mathematical 2D transformation matrices to glyph contours in FontForge. You will learn the mechanics behind FontForge&#39;s six-element affine transformation arrays, how to input custom matrix values through the graphical user" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-transform-glyphs-using-matrix-in-fontforge">How to
+Transform Glyphs Using Matrix in FontForge</h1>
+<p>This guide explains how to apply mathematical 2D transformation
+matrices to glyph contours in FontForge. You will learn the mechanics
+behind FontForge's six-element affine transformation arrays, how to
+input custom matrix values through the graphical user interface, and how
+to automate the transformation process using the FontForge Python
+scripting environment.</p>
+<h2 id="understanding-the-fontforge-transformation-matrix">Understanding
+the FontForge Transformation Matrix</h2>
+<p>FontForge represents 2D affine transformations using a six-element
+array: <code>[a, b, c, d, x, y]</code>. This array maps an original
+coordinate point <span class="math inline">\((X, Y)\)</span> to a new
+coordinate point <span class="math inline">\((X&#39;, Y&#39;)\)</span>
+using the following linear equations:</p>
+<ul>
+<li><span class="math inline">\(X&#39; = a \cdot X + c \cdot Y +
+x\)</span></li>
+<li><span class="math inline">\(Y&#39; = b \cdot X + d \cdot Y +
+y\)</span></li>
+</ul>
+<p>In this structure:</p>
+<ul>
+<li><strong><span class="math inline">\(a\)</span></strong>: Horizontal
+scaling factor.</li>
+<li><strong><span class="math inline">\(b\)</span></strong>: Vertical
+shear (skew along the Y-axis).</li>
+<li><strong><span class="math inline">\(c\)</span></strong>: Horizontal
+shear (skew along the X-axis).</li>
+<li><strong><span class="math inline">\(d\)</span></strong>: Vertical
+scaling factor.</li>
+<li><strong><span class="math inline">\(x\)</span></strong>: Horizontal
+translation (movement along the X-axis in font units).</li>
+<li><strong><span class="math inline">\(y\)</span></strong>: Vertical
+translation (movement along the Y-axis in font units).</li>
+</ul>
+<h3 id="standard-matrix-configurations">Standard Matrix
+Configurations</h3>
+<ul>
+<li><strong>Identity (No Change):</strong>
+<code>[1, 0, 0, 1, 0, 0]</code></li>
+<li><strong>Translation:</strong> <code>[1, 0, 0, 1, dx, dy]</code></li>
+<li><strong>Scaling:</strong> <code>[sx, 0, 0, sy, 0, 0]</code></li>
+<li><strong>Horizontal Slant (Italicize):</strong>
+<code>[1, 0, tan(θ), 1, 0, 0]</code> where <span
+class="math inline">\(\theta\)</span> is the slant angle.</li>
+<li><strong>Rotation:</strong>
+<code>[cos(θ), sin(θ), -sin(θ), cos(θ), 0, 0]</code> where <span
+class="math inline">\(\theta\)</span> is the rotation angle in
+radians.</li>
+</ul>
+<hr />
+<h2 id="applying-matrices-via-the-graphical-user-interface">Applying
+Matrices via the Graphical User Interface</h2>
+<ol type="1">
+<li>Open your font file in FontForge.</li>
+<li>Select one or more glyphs in the <strong>Font View</strong>, or
+double-click a single glyph to open the <strong>Glyph
+View</strong>.</li>
+<li>Navigate to the top menu and select <strong>Element</strong> &gt;
+<strong>Transformations</strong> &gt; <strong>Transform...</strong> (or
+press <code>Ctrl+Shift+E</code> / <code>Cmd+Shift+E</code>).</li>
+<li>In the transformation dialog window, change the first drop-down menu
+from its default (such as <em>Origin</em> or <em>Move</em>) to
+<strong>Matrix</strong>.</li>
+<li>Input your six matrix parameters into the designated fields:
+<ul>
+<li><strong>[ a ] [ c ] [ x ]</strong></li>
+<li><strong>[ b ] [ d ] [ y ]</strong></li>
+</ul></li>
+<li>Click <strong>OK</strong> to execute the transformation on the
+selected contours.</li>
+</ol>
+<hr />
+<h2 id="applying-matrices-via-python-scripting">Applying Matrices via
+Python Scripting</h2>
+<p>FontForge includes a built-in Python module named <code>psMat</code>
+designed for matrix generation, concatenation, and transformation.</p>
+<h3 id="example-custom-matrix-transformation">Example: Custom Matrix
+Transformation</h3>
+<p>To apply a custom matrix directly to a glyph, pass a tuple of six
+numerical values to the <code>glyph.transform()</code> method:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the font file</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Select a target glyph</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>glyph <span class="op">=</span> font[<span class="st">&quot;A&quot;</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a matrix: [a, b, c, d, x, y]</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This example scales X by 1.2, shears X by 0.2, and shifts Y by 50 units</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>custom_matrix <span class="op">=</span> (<span class="fl">1.2</span>, <span class="fl">0.0</span>, <span class="fl">0.2</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">50.0</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the transformation</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>glyph.transform(custom_matrix)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Save changes</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>font.save()</span></code></pre></div>
+<h3 id="example-combining-transformations-with-psmat">Example: Combining
+Transformations with <code>psMat</code></h3>
+<p>The <code>psMat</code> module allows you to compose complex matrices
+without manual calculation:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psMat</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>glyph <span class="op">=</span> font[<span class="st">&quot;B&quot;</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate component matrices</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>scale <span class="op">=</span> psMat.scale(<span class="fl">1.1</span>, <span class="fl">0.9</span>)          <span class="co"># Scale X by 110%, Y by 90%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>rotate <span class="op">=</span> psMat.rotate(math.radians(<span class="dv">15</span>)) <span class="co"># Rotate 15 degrees counter-clockwise</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>translate <span class="op">=</span> psMat.translate(<span class="dv">20</span>, <span class="op">-</span><span class="dv">10</span>)    <span class="co"># Move 20 units right, 10 units down</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiply matrices together (applied from right to left)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>combined_matrix <span class="op">=</span> psMat.compose(scale, rotate)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>final_matrix <span class="op">=</span> psMat.compose(combined_matrix, translate)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to glyph</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>glyph.transform(final_matrix)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>font.save()</span></code></pre></div>
+<hr />
+<h2 id="post-transformation-clean-up">Post-Transformation Clean-Up</h2>
+<p>Matrix operations often alter point positioning in ways that disrupt
+font standards. After applying transformations:</p>
+<ol type="1">
+<li><strong>Round Coordinates to Integers:</strong> PostScript and
+TrueType outlines typically require whole integer coordinates. Run
+<strong>Element</strong> &gt; <strong>Round</strong> &gt; <strong>To
+Int</strong> (or <code>glyph.round()</code> in Python).</li>
+<li><strong>Correct Extrema:</strong> Rotations and shears move on-curve
+extrema. Run <strong>Element</strong> &gt; <strong>Add Extrema</strong>
+(or <code>glyph.addExtrema()</code>) to maintain proper curve
+rendering.</li>
+<li><strong>Correct Direction:</strong> Reflection matrices (negative
+scaling factors) invert path winding order. Run <strong>Element</strong>
+&gt; <strong>Correct Direction</strong> (or
+<code>glyph.correctDirection()</code>) to ensure internal counters
+render as cutouts rather than solid fills.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-transform-glyphs-using-matrix-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

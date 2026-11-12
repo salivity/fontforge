@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why FontForge Needs X11 or XQuartz on macOS - fontforge</title>
+    <meta name="description" content="FontForge is a powerful open-source font editor originally developed for Unix-like environments, which often causes it to rely on an external display server to function on Apple computers. On macOS, running certain builds of FontForge requires X11 or XQua">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/why-font-forge-needs-x-11-or-x-quartz-on-mac-os">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why FontForge Needs X11 or XQuartz on macOS - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/why-font-forge-needs-x-11-or-x-quartz-on-mac-os" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge is a powerful open-source font editor originally developed for Unix-like environments, which often causes it to rely on an external display server to function on Apple computers. On macOS, running certain builds of FontForge requires X11 or XQua" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-fontforge-needs-x11-or-xquartz-on-macos">Why FontForge Needs
+X11 or XQuartz on macOS</h1>
+<p>FontForge is a powerful open-source font editor originally developed
+for Unix-like environments, which often causes it to rely on an external
+display server to function on Apple computers. On macOS, running certain
+builds of FontForge requires X11 or XQuartz because the application's
+legacy graphical user interface is built on the X Window System rather
+than Apple's native Cocoa framework. This article explains the
+architectural origins of FontForge, Apple's transition away from
+integrated X11 support, and how different installation methods affect
+whether you need XQuartz.</p>
+<h3 id="the-unix-heritage-of-fontforge">The Unix Heritage of
+FontForge</h3>
+<p>FontForge was created in the early 2000s specifically for Unix-like
+operating systems. At the time, the universal standard for drawing
+graphical user interfaces on Unix platforms was the X Window System
+(commonly called X11).</p>
+<p>Instead of using cross-platform UI toolkits like Qt or native macOS
+frameworks, FontForge was designed with its own custom widget toolkit
+that communicated directly with an X11 display server. To render
+windows, buttons, glyph outlines, and menus, the software expects an
+active X11 server running in the background to handle drawing commands
+and user inputs.</p>
+<h3 id="apples-removal-of-integrated-x11">Apple’s Removal of Integrated
+X11</h3>
+<p>In earlier versions of OS X (from 10.5 Leopard through 10.7 Lion),
+Apple included a built-in X11 implementation. If a Unix utility needed
+X11, the operating system handled it transparently without requiring
+third-party software.</p>
+<p>Starting with OS X 10.8 Mountain Lion, Apple deprecated and
+completely removed its integrated X11 server to focus exclusively on
+native graphics technologies. Instead, Apple directed users to the
+community-driven open-source project <strong>XQuartz</strong>. Because
+macOS no longer speaks the X11 protocol out of the box, any software
+that relies on X11 must use XQuartz to bridge the gap between Unix
+display calls and Apple’s native Quartz display engine.</p>
+<h3 id="how-fontforge-is-installed-matters">How FontForge Is Installed
+Matters</h3>
+<p>Whether FontForge requires XQuartz on your specific Mac depends
+entirely on how the software was compiled and packaged:</p>
+<ul>
+<li><strong>Package Managers (Homebrew and MacPorts):</strong> If you
+install FontForge via command-line tools without specific native flags,
+it may build using standard Unix dependencies. In these cases, the
+package manager will often list <code>xquartz</code> as a mandatory
+dependency.</li>
+<li><strong>Legacy and Source Builds:</strong> If you compile FontForge
+directly from source without enabling modern native UI backends, the
+build configuration defaults to the original X11-dependent
+interface.</li>
+<li><strong>Modern macOS App Bundles:</strong> Recent official release
+packages distributed as standalone <code>.dmg</code> files have largely
+moved away from X11. Modern builds often bundle GTK+ or native wrappers,
+allowing FontForge to run directly on macOS without demanding an
+external XQuartz installation.</li>
+</ul>
+<h3 id="summary">Summary</h3>
+<p>FontForge requires X11 or XQuartz on macOS whenever you run a version
+compiled to use the traditional X Window System. Because modern macOS
+lacks a native X11 server, XQuartz serves as the vital translation layer
+that allows FontForge's Unix-based GUI to render on modern Apple
+displays.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/why-font-forge-needs-x-11-or-x-quartz-on-mac-os';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

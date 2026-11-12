@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smooth Points vs Corner Points in FontForge - fontforge</title>
+    <meta name="description" content="In FontForge, vector outlines are defined by on-curve points and their associated control handles, with smooth points and corner points serving as the primary building blocks. Smooth points ensure continuous, seamless curvature across a contour by locking">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/smooth-points-vs-corner-points-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Smooth Points vs Corner Points in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/smooth-points-vs-corner-points-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FontForge, vector outlines are defined by on-curve points and their associated control handles, with smooth points and corner points serving as the primary building blocks. Smooth points ensure continuous, seamless curvature across a contour by locking" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="smooth-points-vs-corner-points-in-fontforge">Smooth Points vs
+Corner Points in FontForge</h1>
+<p>In FontForge, vector outlines are defined by on-curve points and
+their associated control handles, with smooth points and corner points
+serving as the primary building blocks. Smooth points ensure continuous,
+seamless curvature across a contour by locking control handles in a
+straight line, whereas corner points allow for sharp turns by letting
+each control handle move independently. Understanding the mechanical and
+visual differences between these two point types is essential for
+drawing clean, predictable glyph outlines in digital typography.</p>
+<h3 id="corner-points">Corner Points</h3>
+<p>A corner point marks a location where a path abruptly changes
+direction, such as the apex of an uppercase "A" or the vertices of an
+"E".</p>
+<ul>
+<li><strong>Handle Independence:</strong> The primary mechanical
+characteristic of a corner point is that its incoming and outgoing
+Bézier control handles operate entirely independently of each other.
+Changing the angle or length of one handle has no effect on the
+other.</li>
+<li><strong>Curvature:</strong> Because the tangent angles do not match
+across the point, corner points naturally produce sharp breaks or abrupt
+transitions between segments, whether those segments are straight lines,
+curves, or a combination of both.</li>
+<li><strong>Visual Representation:</strong> In the FontForge glyph
+canvas, corner points are traditionally rendered as small square
+nodes.</li>
+</ul>
+<h3 id="smooth-points">Smooth Points</h3>
+<p>A smooth point is used along continuous curves where the transition
+from one segment to the next must occur without any visible break or
+sharp angle, such as the crest of an "O" or the curves of an "S".</p>
+<ul>
+<li><strong>Collinear Handles:</strong> Unlike corner points, a smooth
+point forces its incoming and outgoing control handles to remain
+collinear (locked at a 180-degree angle relative to each other through
+the on-curve point).</li>
+<li><strong>Handle Adjustment:</strong> When you rotate or adjust the
+angle of one handle, FontForge automatically adjusts the opposite handle
+to preserve the straight line through the node, ensuring a continuous
+mathematical tangent. However, the length (magnitude) of each handle can
+still be adjusted independently to control the curvature on either
+side.</li>
+<li><strong>Visual Representation:</strong> In the FontForge interface,
+smooth points are typically displayed as small circles.</li>
+</ul>
+<h3 id="key-functional-differences">Key Functional Differences</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Corner Point</th>
+<th style="text-align: left;">Smooth Point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Handle Relationship</strong></td>
+<td style="text-align: left;">Fully independent angle and distance</td>
+<td style="text-align: left;">Angle locked collinearly (180°);
+independent distance</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Visual Result</strong></td>
+<td style="text-align: left;">Sharp angle or sudden directional
+shift</td>
+<td style="text-align: left;">Continuous, smooth curvature without
+creases</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Common Use Cases</strong></td>
+<td style="text-align: left;">Line intersections, serifs, stems, sharp
+turns</td>
+<td style="text-align: left;">Arcs, bowls, loops, wave transitions</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Canvas Symbol</strong></td>
+<td style="text-align: left;">Square</td>
+<td style="text-align: left;">Circle</td>
+</tr>
+</tbody>
+</table>
+<h3 id="switching-between-point-types">Switching Between Point
+Types</h3>
+<p>FontForge allows you to convert an existing point from one type to
+another at any time. Selecting a point and opening the
+<strong>Point</strong> menu provides options to designate it as a
+<strong>Corner Point</strong> or a <strong>Smooth Point</strong>.
+Alternatively, you can use the keyboard shortcuts or double-click the
+point to open the Point Info dialogue window to set the type explicitly
+and adjust numerical coordinates for both the point and its control
+vectors.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/smooth-points-vs-corner-points-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

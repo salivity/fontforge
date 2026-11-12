@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Adjust Subscript and Superscript in FontForge - fontforge</title>
+    <meta name="description" content="Adjusting subscript and superscript metrics in FontForge ensures that applications render small-scale text with accurate baseline positioning and proportional sizing. This guide explains how to locate the OS/2 metric settings in FontForge and modify the s">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-adjust-subscript-and-superscript-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Adjust Subscript and Superscript in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-adjust-subscript-and-superscript-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Adjusting subscript and superscript metrics in FontForge ensures that applications render small-scale text with accurate baseline positioning and proportional sizing. This guide explains how to locate the OS/2 metric settings in FontForge and modify the s" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-adjust-subscript-and-superscript-in-fontforge">How to
+Adjust Subscript and Superscript in FontForge</h1>
+<p>Adjusting subscript and superscript metrics in FontForge ensures that
+applications render small-scale text with accurate baseline positioning
+and proportional sizing. This guide explains how to locate the OS/2
+metric settings in FontForge and modify the scaling and offset
+parameters to achieve balanced typography.</p>
+<h3 id="accessing-font-information">Accessing Font Information</h3>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Click on the <strong>Element</strong> menu in the top navigation
+bar.</li>
+<li>Select <strong>Font Info</strong> from the dropdown menu (or press
+<code>Ctrl+Shift+F</code> on Windows/Linux, <code>Cmd+Shift+F</code> on
+macOS).</li>
+</ol>
+<h3 id="navigating-to-the-subscript-and-superscript-settings">Navigating
+to the Subscript and Superscript Settings</h3>
+<ol type="1">
+<li>In the Font Info dialog, look at the left sidebar listing the
+configuration categories.</li>
+<li>Click on the <strong>OS/2</strong> category to expand its
+options.</li>
+<li>Select the <strong>Sub/Superscript</strong> sub-tab.</li>
+</ol>
+<h3 id="adjusting-the-metrics">Adjusting the Metrics</h3>
+<p>The panel is divided into sections for both Subscript and
+Superscript. Each section contains four main parameters that dictate how
+applications scale and position synthetic or standard sub/superscript
+glyphs:</p>
+<ul>
+<li><strong>X Size:</strong> The horizontal scaling width of the glyphs,
+typically set around 65% to 75% of the font's standard em size.</li>
+<li><strong>Y Size:</strong> The vertical scaling height of the glyphs,
+generally matching the X Size to maintain proportions.</li>
+<li><strong>X Offset:</strong> The horizontal shift applied to the
+glyph. In most standard fonts, this remains at <code>0</code> so the
+character does not drift sideways.</li>
+<li><strong>Y Offset:</strong> The vertical displacement relative to the
+baseline.
+<ul>
+<li>For <strong>Subscript</strong>, set a negative value or a low
+baseline-relative value (depending on standard OS targets) to pull the
+characters below the baseline.</li>
+<li>For <strong>Superscript</strong>, set a positive value to elevate
+the characters above the mean line or cap height.</li>
+</ul></li>
+</ul>
+<h3 id="saving-the-changes">Saving the Changes</h3>
+<ol type="1">
+<li>Click <strong>OK</strong> at the bottom of the Font Info dialog to
+apply your adjustments.</li>
+<li>Save your font database (<code>File</code> &gt;
+<code>Save</code>).</li>
+<li>Re-generate the font binaries (<code>File</code> &gt;
+<code>Generate Fonts</code>) to test the updated metrics in your target
+applications or browsers.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-adjust-subscript-and-superscript-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

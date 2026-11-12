@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Missing Reference Glyph Errors in FontForge - fontforge</title>
+    <meta name="description" content="Missing reference glyph errors in FontForge occur when a composite glyph depends on a base character or accent that has been deleted, emptied, or corrupted. This guide explains why this error happens and provides direct steps to locate the affected glyphs">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/fix-missing-reference-glyph-errors-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fix Missing Reference Glyph Errors in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/fix-missing-reference-glyph-errors-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Missing reference glyph errors in FontForge occur when a composite glyph depends on a base character or accent that has been deleted, emptied, or corrupted. This guide explains why this error happens and provides direct steps to locate the affected glyphs" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fix-missing-reference-glyph-errors-in-fontforge">Fix Missing
+Reference Glyph Errors in FontForge</h1>
+<p>Missing reference glyph errors in FontForge occur when a composite
+glyph depends on a base character or accent that has been deleted,
+emptied, or corrupted. This guide explains why this error happens and
+provides direct steps to locate the affected glyphs, restore missing
+base outlines, unlink dependencies, and successfully validate your font
+for export.</p>
+<h3 id="why-the-error-occurs">Why the Error Occurs</h3>
+<p>FontForge uses composite glyphs to build complex characters
+efficiently. For instance, the accented letter <strong>é</strong> is
+typically constructed by referencing the base glyph <strong>e</strong>
+and the accent glyph <strong>acute</strong>. If you delete, rename, or
+clear the outlines of the base glyph while a composite character still
+references it, FontForge generates a missing reference error because it
+cannot render the dependent shape.</p>
+<h3 id="step-1-identify-the-broken-references">Step 1: Identify the
+Broken References</h3>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Open the Font View grid containing all your characters.</li>
+<li>Go to the top menu and select <strong>Element &gt; Validation &gt;
+Find Problems</strong>.</li>
+<li>In the dialog box, navigate to the <strong>References</strong>
+tab.</li>
+<li>Check the box labeled <strong>Check for missing
+references</strong>.</li>
+<li>Click <strong>OK</strong>. FontForge will scan the font and select
+or highlight any glyphs that contain broken references.</li>
+</ol>
+<p>Alternatively, if this error occurs when generating a font
+(<strong>File &gt; Generate Fonts</strong>), note the character codes or
+glyph names listed in the warning output box.</p>
+<h3 id="step-2-fix-the-glyph-using-the-appropriate-method">Step 2: Fix
+the Glyph Using the Appropriate Method</h3>
+<p>Depending on how you want to handle the affected glyphs, choose one
+of the following solutions:</p>
+<h4 id="method-a-unlink-the-reference-best-for-preserving-shapes">Method
+A: Unlink the Reference (Best for Preserving Shapes)</h4>
+<p>If the composite glyph already has the visual elements you need and
+you do not require a live link to a base glyph:</p>
+<ol type="1">
+<li>Double-click the problematic glyph in the Font View to open its
+Outline window.</li>
+<li>From the top menu, go to <strong>Edit &gt; Select &gt; Select
+All</strong>.</li>
+<li>Select <strong>Edit &gt; Unlink Reference</strong>.</li>
+<li>This converts the linked component into standalone, editable Bézier
+curves, permanently severing the missing link.</li>
+</ol>
+<h4
+id="method-b-restore-the-base-glyph-best-for-maintaining-reusability">Method
+B: Restore the Base Glyph (Best for Maintaining Reusability)</h4>
+<p>If the reference points to a standard character or diacritic that was
+accidentally deleted:</p>
+<ol type="1">
+<li>Identify the missing base glyph name by double-clicking the broken
+glyph and checking the reference box properties (<strong>Element &gt;
+Get Info</strong>).</li>
+<li>Locate the corresponding empty slot for that base character in the
+Font View (for example, the <code>grave</code> or <code>acute</code>
+slot).</li>
+<li>Draw, import, or paste the correct outline paths into that base
+glyph slot.</li>
+<li>Return to the composite glyph. FontForge will automatically resolve
+the reference now that the base glyph contains valid outlines.</li>
+</ol>
+<h4 id="method-c-delete-orphaned-references">Method C: Delete Orphaned
+References</h4>
+<p>Sometimes invisible, empty reference boxes remain in a glyph due to
+accidental copying or imported vector errors:</p>
+<ol type="1">
+<li>Double-click the affected glyph to open the Outline window.</li>
+<li>Press <strong>Tab</strong> or select <strong>Edit &gt; Select &gt;
+Next Point</strong> to cycle through the elements in the glyph until the
+empty reference box is selected.</li>
+<li>Press <strong>Delete</strong> or <strong>Backspace</strong> to
+remove the empty reference frame.</li>
+</ol>
+<h3 id="step-3-clean-and-revalidate">Step 3: Clean and Revalidate</h3>
+<p>After applying the fix:</p>
+<ol type="1">
+<li>Select the modified glyphs.</li>
+<li>Run <strong>Element &gt; Correct Direction</strong> to ensure all
+contour paths are oriented correctly.</li>
+<li>Open <strong>Element &gt; Validation &gt; Find Problems</strong> and
+run the reference check once more.</li>
+<li>When no errors return, navigate to <strong>File &gt; Generate
+Fonts</strong> to export your font file.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/fix-missing-reference-glyph-errors-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

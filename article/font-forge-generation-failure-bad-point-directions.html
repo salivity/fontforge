@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Generation Failure: Bad Point Directions - fontforge</title>
+    <meta name="description" content="When generating a font in FontForge, the process can fail if glyph outlines contain improper path directions or invalid contour orientations. Font rendering engines and output formats rely on consistent path winding directions—specifically clockwise versu">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-generation-failure-bad-point-directions">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Generation Failure: Bad Point Directions - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-generation-failure-bad-point-directions" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When generating a font in FontForge, the process can fail if glyph outlines contain improper path directions or invalid contour orientations. Font rendering engines and output formats rely on consistent path winding directions—specifically clockwise versu" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-generation-failure-bad-point-directions">FontForge
+Generation Failure: Bad Point Directions</h1>
+<p>When generating a font in FontForge, the process can fail if glyph
+outlines contain improper path directions or invalid contour
+orientations. Font rendering engines and output formats rely on
+consistent path winding directions—specifically clockwise versus
+counter-clockwise—to distinguish between filled areas and cutouts. When
+these winding rules are violated, ambiguous, or corrupted by geometric
+errors, FontForge flags a validation error and halts the export to
+prevent generating a broken font file.</p>
+<h3 id="contour-winding-rules-by-font-format">Contour Winding Rules by
+Font Format</h3>
+<p>Font formats adhere to strict geometric conventions to differentiate
+between the solid body of a glyph and interior holes (such as the center
+of the letter "O" or "B"):</p>
+<ul>
+<li><strong>TrueType (TTF):</strong> Outer contours must follow a
+clockwise direction, while inner contours (holes) must be drawn
+counter-clockwise.</li>
+<li><strong>PostScript / OpenType (OTF-CFF):</strong> Outer contours
+must follow a counter-clockwise direction, while inner contours must be
+drawn clockwise.</li>
+</ul>
+<p>If an outer contour and an inner hole share the same direction, or if
+an outer contour is reversed, the rasterizer cannot reliably determine
+which regions to fill. When FontForge converts glyph outlines into
+binary data for generation, conflicting directions break the specified
+format's specification, causing the generator to report bad point
+directions and fail.</p>
+<h3 id="overlapping-paths-and-self-intersections">Overlapping Paths and
+Self-Intersections</h3>
+<p>Bad point directions are frequently triggered by self-intersecting
+paths or unmerged overlapping shapes. When a single contour loops over
+itself, FontForge encounters points that simultaneously act as an
+exterior edge and an interior edge. This creates mathematical
+ambiguity:</p>
+<ul>
+<li>A single vector path cannot be both clockwise and counter-clockwise
+at the same time.</li>
+<li>FontForge’s direction-detection algorithm cannot determine a single
+unified winding order for a self-intersecting shape.</li>
+<li>Open vector paths or stray zero-length points (two coincident points
+on the same contour) confuse the path traversal logic, producing fatal
+direction warnings.</li>
+</ul>
+<h3 id="inconsistent-direction-across-joined-elements">Inconsistent
+Direction Across Joined Elements</h3>
+<p>When combining individual shapes or importing vectors from external
+software such as Adobe Illustrator or Inkscape, paths often carry
+conflicting winding metadata. If components of a single glyph have mixed
+orientations—such as one outer loop running clockwise and an adjoining
+outer loop running counter-clockwise—the generator fails because it
+cannot apply a unified filling rule across the glyph.</p>
+<h3 id="how-to-resolve-the-error">How to Resolve the Error</h3>
+<p>To clear the bad point directions failure in FontForge, clean the
+geometry before generation:</p>
+<ol type="1">
+<li><strong>Remove Overlaps:</strong> Select the affected glyphs and go
+to <code>Element</code> &gt; <code>Overlap</code> &gt;
+<code>Remove Overlap</code> (Ctrl+Shift+O) to eliminate intersecting
+paths and create clean, unified boundaries.</li>
+<li><strong>Correct Path Directions:</strong> Navigate to
+<code>Element</code> &gt; <code>Correct Direction</code> (Ctrl+Shift+D).
+FontForge will automatically inspect all closed contours and orient
+outer and inner paths according to standard typographic rules.</li>
+<li><strong>Find Problems:</strong> Run <code>Element</code> &gt;
+<code>Find Problems</code> to check for missing points at extrema,
+intersecting paths, or stray points that prevent automated direction
+calculation.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-generation-failure-bad-point-directions';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

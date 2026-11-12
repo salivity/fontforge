@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Active Glyph in FontForge Python - fontforge</title>
+    <meta name="description" content="This guide explains how to access the currently active glyph object when writing Python scripts within FontForge. Depending on your workflow, you can retrieve the glyph directly using FontForge&#39;s built-in GUI inspection methods or extract it through the a">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/get-active-glyph-in-font-forge-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Get Active Glyph in FontForge Python - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/get-active-glyph-in-font-forge-python" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to access the currently active glyph object when writing Python scripts within FontForge. Depending on your workflow, you can retrieve the glyph directly using FontForge&#39;s built-in GUI inspection methods or extract it through the a" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="get-active-glyph-in-fontforge-python">Get Active Glyph in
+FontForge Python</h1>
+<p>This guide explains how to access the currently active glyph object
+when writing Python scripts within FontForge. Depending on your
+workflow, you can retrieve the glyph directly using FontForge's built-in
+GUI inspection methods or extract it through the active font's current
+selection state.</p>
+<h3 id="using-fontforgeactiveglyph">Using
+<code>fontforge.activeGlyph()</code></h3>
+<p>The simplest and most direct way to get the active glyph is using the
+<code>activeGlyph()</code> function provided by the
+<code>fontforge</code> module. This method works inside the FontForge
+interactive Python window or when executing scripts via custom menu
+items while a glyph view window is open.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve the active glyph object</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>glyph <span class="op">=</span> fontforge.activeGlyph()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> glyph <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Active Glyph Name: </span><span class="sc">{</span>glyph<span class="sc">.</span>glyphname<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Unicode Value: </span><span class="sc">{</span>glyph<span class="sc">.</span><span class="bu">unicode</span><span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;No glyph is currently active.&quot;</span>)</span></code></pre></div>
+<p>If no glyph window is currently focused or open,
+<code>fontforge.activeGlyph()</code> returns <code>None</code>.</p>
+<h3 id="using-fontforgeactivefont-and-selections">Using
+<code>fontforge.activeFont()</code> and Selections</h3>
+<p>If you are working from the Font View (the main grid window) rather
+than an individual Glyph View, <code>activeGlyph()</code> may return
+<code>None</code>. In this scenario, retrieve the selected glyphs via
+<code>activeFont()</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the currently active font</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.activeFont()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> font <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Iterate over all currently selected glyphs</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> glyph <span class="kw">in</span> font.selection.byGlyphs:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Selected Glyph: </span><span class="sc">{</span>glyph<span class="sc">.</span>glyphname<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Or get the first selected glyph directly</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    selected <span class="op">=</span> [g <span class="cf">for</span> g <span class="kw">in</span> font.selection.byGlyphs]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> selected:</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        primary_glyph <span class="op">=</span> selected[<span class="dv">0</span>]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Primary Selected Glyph: </span><span class="sc">{</span>primary_glyph<span class="sc">.</span>glyphname<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<h3 id="context-requirements">Context Requirements</h3>
+<p>These functions rely on an active graphical user interface (GUI)
+session. If you run a FontForge Python script headlessly from the system
+command line (e.g., <code>fontforge -script script.py</code>), there is
+no active GUI context, so <code>activeGlyph()</code> and
+<code>activeFont()</code> will return <code>None</code>. For
+command-line scripts, you must explicitly open the font file using
+<code>fontforge.open("fontfile.sfd")</code> and target glyphs by name or
+encoding index directly (e.g., <code>font["A"]</code>).</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/get-active-glyph-in-font-forge-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

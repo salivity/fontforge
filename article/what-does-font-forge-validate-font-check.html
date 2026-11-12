@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Does FontForge Validate Font Check? - fontforge</title>
+    <meta name="description" content="The Validate Font command in FontForge is a diagnostic tool that scans a typeface for technical errors, geometry flaws, and specification violations before compilation. This article explains the primary tests the validation tool performs, including checks">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/what-does-font-forge-validate-font-check">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Does FontForge Validate Font Check? - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/what-does-font-forge-validate-font-check" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Validate Font command in FontForge is a diagnostic tool that scans a typeface for technical errors, geometry flaws, and specification violations before compilation. This article explains the primary tests the validation tool performs, including checks" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-does-fontforge-validate-font-check">What Does FontForge
+Validate Font Check?</h1>
+<p>The Validate Font command in FontForge is a diagnostic tool that
+scans a typeface for technical errors, geometry flaws, and specification
+violations before compilation. This article explains the primary tests
+the validation tool performs, including checks for outline integrity,
+coordinate precision, glyph metadata, and hinting anomalies, ensuring
+the resulting font file functions reliably across different operating
+systems and rendering engines.</p>
+<h3 id="outline-and-path-geometry">Outline and Path Geometry</h3>
+<p>The validator primarily inspects the vector contours of each glyph to
+ensure paths conform to standard rendering rules:</p>
+<ul>
+<li><strong>Open Contours:</strong> Detects endpoints that are not
+joined. Fonts require closed loops to properly differentiate between the
+inside and outside of a shape.</li>
+<li><strong>Self-Intersecting Paths:</strong> Identifies contours that
+cross over themselves, which can cause rasterization artifacts or fail
+rendering in strict PostScript and TrueType environments.</li>
+<li><strong>Incorrect Path Direction:</strong> Confirms whether paths
+follow the required winding rules. TrueType paths require clockwise
+outer contours, while PostScript (CFF) paths require counter-clockwise
+outer contours for correct rendering.</li>
+<li><strong>Missing Extrema:</strong> Flags segments where curves reach
+maximum or minimum horizontal or vertical values without an explicit
+on-curve point, which can reduce rendering quality at small sizes.</li>
+<li><strong>Coincident and Extraneous Points:</strong> Finds duplicate
+points occupying the exact same coordinates or unnecessary points along
+straight lines that bloat file size and complicate hinting.</li>
+</ul>
+<h3 id="coordinate-precision-and-grid-alignment">Coordinate Precision
+and Grid Alignment</h3>
+<p>Rendering engines process vector coordinates based on the font's
+internal grid system. The validation command checks:</p>
+<ul>
+<li><strong>Non-Integer Coordinates:</strong> Identifies points, control
+vectors, or advance widths with fractional values, which can lead to
+rounding errors when exporting to formats that require integer
+coordinates.</li>
+<li><strong>Points Too Far Off-Grid:</strong> Flags coordinates that
+exceed standard bounding box thresholds or standard em-square
+dimensions.</li>
+</ul>
+<h3 id="glyph-names-and-encoding">Glyph Names and Encoding</h3>
+<p>Proper font mapping relies on clean identification data. FontForge
+examines:</p>
+<ul>
+<li><strong>Duplicate Names:</strong> Flags instances where multiple
+glyphs share the same PostScript name.</li>
+<li><strong>Invalid Characters in Names:</strong> Ensures glyph names
+adhere to standard Adobe glyph naming conventions (avoiding spaces,
+illegal symbols, or excessive length).</li>
+<li><strong>Missing or Duplicate Unicode Values:</strong> Alerts you if
+two glyphs attempt to map to the exact same Unicode code point or if
+assigned encodings conflict with the font's encoding table.</li>
+</ul>
+<h3 id="references-and-composite-glyphs">References and Composite
+Glyphs</h3>
+<p>For fonts that construct complex characters (such as accented
+letters) using components:</p>
+<ul>
+<li><strong>Missing References:</strong> Detects composite glyphs that
+point to missing or deleted base glyphs.</li>
+<li><strong>Recursive References:</strong> Flags circular references
+where a component glyph refers back to itself, directly or indirectly,
+which can crash font parsers.</li>
+<li><strong>Flipped References:</strong> Identifies components that have
+been inverted or mirrored in a way that violates expected outline
+winding order.</li>
+</ul>
+<h3 id="hinting-and-technical-limits">Hinting and Technical Limits</h3>
+<p>FontForge also reviews hinting instructions and complex table
+limits:</p>
+<ul>
+<li><strong>Overlapping Hints:</strong> Checks PostScript hint regions
+to prevent conflicting horizontal or vertical stem definitions.</li>
+<li><strong>Limit Exceedance:</strong> Confirms that individual glyphs
+do not exceed maximum point counts or contour limits designated by
+standard TrueType or OpenType specifications.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/what-does-font-forge-validate-font-check';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

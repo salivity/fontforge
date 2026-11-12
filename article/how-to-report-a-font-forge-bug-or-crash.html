@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Report a FontForge Bug or Crash - fontforge</title>
+    <meta name="description" content="This guide provides a straightforward walkthrough on how to properly document and report bugs or application crashes to the FontForge development team. You will learn where FontForge issues are tracked, what essential system and diagnostic information you">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-report-a-font-forge-bug-or-crash">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Report a FontForge Bug or Crash - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-report-a-font-forge-bug-or-crash" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide provides a straightforward walkthrough on how to properly document and report bugs or application crashes to the FontForge development team. You will learn where FontForge issues are tracked, what essential system and diagnostic information you" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-report-a-fontforge-bug-or-crash">How to Report a
+FontForge Bug or Crash</h1>
+<p>This guide provides a straightforward walkthrough on how to properly
+document and report bugs or application crashes to the FontForge
+development team. You will learn where FontForge issues are tracked,
+what essential system and diagnostic information you need to collect,
+how to generate a crash backtrace, and how to submit a clear, actionable
+bug report that developers can resolve quickly.</p>
+<h3 id="1-locate-the-official-issue-tracker">1. Locate the Official
+Issue Tracker</h3>
+<p>FontForge tracks all software defects, feature requests, and crashes
+through its official GitHub repository. To begin, navigate to the
+FontForge GitHub Issues page at
+<code>https://github.com/fontforge/fontforge/issues</code>. You will
+need a free GitHub account to post a report.</p>
+<h3 id="2-search-for-existing-reports">2. Search for Existing
+Reports</h3>
+<p>Before opening a new ticket, check whether someone else has already
+reported the same problem:</p>
+<ul>
+<li>Use the search bar on the Issues page.</li>
+<li>Filter through both open and closed issues using relevant keywords,
+error messages, or the specific tool/feature that triggered the
+bug.</li>
+<li>If you find an existing thread matching your problem, add a comment
+describing your setup and confirming that the issue persists, rather
+than opening a duplicate ticket.</li>
+</ul>
+<h3 id="3-gather-necessary-information">3. Gather Necessary
+Information</h3>
+<p>A developer must be able to reproduce the bug to fix it. Collect the
+following details before writing your report:</p>
+<ul>
+<li><strong>FontForge Version:</strong> Check <strong>Help &gt; About
+FontForge</strong> to get the exact version number or Git commit hash
+and release date.</li>
+<li><strong>Operating System:</strong> Specify your OS and version
+(e.g., Ubuntu 22.04, macOS Sonoma 14.4, Windows 11 64-bit).</li>
+<li><strong>Installation Method:</strong> Indicate how you installed
+FontForge (e.g., official installer, Homebrew, Flatpak, PPA, or compiled
+from source).</li>
+<li><strong>Font File Format:</strong> Note the format being used (such
+as SFD, TTF, or OTF).</li>
+</ul>
+<h3 id="4-provide-reproduction-steps">4. Provide Reproduction Steps</h3>
+<p>Write clear, numbered instructions demonstrating how to recreate the
+bug from a fresh launch:</p>
+<ol type="1">
+<li>Open FontForge.</li>
+<li>Open or create a specific font file.</li>
+<li>Select a specific menu item, tool, or glyph.</li>
+<li>Perform the exact action that triggers the unexpected behavior or
+crash.</li>
+</ol>
+<p>Clearly state what you expected to happen versus what actually
+occurred. If the bug only happens with a particular file, attach a
+minimal test font (packaged in a <code>.zip</code> file) to the
+ticket.</p>
+<h3 id="5-capture-crash-logs-for-crashes-only">5. Capture Crash Logs
+(For Crashes Only)</h3>
+<p>If FontForge crashes abruptly (a segmentation fault or sudden exit),
+a debugger backtrace is critical:</p>
+<ul>
+<li><strong>Linux / macOS (GDB or LLDB):</strong>
+<ol type="1">
+<li>Open a terminal and run <code>gdb fontforge</code>.</li>
+<li>Inside GDB, type <code>run</code> and press Enter.</li>
+<li>Recreate the crash inside FontForge.</li>
+<li>Return to the terminal and type <code>bt full</code>
+(backtrace).</li>
+<li>Copy the terminal output and paste it into your report inside code
+blocks (<code>```</code>).</li>
+</ol></li>
+<li><strong>Windows:</strong> Provide details from the Windows Event
+Viewer under <strong>Windows Logs &gt; Application</strong>, noting the
+faulting module and exception code.</li>
+</ul>
+<h3 id="6-submit-the-issue">6. Submit the Issue</h3>
+<ol type="1">
+<li>On the FontForge GitHub Issues page, click <strong>New
+Issue</strong>.</li>
+<li>Select the bug report template if prompted.</li>
+<li>Enter a concise, descriptive title (e.g., <em>"Crash when generating
+OpenType tables on macOS 14"</em>).</li>
+<li>Fill in the gathered details, reproduction steps, sample files, and
+backtrace.</li>
+<li>Click <strong>Submit new issue</strong>. Stay subscribed to
+notifications on the thread in case developers ask follow-up
+questions.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-report-a-font-forge-bug-or-crash';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

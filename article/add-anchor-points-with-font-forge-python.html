@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Anchor Points with FontForge Python - fontforge</title>
+    <meta name="description" content="This article explains how to programmatically define and assign OpenType anchor points to glyphs using the FontForge Python module (fontforge). You will learn the required prerequisites, including setting up GPOS lookups and anchor classes, followed by th">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/add-anchor-points-with-font-forge-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Add Anchor Points with FontForge Python - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/add-anchor-points-with-font-forge-python" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how to programmatically define and assign OpenType anchor points to glyphs using the FontForge Python module (fontforge). You will learn the required prerequisites, including setting up GPOS lookups and anchor classes, followed by th" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="add-anchor-points-with-fontforge-python">Add Anchor Points with
+FontForge Python</h1>
+<p>This article explains how to programmatically define and assign
+OpenType anchor points to glyphs using the FontForge Python module
+(<code>fontforge</code>). You will learn the required prerequisites,
+including setting up GPOS lookups and anchor classes, followed by the
+exact syntax and code required to place anchor points on base and mark
+glyphs.</p>
+<hr />
+<h3 id="prerequisites-gpos-lookup-and-anchor-classes">Prerequisites:
+GPOS Lookup and Anchor Classes</h3>
+<p>In FontForge, an anchor point cannot exist in isolation; it must
+belong to an <strong>Anchor Class</strong>, which in turn belongs to an
+OpenType <strong>GPOS subtable</strong> (such as Mark-to-Base,
+Mark-to-Mark, or Cursive attachment).</p>
+<p>Before attaching points to glyphs, you must ensure the corresponding
+GPOS lookup and anchor class exist in the font.</p>
+<h3 id="step-1-create-the-lookup-and-subtable">Step 1: Create the Lookup
+and Subtable</h3>
+<p>If your font does not already have an appropriate GPOS lookup, create
+one using <code>font.addLookup()</code> and
+<code>font.addLookupSubtable()</code>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>lookup_name <span class="op">=</span> <span class="st">&quot;mark_to_base_lookup&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>subtable_name <span class="op">=</span> <span class="st">&quot;mark_to_base_subtable&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Mark-to-Base GPOS lookup</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>font.addLookup(lookup_name, <span class="st">&quot;gpos_mark2base&quot;</span>, (), ((<span class="st">&quot;latn&quot;</span>, (<span class="st">&quot;dflt&quot;</span>,)),))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a subtable to the lookup</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>font.addLookupSubtable(lookup_name, subtable_name)</span></code></pre></div>
+<h3 id="step-2-define-the-anchor-class">Step 2: Define the Anchor
+Class</h3>
+<p>Once the subtable is defined, bind an anchor class (e.g.,
+<code>"top"</code>, <code>"bottom"</code>) to that subtable using
+<code>font.addAnchorClass()</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>anchor_class_name <span class="op">=</span> <span class="st">&quot;top&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Associate the anchor class with the subtable</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>font.addAnchorClass(subtable_name, anchor_class_name)</span></code></pre></div>
+<h3 id="step-3-add-anchor-points-to-glyphs">Step 3: Add Anchor Points to
+Glyphs</h3>
+<p>Anchor points are placed using the
+<code>glyph.addAnchorPoint()</code> method.</p>
+<p><strong>Method signature:</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>glyph.addAnchorPoint(anchor_class_name, anchor_type, x, y, [lig_index])</span></code></pre></div>
+<ul>
+<li><strong><code>anchor_class_name</code></strong> <em>(str)</em>: The
+exact name of the anchor class defined in Step 2.</li>
+<li><strong><code>anchor_type</code></strong> <em>(str)</em>: The
+point's role. Common values include:
+<ul>
+<li><code>"base"</code>: Used for standard base glyphs.</li>
+<li><code>"mark"</code>: Used for combining diacritics.</li>
+<li><code>"ligature"</code>: Used for composite glyphs requiring
+multiple attachment sites.</li>
+<li><code>"basemark"</code>: Used when a mark acts as a base for another
+mark.</li>
+<li><code>"entry"</code> / <code>"exit"</code>: Used for cursive script
+connections.</li>
+</ul></li>
+<li><strong><code>x</code></strong> <em>(int/float)</em>: The horizontal
+coordinate of the point.</li>
+<li><strong><code>y</code></strong> <em>(int/float)</em>: The vertical
+coordinate of the point.</li>
+<li><strong><code>lig_index</code></strong> <em>(int, optional)</em>:
+Specifies which component of a ligature the anchor belongs to
+(0-indexed).</li>
+</ul>
+<h3 id="complete-code-example">Complete Code Example</h3>
+<p>The following script sets up a lookup, defines an anchor class named
+<code>"top"</code>, and positions coordinates on a base glyph
+(<code>a</code>) and a combining mark (<code>acutecomb</code>):</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open font</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create Lookup and Subtable</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>font.addLookup(<span class="st">&quot;m2b_lookup&quot;</span>, <span class="st">&quot;gpos_mark2base&quot;</span>, (), ((<span class="st">&quot;latn&quot;</span>, (<span class="st">&quot;dflt&quot;</span>,)),))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>font.addLookupSubtable(<span class="st">&quot;m2b_lookup&quot;</span>, <span class="st">&quot;m2b_subtable&quot;</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Create Anchor Class</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>font.addAnchorClass(<span class="st">&quot;m2b_subtable&quot;</span>, <span class="st">&quot;top&quot;</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Add Base Anchor to glyph &#39;a&#39;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>base_glyph <span class="op">=</span> font[<span class="st">&quot;a&quot;</span>]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>base_glyph.addAnchorPoint(<span class="st">&quot;top&quot;</span>, <span class="st">&quot;base&quot;</span>, <span class="dv">260</span>, <span class="dv">480</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Add Mark Anchor to combining acute</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>mark_glyph <span class="op">=</span> font[<span class="st">&quot;acutecomb&quot;</span>]</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>mark_glyph.addAnchorPoint(<span class="st">&quot;top&quot;</span>, <span class="st">&quot;mark&quot;</span>, <span class="dv">0</span>, <span class="dv">480</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Save changes</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>font.save(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>font.close()</span></code></pre></div>
+<h3 id="managing-existing-anchor-points">Managing Existing Anchor
+Points</h3>
+<p>To inspect or remove existing points programmatically:</p>
+<ul>
+<li><p><strong>Inspect points</strong>: Access
+<code>glyph.anchorPoints</code>, which returns a tuple of tuples
+containing point data:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> pt <span class="kw">in</span> glyph.anchorPoints:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    name, pt_type, x, y, lig_index <span class="op">=</span> pt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name, pt_type, x, y)</span></code></pre></div></li>
+<li><p><strong>Clear points</strong>: Assign an empty tuple to remove
+all anchor points from a glyph:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>glyph.anchorPoints <span class="op">=</span> ()</span></code></pre></div></li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/add-anchor-points-with-font-forge-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Mark-to-Base Anchors in FontForge - fontforge</title>
+    <meta name="description" content="Creating anchor points for mark-to-base positioning in FontForge allows combining marks, such as diacritics and accents, to align accurately over base glyphs across different font sizes and rendering environments. This guide walks through configuring the">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/create-mark-to-base-anchors-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create Mark-to-Base Anchors in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/create-mark-to-base-anchors-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Creating anchor points for mark-to-base positioning in FontForge allows combining marks, such as diacritics and accents, to align accurately over base glyphs across different font sizes and rendering environments. This guide walks through configuring the" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-mark-to-base-anchors-in-fontforge">Create Mark-to-Base
+Anchors in FontForge</h1>
+<p>Creating anchor points for mark-to-base positioning in FontForge
+allows combining marks, such as diacritics and accents, to align
+accurately over base glyphs across different font sizes and rendering
+environments. This guide walks through configuring the GPOS lookup
+table, defining anchor classes, placing base and mark points within your
+glyphs, and previewing the final alignment.</p>
+<h3 id="step-1-set-up-the-gpos-lookup-and-subtable">Step 1: Set Up the
+GPOS Lookup and Subtable</h3>
+<p>Before placing anchor points, you must create a Mark-to-Base lookup
+in your font's metadata:</p>
+<ol type="1">
+<li>Open your font file in FontForge.</li>
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font
+Info</strong>.</li>
+<li>Select <strong>Lookups</strong> from the left-hand menu, then click
+the <strong>GPOS</strong> tab.</li>
+<li>Click <strong>Add Lookup</strong>.</li>
+<li>Set the <strong>Type</strong> to <strong>Mark to Base
+Positioning</strong>.</li>
+<li>Under the <strong>Feature</strong> column, select or type
+<code>mark</code> (Mark Positioning), then click
+<strong>OK</strong>.</li>
+<li>Select the newly created lookup and click <strong>Add
+Subtable</strong>.</li>
+<li>In the subtable dialog, add an anchor class (for example, name it
+<code>Top</code> for top accents or <code>Bottom</code> for under-base
+accents). Click <strong>OK</strong> to save and exit the Font Info
+dialog.</li>
+</ol>
+<h3 id="step-2-add-anchor-points-to-base-glyphs">Step 2: Add Anchor
+Points to Base Glyphs</h3>
+<p>Once the anchor class is established, attach base anchors to your
+standard characters:</p>
+<ol type="1">
+<li>Double-click a base glyph (such as <code>a</code> or <code>n</code>)
+to open the Glyph Edit window.</li>
+<li>Navigate to <strong>Point</strong> &gt; <strong>Add
+Anchor</strong>.</li>
+<li>In the dialog, set the <strong>Class</strong> to your defined class
+(e.g., <code>Top</code>).</li>
+<li>Set the <strong>Type</strong> to <strong>Base</strong>.</li>
+<li>Click <strong>OK</strong>. An anchor point labeled with your class
+name will appear on the canvas.</li>
+<li>Drag the anchor point to the exact visual position where the
+diacritic should rest above the character (typically centered
+horizontally slightly above the glyph's cap height or x-height).</li>
+</ol>
+<h3 id="step-3-add-anchor-points-to-mark-glyphs">Step 3: Add Anchor
+Points to Mark Glyphs</h3>
+<p>Next, place corresponding mark anchors on your diacritic glyphs:</p>
+<ol type="1">
+<li>Double-click the corresponding diacritic glyph (such as
+<code>acutecomb</code> or <code>tildecomb</code>).</li>
+<li>Verify that the glyph is recognized as a mark by going to
+<strong>Element</strong> &gt; <strong>Glyph Info</strong>, navigating to
+the <strong>Features</strong> tab, and ensuring the glyph class is set
+to <strong>Mark</strong>.</li>
+<li>Navigate to <strong>Point</strong> &gt; <strong>Add
+Anchor</strong>.</li>
+<li>Set the <strong>Class</strong> to match the base glyph's class
+(e.g., <code>Top</code>).</li>
+<li>Set the <strong>Type</strong> to <strong>Mark</strong>.</li>
+<li>Click <strong>OK</strong>.</li>
+<li>Drag this anchor point to the attachment reference point of the
+diacritic (usually centered at the bottom of the accent). When rendered,
+FontForge lines up the mark's anchor directly over the base's
+anchor.</li>
+</ol>
+<h3 id="step-4-preview-and-adjust">Step 4: Preview and Adjust</h3>
+<p>Verify that your mark-to-base anchors function properly:</p>
+<ol type="1">
+<li>Open the Metrics window by going to <strong>Metrics</strong> &gt;
+<strong>New Metrics Window</strong>.</li>
+<li>Type the base glyph followed by the combining mark.</li>
+<li>Observe whether the accent snaps to the intended position above the
+base character.</li>
+<li>If the alignment is off, reopen either glyph edit window and drag
+the anchor point until the desired visual balance is achieved in the
+Metrics window.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/create-mark-to-base-anchors-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

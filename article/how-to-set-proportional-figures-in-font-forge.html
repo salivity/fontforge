@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Set Proportional Figures in FontForge - fontforge</title>
+    <meta name="description" content="This guide explains how to configure proportional spacing rules for numeral figures in FontForge. You will learn the difference between tabular and proportional metrics, how to adjust individual side bearings in the Metrics Window, how to configure kernin">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-set-proportional-figures-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Set Proportional Figures in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-set-proportional-figures-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to configure proportional spacing rules for numeral figures in FontForge. You will learn the difference between tabular and proportional metrics, how to adjust individual side bearings in the Metrics Window, how to configure kernin" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-set-proportional-figures-in-fontforge">How to Set
+Proportional Figures in FontForge</h1>
+<p>This guide explains how to configure proportional spacing rules for
+numeral figures in FontForge. You will learn the difference between
+tabular and proportional metrics, how to adjust individual side bearings
+in the Metrics Window, how to configure kerning pairs for numerals, and
+how to assign proper OpenType features so software can correctly render
+your proportional figures.</p>
+<h3 id="1-understand-proportional-figures-vs-tabular-figures">1.
+Understand Proportional Figures vs. Tabular Figures</h3>
+<p>Tabular figures share the exact same advance width across all numbers
+(0–9) so columns of numbers align vertically. Proportional figures have
+customized widths and side bearings tailored to the shape of each
+numeral—for example, a narrow "1" occupies significantly less horizontal
+space than an "8" or a "0".</p>
+<h3 id="2-set-side-bearings-in-the-metrics-window">2. Set Side Bearings
+in the Metrics Window</h3>
+<p>To establish the base spacing for each proportional numeral:</p>
+<ol type="1">
+<li>In the Font View, select the figures (0 through 9). If you already
+have tabular figures as your default, name your proportional glyphs with
+a suffix such as <code>zero.pnum</code>, <code>one.pnum</code>,
+etc.</li>
+<li>Go to <strong>Metrics</strong> &gt; <strong>Open Metrics
+Window</strong> (or press <code>Ctrl+K</code> on Windows/Linux,
+<code>Cmd+K</code> on macOS).</li>
+<li>Type the numbers sequentially in the text line to evaluate how they
+interact (e.g., <code>0123456789</code> or sandwiching them between
+reference letters like <code>n0n1n2n</code>).</li>
+<li>Select a glyph by clicking between its boundaries in the Metrics
+Window.</li>
+<li>Manually edit the <strong>LBearing</strong> (Left Side Bearing) and
+<strong>RBearing</strong> (Right Side Bearing) values in the metrics
+fields, or drag the vertical dashed lines in the glyph display
+area.</li>
+<li>Adjust the spacing optically rather than mathematically, ensuring
+the whitespace surrounding each numeral visually balances with the
+counter spaces inside the figures.</li>
+</ol>
+<h3 id="3-apply-automated-spacing-rules">3. Apply Automated Spacing
+Rules</h3>
+<p>If you prefer consistent calculated spacing before manually
+fine-tuning:</p>
+<ol type="1">
+<li>Select your target numerals in the Font View.</li>
+<li>Navigate to <strong>Metrics</strong> &gt; <strong>Auto
+Width</strong>.</li>
+<li>Specify a target spacing rule or average advance width based on your
+font’s design criteria.</li>
+<li>Review the results in the Metrics Window and make manual optical
+adjustments where necessary.</li>
+</ol>
+<h3 id="4-create-figure-kerning-pairs">4. Create Figure Kerning
+Pairs</h3>
+<p>While side bearings handle general spacing, certain numeral
+combinations (such as <code>17</code>, <code>74</code>, or
+<code>41</code>) require kerning adjustments:</p>
+<ol type="1">
+<li>Go to <strong>Element</strong> &gt; <strong>Font Info</strong>.</li>
+<li>Select <strong>Lookups</strong> from the left-hand menu, then select
+the <strong>GPOS</strong> tab.</li>
+<li>Click <strong>Add Lookup</strong>, set the lookup type to
+<strong>Pair Adjustment (Kerning)</strong>, and choose the feature tag
+<code>kern</code> (Horizontal Kerning).</li>
+<li>Click <strong>Add Subtable</strong> to configure a kerning subtable.
+You can create a glyph-by-glyph kerning pair list or set up kerning
+classes (e.g., grouping numerals with flat vs. round edges).</li>
+<li>Open the Metrics Window again, enter the problematic number
+combinations, and drag the kerning handle between the glyphs to
+establish proportional kerning values.</li>
+</ol>
+<h3 id="5-map-the-pnum-opentype-feature">5. Map the <code>pnum</code>
+OpenType Feature</h3>
+<p>If your default figures are tabular, register the proportional
+figures under the OpenType Proportional Numbers (<code>pnum</code>)
+feature:</p>
+<ol type="1">
+<li>In <strong>Element</strong> &gt; <strong>Font Info</strong> &gt;
+<strong>Lookups</strong>, select the <strong>GSUB</strong> (Glyph
+Substitution) tab.</li>
+<li>Click <strong>Add Lookup</strong>, choose <strong>Single
+Substitution</strong>, and assign the feature tag
+<code>pnum</code>.</li>
+<li>Click <strong>Add Subtable</strong>.</li>
+<li>In the subtable dialog, map the default numerals (<code>zero</code>,
+<code>one</code>, etc.) to your proportional alternates
+(<code>zero.pnum</code>, <code>one.pnum</code>, etc.).</li>
+<li>Click <strong>OK</strong> to save the font settings, then generate
+your updated font files via <strong>File</strong> &gt; <strong>Generate
+Fonts</strong>.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-set-proportional-figures-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

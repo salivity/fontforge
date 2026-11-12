@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Compile and Test OpenType Features in FontForge - fontforge</title>
+    <meta name="description" content="OpenType features allow fonts to perform advanced typographic behaviors such as ligatures, kerning, contextual alternates, and small caps. This guide explains how to define, compile, and test OpenType substitutions and positioning tables directly within F">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-compile-and-test-open-type-features-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Compile and Test OpenType Features in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-compile-and-test-open-type-features-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="OpenType features allow fonts to perform advanced typographic behaviors such as ligatures, kerning, contextual alternates, and small caps. This guide explains how to define, compile, and test OpenType substitutions and positioning tables directly within F" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-compile-and-test-opentype-features-in-fontforge">How to
+Compile and Test OpenType Features in FontForge</h1>
+<p>OpenType features allow fonts to perform advanced typographic
+behaviors such as ligatures, kerning, contextual alternates, and small
+caps. This guide explains how to define, compile, and test OpenType
+substitutions and positioning tables directly within FontForge, as well
+as how to verify their behavior in the Metrics window before generating
+your final font files.</p>
+<h3 id="1-setting-up-and-compiling-features-in-fontforge">1. Setting Up
+and Compiling Features in FontForge</h3>
+<p>FontForge handles OpenType features through <strong>Lookups</strong>
+inside the font metadata. Features are broadly categorized into Glyph
+Substitution (GSUB) and Glyph Positioning (GPOS).</p>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Navigate to <strong>Element &gt; Font Info</strong> (or press
+<code>Ctrl+Shift+F</code> / <code>Cmd+Shift+F</code>).</li>
+<li>Select <strong>Lookups</strong> from the sidebar menu.</li>
+<li>Choose either the <strong>GSUB</strong> tab (for ligatures,
+alternates, and substitutions) or the <strong>GPOS</strong> tab (for
+kerning and mark attachment).</li>
+</ol>
+<h4 id="adding-lookups-and-subtables">Adding Lookups and Subtables</h4>
+<ol type="1">
+<li>Click <strong>Add Lookup</strong>.</li>
+<li>Set the <strong>Type</strong> (e.g., <em>Ligature Substitution</em>
+for <code>liga</code>, or <em>Pair Position (kerning)</em> for
+<code>kern</code>).</li>
+<li>In the feature list, assign the appropriate four-letter OpenType tag
+(such as <code>liga</code>, <code>dlig</code>, <code>kern</code>, or
+<code>calt</code>) and select the target script and language
+system.</li>
+<li>Click <strong>OK</strong>, select the newly created lookup, and
+click <strong>Add Subtable</strong>.</li>
+<li>Define your glyph mapping rules in the subtable editor. For
+ligatures, specify the resulting glyph and the sequence of component
+glyphs. For kerning, adjust pair offsets manually or assign kerning
+classes.</li>
+</ol>
+<h4 id="importing-external-adobe-feature-files-fea">Importing External
+Adobe Feature Files (.fea)</h4>
+<p>If you prefer writing feature code manually using Adobe Fea
+syntax:</p>
+<ol type="1">
+<li>Go to <strong>File &gt; Merge Feature Info...</strong>.</li>
+<li>Select your <code>.fea</code> file.</li>
+<li>FontForge will compile the syntax into internal GSUB/GPOS lookups.
+Check the output log for compilation syntax errors.</li>
+</ol>
+<hr />
+<h3 id="2-testing-opentype-features-in-the-metrics-window">2. Testing
+OpenType Features in the Metrics Window</h3>
+<p>FontForge includes an integrated layout engine that allows you to
+test OpenType tables dynamically without needing to export the font.</p>
+<ol type="1">
+<li>Go to <strong>Metrics &gt; New Metrics Window</strong> (or press
+<code>Ctrl+K</code> / <code>Cmd+K</code>).</li>
+<li>In the text field at the top, type the character sequence designed
+to trigger your feature (for example, <code>fi</code> for a standard
+ligature or <code>AV</code> for kerning).</li>
+<li>Open the <strong>Features</strong> panel inside the Metrics window:
+<ul>
+<li>Go to <strong>View &gt; Features</strong> within the Metrics window
+menu.</li>
+<li>A dockable list of available OpenType tags (e.g., <code>liga</code>,
+<code>kern</code>, <code>calt</code>) will appear.</li>
+</ul></li>
+<li>Toggle the checkboxes corresponding to your features.
+<ul>
+<li>When checked, FontForge applies the lookup rules in real time,
+transforming the text display.</li>
+<li>When unchecked, the glyphs revert to their default, unshaped
+representations.</li>
+</ul></li>
+<li>Inspect the optical alignment, vertical positioning, and
+substitution accuracy directly on the canvas.</li>
+</ol>
+<hr />
+<h3 id="3-validating-and-exporting">3. Validating and Exporting</h3>
+<p>After confirming the behavior inside the Metrics window:</p>
+<ol type="1">
+<li>Run the validator by selecting <strong>Element &gt; Validation &gt;
+Find Problems</strong> to ensure there are no missing glyph references,
+unencoded glyphs, or broken anchors.</li>
+<li>Navigate to <strong>File &gt; Generate Fonts...</strong>.</li>
+<li>Choose either <strong>OpenType (CFF)</strong> (<code>.otf</code>) or
+<strong>TrueType</strong> (<code>.ttf</code>).</li>
+<li>Click the <strong>Options</strong> button and verify that
+<strong>OpenType</strong> tables are checked so the compiled lookups are
+written into the binary font.</li>
+<li>Generate the file and test it in production environments, such as
+web browsers or desktop publishing software, to ensure system-level
+HarfBuzz or DirectWrite engines render the features as expected.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-compile-and-test-open-type-features-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

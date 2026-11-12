@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Export WOFF and WOFF2 from FontForge - fontforge</title>
+    <meta name="description" content="Exporting web font formats like WOFF and WOFF2 directly from FontForge allows designers and developers to prepare custom typefaces for fast, modern web rendering. This guide details the step-by-step process of configuring and generating these compressed f">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-export-woff-and-woff-2-from-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Export WOFF and WOFF2 from FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-export-woff-and-woff-2-from-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Exporting web font formats like WOFF and WOFF2 directly from FontForge allows designers and developers to prepare custom typefaces for fast, modern web rendering. This guide details the step-by-step process of configuring and generating these compressed f" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-export-woff-and-woff2-from-fontforge">How to Export WOFF
+and WOFF2 from FontForge</h1>
+<p>Exporting web font formats like WOFF and WOFF2 directly from
+FontForge allows designers and developers to prepare custom typefaces
+for fast, modern web rendering. This guide details the step-by-step
+process of configuring and generating these compressed formats using
+FontForge’s graphical interface, as well as an automated command-line
+method for batch processing.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>To generate WOFF and WOFF2 files, ensure you are running an
+up-to-date version of FontForge. Modern releases come pre-compiled with
+the necessary compression libraries (<code>libbrotli</code> for WOFF2
+and <code>zlib</code> for standard WOFF). If WOFF2 is missing from your
+export options, update to the latest build available for your operating
+system.</p>
+<h3 id="step-by-step-gui-export">Step-by-Step GUI Export</h3>
+<ol type="1">
+<li><p><strong>Open Your Font File</strong> Launch FontForge, go to
+<strong>File</strong> &gt; <strong>Open</strong>, and select your
+existing font file (<code>.ttf</code>, <code>.otf</code>, or
+<code>.sfd</code>).</p></li>
+<li><p><strong>Verify Font Metadata</strong> Before exporting, confirm
+that your font's naming and metrics are intact:</p>
+<ul>
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font
+Info</strong>.</li>
+<li>Under <strong>PS Names</strong>, confirm that the Family Name,
+Weight, and Fontname fields are populated correctly to avoid web
+rendering conflicts.</li>
+<li>Click <strong>OK</strong> to close the window.</li>
+</ul></li>
+<li><p><strong>Open the Export Window</strong> Go to
+<strong>File</strong> &gt; <strong>Generate Fonts...</strong> (or press
+<code>Ctrl+Shift+G</code> / <code>Cmd+Shift+G</code>).</p></li>
+<li><p><strong>Select the Web Format</strong></p>
+<ul>
+<li>Beneath the file directory browser, find the format dropdown menu
+(it typically defaults to TrueType or OpenType).</li>
+<li>For standard Web Open Font Format: Select <strong>Web App Format
+(WOFF)</strong>.</li>
+<li>For the modern, highly compressed format: Select <strong>Web App
+Format 2 (WOFF2)</strong>.</li>
+</ul></li>
+<li><p><strong>Configure Generation Options</strong></p>
+<ul>
+<li>Click the <strong>Options</strong> button next to the format
+dropdown.</li>
+<li>Ensure standard flags such as <strong>Validate Before
+Saving</strong> and <strong>Round to Int</strong> are checked or
+unchecked according to your project's technical specifications.</li>
+<li>Click <strong>OK</strong>.</li>
+</ul></li>
+<li><p><strong>Generate the File</strong></p>
+<ul>
+<li>Choose your desired output directory and file name.</li>
+<li>Click <strong>Generate</strong>.</li>
+<li>If a validation warning pops up, review any non-fatal glyph
+warnings. For standard web deployment, minor glyph errors can often be
+bypassed by clicking <strong>Generate</strong> again in the warning
+dialog.</li>
+</ul></li>
+</ol>
+<p>Repeat this process for each font style and weight you need to
+deploy.</p>
+<h3 id="exporting-via-python-scripting">Exporting via Python
+Scripting</h3>
+<p>FontForge includes a Python module, allowing you to batch convert
+multiple desktop font files to WOFF and WOFF2 without opening the user
+interface.</p>
+<p>Save the following code as <code>convert_to_webfonts.py</code>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert_font(input_path):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open the source font</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    font <span class="op">=</span> fontforge.<span class="bu">open</span>(input_path)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Base output filename without extension</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    base_name <span class="op">=</span> input_path.rsplit(<span class="st">&#39;.&#39;</span>, <span class="dv">1</span>)[<span class="dv">0</span>]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate WOFF</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    font.generate(<span class="ss">f&quot;</span><span class="sc">{</span>base_name<span class="sc">}</span><span class="ss">.woff&quot;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate WOFF2</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    font.generate(<span class="ss">f&quot;</span><span class="sc">{</span>base_name<span class="sc">}</span><span class="ss">.woff2&quot;</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    font.close()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Generated WOFF and WOFF2 for </span><span class="sc">{</span>input_path<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        convert_font(sys.argv[<span class="dv">1</span>])</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Usage: fontforge -script convert_to_webfonts.py fontfile.ttf&quot;</span>)</span></code></pre></div>
+<p>Run the script from your terminal using:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-script</span> convert_to_webfonts.py MyFont-Regular.ttf</span></code></pre></div>
+<p>This creates both <code>MyFont-Regular.woff</code> and
+<code>MyFont-Regular.woff2</code> in the same directory as the source
+font.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-export-woff-and-woff-2-from-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

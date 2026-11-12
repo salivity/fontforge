@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Custom Vertical Advance Widths in FontForge - fontforge</title>
+    <meta name="description" content="Configuring vertical advance widths in FontForge is essential for creating fonts that support vertical writing modes, such as CJK (Chinese, Japanese, and Korean) scripts and traditional Mongolian. This guide outlines the exact process to enable vertical m">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/set-custom-vertical-advance-widths-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Set Custom Vertical Advance Widths in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/set-custom-vertical-advance-widths-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Configuring vertical advance widths in FontForge is essential for creating fonts that support vertical writing modes, such as CJK (Chinese, Japanese, and Korean) scripts and traditional Mongolian. This guide outlines the exact process to enable vertical m" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="set-custom-vertical-advance-widths-in-fontforge">Set Custom
+Vertical Advance Widths in FontForge</h1>
+<p>Configuring vertical advance widths in FontForge is essential for
+creating fonts that support vertical writing modes, such as CJK
+(Chinese, Japanese, and Korean) scripts and traditional Mongolian. This
+guide outlines the exact process to enable vertical metrics in your font
+project, view vertical layouts, and define custom vertical advances
+(VWidth) for individual or batch glyphs.</p>
+<h3 id="step-1-enable-vertical-metrics-in-font-info">Step 1: Enable
+Vertical Metrics in Font Info</h3>
+<p>Before setting vertical advance values, you must configure FontForge
+to support vertical metrics:</p>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Navigate to the top menu and select <strong>Element</strong> &gt;
+<strong>Font Info</strong>.</li>
+<li>In the sidebar of the Font Info dialog, click on
+<strong>General</strong>.</li>
+<li>Check the box labeled <strong>Has Vertical Metrics</strong>.</li>
+<li>Click <strong>OK</strong> to apply the changes.</li>
+</ol>
+<p>FontForge will now compute and store vertical metrics tables
+(<code>vhea</code> and <code>vmtx</code>) upon font generation.</p>
+<h3 id="step-2-switch-to-vertical-layout-in-the-font-view">Step 2:
+Switch to Vertical Layout in the Font View</h3>
+<p>To view your glyphs with their vertical baseline and advance
+lines:</p>
+<ol type="1">
+<li>In the main Font View window, go to <strong>View</strong>.</li>
+<li>Select <strong>Vertical</strong> to toggle the display mode from
+horizontal to vertical.</li>
+</ol>
+<p>This view displays the glyphs as they will stack top-to-bottom,
+showing the top origin line and the vertical advance line.</p>
+<h3 id="step-3-set-custom-vertical-advance-widths">Step 3: Set Custom
+Vertical Advance Widths</h3>
+<p>You can assign custom vertical advances using several methods
+depending on your workflow:</p>
+<h4
+id="method-a-using-the-metrics-menu-single-or-multiple-glyphs">Method A:
+Using the Metrics Menu (Single or Multiple Glyphs)</h4>
+<ol type="1">
+<li>Select one or more glyphs in the main Font View.</li>
+<li>Go to <strong>Metrics</strong> in the top menu.</li>
+<li>Select <strong>Set VWidth...</strong>.</li>
+<li>Enter your desired custom vertical advance value in font units.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<h4 id="method-b-using-the-glyph-info-window-per-glyph">Method B: Using
+the Glyph Info Window (Per Glyph)</h4>
+<ol type="1">
+<li>Right-click the desired glyph in the Font View and select
+<strong>Glyph Info</strong> (or press <code>Ctrl+I</code> /
+<code>Cmd+I</code>).</li>
+<li>Go to the <strong>Size</strong> or <strong>Metrics</strong>
+tab.</li>
+<li>Locate the <strong>VWidth</strong> field and input your custom
+numerical value.</li>
+<li>Adjust the vertical origin offset if the glyph needs to be shifted
+relative to the top bearing.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<h4 id="method-c-using-the-metrics-window-visual-editing">Method C:
+Using the Metrics Window (Visual Editing)</h4>
+<ol type="1">
+<li>Select the glyphs you want to adjust and go to
+<strong>Metrics</strong> &gt; <strong>New Metrics Window</strong>.</li>
+<li>Change the view direction to vertical by clicking the vertical text
+icon in the toolbar or selecting <strong>View</strong> &gt;
+<strong>Vertical</strong>.</li>
+<li>In the text field table at the bottom, edit the
+<strong>VWidth</strong> numeric cell directly.</li>
+<li>Alternatively, click and drag the bottom horizontal line
+representing the vertical advance boundary in the visual preview
+area.</li>
+</ol>
+<h3 id="step-4-verify-and-export">Step 4: Verify and Export</h3>
+<ol type="1">
+<li>Test the alignment of stacked characters in the Metrics Window to
+verify spacing and aesthetics.</li>
+<li>Go to <strong>File</strong> &gt; <strong>Generate Fonts...</strong>
+to export your OpenType (<code>.otf</code>) or TrueType
+(<code>.ttf</code>) font. FontForge will automatically compile your
+custom vertical values into the OpenType <code>vmtx</code> table.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/set-custom-vertical-advance-widths-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

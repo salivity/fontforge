@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Check Glyph Path Winding Order in FontForge - fontforge</title>
+    <meta name="description" content="Glyph path winding direction determines which areas of a font character are treated as solid shapes and which are treated as hollow cutouts. In FontForge, incorrect path orientation can cause glyphs to render inverted or create fill errors when compiling">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-check-glyph-path-winding-order-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Check Glyph Path Winding Order in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-check-glyph-path-winding-order-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Glyph path winding direction determines which areas of a font character are treated as solid shapes and which are treated as hollow cutouts. In FontForge, incorrect path orientation can cause glyphs to render inverted or create fill errors when compiling" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-check-glyph-path-winding-order-in-fontforge">How to Check
+Glyph Path Winding Order in FontForge</h1>
+<p>Glyph path winding direction determines which areas of a font
+character are treated as solid shapes and which are treated as hollow
+cutouts. In FontForge, incorrect path orientation can cause glyphs to
+render inverted or create fill errors when compiling TrueType (TTF) or
+PostScript/OpenType (OTF) formats. This guide outlines how to visually
+inspect path directions, use FontForge’s automated verification tools to
+locate winding errors, and automatically fix contour directions across
+your entire font.</p>
+<h2 id="understanding-font-winding-rules">Understanding Font Winding
+Rules</h2>
+<p>Different font formats rely on specific contour directions:</p>
+<ul>
+<li><strong>TrueType (TTF):</strong> Outer paths must run clockwise;
+inner cutouts (counters) must run counter-clockwise.</li>
+<li><strong>PostScript / OpenType (OTF):</strong> Outer paths must run
+counter-clockwise; inner cutouts must run clockwise.</li>
+</ul>
+<p>If an outer contour and an inner cutout have the same direction,
+rendering engines may fill the cutout or drop the entire shape.</p>
+<h2 id="method-1-visual-inspection-in-the-glyph-window">Method 1: Visual
+Inspection in the Glyph Window</h2>
+<p>You can inspect the exact vector direction directly in the drawing
+view:</p>
+<ol type="1">
+<li>Double-click any glyph in the font matrix to open the <strong>Glyph
+Edit Window</strong>.</li>
+<li>Go to the top menu and select <strong>View &gt; Show</strong>.</li>
+<li>Ensure <strong>Points</strong> is checked. FontForge displays small
+directional arrows on the contour lines alongside the on-curve
+points.</li>
+<li>Follow the arrows around each contour:
+<ul>
+<li>Verify that the outer boundary points in the required
+direction.</li>
+<li>Verify that any enclosed counter-spaces (such as the hole inside an
+"O" or "P") flow in the opposite direction.</li>
+</ul></li>
+</ol>
+<h2 id="method-2-use-the-find-problems-tool">Method 2: Use the "Find
+Problems" Tool</h2>
+<p>To test the entire font for winding and direction errors
+automatically:</p>
+<ol type="1">
+<li>Open your font project and select the glyphs you want to audit (or
+press <strong>Ctrl+A</strong> / <strong>Cmd+A</strong> to select
+all).</li>
+<li>Go to <strong>Element &gt; Validation &gt; Find Problems</strong>
+(or press **Ctrl+Shift+_**).</li>
+<li>In the dialog box, navigate to the <strong>Paths</strong> tab.</li>
+<li>Check the box for <strong>Check direction</strong>.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<p>FontForge will scan your glyphs and display an alert dialog for any
+glyph where the outer and inner paths fail standard orientation rules,
+allowing you to review each issue individually.</p>
+<h2 id="method-3-automatically-correct-path-direction">Method 3:
+Automatically Correct Path Direction</h2>
+<p>Rather than manual verification, FontForge can calculate and apply
+the standard winding order across your glyphs automatically:</p>
+<ol type="1">
+<li>Select your target glyphs in the main font view or select all
+contours in the Glyph Edit Window.</li>
+<li>Go to <strong>Element &gt; Correct Direction</strong> (Shortcut:
+<strong>Ctrl+Shift+D</strong> on Windows/Linux,
+<strong>Cmd+Shift+D</strong> on macOS).</li>
+</ol>
+<p>FontForge calculates the hierarchy of nested paths, forces outer
+paths to match the target font specification, and reverses inner cutouts
+so they display as transparent holes.</p>
+<h2 id="reversing-direction-manually">Reversing Direction Manually</h2>
+<p>If an individual path needs to be flipped manually after an
+inspection:</p>
+<ol type="1">
+<li>Open the glyph in the <strong>Glyph Edit Window</strong>.</li>
+<li>Select a point on the specific path you wish to reverse.</li>
+<li>Choose <strong>Element &gt; Reverse Direction</strong>. The arrows
+on that contour will flip immediately.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-check-glyph-path-winding-order-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

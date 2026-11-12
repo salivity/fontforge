@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use FontForge Metrics View to Adjust Character Spacing - fontforge</title>
+    <meta name="description" content="Adjusting character spacing is a critical step in type design to ensure text is legible, balanced, and aesthetically pleasing. In FontForge, this process is managed primarily through the Metrics View, an interactive workspace where you can inspect and mod">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/use-font-forge-metrics-view-to-adjust-character-spacing">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Use FontForge Metrics View to Adjust Character Spacing - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/use-font-forge-metrics-view-to-adjust-character-spacing" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Adjusting character spacing is a critical step in type design to ensure text is legible, balanced, and aesthetically pleasing. In FontForge, this process is managed primarily through the Metrics View, an interactive workspace where you can inspect and mod" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="use-fontforge-metrics-view-to-adjust-character-spacing">Use
+FontForge Metrics View to Adjust Character Spacing</h1>
+<p>Adjusting character spacing is a critical step in type design to
+ensure text is legible, balanced, and aesthetically pleasing. In
+FontForge, this process is managed primarily through the Metrics View,
+an interactive workspace where you can inspect and modify glyph side
+bearings, advance widths, and kerning pairs in real time. This guide
+walks you through opening the Metrics View, understanding spacing
+parameters, editing horizontal metrics numerically and visually, and
+applying kerning adjustments across character pairs.</p>
+<h3 id="opening-the-metrics-view">Opening the Metrics View</h3>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>In the main Font View window, select the glyphs you want to inspect.
+You can select multiple glyphs by holding <code>Ctrl</code> or
+<code>Shift</code> while clicking.</li>
+<li>Go to the top menu and select <strong>Metrics &gt; Open Metrics
+Window</strong> (or press <code>Ctrl + K</code>).</li>
+<li>A new window will appear showing the selected characters rendered
+consecutively along a baseline. You can also type directly into the text
+field at the top to add, delete, or rearrange characters for live
+previewing.</li>
+</ol>
+<h3 id="understanding-the-metrics-interface">Understanding the Metrics
+Interface</h3>
+<p>Each glyph in the Metrics View is enclosed by vertical reference
+lines:</p>
+<ul>
+<li><strong>Left Side Bearing (LSB):</strong> The distance between the
+character's origin point (left vertical line) and the leftmost point of
+the glyph contour.</li>
+<li><strong>Right Side Bearing (RSB):</strong> The distance between the
+rightmost point of the glyph contour and the right boundary line.</li>
+<li><strong>Advance Width:</strong> The total horizontal space assigned
+to the glyph (LSB + glyph outline width + RSB).</li>
+</ul>
+<p>Beneath each glyph, a table displays these values numerically,
+allowing for both precise numeric entry and intuitive visual
+editing.</p>
+<h3 id="adjusting-side-bearings-and-widths">Adjusting Side Bearings and
+Widths</h3>
+<p>You can modify metrics using either the graphical display or the data
+table:</p>
+<h4 id="graphical-adjustment">Graphical Adjustment</h4>
+<ol type="1">
+<li>Hover your cursor over the vertical boundary lines (the LSB or RSB
+lines) flanking any glyph. The cursor will change to a horizontal resize
+icon.</li>
+<li>Click and drag the line left or right:
+<ul>
+<li>Dragging the <strong>RSB line</strong> changes the advance width
+without affecting the placement of the glyph outline.</li>
+<li>Dragging the <strong>glyph outline</strong> itself changes both the
+LSB and RSB while keeping the total advance width intact.</li>
+<li>Dragging the <strong>LSB line</strong> shifts the origin relative to
+the glyph contour.</li>
+</ul></li>
+</ol>
+<h4 id="numerical-adjustment">Numerical Adjustment</h4>
+<ol type="1">
+<li>Locate the editable text boxes directly beneath the character in the
+bottom panel.</li>
+<li>Double-click the values for <strong>LBearing</strong>,
+<strong>RBearing</strong>, or <strong>Width</strong>.</li>
+<li>Type your desired unit value and press <code>Enter</code>. The
+visual representation updates immediately.</li>
+</ol>
+<p>Alternatively, you can select a glyph and use the menu commands:</p>
+<ul>
+<li><strong>Metrics &gt; Set LBearing...</strong></li>
+<li><strong>Metrics &gt; Set RBearing...</strong></li>
+<li><strong>Metrics &gt; Set Width...</strong></li>
+</ul>
+<h3 id="setting-kerning-between-pairs">Setting Kerning Between
+Pairs</h3>
+<p>Kerning controls the specific spacing between two adjacent characters
+when default side bearings produce visual gaps (such as in pairs like
+"AV", "To", or "WA").</p>
+<ol type="1">
+<li>In the text field of the Metrics View, type the two characters side
+by side (e.g., <code>AV</code>).</li>
+<li>Click the second character to select it.</li>
+<li>Move the cursor between the two characters until it turns into a
+horizontal double-arrow.</li>
+<li>Click and drag to shift the second character closer to or farther
+from the first.</li>
+<li>If a kerning pair does not yet exist for these two glyphs, FontForge
+will create one automatically.</li>
+<li>To enter an exact kerning value, click the kerning field located
+between the two glyph columns in the metrics table below and enter a
+positive or negative numerical value.</li>
+</ol>
+<h3 id="testing-and-refining-spacing">Testing and Refining Spacing</h3>
+<p>Consistent spacing requires testing characters in realistic
+contexts:</p>
+<ul>
+<li><strong>Control Strings:</strong> Test uppercase letters against
+straight and round forms (e.g., <code>HHOHOOAOHO</code>,
+<code>NNONOOAO</code>).</li>
+<li><strong>Lowercase Testing:</strong> Use <code>n</code> and
+<code>o</code> as reference frames (e.g., <code>nnonooano</code>,
+<code>nonanono</code>).</li>
+<li><strong>Zoom and Scale:</strong> Use the <strong>View</strong> menu
+within the Metrics window to change display sizes. Spacing that looks
+acceptable at large display sizes may appear unbalanced at smaller text
+sizes.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/use-font-forge-metrics-view-to-adjust-character-spacing';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

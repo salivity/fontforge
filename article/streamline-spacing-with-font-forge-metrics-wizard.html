@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamline Spacing with FontForge Metrics Wizard - fontforge</title>
+    <meta name="description" content="Proper character spacing and kerning define the readability and professional finish of a typeface, but setting side bearings manually for hundreds of glyphs is time-consuming. FontForge provides automated metrics tools—often referred to collectively as th">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/streamline-spacing-with-font-forge-metrics-wizard">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Streamline Spacing with FontForge Metrics Wizard - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/streamline-spacing-with-font-forge-metrics-wizard" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Proper character spacing and kerning define the readability and professional finish of a typeface, but setting side bearings manually for hundreds of glyphs is time-consuming. FontForge provides automated metrics tools—often referred to collectively as th" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="streamline-spacing-with-fontforge-metrics-wizard">Streamline
+Spacing with FontForge Metrics Wizard</h1>
+<p>Proper character spacing and kerning define the readability and
+professional finish of a typeface, but setting side bearings manually
+for hundreds of glyphs is time-consuming. FontForge provides automated
+metrics tools—often referred to collectively as the Metrics Wizard
+(encompassing the Auto Width and Auto Kern features)—to calculate
+optical spacing programmatically. This guide walks you through preparing
+your glyphs, configuring automated width and kerning parameters, and
+fine-tuning the results to achieve balanced typography in a fraction of
+the time.</p>
+<h3 id="1-prepare-your-glyphs">1. Prepare Your Glyphs</h3>
+<p>Before running any automated spacing routines, ensure all glyph
+contours are finalized, correctly oriented, and free of overlap
+errors:</p>
+<ul>
+<li>Select all glyphs (<code>Ctrl + A</code> or
+<code>Cmd + A</code>).</li>
+<li>Run <strong>Element &gt; Correct Direction</strong> to verify path
+winding.</li>
+<li>Run <strong>Element &gt; Overlap &gt; Remove Overlap</strong> to
+avoid erroneous bounding box calculations.</li>
+</ul>
+<h3 id="2-configure-auto-width-side-bearings">2. Configure Auto Width
+(Side Bearings)</h3>
+<p>The Auto Width utility automatically calculates the Left Side Bearing
+(LSB) and Right Side Bearing (RSB) by analyzing the optical mass and
+edges of each glyph.</p>
+<ol type="1">
+<li>In the Font View window, select the glyphs you want to space (it is
+best to start with standard Latin lowercase letters <code>a-z</code>,
+then uppercase <code>A-Z</code>).</li>
+<li>Navigate to <strong>Metrics &gt; Auto Width...</strong> from the top
+menu.</li>
+<li>In the dialog box, specify the target spacing parameters:
+<ul>
+<li><strong>Desired Spacing / Guess</strong>: Enter the desired optical
+distance between characters (measured in font units, commonly scaled
+relative to your UPM, such as 100 to 200 units on a 1000-UPM font).</li>
+<li><strong>Minimum Bearing</strong>: Set a lower limit so glyphs with
+steep curves do not collapse into adjacent letters.</li>
+</ul></li>
+<li>Click <strong>OK</strong>. FontForge will compute the optical
+margins and adjust the LSB and RSB for each selected glyph.</li>
+</ol>
+<h3 id="3-generate-kerning-pairs-with-auto-kern">3. Generate Kerning
+Pairs with Auto Kern</h3>
+<p>Once side bearings are set, use the Auto Kern tool to catch
+problematic pairs with extreme overhangs or diagonal shapes (such as
+<em>AV</em>, <em>To</em>, and <em>Wa</em>).</p>
+<ol type="1">
+<li>Select the glyph set you want to test for pair collisions or
+gaps.</li>
+<li>Go to <strong>Metrics &gt; Auto Kern...</strong>.</li>
+<li>Choose the target kerning subtable or allow FontForge to generate a
+new GPOS lookup table.</li>
+<li>Set your kerning parameters:
+<ul>
+<li><strong>Desired Optical Distance</strong>: This should match or
+closely approximate the visual spacing established during the Auto Width
+step.</li>
+<li><strong>Threshold / Minimum Kern</strong>: Define the minimum
+adjustment value required before a kerning pair is created (e.g., 5 or
+10 units) to prevent bloat in your final font file.</li>
+<li><strong>Maximum Kern Value</strong>: Set a ceiling to avoid overly
+aggressive negative adjustments.</li>
+</ul></li>
+<li>Click <strong>OK</strong> to run the calculation.</li>
+</ol>
+<h3 id="4-review-and-refine-in-the-metrics-window">4. Review and Refine
+in the Metrics Window</h3>
+<p>Automated metrics provide an estimated baseline, but human optical
+verification is required for high-quality results.</p>
+<ol type="1">
+<li>Open the Metrics Window by selecting <strong>Metrics &gt; Open
+Metrics Window</strong> (or pressing <code>Ctrl + K</code> /
+<code>Cmd + K</code>).</li>
+<li>Type standard spacing strings to inspect rhythm and harmony:
+<ul>
+<li>For lowercase: <code>nnanbnooppnqqnrn</code> or
+<code>hhahbhchoohphqh</code></li>
+<li>For uppercase: <code>HHAMBORGEVONS</code></li>
+</ul></li>
+<li>Click and drag between characters in the preview area to adjust
+kerning values interactively, or edit the numeric LSB, RSB, and Kern
+fields at the top of the window.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/streamline-spacing-with-font-forge-metrics-wizard';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

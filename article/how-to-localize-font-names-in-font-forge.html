@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Localize Font Names in FontForge - fontforge</title>
+    <meta name="description" content="Localizing font metadata allows your font&#39;s name, style, and copyright information to appear natively in different languages across various operating systems. This guide walks you through the step-by-step process of accessing the TrueType/OpenType Name ta">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-localize-font-names-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Localize Font Names in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-localize-font-names-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Localizing font metadata allows your font&#39;s name, style, and copyright information to appear natively in different languages across various operating systems. This guide walks you through the step-by-step process of accessing the TrueType/OpenType Name ta" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-localize-font-names-in-fontforge">How to Localize Font
+Names in FontForge</h1>
+<p>Localizing font metadata allows your font's name, style, and
+copyright information to appear natively in different languages across
+various operating systems. This guide walks you through the step-by-step
+process of accessing the TrueType/OpenType Name table in FontForge,
+adding language-specific string entries, and exporting the finalized
+multilingual font files.</p>
+<h2 id="step-1-open-font-info">Step 1: Open Font Info</h2>
+<ol type="1">
+<li>Launch FontForge and open your font project (<code>.sfd</code>,
+<code>.ttf</code>, or <code>.otf</code>).</li>
+<li>From the top menu, navigate to <strong>Element</strong> &gt;
+<strong>Font Info</strong> (or press <code>Ctrl + Shift + F</code> on
+Windows/Linux, <code>Cmd + Shift + F</code> on macOS).</li>
+</ol>
+<h2 id="step-2-access-the-ttf-names-table">Step 2: Access the TTF Names
+Table</h2>
+<ol type="1">
+<li>In the sidebar on the left side of the <strong>Font Info</strong>
+window, select <strong>TTF Names</strong>.</li>
+<li>This table displays the OpenType <code>name</code> table entries. By
+default, most entries will be set to the language <strong>English
+(US)</strong>.</li>
+</ol>
+<h2 id="step-3-add-a-localized-language-entry">Step 3: Add a Localized
+Language Entry</h2>
+<ol type="1">
+<li>Click on the name field you want to localize (for example,
+<strong>Family</strong> or <strong>Fullname</strong>).</li>
+<li>Click the <strong>Add</strong> button at the bottom of the dialog or
+right-click an empty row in the list to create a new entry.</li>
+<li>In the <strong>Language</strong> column for the new row, click the
+dropdown menu and select the target language (for example,
+<em>Japanese</em>, <em>French</em>, or <em>German</em>).</li>
+<li>In the <strong>String</strong> column, enter the localized name
+translated into the selected language (e.g., your font family name in
+Japanese Kanji/Kana).</li>
+</ol>
+<h2 id="key-metadata-fields-to-localize">Key Metadata Fields to
+Localize</h2>
+<p>To ensure proper rendering in localized application menus, provide
+translations for the following Name IDs:</p>
+<ul>
+<li><strong>Name ID 1 (Family):</strong> The localized name of the font
+family.</li>
+<li><strong>Name ID 2 (Subfamily):</strong> The localized weight or
+style (e.g., "Gras" instead of "Bold" for French).</li>
+<li><strong>Name ID 4 (Fullname):</strong> The combined localized family
+and subfamily name.</li>
+<li><strong>Name ID 16 (Typographic Family):</strong> Recommended if
+your family exceeds standard four-style arrangements (Regular, Bold,
+Italic, Bold Italic).</li>
+<li><strong>Name ID 17 (Typographic Subfamily):</strong> The localized
+specific style variant for extended families (e.g., "SemiBold",
+"Light").</li>
+</ul>
+<h2 id="step-4-verify-and-save">Step 4: Verify and Save</h2>
+<ol type="1">
+<li>Review the TTF Names list to ensure both the default <strong>English
+(US)</strong> fallback and your localized entries are present.</li>
+<li>Click <strong>OK</strong> at the bottom of the <strong>Font
+Info</strong> window to save your metadata changes.</li>
+<li>Save your source file by going to <strong>File</strong> &gt;
+<strong>Save</strong>.</li>
+</ol>
+<h2 id="step-5-generate-the-font">Step 5: Generate the Font</h2>
+<ol type="1">
+<li>Navigate to <strong>File</strong> &gt; <strong>Generate
+Fonts...</strong></li>
+<li>Choose your desired output format (such as <strong>OpenType
+(CFF)</strong> or <strong>TrueType</strong>).</li>
+<li>Ensure the export options preserve OpenType tables, then click
+<strong>Generate</strong>.</li>
+</ol>
+<p>The generated font file will now dynamically present the translated
+name when installed on an operating system running under the configured
+locale.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-localize-font-names-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

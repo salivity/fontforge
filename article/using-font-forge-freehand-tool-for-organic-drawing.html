@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using FontForge Freehand Tool for Organic Drawing - fontforge</title>
+    <meta name="description" content="FontForge includes a built-in Freehand tool that allows designers to draw organic, expressive shapes directly on the glyph canvas. While it provides an intuitive way to sketch with a mouse or graphics tablet, freehand input naturally generates an excessiv">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/using-font-forge-freehand-tool-for-organic-drawing">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Using FontForge Freehand Tool for Organic Drawing - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/using-font-forge-freehand-tool-for-organic-drawing" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge includes a built-in Freehand tool that allows designers to draw organic, expressive shapes directly on the glyph canvas. While it provides an intuitive way to sketch with a mouse or graphics tablet, freehand input naturally generates an excessiv" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="using-fontforge-freehand-tool-for-organic-drawing">Using
+FontForge Freehand Tool for Organic Drawing</h1>
+<p>FontForge includes a built-in Freehand tool that allows designers to
+draw organic, expressive shapes directly on the glyph canvas. While it
+provides an intuitive way to sketch with a mouse or graphics tablet,
+freehand input naturally generates an excessive number of Bézier control
+points that can cause jagged outlines and poor font rendering.
+Understanding how to draw with the tool, expand your strokes, and
+simplify your paths is essential for turning raw organic sketches into
+clean, production-ready typography.</p>
+<h3 id="how-to-use-the-freehand-tool">How to Use the Freehand Tool</h3>
+<p>To access the Freehand tool, open any glyph in the Outline View and
+select the Freehand icon (resembling a freehand curve) from the Tools
+palette, or press its corresponding keyboard shortcut. Click and drag
+across the canvas using a mouse or drawing tablet to create spontaneous,
+fluid curves.</p>
+<p>By default, the Freehand tool creates open paths that follow the
+exact movement of your cursor. Double-clicking the Freehand tool icon in
+the palette opens its settings, where you can adjust the stroke width
+and pen type to simulate different drawing implements, such as flat
+calligraphic nibs or circular brushes.</p>
+<h3 id="managing-point-density">Managing Point Density</h3>
+<p>The primary drawback of drawing organically in FontForge is node
+density. The tool places points rapidly as you move your hand, resulting
+in irregular curves and bloated file sizes. Digital fonts require clean,
+minimal Bézier curves with on-curve points positioned primarily at
+extrema (the highest, lowest, leftmost, and rightmost points of a
+curve).</p>
+<p>To fix excessive nodes after drawing:</p>
+<ol type="1">
+<li>Select the drawn path.</li>
+<li>Navigate to <strong>Element &gt; Simplify &gt; Simplify</strong> (or
+press <code>Ctrl+Shift+M</code>) to automatically reduce redundant
+points while preserving the overall shape.</li>
+<li>Apply <strong>Element &gt; Add Extrema</strong> to ensure the
+remaining points align with standard font geometry practices.</li>
+<li>Manually inspect and adjust the curve handles to smooth out any
+residual bumps.</li>
+</ol>
+<h3 id="expanding-strokes-into-outlines">Expanding Strokes into
+Outlines</h3>
+<p>Because the Freehand tool produces single open strokes, you must
+convert these lines into closed contours before exporting your font.
+Fonts cannot render open lines.</p>
+<p>To convert your strokes into filled shapes, select the path and
+choose <strong>Element &gt; Expand Stroke</strong>. In the dialog that
+appears, define your desired stroke width, cap types (flat, round, or
+bevel), and join styles. Once expanded, run <strong>Element &gt; Overlap
+&gt; Remove Overlap</strong> to fuse intersecting segments into a
+single, cohesive contour.</p>
+<h3 id="best-practice-alternatives">Best Practice Alternatives</h3>
+<p>While the Freehand tool is convenient for quick experimentation, many
+type designers prefer sketching organically outside of FontForge. A
+common alternative is importing a scanned sketch into the glyph's
+Background layer via <strong>View &gt; Layers &gt; Back</strong>
+followed by <strong>File &gt; Import</strong>. This allows you to trace
+your organic curves manually using the standard Bézier Pen tool, giving
+you complete control over node placement and curve tension from the
+start.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/using-font-forge-freehand-tool-for-organic-drawing';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

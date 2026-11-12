@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Fix Missing Required Tables in FontForge - fontforge</title>
+    <meta name="description" content="This guide explains how to identify and resolve validation errors related to missing required OpenType and TrueType tables in FontForge. These errors occur when a font lacks mandatory structural data—such as the OS/2, cmap, head, hhea, maxp, or post table">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-fix-missing-required-tables-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Fix Missing Required Tables in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-fix-missing-required-tables-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to identify and resolve validation errors related to missing required OpenType and TrueType tables in FontForge. These errors occur when a font lacks mandatory structural data—such as the OS/2, cmap, head, hhea, maxp, or post table" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-fix-missing-required-tables-in-fontforge">How to Fix
+Missing Required Tables in FontForge</h1>
+<p>This guide explains how to identify and resolve validation errors
+related to missing required OpenType and TrueType tables in FontForge.
+These errors occur when a font lacks mandatory structural data—such as
+the <code>OS/2</code>, <code>cmap</code>, <code>head</code>,
+<code>hhea</code>, <code>maxp</code>, or <code>post</code>
+tables—required by font rendering engines. Following the steps below
+will ensure your font metadata, encodings, and export settings are
+correctly configured so FontForge can automatically generate all
+required tables.</p>
+<h3 id="1-identify-the-specific-missing-table">1. Identify the Specific
+Missing Table</h3>
+<p>Run FontForge's built-in validator to determine which table is
+failing:</p>
+<ol type="1">
+<li>Open your font in FontForge.</li>
+<li>Navigate to <strong>Element</strong> &gt;
+<strong>Validation</strong> &gt; <strong>Validate</strong>.</li>
+<li>Review the validation window for messages explicitly citing missing
+tables (e.g., <code>Missing required table: 'OS/2'</code> or
+<code>Missing table: 'cmap'</code>).</li>
+</ol>
+<h3 id="2-configure-font-information-and-metadata">2. Configure Font
+Information and Metadata</h3>
+<p>Most missing tables result from incomplete metadata, which prevents
+FontForge from generating proper table headers.</p>
+<ol type="1">
+<li>Go to <strong>Element</strong> &gt; <strong>Font Info</strong>.</li>
+<li>Select the <strong>PS Names</strong> tab and ensure
+<strong>Fontname</strong>, <strong>Family Name</strong>, and
+<strong>Name for Humans</strong> are populated without unsupported
+symbols.</li>
+<li>Select the <strong>TTF Names</strong> tab and verify that default
+entries for English (US) exist for:
+<ul>
+<li>Copyright</li>
+<li>Font Family Name</li>
+<li>Font Subfamily Name</li>
+<li>Unique Font Identifier</li>
+<li>Full Font Name</li>
+<li>Version</li>
+</ul></li>
+<li>Click <strong>OK</strong> to apply changes.</li>
+</ol>
+<h3 id="3-populate-os2-and-metric-tables">3. Populate OS/2 and Metric
+Tables</h3>
+<p>If the <code>OS/2</code> or <code>hhea</code> tables are reported
+missing:</p>
+<ol type="1">
+<li>Navigate back to <strong>Element</strong> &gt; <strong>Font
+Info</strong> &gt; <strong>OS/2</strong>.</li>
+<li>In the <strong>Misc.</strong> sub-tab, assign a valid
+<strong>Weight</strong> class (e.g., 400 for Regular) and
+<strong>Width</strong> class (e.g., Medium/Normal).</li>
+<li>Ensure a 4-character <strong>Vendor ID</strong> is present (use
+<code>PfEd</code> or any four alphanumeric characters).</li>
+<li>Go to the <strong>Metrics</strong> sub-tab under
+<strong>OS/2</strong> and click <strong>Set Offset</strong> or compute
+values automatically for Win Ascent, Win Descent, Typo Ascent, and Typo
+Descent.</li>
+<li>Check the <strong>Panose</strong> sub-tab and set basic
+classification metrics instead of leaving all values at zero.</li>
+</ol>
+<h3 id="4-fix-encoding-for-the-cmap-table">4. Fix Encoding for the cmap
+Table</h3>
+<p>A missing <code>cmap</code> table indicates that the glyphs are not
+mapped to standard character codes:</p>
+<ol type="1">
+<li>Go to <strong>Encoding</strong> &gt; <strong>Reencode</strong>.</li>
+<li>Select <strong>ISO 10646-1 (Unicode, BMP)</strong> or
+<strong>Unicode (Full)</strong>.</li>
+<li>Ensure that basic glyphs (such as the space character
+<code>uni0020</code> and standard Latin characters) have assigned
+Unicode codepoints and are not placed in unassigned slots.</li>
+<li>Ensure the <code>.notdef</code> glyph exists at glyph index 0, as
+TrueType and OpenType specifications require it.</li>
+</ol>
+<h3 id="5-adjust-font-generation-settings">5. Adjust Font Generation
+Settings</h3>
+<p>FontForge compiles most low-level tables (<code>head</code>,
+<code>maxp</code>, <code>post</code>, <code>loca</code>) at the time of
+export. If custom generation options are stripping these tables:</p>
+<ol type="1">
+<li>Go to <strong>File</strong> &gt; <strong>Generate
+Fonts</strong>.</li>
+<li>Choose <strong>TrueType</strong> or <strong>OpenType (CFF)</strong>
+from the format dropdown.</li>
+<li>Click the <strong>Options</strong> button next to the format
+selection.</li>
+<li>Verify that:
+<ul>
+<li><strong>OpenType</strong> is checked if outputting OTF fonts.</li>
+<li>Any options specifying "Don't create OS/2 table" or stripping
+TrueType tables are unchecked.</li>
+<li><strong>Apple</strong> or <strong>OpenType</strong> table format is
+selected according to your target platform.</li>
+</ul></li>
+<li>Click <strong>OK</strong>, then click
+<strong>Generate</strong>.</li>
+</ol>
+<p>After completing these steps, reopen the newly generated font file in
+FontForge and run <strong>Element</strong> &gt;
+<strong>Validation</strong> &gt; <strong>Validate</strong> again to
+confirm that all required tables are present and valid.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-fix-missing-required-tables-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

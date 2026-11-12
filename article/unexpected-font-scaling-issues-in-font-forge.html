@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unexpected Font Scaling Issues in FontForge - fontforge</title>
+    <meta name="description" content="Opening a font file in FontForge can sometimes cause glyphs to appear dramatically enlarged, shrunken, or distorted relative to their original designs. This unexpected scaling is typically caused by Units Per Em (UPM) discrepancies, conflicting PostScript">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/unexpected-font-scaling-issues-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Unexpected Font Scaling Issues in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/unexpected-font-scaling-issues-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Opening a font file in FontForge can sometimes cause glyphs to appear dramatically enlarged, shrunken, or distorted relative to their original designs. This unexpected scaling is typically caused by Units Per Em (UPM) discrepancies, conflicting PostScript" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="unexpected-font-scaling-issues-in-fontforge">Unexpected Font
+Scaling Issues in FontForge</h1>
+<p>Opening a font file in FontForge can sometimes cause glyphs to appear
+dramatically enlarged, shrunken, or distorted relative to their original
+designs. This unexpected scaling is typically caused by Units Per Em
+(UPM) discrepancies, conflicting PostScript and TrueType metric
+standards, unapplied transformation matrices, or automated import
+preferences within the software. Identifying the specific mechanism
+triggering the size shift allows you to quickly restore proper glyph
+proportions and export consistent font files.</p>
+<h3 id="units-per-em-upm-discrepancies">Units Per Em (UPM)
+Discrepancies</h3>
+<p>The most frequent source of scaling issues is the configuration of
+the Em square. Every outline font is drawn on a coordinate grid defined
+by its Units Per Em (UPM) value:</p>
+<ul>
+<li><strong>PostScript/CFF fonts:</strong> Typically use a standard 1000
+UPM grid.</li>
+<li><strong>TrueType fonts:</strong> Commonly use power-of-two values,
+most often 2048 UPM, though sometimes 1024 UPM.</li>
+</ul>
+<p>When FontForge opens a font or imports glyph outlines, it evaluates
+the font's existing header metrics. If the source file contains
+corrupted header entries or if FontForge attempts to normalize an
+unconventional UPM to a standard size, the outlines are scaled up or
+down. If the coordinate points are not recalculated proportionally
+alongside the Em size change, the glyphs will render at the wrong
+scale.</p>
+<h3 id="format-conversion-shifts-postscript-vs-truetype">Format
+Conversion Shifts (PostScript vs. TrueType)</h3>
+<p>Converting between font formats during the opening or importing
+process alters how coordinates are processed. When importing
+OpenType-CFF outlines into a TrueType environment, FontForge must
+convert cubic Bézier curves to quadratic curves. If the source font uses
+non-standard coordinate definitions, FontForge may automatically rescale
+the glyphs to conform to TrueType grid expectations, leading to
+unexpected sizing shifts.</p>
+<h3 id="transformation-matrices-and-component-glyphs">Transformation
+Matrices and Component Glyphs</h3>
+<p>Fonts frequently use composite glyphs—such as accented characters
+built from a base letter and a separate diacritic—or rely on embedded
+transformation matrices:</p>
+<ul>
+<li><strong>Nested Transformations:</strong> TrueType formats allow
+glyph components to carry internal scaling factors (e.g., scale <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> by 0.5). If FontForge imports or
+decomposes these components incorrectly, it may apply the scale factor
+twice or ignore it entirely.</li>
+<li><strong>Font-Level Matrices:</strong> Some Type 1 and CFF fonts
+define a global <code>FontMatrix</code> array that scales coordinates
+upon rendering (e.g., <code>[0.001 0 0 0.001 0 0]</code>). If FontForge
+misinterprets an unusual transformation matrix upon reading the file, it
+will display the raw coordinate values without the necessary scaling
+applied.</li>
+</ul>
+<h3 id="automated-import-settings-and-preferences">Automated Import
+Settings and Preferences</h3>
+<p>FontForge includes global and file-specific preferences that govern
+how outlines are handled when opened or imported. If settings such as
+"Scale to Fit" or automatic outline normalization are enabled, FontForge
+will bypass the original font's intrinsic sizing and resize incoming
+vector paths to match the active font window's dimensions. This
+frequently occurs when importing external vector assets (such as SVG or
+EPS files) into an existing font database.</p>
+<h3 id="inconsistent-vertical-metrics">Inconsistent Vertical
+Metrics</h3>
+<p>Visual scaling problems can also be an illusion created by mismatched
+vertical metrics. Font formats store multiple vertical metric tables,
+including WinAscent/WinDescent, TypoAscender/TypoDescender, and Hhea
+metrics. If these tables conflict, FontForge may rescale the preview
+canvas or alter the baseline reference points upon import, making
+standard glyphs appear improperly proportioned within the design
+window.</p>
+<h3 id="how-to-fix-scaling-issues-in-fontforge">How to Fix Scaling
+Issues in FontForge</h3>
+<ol type="1">
+<li><strong>Verify the Em Size:</strong> Navigate to <strong>Element
+&gt; Font Info &gt; General</strong> and verify that the Em Size matches
+the original design specifications (typically 1000 or 2048).</li>
+<li><strong>Disable Automatic Scaling:</strong> Check <strong>File &gt;
+Preferences</strong> and ensure automatic outline scaling is disabled
+during import operations.</li>
+<li><strong>Transform Manually:</strong> If outlines open at an
+incorrect scale, select all glyphs and use <strong>Element &gt;
+Transformations &gt; Transform</strong>, selecting <strong>Scale
+Uniformly</strong> with the proper percentage (e.g., 50% or 204.8%) to
+restore proper design dimensions.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/unexpected-font-scaling-issues-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

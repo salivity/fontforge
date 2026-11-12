@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Font Tables to XML or Text in FontForge - fontforge</title>
+    <meta name="description" content="This guide explains how to extract font tables as raw text or XML using FontForge. While FontForge is primarily an outline editor, you can export font table data into human-readable formats by saving the font as a native Spline Font Database (SFD) text fi">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/export-font-tables-to-xml-or-text-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Export Font Tables to XML or Text in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/export-font-tables-to-xml-or-text-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to extract font tables as raw text or XML using FontForge. While FontForge is primarily an outline editor, you can export font table data into human-readable formats by saving the font as a native Spline Font Database (SFD) text fi" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="export-font-tables-to-xml-or-text-in-fontforge">Export Font
+Tables to XML or Text in FontForge</h1>
+<p>This guide explains how to extract font tables as raw text or XML
+using FontForge. While FontForge is primarily an outline editor, you can
+export font table data into human-readable formats by saving the font as
+a native Spline Font Database (SFD) text file, exporting OpenType tables
+as feature text files, or using FontForge's built-in Python scripting
+environment to dump raw table bytes directly to disk.</p>
+<h3 id="method-1-export-complete-font-data-as-text-sfd">Method 1: Export
+Complete Font Data as Text (.sfd)</h3>
+<p>FontForge’s native file format is the Spline Font Database
+(<code>.sfd</code>), which stores every font table, glyph outline,
+metadata field, and metric in plain, human-readable ASCII text.</p>
+<ol type="1">
+<li>Open your font in FontForge via <strong>File &gt;
+Open</strong>.</li>
+<li>Navigate to <strong>File &gt; Save As...</strong>.</li>
+<li>In the file format dropdown, select **Spline Font Database
+(*.sfd)**.</li>
+<li>Choose a destination and click <strong>Save</strong>.</li>
+<li>Open the resulting <code>.sfd</code> file in any text editor to view
+or parse raw table definitions, such as the <code>head</code>,
+<code>hhea</code>, <code>OS/2</code>, and lookup tables.</li>
+</ol>
+<h3
+id="method-2-export-opentype-layout-tables-as-feature-text-fea">Method
+2: Export OpenType Layout Tables as Feature Text (.fea)</h3>
+<p>If you need layout tables such as <code>GSUB</code> (substitutions)
+or <code>GPOS</code> (positioning) in an editable text format, you can
+export them using Adobe Feature File syntax.</p>
+<ol type="1">
+<li>Go to <strong>Element &gt; Font Info</strong> (or press
+<code>Ctrl+Shift+F</code> / <code>Cmd+Shift+F</code>).</li>
+<li>Select <strong>Lookups</strong> from the left-hand sidebar.</li>
+<li>Click the <strong>Save Feature File...</strong> button at the bottom
+of the window.</li>
+<li>Choose a file name ending in <code>.fea</code> and click
+<strong>Save</strong>.</li>
+</ol>
+<p>The generated file contains the raw OpenType layout table rules
+represented as standardized plain text.</p>
+<h3 id="method-3-export-raw-table-data-via-fontforge-python">Method 3:
+Export Raw Table Data via FontForge Python</h3>
+<p>FontForge includes an integrated Python engine capable of reading any
+binary TrueType or OpenType table using the <code>getTableData()</code>
+method. You can dump tables as raw binary, hex text, or XML.</p>
+<ol type="1">
+<li>Open your font in FontForge.</li>
+<li>Navigate to <strong>File &gt; Execute Script...</strong>.</li>
+<li>Select <strong>Python</strong> as the scripting language.</li>
+<li>Enter the following script to dump a specific table (e.g., the
+<code>name</code> table or <code>OS/2</code> table) as hex-encoded
+text:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference the active font</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.activeFont()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify the 4-character table tag you want to extract</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>table_tag <span class="op">=</span> <span class="st">&quot;OS/2&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the raw binary data</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    raw_data <span class="op">=</span> font.getTableData(table_tag)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save as plain hex text</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&quot;</span><span class="sc">{</span>font<span class="sc">.</span>fontname<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>table_tag<span class="sc">}</span><span class="ss">.txt&quot;</span>, <span class="st">&quot;w&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        f.write(raw_data.<span class="bu">hex</span>())</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Table &#39;</span><span class="sc">{</span>table_tag<span class="sc">}</span><span class="ss">&#39; successfully exported to text.&quot;</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Error extracting table: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<ol start="5" type="1">
+<li>Click <strong>OK</strong> to run the script. The output file will be
+written to your working directory.</li>
+</ol>
+<h3 id="method-4-export-tables-as-raw-xml-using-fonttools-ttx">Method 4:
+Export Tables as Raw XML Using FontTools (TTX)</h3>
+<p>FontForge does not contain an internal native XML serializer for all
+binary tables. To convert raw font tables directly into formatted XML,
+run the FontTools <code>ttx</code> utility alongside FontForge:</p>
+<ol type="1">
+<li><p>Open your terminal or command prompt.</p></li>
+<li><p>Use FontTools to dump all tables to an XML file:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ttx</span> <span class="at">-o</span> font_tables.xml input_font.ttf</span></code></pre></div></li>
+<li><p>To extract only a specific table as raw XML, pass the
+<code>-t</code> flag:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ttx</span> <span class="at">-t</span> name <span class="at">-t</span> <span class="st">&quot;OS/2&quot;</span> <span class="at">-o</span> specific_tables.xml input_font.ttf</span></code></pre></div></li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/export-font-tables-to-xml-or-text-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

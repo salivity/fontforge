@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Auto Space a Whole Font in FontForge - fontforge</title>
+    <meta name="description" content="Yes, you can automatically space an entire font using FontForge&#39;s built-in metric algorithms. This guide outlines how to use the automated spacing features in FontForge, explains how the underlying algorithm calculates side bearings, and highlights the ne">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-auto-space-a-whole-font-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Auto Space a Whole Font in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-auto-space-a-whole-font-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Yes, you can automatically space an entire font using FontForge&#39;s built-in metric algorithms. This guide outlines how to use the automated spacing features in FontForge, explains how the underlying algorithm calculates side bearings, and highlights the ne" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-auto-space-a-whole-font-in-fontforge">How to Auto Space a
+Whole Font in FontForge</h1>
+<p>Yes, you can automatically space an entire font using FontForge's
+built-in metric algorithms. This guide outlines how to use the automated
+spacing features in FontForge, explains how the underlying algorithm
+calculates side bearings, and highlights the necessary steps to refine
+the results for professional typography.</p>
+<h3 id="how-to-auto-space-all-glyphs">How to Auto-Space All Glyphs</h3>
+<p>To apply automatic spacing across your entire font, follow these
+steps in the FontForge font view window:</p>
+<ol type="1">
+<li><strong>Select All Glyphs:</strong> Press <code>Ctrl + A</code> (or
+<code>Cmd + A</code> on macOS) to select every character in the font
+database. Alternatively, use the menu bar: <code>Edit</code> &gt;
+<code>Select</code> &gt; <code>Select All</code>.</li>
+<li><strong>Open Auto Space:</strong> Navigate to the top menu and click
+<code>Metrics</code> &gt; <code>Auto Space...</code>.</li>
+<li><strong>Configure Spacing Parameters:</strong> A configuration
+window will appear. Here, you specify:
+<ul>
+<li><strong>Spacing between glyphs:</strong> The target visual space (in
+font units) desired between standard vertical stems.</li>
+<li><strong>Reference Glyphs:</strong> FontForge typically uses typical
+lowercase characters like "n" and "o" as baseline references to
+determine overall density.</li>
+</ul></li>
+<li><strong>Apply Changes:</strong> Click <code>OK</code>. FontForge
+will iterate through the selected glyphs and calculate new Left Side
+Bearings (LSB) and Right Side Bearings (RSB) based on your
+parameters.</li>
+</ol>
+<h3 id="how-the-algorithm-works">How the Algorithm Works</h3>
+<p>FontForge’s auto-spacing algorithm evaluates the outer contours of
+each glyph. Instead of merely measuring bounding boxes, it analyzes the
+optical mass and negative space along the left and right perimeters. It
+attempts to equalize the visual area between adjacent characters so that
+straight stems, rounds, and open shapes appear uniformly separated.</p>
+<h3 id="adding-auto-kerning">Adding Auto-Kerning</h3>
+<p>Spacing alone controls the individual advance width and side bearings
+of each glyph. Irregular combinations (such as "AV", "To", or "L'")
+still require kerning pairs. You can automate this process immediately
+after auto-spacing:</p>
+<ol type="1">
+<li>Keep all glyphs selected.</li>
+<li>Go to <code>Metrics</code> &gt; <code>Auto Kern...</code>.</li>
+<li>Choose the kerning subtable to write to (or create a new one).</li>
+<li>Specify the maximum number of pairs and the visual gap
+threshold.</li>
+<li>Click <code>OK</code> to generate kerning offsets for problematic
+letter combinations.</li>
+</ol>
+<h3 id="limitations-and-practical-tips">Limitations and Practical
+Tips</h3>
+<p>While the auto-space algorithm provides a solid foundation and saves
+substantial setup time, it is not a complete substitute for visual
+proofing:</p>
+<ul>
+<li><strong>Diagonal and Asymmetrical Shapes:</strong> Characters with
+pronounced angles (like <code>A</code>, <code>V</code>, <code>W</code>,
+<code>k</code>, and <code>x</code>) often receive disproportionate
+padding from purely mathematical algorithms.</li>
+<li><strong>Punctuation and Symbols:</strong> Quotation marks, hyphens,
+and periods frequently need custom spacing metrics relative to standard
+body letters.</li>
+<li><strong>Manual Review:</strong> Always test your font using a
+metrics window (<code>Metrics</code> &gt;
+<code>New Metrics Window</code>) with sample text strings (such as
+"HOHONON" or "minimum") to verify optical rhythm and manually adjust
+side bearings where necessary.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-auto-space-a-whole-font-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

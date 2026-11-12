@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generating TrueType vs OpenType in FontForge - fontforge</title>
+    <meta name="description" content="When exporting a font in FontForge, choosing between TrueType (TTF) and OpenType (OTF/CFF) determines how glyph curves are mathematically represented, how hinting instructions are stored, and how the outlines are converted during generation. While modern">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/generating-true-type-vs-open-type-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Generating TrueType vs OpenType in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/generating-true-type-vs-open-type-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When exporting a font in FontForge, choosing between TrueType (TTF) and OpenType (OTF/CFF) determines how glyph curves are mathematically represented, how hinting instructions are stored, and how the outlines are converted during generation. While modern" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="generating-truetype-vs-opentype-in-fontforge">Generating
+TrueType vs OpenType in FontForge</h1>
+<p>When exporting a font in FontForge, choosing between TrueType (TTF)
+and OpenType (OTF/CFF) determines how glyph curves are mathematically
+represented, how hinting instructions are stored, and how the outlines
+are converted during generation. While modern OpenType fonts can
+technically contain either TrueType or PostScript outlines, FontForge
+presents "TrueType" and "OpenType (CFF)" as distinct export options.
+Understanding how FontForge processes these two formats ensures your
+exported typefaces maintain design fidelity, render sharply on screen,
+and perform reliably across platforms.</p>
+<h3 id="curve-mathematics-cubic-vs-quadratic">Curve Mathematics: Cubic
+vs. Quadratic</h3>
+<p>The primary technical distinction during generation lies in the
+underlying mathematical splines used to draw the glyphs:</p>
+<ul>
+<li><strong>OpenType (CFF):</strong> Uses PostScript-style cubic Bézier
+curves (3rd-degree polynomials). Each curve segment consists of an
+on-curve start point, two off-curve control points, and an on-curve end
+point.</li>
+<li><strong>TrueType:</strong> Uses quadratic Bézier curves (2nd-degree
+polynomials). Each curve segment uses a single off-curve control point
+between on-curve points.</li>
+</ul>
+<p>By default, FontForge uses cubic curves in its editing window. When
+you generate an <strong>OpenType (CFF)</strong> file, FontForge writes
+your cubic paths directly to the font file without altering the curve
+structure.</p>
+<p>When you generate a <strong>TrueType</strong> file from a cubic
+workspace, FontForge must automatically convert the cubic curves into
+quadratic approximations. Because quadratic curves cannot represent
+complex shapes with as few points as cubic curves, this conversion often
+adds additional points to your contours to preserve shape fidelity.</p>
+<h3 id="hinting-differences">Hinting Differences</h3>
+<p>Hinting instructs rendering engines on how to align outlines to pixel
+grids at small sizes:</p>
+<ul>
+<li><strong>OpenType (CFF) Hinting:</strong> Relies on declarative
+PostScript stem hints (<code>hstem</code> and <code>vstem</code>). These
+instruct the rasterizer about stem widths and positions. FontForge can
+generate these automatically, and the rasterizer decides how to apply
+them.</li>
+<li><strong>TrueType Hinting:</strong> Uses an imperative, low-level
+bytecode language (instructions). While TrueType allows for highly
+precise control over individual pixels and screen rendering (especially
+on Windows), generating high-quality TrueType instructions is complex.
+FontForge has an auto-instructing feature for TrueType, but converting
+PostScript hints into TrueType bytecode can yield unpredictable results
+unless carefully configured.</li>
+</ul>
+<h3 id="file-size-and-node-count">File Size and Node Count</h3>
+<p>Because cubic Bézier curves describe complex shapes more efficiently
+than quadratic curves, <strong>OpenType (CFF)</strong> exports generally
+yield smaller file sizes than TrueType equivalents for the same design.
+In contrast, <strong>TrueType</strong> fonts often contain significantly
+more points per glyph after the cubic-to-quadratic conversion, which
+slightly increases the overall font file size.</p>
+<h3 id="format-wrappers-in-fontforge">Format Wrappers in FontForge</h3>
+<p>In FontForge’s "Generate Fonts" dialogue:</p>
+<ul>
+<li>Selecting <strong>TrueType</strong> generates a standard
+<code>.ttf</code> file containing <code>glyf</code> and
+<code>loca</code> tables (quadratic data).</li>
+<li>Selecting <strong>OpenType (CFF)</strong> generates a standard
+<code>.otf</code> file containing a <code>CFF</code> (Compact Font
+Format) table (cubic data).</li>
+</ul>
+<p>Both formats use the OpenType SFNT container structure and support
+advanced OpenType layout features, such as ligatures, kerning pairs, and
+stylistic alternates.</p>
+<h3 id="which-format-to-generate">Which Format to Generate</h3>
+<ul>
+<li>Choose <strong>OpenType (CFF)</strong> if your design was drawn with
+cubic curves, will be used predominantly in graphic design and print
+environments, or if you want smaller file sizes without altering node
+counts.</li>
+<li>Choose <strong>TrueType</strong> if your primary target is legacy
+Windows software, systems requiring TTF instruction rendering, or if you
+specifically engineered your glyphs using quadratic curves inside
+FontForge (<code>Element &gt; Font Info &gt; Layers</code>).</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/generating-true-type-vs-open-type-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subset a Font from a Text File with FontForge Python - fontforge</title>
+    <meta name="description" content="Yes, you can generate a font subset based on a text file using FontForge&#39;s Python module. This process works by extracting unique characters from your source text file, opening the target font in FontForge, selecting only the glyphs corresponding to those">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/subset-a-font-from-a-text-file-with-font-forge-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Subset a Font from a Text File with FontForge Python - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/subset-a-font-from-a-text-file-with-font-forge-python" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Yes, you can generate a font subset based on a text file using FontForge&#39;s Python module. This process works by extracting unique characters from your source text file, opening the target font in FontForge, selecting only the glyphs corresponding to those" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="subset-a-font-from-a-text-file-with-fontforge-python">Subset a
+Font from a Text File with FontForge Python</h1>
+<p>Yes, you can generate a font subset based on a text file using
+FontForge's Python module. This process works by extracting unique
+characters from your source text file, opening the target font in
+FontForge, selecting only the glyphs corresponding to those characters,
+removing all unused glyphs, and exporting the reduced font file. This is
+an effective way to drastically reduce font file sizes for web
+performance or embedded systems.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>To use FontForge with Python, you must run your script through
+FontForge's embedded Python interpreter. FontForge provides a standalone
+binary that can execute Python scripts directly using the
+<code>-script</code> flag:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-script</span> subset.py</span></code></pre></div>
+<p>Alternatively, on Linux distributions, you can install the
+system-level Python bindings (often packaged as
+<code>python3-fontforge</code>).</p>
+<h3 id="the-subsetting-script">The Subsetting Script</h3>
+<p>Below is a complete Python script that reads unique characters from
+<code>input.txt</code>, extracts them from <code>SourceFont.ttf</code>,
+and outputs a subsetted font named <code>SubsetFont.ttf</code>.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> subset_font(font_path, text_path, output_path):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 1: Read unique characters from the text file</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(text_path, <span class="st">&#39;r&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf-8&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        text_content <span class="op">=</span> f.read()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    unique_chars <span class="op">=</span> <span class="bu">set</span>(text_content)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 2: Open the target font</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    font <span class="op">=</span> fontforge.<span class="bu">open</span>(font_path)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 3: Deselect all glyphs to start with a clean slate</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    font.selection.none()</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 4: Select only the glyphs present in the text file</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> char <span class="kw">in</span> unique_chars:</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        codepoint <span class="op">=</span> <span class="bu">ord</span>(char)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Verify the glyph exists in the font before selecting</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> codepoint <span class="kw">in</span> font:</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            font.selection.select((<span class="st">&quot;more&quot;</span>,), codepoint)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 5: Always retain the .notdef glyph (undefined character box)</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;.notdef&quot;</span> <span class="kw">in</span> font:</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        font.selection.select((<span class="st">&quot;more&quot;</span>,), <span class="st">&quot;.notdef&quot;</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 6: Invert the selection and clear all unused glyphs</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    font.selection.invert()</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    font.clear()</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 7: Generate the optimized subset font</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    font.generate(output_path)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    font.close()</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    subset_font(<span class="st">&quot;SourceFont.ttf&quot;</span>, <span class="st">&quot;input.txt&quot;</span>, <span class="st">&quot;SubsetFont.ttf&quot;</span>)</span></code></pre></div>
+<h3 id="how-the-script-works">How the Script Works</h3>
+<ol type="1">
+<li><strong>Character Extraction:</strong> The script opens the plain
+text file using UTF-8 encoding and places all characters into a Python
+<code>set</code>, eliminating duplicates.</li>
+<li><strong>Glyph Selection:</strong> It converts each character to its
+Unicode codepoint via <code>ord(char)</code> and verifies if the font
+contains that encoding. The <code>("more",)</code> flag appends the
+character to the active selection without resetting previous
+selections.</li>
+<li><strong>Preserving Critical Glyphs:</strong> Retaining standard
+fallback glyphs like <code>.notdef</code> is critical to prevent font
+rendering errors when an unmapped character is encountered in runtime
+environments.</li>
+<li><strong>Inversion and Removal:</strong>
+<code>font.selection.invert()</code> flips the selection so that all
+unused characters are highlighted, and <code>font.clear()</code> wipes
+them entirely from the font database.</li>
+<li><strong>Generation:</strong> <code>font.generate()</code> exports
+the subsetted font into modern formats like TTF, OTF, or WOFF depending
+on the specified file extension.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/subset-a-font-from-a-text-file-with-font-forge-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

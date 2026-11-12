@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenType Lookup Subtables in FontForge - fontforge</title>
+    <meta name="description" content="In digital typography, OpenType features rely on a strict structural hierarchy to transform and position glyphs dynamically. This article explains the role of lookup subtables within FontForge, detailing how they function as the granular execution units b">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/open-type-lookup-subtables-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="OpenType Lookup Subtables in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/open-type-lookup-subtables-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In digital typography, OpenType features rely on a strict structural hierarchy to transform and position glyphs dynamically. This article explains the role of lookup subtables within FontForge, detailing how they function as the granular execution units b" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="opentype-lookup-subtables-in-fontforge">OpenType Lookup
+Subtables in FontForge</h1>
+<p>In digital typography, OpenType features rely on a strict structural
+hierarchy to transform and position glyphs dynamically. This article
+explains the role of lookup subtables within FontForge, detailing how
+they function as the granular execution units beneath lookups. By
+understanding subtables, type designers can properly separate
+substitution types, control the order of typographic rules, manage
+contextual interactions, and avoid compile errors when building OpenType
+fonts.</p>
+<h3 id="the-opentype-hierarchy-in-fontforge">The OpenType Hierarchy in
+FontForge</h3>
+<p>To understand subtables, it helps to view the OpenType architecture
+in FontForge as a three-tiered system:</p>
+<ol type="1">
+<li><strong>Features:</strong> High-level tags (such as
+<code>liga</code> for standard ligatures, <code>smcp</code> for small
+capitals, or <code>kern</code> for kerning) that software applications
+turn on or off.</li>
+<li><strong>Lookups:</strong> Functional containers tied to features. A
+lookup defines a broad action, such as a Glyph Substitution (GSUB) or
+Glyph Positioning (GPOS) task.</li>
+<li><strong>Subtables:</strong> The individual, concrete rule sets
+contained inside a lookup that perform the actual work on glyph
+data.</li>
+</ol>
+<p>While a feature signals <em>what</em> typographic effect is intended,
+and a lookup defines <em>how</em> the glyphs are modified, the subtable
+defines <em>which specific rules</em> execute and how they are
+stored.</p>
+<h3 id="enforcing-opentype-format-restrictions">Enforcing OpenType
+Format Restrictions</h3>
+<p>The OpenType specification dictates that a single lookup cannot mix
+fundamentally different data formats or lookup types. For instance, a
+single GSUB lookup cannot combine a simple one-to-one substitution with
+a multiple-to-one ligature substitution in the exact same table
+format.</p>
+<p>Subtables resolve this technical limitation. FontForge uses subtables
+to isolate distinct operations—such as Single, Multiple, Alternate,
+Ligature, or Contextual substitutions—within the parent lookup. Each
+subtable encapsulates a specific subset of glyph coverage tables,
+ensuring the exported font binary adheres cleanly to the OpenType
+specification without data corruption.</p>
+<h3 id="controlling-order-of-execution">Controlling Order of
+Execution</h3>
+<p>In OpenType layout, the sequence of operations is deterministic. The
+OpenType layout engine processes lookups sequentially, and within each
+lookup, it evaluates subtables from top to bottom.</p>
+<p>Lookup subtables enable type designers to set explicit
+priorities:</p>
+<ul>
+<li><strong>Rule Precedence:</strong> When two substitution or
+positioning rules could potentially match the same sequence of input
+glyphs, the rule in the earlier subtable takes precedence.</li>
+<li><strong>Stopping Behavior:</strong> For most substitution types,
+once a glyph matches a rule within an early subtable, the layout engine
+applies the replacement and moves on to the next lookup, bypassing
+conflicting rules in later subtables of the same lookup.</li>
+<li><strong>Contextual Evaluation:</strong> In complex scripts (such as
+Arabic or Indic scripts) or advanced contextual ligatures, multiple
+subtables let designers test for narrow, highly specific contexts first
+before falling back to generalized default substitutions.</li>
+</ul>
+<h3 id="managing-kerning-and-file-size-optimization">Managing Kerning
+and File Size Optimization</h3>
+<p>Subtables play a critical role in kerning (GPOS). In FontForge,
+kerning can be organized either via individual glyph-to-glyph pairs or
+through kerning classes.</p>
+<p>Because class-based kerning matrices can become extremely large,
+designers often split kerning data across multiple subtables. For
+example, a designer might place high-priority individual pair exceptions
+in the first subtable, followed by general class kerning rules in a
+subsequent subtable. This approach optimizes table size in the final
+binary and ensures that manual kerning overrides class-based
+defaults.</p>
+<h3 id="working-with-subtables-in-fontforge">Working with Subtables in
+FontForge</h3>
+<p>In FontForge, subtables are managed through the <strong>Font Info
+&gt; Lookups</strong> menu. Designers can:</p>
+<ul>
+<li><strong>Add Subtables:</strong> Create new partitions under an
+existing GSUB or GPOS lookup to add additional rule formats.</li>
+<li><strong>Reorder Subtables:</strong> Use the interface to shift
+subtables up or down, directly altering their processing priority.</li>
+<li><strong>Anchor Points and Marks:</strong> Organize mark-to-base and
+mark-to-mark attachment points into discrete subtables to prevent
+conflicting coordinate anchors across complex glyph sets.</li>
+</ul>
+<p>By segregating typographic rules into distinct subtables, FontForge
+gives designers granular control over execution logic, prevents format
+errors during font generation, and ensures predictable cross-platform
+rendering across modern text layout engines.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/open-type-lookup-subtables-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

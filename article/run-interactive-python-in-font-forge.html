@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Interactive Python in FontForge - fontforge</title>
+    <meta name="description" content="FontForge does not feature a docked, interactive graphical Python REPL directly embedded inside its main user interface, but you can still run Python interactively with FontForge&#39;s engine. Depending on your workflow, you can either execute Python commands">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/run-interactive-python-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Run Interactive Python in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/run-interactive-python-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge does not feature a docked, interactive graphical Python REPL directly embedded inside its main user interface, but you can still run Python interactively with FontForge&#39;s engine. Depending on your workflow, you can either execute Python commands" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="run-interactive-python-in-fontforge">Run Interactive Python in
+FontForge</h1>
+<p>FontForge does not feature a docked, interactive graphical Python
+REPL directly embedded inside its main user interface, but you can still
+run Python interactively with FontForge's engine. Depending on your
+workflow, you can either execute Python commands via the built-in GUI
+script dialog, run an interactive shell through FontForge’s command-line
+interface, or import FontForge as a standard module inside any external
+Python console.</p>
+<h3 id="the-gui-execute-script-window">The GUI "Execute Script"
+Window</h3>
+<p>While FontForge lacks an integrated terminal window like Blender or
+QGIS, it provides a basic script runner within the graphical
+interface:</p>
+<ol type="1">
+<li>Open FontForge and go to <strong>File &gt; Execute
+Script...</strong> (or press <code>Ctrl + Alt + E</code>).</li>
+<li>Set the script type dropdown to <strong>Python</strong>.</li>
+<li>Type or paste your Python code into the text area.</li>
+<li>Click <strong>OK</strong> to execute.</li>
+</ol>
+<p>This dialog executes one-off blocks of code against the currently
+active font window, but it does not maintain persistent line-by-line
+interactive feedback like a true REPL.</p>
+<h3 id="running-an-interactive-terminal-session">Running an Interactive
+Terminal Session</h3>
+<p>To get a genuine interactive Python prompt that has access to
+FontForge’s internal libraries, launch FontForge directly from your
+system terminal with the language flag:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-lang</span><span class="op">=</span>py</span></code></pre></div>
+<p>This command opens an interactive Python interpreter directly inside
+your terminal session, pre-configured with the <code>fontforge</code>
+environment. You can immediately inspect objects, manipulate glyphs, and
+test commands in real time.</p>
+<h3 id="using-an-external-python-console">Using an External Python
+Console</h3>
+<p>If FontForge is built and installed with Python bindings on your
+system, the most powerful method is importing the library into an
+external interactive environment like IPython, standard Python, or a
+Jupyter Notebook:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open a font interactively</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;path/to/font.sfd&quot;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(font.fontname)</span></code></pre></div>
+<p>Running FontForge through an external REPL gives you tab-completion,
+history tracking, and full debugging capabilities, making it the
+preferred approach for interactive font automation.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/run-interactive-python-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

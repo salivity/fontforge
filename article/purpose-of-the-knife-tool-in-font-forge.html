@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purpose of the Knife Tool in FontForge - fontforge</title>
+    <meta name="description" content="The Knife tool in FontForge is a specialized vector-editing utility designed to slice contours and separate glyph paths. This article explains the primary function of the Knife tool, how it alters vector outlines, common typographic use cases such as crea">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/purpose-of-the-knife-tool-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Purpose of the Knife Tool in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/purpose-of-the-knife-tool-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Knife tool in FontForge is a specialized vector-editing utility designed to slice contours and separate glyph paths. This article explains the primary function of the Knife tool, how it alters vector outlines, common typographic use cases such as crea" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="purpose-of-the-knife-tool-in-fontforge">Purpose of the Knife
+Tool in FontForge</h1>
+<p>The Knife tool in FontForge is a specialized vector-editing utility
+designed to slice contours and separate glyph paths. This article
+explains the primary function of the Knife tool, how it alters vector
+outlines, common typographic use cases such as creating stencil
+lettering, and the practical mechanics of using it within the glyph
+editing window.</p>
+<h3 id="primary-function-of-the-knife-tool">Primary Function of the
+Knife Tool</h3>
+<p>At its core, the Knife tool cuts through existing vector paths. When
+you drag the Knife tool across an outline in the Glyph Outline View,
+FontForge calculates the exact intersection points between your cut line
+and the glyph's contours. It then inserts new on-curve points at those
+intersections and breaks the continuous path, dividing a single closed
+or open contour into separate segments.</p>
+<h3 id="common-use-cases">Common Use Cases</h3>
+<ul>
+<li><strong>Creating Stencil and Segmented Fonts:</strong> The most
+frequent design use for the Knife tool is slicing solid glyphs to create
+bridges or gaps, which is essential for stencil typography, inline
+effects, or fragmented letterforms.</li>
+<li><strong>Separating Overlapping Components:</strong> When importing
+vector artwork or auto-tracing scanned drawings, shapes often merge
+undesirably. The Knife tool allows you to manually bisect interconnected
+paths so they can be repositioned, deleted, or assigned to different
+layers.</li>
+<li><strong>Converting Closed Paths to Open Paths:</strong> Standard
+drawing tools in FontForge naturally produce closed contours for font
+rendering. Slicing a contour with the Knife tool opens the path,
+allowing you to manipulate stroke endpoints individually.</li>
+<li><strong>Cleaning Up Problematic Intersections:</strong> Complex path
+intersections can cause rendering errors or validation warnings during
+font generation. Slicing complex geometry allows you to discard unwanted
+segments manually before joining clean endpoints.</li>
+</ul>
+<h3 id="how-to-use-the-knife-tool">How to Use the Knife Tool</h3>
+<ol type="1">
+<li>Open a glyph in the <strong>Outline View</strong>.</li>
+<li>Select the <strong>Knife tool</strong> from the Tools palette
+(represented by a knife icon).</li>
+<li>Click and drag a line across the path or paths you want to cut.</li>
+<li>Release the mouse button. FontForge immediately places new points at
+the intersection boundaries and severs the path.</li>
+<li>Switch back to the <strong>Pointer tool</strong> to select, move, or
+delete the newly separated path segments.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/purpose-of-the-knife-tool-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

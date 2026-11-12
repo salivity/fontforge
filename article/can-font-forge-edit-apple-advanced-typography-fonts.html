@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can FontForge Edit Apple Advanced Typography Fonts? - fontforge</title>
+    <meta name="description" content="FontForge provides robust native support for opening, modifying, and generating fonts that utilize Apple Advanced Typography (AAT), originally known as TrueType GX. While modern font development heavily favors OpenType Layout (OTL), FontForge remains one">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/can-font-forge-edit-apple-advanced-typography-fonts">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Can FontForge Edit Apple Advanced Typography Fonts? - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/can-font-forge-edit-apple-advanced-typography-fonts" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge provides robust native support for opening, modifying, and generating fonts that utilize Apple Advanced Typography (AAT), originally known as TrueType GX. While modern font development heavily favors OpenType Layout (OTL), FontForge remains one" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="can-fontforge-edit-apple-advanced-typography-fonts">Can
+FontForge Edit Apple Advanced Typography Fonts?</h1>
+<p>FontForge provides robust native support for opening, modifying, and
+generating fonts that utilize Apple Advanced Typography (AAT),
+originally known as TrueType GX. While modern font development heavily
+favors OpenType Layout (OTL), FontForge remains one of the few
+open-source font editors equipped with the tools to parse, display,
+edit, and write Apple-specific typography tables directly. This guide
+details FontForge's capabilities regarding AAT, how it handles layout
+features, and key considerations when working with these formats.</p>
+<h2 id="fontforges-native-aat-support">FontForge's Native AAT
+Support</h2>
+<p>When you open a font containing AAT data in FontForge, the editor
+reads both the standard glyph outlines and the Apple-specific layout
+tables. FontForge was developed with comprehensive support for the Apple
+typographic architecture, allowing designers to view and manipulate
+advanced features that standard OpenType editors often ignore or strip
+away.</p>
+<p>FontForge natively supports core AAT tables, including:</p>
+<ul>
+<li><strong><code>morx</code> / <code>mort</code>:</strong> Extended
+Glyph Metamorphosis tables that define contextual substitutions,
+ligatures, and reordering using finite state machines.</li>
+<li><strong><code>feat</code>:</strong> Feature Name tables, which map
+user-visible features to internal font settings.</li>
+<li><strong><code>prop</code>:</strong> Glyph Properties tables,
+defining character directionality and attachment properties.</li>
+<li><strong><code>trak</code>:</strong> Tracking tables, enabling
+automatic letter-spacing adjustments based on font size.</li>
+<li><strong><code>lcar</code>:</strong> Ligature Caret tables,
+specifying cursor placement within composite glyphs.</li>
+<li><strong><code>opbd</code>:</strong> Optical Bounds tables, handling
+optical margin alignment.</li>
+</ul>
+<h2 id="accessing-and-editing-aat-tables-in-fontforge">Accessing and
+Editing AAT Tables in FontForge</h2>
+<p>To edit AAT rules in FontForge:</p>
+<ol type="1">
+<li>Open the font file in FontForge.</li>
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font
+Info</strong>.</li>
+<li>Select the <strong>Mac Features</strong> or <strong>Lookups</strong>
+section in the left sidebar.</li>
+</ol>
+<p>Under <strong>Mac Features</strong>, you can view and configure the
+feature-setting pairs defined by Apple, such as Ligatures, Letter Case,
+or Contextual Alternates. Under the <strong>Lookups</strong> tab, you
+can inspect the underlying state machines that power contextual glyph
+substitutions and positioning. FontForge provides a dedicated interface
+to edit these transition tables and state classes, giving you low-level
+control over how macOS text engines process the glyphs.</p>
+<h2 id="converting-between-aat-and-opentype">Converting Between AAT and
+OpenType</h2>
+<p>Beyond raw editing, FontForge includes functionality to translate
+features between Apple Advanced Typography and OpenType Layout:</p>
+<ul>
+<li><strong>OpenType to AAT:</strong> FontForge can attempt to compile
+OpenType lookups (GSUB/GPOS) into equivalent AAT state machines
+(<code>morx</code>/<code>kerx</code>) upon export. This is useful for
+creating fonts intended for legacy macOS environments or specific Apple
+software workflows.</li>
+<li><strong>AAT to OpenType:</strong> When opening an AAT font lacking
+OpenType tables, FontForge can translate simple substitutions and
+ligatures into OpenType format, though complex state-machine
+interactions may require manual adjustment.</li>
+</ul>
+<p>To generate a font retaining AAT tables, select <strong>File</strong>
+&gt; <strong>Generate Fonts</strong>, click <strong>Options</strong>,
+and ensure the <strong>Apple</strong> or <strong>Mac</strong> table
+generation options are checked before exporting.</p>
+<h2 id="limitations-and-practical-considerations">Limitations and
+Practical Considerations</h2>
+<p>While FontForge can edit AAT fonts, working with Apple's architecture
+involves distinct challenges:</p>
+<ul>
+<li><strong>State Machine Complexity:</strong> AAT relies on finite
+state machines rather than simple glyph substitution lists. Editing
+these tables manually in FontForge requires a clear understanding of
+Apple's state transition logic.</li>
+<li><strong>Platform Exclusivity:</strong> AAT tables are primarily
+supported by macOS and iOS text engines (Core Text). Windows and Linux
+systems rely almost universally on OpenType tables, meaning pure AAT
+fonts will not render advanced typographic features on non-Apple
+platforms.</li>
+<li><strong>Modern Preference:</strong> Modern versions of macOS support
+standard OpenType features alongside AAT. Unless you are maintaining
+legacy font files or developing specifically for specialized macOS
+features like size-dependent tracking (<code>trak</code>), developing
+standard OpenType tables is generally recommended for cross-platform
+compatibility.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/can-font-forge-edit-apple-advanced-typography-fonts';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

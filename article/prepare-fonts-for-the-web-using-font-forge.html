@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prepare Fonts for the Web Using FontForge - fontforge</title>
+    <meta name="description" content="Preparing a font for web distribution using FontForge involves cleaning vector outlines, validating font metrics, standardizing metadata, and exporting the glyphs into compressed, web-compatible formats like WOFF and WOFF2. Following these steps ensures y">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/prepare-fonts-for-the-web-using-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Prepare Fonts for the Web Using FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/prepare-fonts-for-the-web-using-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Preparing a font for web distribution using FontForge involves cleaning vector outlines, validating font metrics, standardizing metadata, and exporting the glyphs into compressed, web-compatible formats like WOFF and WOFF2. Following these steps ensures y" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="prepare-fonts-for-the-web-using-fontforge">Prepare Fonts for the
+Web Using FontForge</h1>
+<p>Preparing a font for web distribution using FontForge involves
+cleaning vector outlines, validating font metrics, standardizing
+metadata, and exporting the glyphs into compressed, web-compatible
+formats like WOFF and WOFF2. Following these steps ensures your web font
+renders crisply across all screens, maintains small file sizes for fast
+page loading, and functions consistently across various web
+browsers.</p>
+<h3 id="1-open-and-clean-up-vector-outlines">1. Open and Clean Up Vector
+Outlines</h3>
+<p>Start by opening your source font file (typically <code>.otf</code>
+or <code>.ttf</code>) in FontForge. Web fonts perform best when glyph
+outlines are simplified and clean to keep file sizes minimal.</p>
+<ul>
+<li>Select all glyphs by pressing <code>Ctrl + A</code> (or
+<code>Cmd + A</code> on macOS).</li>
+<li>Navigate to <strong>Element &gt; Overlap &gt; Remove
+Overlap</strong> to merge intersecting paths and prevent rendering
+artifacts.</li>
+<li>Go to <strong>Element &gt; Simplify &gt; Simplify</strong> to reduce
+unnecessary control points while preserving the intended shape.</li>
+<li>Run <strong>Element &gt; Correct Direction</strong> to ensure that
+outer paths run clockwise and cutouts (inner paths) run
+counterclockwise, which is essential for proper browser
+rasterization.</li>
+</ul>
+<h3 id="2-snap-points-to-the-pixel-grid">2. Snap Points to the Pixel
+Grid</h3>
+<p>Non-integer coordinates cause rendering issues and inflate file
+sizes. To fix this:</p>
+<ul>
+<li>With all glyphs selected, go to <strong>Element &gt; Round &gt; To
+Int</strong>. This snaps all control points and handles to whole integer
+values, ensuring cleaner rendering and better compression.</li>
+</ul>
+<h3 id="3-apply-hinting-for-screen-display">3. Apply Hinting for Screen
+Display</h3>
+<p>Hinting instructs web browsers how to align vector paths with
+physical screen pixels, particularly at smaller font sizes on
+low-resolution displays.</p>
+<ul>
+<li>Select all glyphs and choose <strong>Hints &gt;
+AutoHint</strong>.</li>
+<li>If your font is PostScript-based (CFF/OTF), navigate to
+<strong>Hints &gt; Auto Counter</strong> to optimize internal glyph
+spaces.</li>
+</ul>
+<h3 id="4-review-and-set-font-information">4. Review and Set Font
+Information</h3>
+<p>Browsers rely heavily on metadata to properly group font families,
+styles, and weights in CSS.</p>
+<ul>
+<li>Navigate to <strong>Element &gt; Font Info</strong>.</li>
+<li>Under the <strong>PS Names</strong> tab, verify that the
+<strong>Fontname</strong>, <strong>Family Name</strong>, and
+<strong>Weight</strong> fields are accurately defined without spaces in
+the technical names.</li>
+<li>Under the <strong>OS/2</strong> tab, set the weight class (e.g., 400
+for Regular, 700 for Bold) and check your vertical metrics
+(<code>Ascent</code>, <code>Descent</code>, and <code>LineGap</code>) to
+prevent inconsistent line-heights across different operating
+systems.</li>
+<li>Under the <strong>TTF Values</strong> tab, ensure the embedding
+licensing restrictions are set appropriately for web distribution.</li>
+</ul>
+<h3 id="5-validate-the-font">5. Validate the Font</h3>
+<p>Before exporting, check the font for technical errors:</p>
+<ul>
+<li>Go to <strong>Element &gt; Validation &gt; Validate</strong>.</li>
+<li>Review the report and resolve critical errors such as missing
+extrema points, self-intersecting paths, or missing unicode values.</li>
+</ul>
+<h3 id="6-generate-web-font-formats">6. Generate Web Font Formats</h3>
+<p>Modern web browsers primarily require WOFF2 (offering the best
+compression) and WOFF (as a fallback for older environments).</p>
+<ul>
+<li>Go to <strong>File &gt; Generate Fonts</strong>.</li>
+<li>In the export dialog, select <strong>Web Open Font Format
+(WOFF)</strong> from the dropdown and save.</li>
+<li>Repeat the process, selecting <strong>Web Open Font Format 2
+(WOFF2)</strong> from the dropdown.</li>
+<li>If WOFF2 is not available in your build of FontForge, export a
+standard OpenType (<code>.otf</code>) or TrueType (<code>.ttf</code>)
+file and convert it using command-line tools like Google’s
+<code>woff2_compress</code>.</li>
+</ul>
+<h3 id="7-deploy-via-css">7. Deploy via CSS</h3>
+<p>Once generated, place the <code>.woff2</code> and <code>.woff</code>
+files on your web server and reference them using a standard
+<code>@font-face</code> rule in your stylesheet:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;YourFontName&#39;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;yourfont.woff2&#39;</span><span class="fu">)</span> <span class="fu">format(</span><span class="st">&#39;woff2&#39;</span><span class="fu">)</span><span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">url(</span><span class="st">&#39;yourfont.woff&#39;</span><span class="fu">)</span> <span class="fu">format(</span><span class="st">&#39;woff&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">400</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-style</span><span class="ch">:</span> <span class="dv">normal</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-display</span><span class="ch">:</span> <span class="dv">swap</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/prepare-fonts-for-the-web-using-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

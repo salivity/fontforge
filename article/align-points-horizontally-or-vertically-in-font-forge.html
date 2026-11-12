@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Align Points Horizontally or Vertically in FontForge - fontforge</title>
+    <meta name="description" content="Aligning points horizontally or vertically in FontForge is essential for maintaining consistent stem widths, flat baselines, and sharp geometric curves. This guide explains how to quickly align multiple points using FontForge&#39;s built-in direction commands">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/align-points-horizontally-or-vertically-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Align Points Horizontally or Vertically in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/align-points-horizontally-or-vertically-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Aligning points horizontally or vertically in FontForge is essential for maintaining consistent stem widths, flat baselines, and sharp geometric curves. This guide explains how to quickly align multiple points using FontForge&#39;s built-in direction commands" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="align-points-horizontally-or-vertically-in-fontforge">Align
+Points Horizontally or Vertically in FontForge</h1>
+<p>Aligning points horizontally or vertically in FontForge is essential
+for maintaining consistent stem widths, flat baselines, and sharp
+geometric curves. This guide explains how to quickly align multiple
+points using FontForge's built-in direction commands, the Average Points
+feature, and precise coordinate adjustments.</p>
+<h3 id="method-1-using-make-horizontal-or-make-vertical">Method 1: Using
+"Make Horizontal" or "Make Vertical"</h3>
+<p>This method is the fastest way to align two or more adjacent points
+on the same path.</p>
+<ol type="1">
+<li>Double-click your glyph in the Font View to open the <strong>Glyph
+Window</strong>.</li>
+<li>Select the <strong>Pointer tool</strong> from the toolbox (or press
+<code>V</code>).</li>
+<li>Select the points you want to align by holding <code>Shift</code>
+while clicking each point, or by dragging a selection marquee over
+them.</li>
+<li>Navigate to the top menu and select <strong>Point</strong>.</li>
+<li>Click <strong>Make Horizontal</strong> to align the selected points
+to the same Y-axis (horizontal line), or click <strong>Make
+Vertical</strong> to align them along the same X-axis (vertical
+line).</li>
+</ol>
+<p><em>Tip:</em> When you use this command, FontForge typically moves
+the second selected point to match the coordinate of the first.</p>
+<hr />
+<h3 id="method-2-using-the-average-points-tool">Method 2: Using the
+"Average Points" Tool</h3>
+<p>If the points you want to align are not directly connected, or if you
+want them to meet at the mathematical midpoint rather than snapping to
+one specific point, use the Average Points tool.</p>
+<ol type="1">
+<li>Select the points you wish to align across any part of the glyph
+contour.</li>
+<li>Go to the top menu and click <strong>Element</strong> &gt;
+<strong>Average Points...</strong></li>
+<li>In the dialog box:
+<ul>
+<li>Select <strong>Average X value</strong> if you want to align the
+points <strong>vertically</strong>.</li>
+<li>Select <strong>Average Y value</strong> if you want to align the
+points <strong>horizontally</strong>.</li>
+</ul></li>
+<li>Click <strong>OK</strong>. All selected points will immediately snap
+to the calculated center coordinate.</li>
+</ol>
+<hr />
+<h3 id="method-3-manual-precision-via-point-info">Method 3: Manual
+Precision via Point Info</h3>
+<p>When you need multiple points to align to a specific, predetermined
+metric:</p>
+<ol type="1">
+<li>Double-click the point that is positioned correctly to open the
+<strong>Point Info</strong> window.</li>
+<li>Note or copy the <strong>Base X</strong> value (for vertical
+alignment) or <strong>Base Y</strong> value (for horizontal
+alignment).</li>
+<li>Close the window, then open the <strong>Point Info</strong> window
+for the other point(s) you wish to align.</li>
+<li>Paste the copied coordinate into the corresponding X or Y field and
+click <strong>OK</strong>.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/align-points-horizontally-or-vertically-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Python 3 vs Python 2 Limitations - fontforge</title>
+    <meta name="description" content="FontForge&#39;s integration with Python enables automated, programmatic font generation and editing, but transitioning from Python 2 to Python 3 introduced notable technical friction. This article examines the core limitations, architectural discrepancies, an">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-python-3-vs-python-2-limitations">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Python 3 vs Python 2 Limitations - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-python-3-vs-python-2-limitations" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge&#39;s integration with Python enables automated, programmatic font generation and editing, but transitioning from Python 2 to Python 3 introduced notable technical friction. This article examines the core limitations, architectural discrepancies, an" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-python-3-vs-python-2-limitations">FontForge Python 3
+vs Python 2 Limitations</h1>
+<p>FontForge's integration with Python enables automated, programmatic
+font generation and editing, but transitioning from Python 2 to Python 3
+introduced notable technical friction. This article examines the core
+limitations, architectural discrepancies, and regressions developers
+encounter when utilizing Python 3 within FontForge compared to the
+legacy Python 2 implementation, focusing primarily on string encoding
+mismatches, API regressions, script portability, and cross-platform
+binary stability.</p>
+<h3 id="string-and-encoding-architecture-mismatches">String and Encoding
+Architecture Mismatches</h3>
+<p>The most significant operational limitation stems from the divergence
+in how Python 2 and Python 3 handle text and binary data. FontForge's
+internal engine is written in C, relying heavily on native
+null-terminated character arrays (<code>char *</code>).</p>
+<ul>
+<li><strong>Implicit Conversions:</strong> Under Python 2,
+<code>str</code> behaved as raw byte sequences, aligning cleanly with
+FontForge's underlying C pointers. Python 3 separates textual data
+(<code>str</code>) and raw data (<code>bytes</code>). FontForge’s Python
+3 bindings occasionally exhibit ambiguity regarding whether an attribute
+requires a UTF-8 encoded string or a raw byte object.</li>
+<li><strong>Metadata and Table Errors:</strong> Accessing font metadata,
+PostScript names, or raw OpenType tables in Python 3 can produce
+unexpected <code>TypeError</code> or <code>UnicodeDecodeError</code>
+exceptions when handling fonts with non-standard, malformed, or legacy
+byte encodings. In Python 2, these operations typically passed through
+without parsing failures.</li>
+</ul>
+<h3 id="legacy-codebases-and-api-inconsistencies">Legacy Codebases and
+API Inconsistencies</h3>
+<p>FontForge accumulated over a decade of community-contributed tooling
+tailored specifically for Python 2.7. Moving to Python 3 reveals several
+maintenance hurdles:</p>
+<ul>
+<li><strong>Unported Ecosystems:</strong> Numerous specialized type
+design scripts, batch processing macros, and glyph metric calculators
+remain unmaintained and incompatible with Python 3, requiring manual
+refactoring.</li>
+<li><strong>Signature Mismatches:</strong> During the transition to
+Python 3, certain methods in the <code>fontforge</code> module were
+wrapped differently. Some methods return <code>bytes</code> where a
+Python 3 <code>str</code> is logically expected, forcing developers to
+implement defensive type checks and decoding routines.</li>
+<li><strong>Iteration Regressions:</strong> Font iteration methods and
+dictionary-like access to font glyphs experienced minor behavior
+changes, leading to silent failures or indexing errors in scripts
+converted mechanically via automated tools like <code>2to3</code>.</li>
+</ul>
+<h3 id="build-system-and-platform-instability">Build System and Platform
+Instability</h3>
+<p>While modern Linux distributions package FontForge compiled against
+Python 3, parity across all operating systems has historically lagged
+compared to the mature Python 2 integration:</p>
+<ul>
+<li><strong>Windows Packaging Challenges:</strong> For years, Windows
+distributions of FontForge were bundled with Python 2.7 via MinGW/MSYS2.
+Python 3 builds on Windows frequently faced environment path issues,
+missing extension modules, and dynamic linking conflicts, complicating
+automated continuous integration pipelines.</li>
+<li><strong>Embedded Interpreter Isolation:</strong> Running FontForge
+as an imported library (<code>import fontforge</code>) inside an
+external Python 3 virtual environment can trigger segmentation faults if
+the interpreter compiled into FontForge does not match the external
+environment's minor Python version and C runtime flags.</li>
+</ul>
+<h3 id="performance-and-overhead">Performance and Overhead</h3>
+<p>Python 3 introduces a slightly larger memory footprint for text
+representations due to PEP 393 (Flexible String Representation). When
+processing massive CJK (Chinese, Japanese, Korean) fonts containing tens
+of thousands of glyphs, the overhead of converting C-strings into full
+Python 3 Unicode objects increases memory consumption and marginally
+slows down bulk glyph name inspection compared to the raw byte handling
+of Python 2.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-python-3-vs-python-2-limitations';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

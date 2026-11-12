@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Adjust Cap Height and X-Height in FontForge - fontforge</title>
+    <meta name="description" content="Adjusting the cap height and x-height in FontForge involves updating the font&#39;s OS/2 metric tables to ensure operating systems render text lines correctly, as well as setting horizontal guide lines for precise visual design. This guide provides clear, ste">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-adjust-cap-height-and-x-height-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Adjust Cap Height and X-Height in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-adjust-cap-height-and-x-height-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Adjusting the cap height and x-height in FontForge involves updating the font&#39;s OS/2 metric tables to ensure operating systems render text lines correctly, as well as setting horizontal guide lines for precise visual design. This guide provides clear, ste" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-adjust-cap-height-and-x-height-in-fontforge">How to
+Adjust Cap Height and X-Height in FontForge</h1>
+<p>Adjusting the cap height and x-height in FontForge involves updating
+the font's OS/2 metric tables to ensure operating systems render text
+lines correctly, as well as setting horizontal guide lines for precise
+visual design. This guide provides clear, step-by-step instructions to
+configure both the internal font metadata and the visual workspace
+guides.</p>
+<h3 id="step-1-open-font-info">Step 1: Open Font Info</h3>
+<ol type="1">
+<li>Launch FontForge and open your font file (<code>.sfd</code>,
+<code>.otf</code>, or <code>.ttf</code>).</li>
+<li>Click on the <strong>Element</strong> menu in the top navigation
+bar.</li>
+<li>Select <strong>Font Info</strong> from the dropdown menu (or press
+<code>Ctrl + Shift + F</code> on Windows/Linux,
+<code>Cmd + Shift + F</code> on macOS).</li>
+</ol>
+<h3 id="step-2-set-metric-parameters-in-the-os2-table">Step 2: Set
+Metric Parameters in the OS/2 Table</h3>
+<p>The actual standard parameters used by rendering engines and
+applications are stored in the OS/2 table:</p>
+<ol type="1">
+<li>In the <strong>Font Info</strong> window, look at the sidebar on the
+left and click on <strong>OS/2</strong>.</li>
+<li>Select the <strong>Metrics</strong> sub-tab at the top of the
+pane.</li>
+<li>Locate the <strong>X-Height</strong> and <strong>Cap Height</strong>
+input fields:
+<ul>
+<li><strong>X-Height:</strong> Enter the vertical height (in font design
+units) from the baseline to the top of standard flat lowercase letters
+like "x", "v", or "z".</li>
+<li><strong>Cap Height:</strong> Enter the vertical height from the
+baseline to the top of flat uppercase letters like "H", "I", or
+"E".</li>
+</ul></li>
+<li>If you want FontForge to determine these values automatically based
+on your existing glyphs, click the <strong>Compute</strong> button next
+to each field (if available in your build) or check the automatic
+calculation options.</li>
+<li>Click <strong>OK</strong> at the bottom of the window to apply and
+save your changes.</li>
+</ol>
+<h3 id="step-3-add-visual-guide-lines-optional-but-recommended">Step 3:
+Add Visual Guide Lines (Optional but Recommended)</h3>
+<p>Updating the OS/2 table sets the metadata, but you should also add
+visual guidelines in the glyph editing window to help draw consistent
+shapes.</p>
+<ol type="1">
+<li>Double-click any glyph (such as "x" or "H") in the main font view to
+open the Glyph Editing window.</li>
+<li>Ensure the horizontal ruler is visible at the top (toggle via
+<strong>View</strong> &gt; <strong>Rulers</strong> if hidden).</li>
+<li>Click on the top horizontal ruler and drag a guideline downward onto
+the canvas.</li>
+<li>Release the mouse button near the intended height.</li>
+<li>Right-click the guideline and select <strong>Get Info</strong> (or
+double-click the guideline).</li>
+<li>In the dialog box, set the exact vertical position:
+<ul>
+<li>Enter your desired <strong>Cap Height</strong> value in the
+<strong>Y</strong> field and click <strong>OK</strong>.</li>
+<li>Drag a second guide and enter your <strong>X-Height</strong> value
+in the <strong>Y</strong> field.</li>
+</ul></li>
+<li>To make these guides appear across all glyphs, right-click the
+guideline, open its properties, and set it to the <strong>Guide</strong>
+layer rather than a local layer.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-adjust-cap-height-and-x-height-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

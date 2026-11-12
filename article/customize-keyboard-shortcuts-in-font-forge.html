@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Keyboard Shortcuts in FontForge - fontforge</title>
+    <meta name="description" content="FontForge does not feature a dedicated, built-in graphical interface for remapping its default keyboard shortcuts. However, you can still customize or add shortcuts by utilizing operating system-level key remapping, writing custom Python scripts with assi">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/customize-keyboard-shortcuts-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Customize Keyboard Shortcuts in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/customize-keyboard-shortcuts-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge does not feature a dedicated, built-in graphical interface for remapping its default keyboard shortcuts. However, you can still customize or add shortcuts by utilizing operating system-level key remapping, writing custom Python scripts with assi" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="customize-keyboard-shortcuts-in-fontforge">Customize Keyboard
+Shortcuts in FontForge</h1>
+<p>FontForge does not feature a dedicated, built-in graphical interface
+for remapping its default keyboard shortcuts. However, you can still
+customize or add shortcuts by utilizing operating system-level key
+remapping, writing custom Python scripts with assigned hotkeys, or
+modifying source configuration files. This guide explains how FontForge
+handles shortcuts and the most effective methods to set up your
+preferred key bindings.</p>
+<h3 id="native-interface-limitations">Native Interface Limitations</h3>
+<p>Unlike modern design suites, FontForge lacks a visual "Keyboard
+Shortcuts" preference pane. The default shortcuts mapped to primary menu
+commands (such as glyph transformations, metrics adjustments, and file
+exports) are hardcoded into the application's interface. Because of
+this, reassigning default keys requires working outside the standard
+settings menu.</p>
+<h3 id="method-1-using-operating-system-app-shortcuts-macos">Method 1:
+Using Operating System App Shortcuts (macOS)</h3>
+<p>If you are using macOS, you can override or assign shortcuts to any
+FontForge menu item natively without touching configuration files:</p>
+<ol type="1">
+<li>Open <strong>System Settings</strong> and navigate to
+<strong>Keyboard</strong> &gt; <strong>Keyboard Shortcuts</strong>.</li>
+<li>Select <strong>App Shortcuts</strong> from the sidebar and click the
+<strong>+</strong> (Add) button.</li>
+<li>Select <strong>FontForge</strong> from the Application
+dropdown.</li>
+<li>Type the exact name of the menu command you want to trigger in the
+<strong>Menu Title</strong> field (for example,
+<code>Generate Fonts...</code> or <code>Transform...</code>).</li>
+<li>Press your desired key combination in the <strong>Keyboard
+Shortcut</strong> field.</li>
+<li>Click <strong>Done</strong> and restart FontForge for the shortcut
+to take effect.</li>
+</ol>
+<h3 id="method-2-adding-custom-shortcuts-via-python-scripts">Method 2:
+Adding Custom Shortcuts via Python Scripts</h3>
+<p>FontForge has a robust Python scripting engine. If you want shortcuts
+for repetitive tasks or custom operations, you can register custom menu
+items with bound hotkeys using your startup script
+(<code>~/.config/fontforge/init.py</code> or
+<code>~/.FontForge/python/init.py</code>):</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_custom_action(data, glyph):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Your automation logic here</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Register a menu item with a shortcut</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>fontforge.registerMenuItem(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    my_custom_action,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">None</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">None</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Glyph&quot;</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ctrl+Shift+U&quot;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Custom Action&quot;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Any tool registered this way will appear in FontForge's menus with
+your specified keyboard shortcut bound to it.</p>
+<h3 id="method-3-third-party-macro-tools-windows-and-linux">Method 3:
+Third-Party Macro Tools (Windows and Linux)</h3>
+<p>For Windows and Linux users wanting to rebind default actions:</p>
+<ul>
+<li><strong>Windows:</strong> Use <strong>AutoHotkey</strong> to remap
+specific key combinations to trigger the default FontForge shortcuts or
+activate menu items via Alt-key navigation chains.</li>
+<li><strong>Linux:</strong> Use tools such as <strong>AutoKey</strong>
+or window manager keybinds to send specific keypress sequences directly
+to the FontForge window.</li>
+</ul>
+<h3 id="modifying-source-hotkeys-advanced">Modifying Source Hotkeys
+(Advanced)</h3>
+<p>For full control over standard menu keys across any platform, you can
+clone the FontForge source code from GitHub, modify the shortcut
+assignments directly in the source files (primarily found in the UI
+definitions within the <code>fontforgeexe/</code> directory), and
+compile the application locally.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/customize-keyboard-shortcuts-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

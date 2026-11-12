@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Rotate a Glyph by Decimal Degrees in FontForge - fontforge</title>
+    <meta name="description" content="Yes, you can rotate a glyph by an exact decimal degree in FontForge. This guide explains how to apply fractional rotation values through FontForge&#39;s graphical user interface using the Transform tool, as well as how to perform precision rotations using Pyt">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-rotate-a-glyph-by-decimal-degrees-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Rotate a Glyph by Decimal Degrees in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-rotate-a-glyph-by-decimal-degrees-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Yes, you can rotate a glyph by an exact decimal degree in FontForge. This guide explains how to apply fractional rotation values through FontForge&#39;s graphical user interface using the Transform tool, as well as how to perform precision rotations using Pyt" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-rotate-a-glyph-by-decimal-degrees-in-fontforge">How to
+Rotate a Glyph by Decimal Degrees in FontForge</h1>
+<p>Yes, you can rotate a glyph by an exact decimal degree in FontForge.
+This guide explains how to apply fractional rotation values through
+FontForge's graphical user interface using the Transform tool, as well
+as how to perform precision rotations using Python scripting. It also
+details the essential font configuration settings required to maintain
+fractional point positions without automatic integer rounding.</p>
+<h2 id="rotating-via-the-graphical-interface">Rotating via the Graphical
+Interface</h2>
+<p>FontForge's standard transformation dialog accepts floating-point
+decimal numbers directly.</p>
+<ol type="1">
+<li>Open your font and double-click the glyph you want to modify to open
+the <strong>Glyph Outline View</strong> (or select one or more glyphs in
+the <strong>Font View</strong>).</li>
+<li>Select the contours or points you want to rotate. If you want to
+rotate the entire glyph, press <code>Ctrl + A</code> (or
+<code>Cmd + A</code> on macOS) to select all points.</li>
+<li>Go to the top menu and click <strong>Element &gt;
+Transform...</strong> (shortcut: <code>Ctrl + \</code> or
+<code>Cmd + \</code>).</li>
+<li>In the dialog, set the first dropdown menu to
+<strong>Rotate</strong>.</li>
+<li>In the angle field, enter your exact decimal degree (for example,
+<code>15.75</code> or <code>-3.45</code>). Positive values rotate
+counter-clockwise; negative values rotate clockwise.</li>
+<li>Choose your rotation origin:
+<ul>
+<li><strong>Glyph Origin:</strong> Rotates around the
+<code>(0, 0)</code> base coordinate.</li>
+<li><strong>Center of Selection:</strong> Rotates around the geometric
+center of the selected points.</li>
+</ul></li>
+<li>Click <strong>OK</strong> to apply the transformation.</li>
+</ol>
+<h2 id="maintaining-decimal-precision-grid-snapping">Maintaining Decimal
+Precision (Grid Snapping)</h2>
+<p>By default, FontForge rounds all point coordinates to the nearest
+whole integer. A rotation by a decimal degree will still function, but
+the resulting Bezier control points and on-curve points will snap to
+whole numbers unless configured otherwise:</p>
+<ol type="1">
+<li>Go to <strong>File &gt; Preferences</strong> (or <strong>FontForge
+&gt; Preferences</strong>).</li>
+<li>Navigate to <strong>Editing</strong>.</li>
+<li>Uncheck <strong>Snap To Int</strong> (or ensure points are allowed
+to remain floating-point values depending on your FontForge build).</li>
+<li>If you plan to export to formats that strictly require integer
+coordinates (such as standard PostScript/CFF or TrueType formats), keep
+in mind that FontForge will round coordinates upon font generation
+unless using specific OpenType features or SVG fonts.</li>
+</ol>
+<h2 id="rotating-via-python-scripting">Rotating via Python
+Scripting</h2>
+<p>If you need exact mathematical precision or want to batch-rotate
+glyphs, FontForge provides a Python scripting API that handles
+floating-point math natively:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psMat</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the font</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;YourFont.sfd&quot;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the target glyph</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>glyph <span class="op">=</span> font[<span class="st">&quot;A&quot;</span>]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define your exact decimal rotation in degrees</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>degrees <span class="op">=</span> <span class="fl">12.375</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>radians <span class="op">=</span> math.radians(degrees)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the rotation transformation matrix and apply it</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>rotation_matrix <span class="op">=</span> psMat.rotate(radians)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>glyph.transform(rotation_matrix)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Save changes</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>font.save()</span></code></pre></div>
+<p>FontForge's internal transformation matrix processes the rotation
+directly in radians, ensuring high-precision calculations regardless of
+the angle specified.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-rotate-a-glyph-by-decimal-degrees-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

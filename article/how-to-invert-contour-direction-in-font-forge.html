@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Invert Contour Direction in FontForge - fontforge</title>
+    <meta name="description" content="Inverting the direction of a path contour in FontForge is an essential step in digital font design to ensure proper rendering and cutout behavior. The winding direction of a path—whether clockwise or counter-clockwise—determines whether a shape is filled">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-invert-contour-direction-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Invert Contour Direction in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-invert-contour-direction-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Inverting the direction of a path contour in FontForge is an essential step in digital font design to ensure proper rendering and cutout behavior. The winding direction of a path—whether clockwise or counter-clockwise—determines whether a shape is filled" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-invert-contour-direction-in-fontforge">How to Invert
+Contour Direction in FontForge</h1>
+<p>Inverting the direction of a path contour in FontForge is an
+essential step in digital font design to ensure proper rendering and
+cutout behavior. The winding direction of a path—whether clockwise or
+counter-clockwise—determines whether a shape is filled with black or cut
+out as transparent, such as the counters in letters like "O" or "B".
+This guide explains how to manually reverse the direction of a specific
+contour, how to automatically correct path directions across an entire
+glyph, and how to verify path orientation.</p>
+<h3 id="manually-reversing-a-single-contour">Manually Reversing a Single
+Contour</h3>
+<p>To manually flip the direction of an individual path within a
+glyph:</p>
+<ol type="1">
+<li>Double-click the glyph you want to edit in the main Font View window
+to open the Outline Glyph Window.</li>
+<li>Select the contour you wish to invert. You can do this by clicking
+directly on the path, dragging a selection box around its points, or
+double-clicking any point on the contour to select the entire closed
+path.</li>
+<li>Go to the top menu bar and select <strong>Element</strong>.</li>
+<li>Click <strong>Reverse Direction</strong>.</li>
+</ol>
+<p>The starting point and ending point of the contour will swap,
+effectively changing the path's orientation from clockwise to
+counter-clockwise, or vice versa.</p>
+<h3 id="automatically-correcting-contour-directions">Automatically
+Correcting Contour Directions</h3>
+<p>FontForge features an automated tool that determines the intended
+outer contours and inner cutouts, adjusting their directions according
+to font format standards (TrueType or PostScript).</p>
+<ol type="1">
+<li>In the Glyph Window, select all contours by pressing
+<code>Ctrl + A</code> (or <code>Cmd + A</code> on macOS), or leave
+everything unselected to apply the change to the entire glyph.</li>
+<li>Navigate to <strong>Element</strong> in the top menu.</li>
+<li>Select <strong>Correct Direction</strong> (keyboard shortcut:
+<code>Ctrl + Shift + D</code> or <code>Cmd + Shift + D</code>).</li>
+</ol>
+<p>FontForge will analyze the nesting of contours, ensuring outer paths
+run clockwise (for TrueType) or counter-clockwise (for PostScript/CFF),
+while inner cutouts are set to the opposite direction.</p>
+<h3 id="batch-correcting-directions-across-multiple-glyphs">Batch
+Correcting Directions Across Multiple Glyphs</h3>
+<p>To apply correct contour winding to multiple glyphs at once:</p>
+<ol type="1">
+<li>Return to the main Font View window.</li>
+<li>Select the desired glyphs by holding <code>Shift</code> or
+<code>Ctrl</code> / <code>Cmd</code> while clicking, or press
+<code>Ctrl + A</code> to select all glyphs in the font.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Correct
+Direction</strong>.</li>
+</ol>
+<h3 id="verifying-contour-direction">Verifying Contour Direction</h3>
+<p>To verify that the inversion was successful:</p>
+<ul>
+<li><strong>Inspect Direction Arrows:</strong> In the Glyph Window, each
+selected point displays small directional indicators showing the path
+flow.</li>
+<li><strong>Enable Fill Preview:</strong> Go to <strong>View</strong>
+&gt; <strong>Fill</strong> (or press the fill toggle) to preview the
+glyph as a solid rasterized shape. If an inner counter appears solid
+black instead of transparent, its contour direction matches the outer
+boundary and must be inverted.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-invert-contour-direction-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

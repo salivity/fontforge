@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Settings Before Generating Production Fonts - fontforge</title>
+    <meta name="description" content="Before exporting a final production font in FontForge, you must configure critical technical parameters to ensure visual integrity, correct rendering, and cross-platform compatibility. This guide covers the essential pre-flight checklist, including font m">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-settings-before-generating-production-fonts">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Settings Before Generating Production Fonts - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-settings-before-generating-production-fonts" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Before exporting a final production font in FontForge, you must configure critical technical parameters to ensure visual integrity, correct rendering, and cross-platform compatibility. This guide covers the essential pre-flight checklist, including font m" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-settings-before-generating-production-fonts">FontForge
+Settings Before Generating Production Fonts</h1>
+<p>Before exporting a final production font in FontForge, you must
+configure critical technical parameters to ensure visual integrity,
+correct rendering, and cross-platform compatibility. This guide covers
+the essential pre-flight checklist, including font metadata, OS/2
+metrics, glyph outline sanitization, encoding verification, and
+generation export flags to prevent rendering bugs in operating systems,
+browsers, and desktop publishing software.</p>
+<h3 id="1-font-information-and-metadata-element--font-info">1. Font
+Information and Metadata (<code>Element &gt; Font Info</code>)</h3>
+<ul>
+<li><strong>PS Names:</strong> Verify the <code>Fontname</code> (no
+spaces allowed), <code>Family Name</code>, and <code>Fullname</code>.
+Ensure <code>Weight</code> accurately reflects the design (e.g.,
+Regular, Bold, SemiBold).</li>
+<li><strong>TTF Names:</strong> Windows and macOS rely heavily on TTF
+Name IDs. Ensure Name ID 1 (Family), Name ID 2 (Subfamily/Style), Name
+ID 4 (Full Name), and Name ID 6 (PostScript Name) are configured
+correctly. For font families with more than four styles (Regular,
+Italic, Bold, Bold Italic), configure Name ID 16 (Preferred Family) and
+Name ID 17 (Preferred Subfamily) to avoid style-linking errors in
+Microsoft Office.</li>
+<li><strong>Em Size (<code>General</code> tab):</strong> Set standard
+Units Per Em (UPM). The industry standard is <code>1000</code> for
+PostScript/CFF (<code>.otf</code>) fonts and <code>1024</code> or
+<code>2048</code> for TrueType (<code>.ttf</code>) fonts. Changing this
+late will scale your outlines, so verify it matches your target
+format.</li>
+</ul>
+<h3 id="2-vertical-metrics-element--font-info--os2--metrics">2. Vertical
+Metrics
+(<code>Element &gt; Font Info &gt; OS/2 &gt; Metrics</code>)</h3>
+<p>Inconsistent vertical metrics cause text clipping and inconsistent
+line heights across different applications:</p>
+<ul>
+<li><strong>Win Ascent and Win Descent:</strong> Used by Windows GDI.
+Ensure these values equal or exceed the highest and lowest points of
+your glyph outlines (including diacritics) to avoid clipping. Note that
+<code>Win Descent</code> must be a positive number in FontForge.</li>
+<li><strong>Typo Ascent, Typo Descent, and Typo LineGap:</strong> Used
+by modern typography engines and browsers. Set <code>Typo Descent</code>
+as a negative value. Ensure
+<code>Typo Ascent + abs(Typo Descent) + Typo LineGap</code> equals your
+Em size or an intended proportional height.</li>
+<li><strong>HHead Ascent, HHead Descent, and HHead LineGap:</strong>
+Used by macOS. Typically match <code>HHead Ascent</code> to
+<code>Typo Ascent</code> and <code>HHead Descent</code> to
+<code>Typo Descent</code>, with <code>HHead LineGap</code> set to
+<code>Typo LineGap</code>.</li>
+<li><strong>USE_TYPO_METRICS:</strong> Under the <code>OS/2</code> &gt;
+<code>Panose</code> / <code>Misc</code> tab, check the
+<code>USE_TYPO_METRICS</code> flag (fsSelection bit 7) to enforce
+consistent line spacing across modern systems.</li>
+</ul>
+<h3 id="3-glyph-outlines-and-geometry-cleanliness">3. Glyph Outlines and
+Geometry Cleanliness</h3>
+<p>Select all glyphs (<code>Ctrl+A</code>) and execute the following
+automated cleanups:</p>
+<ul>
+<li><strong>Add Extrema
+(<code>Element &gt; Add Extrema</code>):</strong> Every curve should
+have on-curve control points at its vertical and horizontal extremes
+(local minima and maxima) to ensure clean rasterization.</li>
+<li><strong>Correct Direction
+(<code>Element &gt; Correct Direction</code>):</strong> Clockwise vs.
+counter-clockwise path direction determines which areas are filled and
+which are hollow. TrueType outer paths must be clockwise; PostScript
+outer paths must be counter-clockwise. FontForge handles this
+automatically via this command.</li>
+<li><strong>Remove Overlap
+(<code>Element &gt; Overlap &gt; Remove Overlap</code>):</strong> Merges
+intersecting contours into a single outline. While modern TrueType
+supports overlapping paths, PostScript/CFF outlines must be merged to
+prevent rasterization artifacts.</li>
+<li><strong>Round to Integer Coordinates
+(<code>Element &gt; Round &gt; To Int</code>):</strong> Production fonts
+do not support fractional coordinate points on nodes. Ensure all points
+snap to whole integers.</li>
+</ul>
+<h3 id="4-essential-glyphs-and-encodings">4. Essential Glyphs and
+Encodings</h3>
+<ul>
+<li><strong>Check Required Glyphs:</strong> Ensure your font contains
+<code>.notdef</code> (glyph 0, displayed when a character is missing),
+<code>space</code> (Unicode <code>U+0020</code>), and
+<code>non-breaking space</code> (<code>U+00A0</code>).</li>
+<li><strong>Encoding Table:</strong> Confirm the encoding is set via
+<code>Encoding &gt; Reencode &gt; ISO 10646-1 (Unicode, Full)</code> or
+<code>Unicode, BMP</code> to ensure correct Unicode codepoints are
+assigned to glyph slots.</li>
+</ul>
+<h3 id="5-font-validation-element--validation--find-problems">5. Font
+Validation
+(<code>Element &gt; Validation &gt; Find Problems</code>)</h3>
+<p>Run the automated validator to catch unseen errors:</p>
+<ul>
+<li>Check for self-intersecting paths.</li>
+<li>Identify missing extrema.</li>
+<li>Search for points that are too close to each other.</li>
+<li>Ensure references/components are not flipped or scaled unevenly
+without being unlinked.</li>
+</ul>
+<h3 id="6-generation-options-file--generate-fonts">6. Generation Options
+(<code>File &gt; Generate Fonts</code>)</h3>
+<p>Click the <strong>Options</strong> button in the file export dialog
+to finalize compiler flags:</p>
+<ul>
+<li><strong>For OpenType (CFF / .otf):</strong>
+<ul>
+<li>Check <strong>OpenType</strong>.</li>
+<li>Check <strong>Round</strong> to strip any remaining fractional
+points.</li>
+<li>Check <strong>PS Glyph Names</strong> to include standard PostScript
+glyph naming tables.</li>
+</ul></li>
+<li><strong>For TrueType (.ttf):</strong>
+<ul>
+<li>Select <strong>TrueType</strong> from the format dropdown.</li>
+<li>Check <strong>Hints</strong> if you have created TrueType
+instructions, or uncheck to avoid exporting broken manual hints.</li>
+</ul></li>
+<li><strong>Validation warnings:</strong> Address any warnings that
+appear in the compilation pop-up before distributing the generated
+<code>.otf</code> or <code>.ttf</code> binary.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-settings-before-generating-production-fonts';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

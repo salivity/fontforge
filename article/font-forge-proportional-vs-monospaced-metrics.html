@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Proportional vs Monospaced Metrics - fontforge</title>
+    <meta name="description" content="FontForge handles proportional and monospaced font metrics by altering how advance widths, side bearings, kerning, and metadata flags are assigned across a typeface. While proportional fonts rely on individual, visually balanced character widths and dynam">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-proportional-vs-monospaced-metrics">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Proportional vs Monospaced Metrics - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-proportional-vs-monospaced-metrics" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge handles proportional and monospaced font metrics by altering how advance widths, side bearings, kerning, and metadata flags are assigned across a typeface. While proportional fonts rely on individual, visually balanced character widths and dynam" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-proportional-vs-monospaced-metrics">FontForge
+Proportional vs Monospaced Metrics</h1>
+<p>FontForge handles proportional and monospaced font metrics by
+altering how advance widths, side bearings, kerning, and metadata flags
+are assigned across a typeface. While proportional fonts rely on
+individual, visually balanced character widths and dynamic pair
+adjustments, monospaced fonts require strict, uniform horizontal spacing
+enforced by specific font tables. Understanding how FontForge manages
+these distinct paradigms is essential for producing correctly spaced
+typography.</p>
+<h3 id="managing-proportional-font-metrics">Managing Proportional Font
+Metrics</h3>
+<p>In a proportional font, every glyph has a unique advance width
+determined by its visual weight and contour design. FontForge provides
+dynamic tools to manage these variable distances:</p>
+<ul>
+<li><strong>Advance Widths and Side Bearings:</strong> You can adjust
+the Left Side Bearing (LSB) and Right Side Bearing (RSB) for each glyph
+individually in the Glyph Window or interactively in the Metrics Window
+(<code>Metrics &gt; Open Metrics Window</code>). The total advance width
+is the sum of the LSB, the glyph outline width, and the RSB.</li>
+<li><strong>Auto-Spacing:</strong> FontForge includes an automated
+spacing algorithm (<code>Metrics &gt; Auto Width</code>) that analyzes
+glyph contours and calculates optical side bearings to balance
+whitespace across the character set.</li>
+<li><strong>Kerning Pairs and Features:</strong> Proportional fonts rely
+heavily on kerning to resolve awkward collisions (such as "AV" or "To").
+FontForge handles this via OpenType features configured in
+<code>Element &gt; Font Info &gt; Lookups</code>. You can create GPOS
+lookup tables for pair-to-pair kerning or class-based kerning, allowing
+specific glyph combinations to override default advance widths.</li>
+</ul>
+<h3 id="managing-monospaced-font-metrics">Managing Monospaced Font
+Metrics</h3>
+<p>Monospaced fonts demand that every single glyph shares the exact same
+advance width. FontForge controls this through uniform numerical
+assignments and dedicated structural flags.</p>
+<ul>
+<li><strong>Setting a Global Advance Width:</strong> To establish
+monospaced spacing, select all glyphs in the Font View
+(<code>Ctrl+A</code>) and choose <code>Metrics &gt; Set Width...</code>.
+Entering a fixed value (such as 500 or 600 units, depending on your Em
+size) assigns an identical horizontal advance across all selected
+glyphs.</li>
+<li><strong>Centering Glyphs:</strong> Because the advance width is
+fixed, characters with narrow outlines (such as "i" or ".") must be
+centered within the slot. FontForge allows you to center glyphs within
+their new widths using <code>Metrics &gt; Center in Width</code>. This
+automatically distributes the remaining space equally between the LSB
+and RSB.</li>
+<li><strong>Eliminating Kerning:</strong> Monospaced typefaces generally
+do not use kerning. Any existing horizontal kerning lookups in
+<code>Element &gt; Font Info &gt; Lookups</code> must be removed to
+prevent software from altering character cell widths.</li>
+</ul>
+<h3 id="monospaced-flags-and-font-tables">Monospaced Flags and Font
+Tables</h3>
+<p>Setting identical advance widths is not enough for an operating
+system to classify a font as monospaced. FontForge requires specific
+metadata to be toggled:</p>
+<ol type="1">
+<li><strong>PostScript Properties:</strong> In
+<code>Element &gt; Font Info &gt; PostScript</code>, check the
+<strong>isFixedPitch</strong> box. This sets the Boolean flag that tells
+rendering engines the font has uniform metrics.</li>
+<li><strong>PANOSE Classification:</strong> In
+<code>Element &gt; Font Info &gt; OS/2 &gt; PANOSE</code>, set the
+<strong>Proportion</strong> dropdown menu to
+<strong>Monospaced</strong>.</li>
+<li><strong>TrueType/OpenType Tables:</strong> When generating the font,
+FontForge sets the <code>hhea</code> (Horizontal Header) and
+<code>OS/2</code> table values—such as <code>xAvgCharWidth</code> and
+<code>maxAdvanceWidth</code>—to match the uniform width, ensuring
+terminal emulators and code editors render the font correctly on a
+strict grid.</li>
+</ol>
+<h3 id="validating-metrics">Validating Metrics</h3>
+<p>FontForge includes a verification tool to ensure consistency. By
+opening <code>Element &gt; Find Problems</code> and navigating to the
+<strong>Spacing / Kerning</strong> tab, you can test whether any glyphs
+deviate from the required advance width. This helps catch unassigned
+widths, accents, or hidden non-spacing characters before generating the
+final font binary.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-proportional-vs-monospaced-metrics';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

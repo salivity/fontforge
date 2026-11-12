@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding the TTF Names Table in FontForge - fontforge</title>
+    <meta name="description" content="The TTF Names table in FontForge serves as the central repository for critical font metadata, defining how operating systems and software applications identify, group, and display a font. This table contains essential information such as the font family n">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/understanding-the-ttf-names-table-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding the TTF Names Table in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/understanding-the-ttf-names-table-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The TTF Names table in FontForge serves as the central repository for critical font metadata, defining how operating systems and software applications identify, group, and display a font. This table contains essential information such as the font family n" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-the-ttf-names-table-in-fontforge">Understanding
+the TTF Names Table in FontForge</h1>
+<p>The TTF Names table in FontForge serves as the central repository for
+critical font metadata, defining how operating systems and software
+applications identify, group, and display a font. This table contains
+essential information such as the font family name, style variations,
+copyright details, designer credits, and platform-specific identifiers.
+Properly configuring the TTF Names table is vital to ensure that a font
+renders reliably across various platforms and integrates seamlessly into
+user font menus.</p>
+<h2 id="what-is-the-ttf-names-table">What Is the TTF Names Table?</h2>
+<p>In TrueType and OpenType specifications, the <code>name</code> table
+is a mandatory component. Within FontForge, this can be accessed via
+<strong>Element &gt; Font Info &gt; TTF Names</strong>. Instead of
+storing glyph vectors or outlines, this table holds plain text strings
+referenced by standard numerical IDs (known as Name IDs) defined by the
+OpenType specification.</p>
+<h2 id="primary-purposes-of-the-table">Primary Purposes of the
+Table</h2>
+<h3 id="1-font-family-grouping-and-selection">1. Font Family Grouping
+and Selection</h3>
+<p>Operating systems rely on specific Name IDs to organize fonts in
+application menus:</p>
+<ul>
+<li><strong>Family Name (Name ID 1):</strong> Groups related styles
+(such as Regular, Italic, Bold, and Bold Italic) under a single family
+entry.</li>
+<li><strong>Subfamily Name (Name ID 2):</strong> Identifies the specific
+weight or style variant within the family.</li>
+<li><strong>Typographic Family/Subfamily (Name IDs 16 and 17):</strong>
+Allows modern software to handle extended families that exceed the
+traditional four-style (Regular, Italic, Bold, Bold Italic) model,
+accommodating weights like Thin, Medium, and Black without creating
+separate font menu items.</li>
+</ul>
+<h3 id="2-system-and-postscript-identification">2. System and PostScript
+Identification</h3>
+<p>Software needs unique internal names to track and embed fonts
+correctly:</p>
+<ul>
+<li><strong>PostScript Name (Name ID 6):</strong> Provides an
+ASCII-only, space-free identifier required for PostScript output, PDF
+embedding, and system-level font caching.</li>
+<li><strong>Full Font Name (Name ID 4):</strong> Combines the family and
+subfamily names (e.g., "Open Sans Bold") to present the human-readable
+title of the specific font file.</li>
+</ul>
+<h3 id="3-cross-platform-compatibility-and-localization">3.
+Cross-Platform Compatibility and Localization</h3>
+<p>The TTF Names table stores strings tailored to specific platforms
+(such as Microsoft Unicode or Macintosh Roman) and languages. FontForge
+allows creators to add localized names, ensuring a font's title and
+metadata display properly in different language environments without
+causing system conflicts or encoding bugs.</p>
+<h3 id="4-legal-and-attribution-metadata">4. Legal and Attribution
+Metadata</h3>
+<p>Beyond identification, the table provides legal and historical
+records for the typeface:</p>
+<ul>
+<li><strong>Copyright Notice (Name ID 0):</strong> Specifies the
+intellectual property holder.</li>
+<li><strong>Designer and Manufacturer (Name IDs 8 and 9):</strong>
+Attributes the creation and production of the font.</li>
+<li><strong>License Description and URL (Name IDs 13 and 14):</strong>
+States the terms of use, such as open-source licenses (OFL, Apache) or
+proprietary end-user license agreements (EULA).</li>
+<li><strong>Version String (Name ID 5):</strong> Tracks font releases
+and updates for system cache invalidation.</li>
+</ul>
+<h2 id="why-correct-configuration-matters">Why Correct Configuration
+Matters</h2>
+<p>An incomplete or improperly configured TTF Names table results in
+broken font families, duplicate entries in font pickers, or failures
+when generating PDF documents. Ensuring the integrity of this table in
+FontForge guarantees that the exported font behaves consistently across
+Windows, macOS, Linux, and web environments.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/understanding-the-ttf-names-table-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

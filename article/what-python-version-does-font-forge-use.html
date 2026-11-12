@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Python Version Does FontForge Use? - fontforge</title>
+    <meta name="description" content="FontForge relies on Python to handle complex typography automation, batch processing, and custom script execution. In modern standard releases, FontForge packages or links to Python 3—predominantly Python 3.10 or Python 3.11 in recent releases—having comp">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/what-python-version-does-font-forge-use">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Python Version Does FontForge Use? - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/what-python-version-does-font-forge-use" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge relies on Python to handle complex typography automation, batch processing, and custom script execution. In modern standard releases, FontForge packages or links to Python 3—predominantly Python 3.10 or Python 3.11 in recent releases—having comp" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-python-version-does-fontforge-use">What Python Version Does
+FontForge Use?</h1>
+<p>FontForge relies on Python to handle complex typography automation,
+batch processing, and custom script execution. In modern standard
+releases, FontForge packages or links to Python 3—predominantly Python
+3.10 or Python 3.11 in recent releases—having completely phased out
+legacy Python 2 support. However, because packaging methods vary across
+operating systems, the exact Python version depends on the platform and
+installer package you use.</p>
+<h3 id="python-in-windows-installers">Python in Windows Installers</h3>
+<p>The official standard installer for Microsoft Windows bundles an
+embedded version of Python built through the MSYS2/MinGW environment.
+Modern standard builds (such as the 2023 release and subsequent stable
+builds) bundle a complete <strong>Python 3.11</strong> or <strong>Python
+3.10</strong> environment.</p>
+<p>This installation is entirely self-contained. The interpreter
+executable, standard library modules, and FontForge extension bindings
+reside directly within the <code>FontForgeBuilds</code> directory
+structure, ensuring the application functions without requiring a
+separate Python installation on your host system.</p>
+<h3 id="python-in-macos-packages">Python in macOS Packages</h3>
+<p>For macOS users downloading the official pre-compiled
+<code>.app</code> disk image (<code>.dmg</code>), FontForge bundles its
+own internal <strong>Python 3</strong> framework inside the application
+bundle.</p>
+<p>If you install FontForge on macOS via alternative package managers
+like Homebrew or MacPorts, FontForge does not bundle its own
+interpreter. Instead, it compiles against and dynamically links to the
+active Python 3 version managed by that package manager (typically
+Python 3.11 or 3.12).</p>
+<h3 id="python-in-linux-distributions">Python in Linux
+Distributions</h3>
+<p>Linux packages do not bundle an isolated Python distribution.
+Standard distributions (including Ubuntu, Debian, Fedora, and Arch)
+provide FontForge through native packages that link dynamically to the
+operating system's native Python 3 interpreter. Installing the
+<code>python3-fontforge</code> package integrates the FontForge module
+into your primary system Python environment.</p>
+<h3 id="legacy-python-2-support">Legacy Python 2 Support</h3>
+<p>Older FontForge releases distributed prior to 2020 historically
+bundled <strong>Python 2.7</strong>. Modern development has completely
+dropped Python 2 compatibility, and all current standard maintenance
+releases and builds exclusively support and distribute Python 3.</p>
+<h3 id="how-to-check-your-exact-bundled-version">How to Check Your Exact
+Bundled Version</h3>
+<p>Because minor revisions change as new installers are released, you
+can confirm the exact Python version embedded in your specific FontForge
+installation directly through the interactive interpreter.</p>
+<ol type="1">
+<li>Launch FontForge.</li>
+<li>Open the scripting console by navigating to <strong>File &gt;
+Execute Script</strong> or launch the interactive terminal by running
+<code>fontforge -lang=py</code>.</li>
+<li>Enter the following commands:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.version)</span></code></pre></div>
+<p>The output will display the exact Python version number, build date,
+and compiler information packaged with your FontForge software.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/what-python-version-does-font-forge-use';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

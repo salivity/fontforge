@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Arabic and Devanagari Shaping Tables - fontforge</title>
+    <meta name="description" content="FontForge can generate the OpenType shaping tables required for complex text layouts such as Arabic and Devanagari. By utilizing FontForge’s OpenType layout tools, type designers can build the necessary Glyph Substitution (GSUB) and Glyph Positioning (GPO">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-arabic-and-devanagari-shaping-tables">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Arabic and Devanagari Shaping Tables - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-arabic-and-devanagari-shaping-tables" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge can generate the OpenType shaping tables required for complex text layouts such as Arabic and Devanagari. By utilizing FontForge’s OpenType layout tools, type designers can build the necessary Glyph Substitution (GSUB) and Glyph Positioning (GPO" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-arabic-and-devanagari-shaping-tables">FontForge Arabic
+and Devanagari Shaping Tables</h1>
+<p>FontForge can generate the OpenType shaping tables required for
+complex text layouts such as Arabic and Devanagari. By utilizing
+FontForge’s OpenType layout tools, type designers can build the
+necessary Glyph Substitution (GSUB) and Glyph Positioning (GPOS) tables
+to correctly render connected cursive letters, ligatures, conjuncts, and
+mark-to-base attachments. While the software provides native interfaces
+to configure these tables, the workflow differs between Arabic and
+Devanagari due to the inherent structural requirements of each
+script.</p>
+<h3 id="understanding-complex-script-shaping">Understanding Complex
+Script Shaping</h3>
+<p>Digital rendering of complex scripts relies on an external shaping
+engine (such as HarfBuzz) reading the instructions compiled inside the
+font's OpenType tables. The font does not perform the shaping itself;
+instead, it provides the shaping tables that tell the rendering engine
+how to substitute isolated characters with contextual forms and position
+diacritics or marks. FontForge compiles these instructions directly into
+standard TrueType (<code>.ttf</code>) or OpenType (<code>.otf</code>)
+output files.</p>
+<h3 id="arabic-shaping-in-fontforge">Arabic Shaping in FontForge</h3>
+<p>FontForge provides built-in support for basic and advanced Arabic
+typography:</p>
+<ul>
+<li><strong>Positional Forms:</strong> FontForge can automate the
+creation of lookup tables for the four primary positional features:
+Initial (<code>init</code>), Medial (<code>medi</code>), Final
+(<code>fina</code>), and Isolated (<code>isol</code>). Standard Arabic
+glyph naming conventions allow FontForge to detect and map these
+positional variants automatically.</li>
+<li><strong>Ligatures:</strong> Mandatory ligatures, such as Lam-Alef,
+and aesthetic ligatures are handled via the Standard Ligatures
+(<code>liga</code>) and Discretionary Ligatures (<code>dlig</code>)
+lookup features.</li>
+<li><strong>Mark Attachment:</strong> Diacritics (Harakat) are
+positioned using Mark-to-Base (<code>mark</code>) and Mark-to-Mark
+(<code>mkmk</code>) lookups, which can be defined visually using
+FontForge's anchor point interface.</li>
+<li><strong>Cursive Attachment:</strong> FontForge supports the
+<code>curs</code> feature, allowing designers to set entry and exit
+anchors on cursive glyphs so they connect seamlessly at varying vertical
+alignments.</li>
+</ul>
+<h3 id="devanagari-shaping-in-fontforge">Devanagari Shaping in
+FontForge</h3>
+<p>Devanagari belongs to the Indic family of scripts, which relies on a
+strict shaping model to handle consonant conjuncts, half-forms,
+reordering of pre-base vowels (such as <em>I-matra</em>), and syllable
+composition.</p>
+<p>Unlike basic Arabic glyph mapping, FontForge does not offer a single
+"one-click" automatic generator for the entire Devanagari shaping
+pipeline. However, it provides full structural support for the necessary
+OpenType Indic tags:</p>
+<ul>
+<li><strong>GSUB Features:</strong> You can define substitutions for
+Nukta forms (<code>nukt</code>), Akhand ligatures (<code>akhn</code>),
+Reph forms (<code>rphf</code>), Rakar forms (<code>rkrf</code>),
+Below-base forms (<code>blwf</code>), Half-forms (<code>half</code>),
+Above-base substitutions (<code>abvs</code>), and Post-base
+substitutions (<code>psts</code>).</li>
+<li><strong>GPOS Features:</strong> FontForge handles the precise
+attachment of vowel signs and nasalization marks through standard mark
+positioning tables.</li>
+</ul>
+<p>Because the Indic shaping engine handles glyph reordering, the tables
+within FontForge must accurately reflect the targeted OpenType
+specification (such as the <code>deva</code> or <code>dev2</code> script
+tags).</p>
+<h3 id="recommended-workflow-adobe-feature-files-fea">Recommended
+Workflow: Adobe Feature Files (.fea)</h3>
+<p>While FontForge has a graphic interface for lookups via
+<strong>Element &gt; Font Info &gt; Lookups</strong>, managing intricate
+contextual substitutions for Devanagari and complex Arabic scripts
+directly within the user interface can be tedious and prone to human
+error.</p>
+<p>The most efficient method to generate shaping tables in FontForge is
+using Adobe OpenType Feature File (<code>.fea</code>) syntax:</p>
+<ol type="1">
+<li>Write or generate your shaping rules, feature tags, and lookup
+hierarchies in a separate <code>.fea</code> text file.</li>
+<li>In FontForge, navigate to <strong>File &gt; Merge Feature
+Info...</strong> and select the <code>.fea</code> file.</li>
+<li>FontForge imports these rules into its internal database and
+compiles them into valid OpenType tables upon font generation.</li>
+</ol>
+<p>FontForge is fully capable of producing production-ready Arabic and
+Devanagari fonts, provided the designer supplies the required glyph
+variants and appropriately defined OpenType lookup tables.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-arabic-and-devanagari-shaping-tables';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

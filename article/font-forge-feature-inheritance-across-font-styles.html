@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Feature Inheritance Across Font Styles - fontforge</title>
+    <meta name="description" content="Managing OpenType feature inheritance across multiple font styles in FontForge requires decoupling your layout logic from individual font files. Because FontForge stores OpenType Layout (GSUB/GPOS) data per .sfd (Spline Font Database) file rather than via">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-feature-inheritance-across-font-styles">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Feature Inheritance Across Font Styles - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-feature-inheritance-across-font-styles" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Managing OpenType feature inheritance across multiple font styles in FontForge requires decoupling your layout logic from individual font files. Because FontForge stores OpenType Layout (GSUB/GPOS) data per .sfd (Spline Font Database) file rather than via" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-feature-inheritance-across-font-styles">FontForge
+Feature Inheritance Across Font Styles</h1>
+<p>Managing OpenType feature inheritance across multiple font styles in
+FontForge requires decoupling your layout logic from individual font
+files. Because FontForge stores OpenType Layout (GSUB/GPOS) data per
+<code>.sfd</code> (Spline Font Database) file rather than via a global
+dynamic project file, maintaining feature consistency across Regular,
+Bold, or Italic cuts relies on external feature files
+(<code>.fea</code>), lookup exports, and Python automation. This guide
+details how to implement a modular feature workflow that prevents
+repetitive manual configuration and keeps your font family
+synchronized.</p>
+<h2 id="the-strategy-decoupling-logic-with-adobe-feature-files">The
+Strategy: Decoupling Logic with Adobe Feature Files</h2>
+<p>The most robust way to inherit and share OpenType layout features
+across multiple styles in FontForge is using external Adobe Feature File
+syntax (<code>.fea</code>). By centralizing shared substitutions into
+external text files, child styles can inherit parent feature definitions
+directly.</p>
+<h3 id="1-structure-modular-feature-files">1. Structure Modular Feature
+Files</h3>
+<p>Instead of writing OpenType code inside FontForge’s internal GUI
+editors for every style, create a directory for <code>.fea</code>
+files:</p>
+<ul>
+<li><strong><code>common.fea</code></strong>: Stores shared features
+applicable to the entire family (e.g., standard ligatures
+<code>liga</code>, localized forms <code>locl</code>, tabular figures
+<code>tnum</code>, and discretionary ligatures <code>dlig</code>).</li>
+<li><strong><code>regular.fea</code></strong>: Contains code specific to
+the Regular weight.</li>
+<li><strong><code>bold.fea</code></strong>: Contains code specific to
+the Bold weight.</li>
+</ul>
+<p>Using the <code>include()</code> directive, style-specific files
+inherit the parent file:</p>
+<pre class="fea"><code># In bold.fea
+include(common.fea);
+
+# Additional Bold-only substitution rules go here
+feature ss01 {
+    sub a by a.alt;
+} ss01;</code></pre>
+<h3 id="2-import-feature-files-into-fontforge-styles">2. Import Feature
+Files into FontForge Styles</h3>
+<p>To apply your modular features to each style file:</p>
+<ol type="1">
+<li>Open your style-specific font file in FontForge (e.g.,
+<code>MyFont-Bold.sfd</code>).</li>
+<li>Go to <strong>File &gt; Merge Feature Info...</strong>.</li>
+<li>Select your corresponding feature file (e.g.,
+<code>bold.fea</code>).</li>
+<li>FontForge parses the code and populates the GSUB/GPOS tables,
+automatically including everything defined in the parent
+<code>common.fea</code>.</li>
+</ol>
+<hr />
+<h2 id="alternative-gui-method-lookup-export-and-import">Alternative GUI
+Method: Lookup Export and Import</h2>
+<p>If you prefer using the native FontForge interface without writing
+external text files:</p>
+<ol type="1">
+<li><strong>Establish the Master Style</strong>: Configure all GSUB
+substitutions (such as small caps, fractions, and ligatures) in your
+base style under <strong>Element &gt; Font Info &gt;
+Lookups</strong>.</li>
+<li><strong>Export Lookups</strong>: Select a lookup in the list and
+click <strong>Save Feature</strong> to export it as an external
+file.</li>
+<li><strong>Inherit into Other Styles</strong>:
+<ul>
+<li>Open the target style (e.g., Italic).</li>
+<li>Go to <strong>Element &gt; Font Info &gt; Lookups</strong>.</li>
+<li>Click <strong>Add Lookup</strong>, then select
+<strong>Import</strong> to load the exported lookup file.</li>
+</ul></li>
+</ol>
+<p><em>Note: Lookups that rely on specific glyph geometry (like GPOS
+pair kerning) should generally not be shared wholesale across radically
+different weights, whereas substitution features (GSUB) inherit
+seamlessly.</em></p>
+<hr />
+<h2 id="automating-inheritance-across-styles-via-python">Automating
+Inheritance Across Styles via Python</h2>
+<p>When managing larger families, updating features manually across each
+<code>.sfd</code> file is prone to human error. FontForge’s built-in
+Python scripting environment allows you to apply inherited features
+programmatically across the entire family.</p>
+<p>Create a script named <code>apply_features.py</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Path to the base inherited feature file</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>common_fea <span class="op">=</span> <span class="st">&quot;features/common.fea&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Target all SFD files in the directory</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>font_files <span class="op">=</span> glob.glob(<span class="st">&quot;*.sfd&quot;</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file_path <span class="kw">in</span> font_files:</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    font <span class="op">=</span> fontforge.<span class="bu">open</span>(file_path)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Merge the inherited features into the current style</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    font.mergeFeature(common_fea)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save the updated SFD</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    font.save()</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    font.close()</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Applied inherited features to </span><span class="sc">{</span>file_path<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>Run this script inside FontForge:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-script</span> apply_features.py</span></code></pre></div>
+<hr />
+<h2 id="critical-rules-for-smooth-feature-inheritance">Critical Rules
+for Smooth Feature Inheritance</h2>
+<ul>
+<li><strong>Enforce Strict Glyph Naming</strong>: All inherited rules
+rely on exact glyph name matching. If <code>common.fea</code> references
+<code>f_i</code> or <code>a.sc</code>, every style in the family must
+use those exact names, or FontForge will reject the feature
+compilation.</li>
+<li><strong>Separate Substitution from Positioning</strong>: Keep GSUB
+(ligatures, alternates) separate from GPOS (kerning, mark-to-base).
+Substitution logic is typically 100% reusable across styles, whereas
+positioning metrics depend on individual glyph shapes and weights.</li>
+<li><strong>Compile at Build Time</strong>: Avoid manually saving
+complex lookups into <code>.sfd</code> files during early design phases.
+Instead, keep your <code>.sfd</code> files clean and use a Python build
+script to merge the inherited <code>.fea</code> definitions whenever you
+generate final OTF/TTF binaries.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-feature-inheritance-across-font-styles';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

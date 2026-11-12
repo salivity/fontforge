@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Set Up Case-Sensitive Forms in FontForge - fontforge</title>
+    <meta name="description" content="Yes, you can set up case-sensitive forms in FontForge by utilizing OpenType layout features. Case-sensitive forms allow fonts to swap standard punctuation marks—such as hyphens, parentheses, brackets, and colons—for vertically shifted variants designed to">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-set-up-case-sensitive-forms-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Set Up Case-Sensitive Forms in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-set-up-case-sensitive-forms-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Yes, you can set up case-sensitive forms in FontForge by utilizing OpenType layout features. Case-sensitive forms allow fonts to swap standard punctuation marks—such as hyphens, parentheses, brackets, and colons—for vertically shifted variants designed to" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-set-up-case-sensitive-forms-in-fontforge">How to Set Up
+Case-Sensitive Forms in FontForge</h1>
+<p>Yes, you can set up case-sensitive forms in FontForge by utilizing
+OpenType layout features. Case-sensitive forms allow fonts to swap
+standard punctuation marks—such as hyphens, parentheses, brackets, and
+colons—for vertically shifted variants designed to align with all-caps
+text. This guide explains how to create the alternate glyphs, configure
+the OpenType <code>case</code> feature via FontForge's Lookup tables,
+and map the substitutions directly in your font project.</p>
+<h3 id="step-1-design-alternate-glyphs">Step 1: Design Alternate
+Glyphs</h3>
+<p>Standard punctuation is typically centered relative to the lowercase
+x-height. For all-caps settings, these glyphs appear too low. You must
+first create raised versions:</p>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Select an empty glyph slot or go to <strong>Encoding &gt; Add
+Encoding Slots</strong> to create space for your alternates.</li>
+<li>Draw or copy the glyphs you want to adjust (such as
+<code>hyphen</code>, <code>parenleft</code>, <code>parenright</code>,
+<code>bracketleft</code>, <code>bracketright</code>, <code>colon</code>,
+or <code>guillemotleft</code>).</li>
+<li>Shift the contours upward so they vertically align with the cap
+height.</li>
+<li>Rename each alternate glyph using a standardized suffix. Right-click
+the glyph, select <strong>Glyph Info</strong>, and change the name (for
+example, <code>hyphen.case</code>, <code>parenleft.case</code>, or
+<code>colon.case</code>).</li>
+</ol>
+<h3 id="step-2-create-the-opentype-case-lookup">Step 2: Create the
+OpenType <code>case</code> Lookup</h3>
+<p>FontForge manages OpenType features through the Lookups menu in the
+Font Info dialog.</p>
+<ol type="1">
+<li>Navigate to <strong>Element &gt; Font Info</strong> (or press
+<code>Ctrl+Shift+F</code> / <code>Cmd+Shift+F</code>).</li>
+<li>In the left sidebar, select the <strong>Lookups</strong> tab.</li>
+<li>Click the <strong>GSUB</strong> (Glyph Substitution) tab at the
+top.</li>
+<li>Click <strong>Add Lookup</strong>.</li>
+<li>Set the <strong>Type</strong> dropdown to <strong>Single
+Substitution</strong>.</li>
+<li>Under the <strong>Feature</strong> column, select or type
+<code>case</code> (Case-Sensitive Forms).</li>
+<li>Select the appropriate script and language systems (typically
+<code>latn</code> with <code>&lt;Default&gt;</code> language).</li>
+<li>Click <strong>OK</strong> to create the lookup.</li>
+</ol>
+<h3 id="step-3-add-and-populate-the-subtable">Step 3: Add and Populate
+the Subtable</h3>
+<p>With the lookup created, you need to define which base glyphs are
+replaced by your new alternates.</p>
+<ol type="1">
+<li>Select your newly created <code>case</code> lookup in the list and
+click <strong>Add Subtable</strong>.</li>
+<li>Accept the default subtable name or provide your own, then click
+<strong>OK</strong>.</li>
+<li>In the subtable editor, populate the substitution list:
+<ul>
+<li>Click the field under the <strong>Base Glyph Name</strong> column
+and enter the standard glyph name (e.g., <code>hyphen</code>).</li>
+<li>Click the field under the <strong>Replacement Glyph Name</strong>
+column and enter the corresponding alternate name (e.g.,
+<code>hyphen.case</code>).</li>
+<li>Alternatively, if you named your glyphs systematically with a
+<code>.case</code> extension, click the <strong>Populate</strong> or
+<strong>Default</strong> button to have FontForge automatically detect
+and pair the glyphs.</li>
+</ul></li>
+<li>Add rows for all punctuation marks you have created alternate forms
+for.</li>
+<li>Click <strong>OK</strong> to close the subtable, then click
+<strong>OK</strong> again to apply the changes in Font Info.</li>
+</ol>
+<h3 id="step-4-validate-and-export">Step 4: Validate and Export</h3>
+<p>Once configured, test the substitutions before finalizing the
+font:</p>
+<ol type="1">
+<li>Open the Metrics window by going to <strong>Metrics &gt; New Metrics
+Window</strong>.</li>
+<li>Type an uppercase word flanked by punctuation (e.g.,
+<code>(TEST)</code>).</li>
+<li>Open the <strong>Features</strong> menu in the Metrics window and
+toggle <strong>Case-Sensitive Forms</strong> (<code>case</code>) on and
+off to confirm that the punctuation shifts into alignment with the
+capital letters.</li>
+<li>Once verified, go to <strong>File &gt; Generate Fonts</strong> to
+export your OpenType font file (<code>.otf</code> or <code>.ttf</code>).
+Modern design applications like Adobe InDesign, Illustrator, and
+CSS-supported web browsers will now automatically apply these alternates
+when all-caps formatting or the
+<code>font-feature-settings: "case"</code> property is used.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-set-up-case-sensitive-forms-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

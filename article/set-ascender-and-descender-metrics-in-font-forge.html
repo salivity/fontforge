@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Ascender and Descender Metrics in FontForge - fontforge</title>
+    <meta name="description" content="FontForge gives you full control over a font&#39;s vertical metrics, including the ascender, descender, and line gap values. Setting these metrics properly is essential for ensuring your font displays at a consistent size and without unwanted text clipping ac">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/set-ascender-and-descender-metrics-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Set Ascender and Descender Metrics in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/set-ascender-and-descender-metrics-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge gives you full control over a font&#39;s vertical metrics, including the ascender, descender, and line gap values. Setting these metrics properly is essential for ensuring your font displays at a consistent size and without unwanted text clipping ac" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="set-ascender-and-descender-metrics-in-fontforge">Set Ascender
+and Descender Metrics in FontForge</h1>
+<p>FontForge gives you full control over a font's vertical metrics,
+including the ascender, descender, and line gap values. Setting these
+metrics properly is essential for ensuring your font displays at a
+consistent size and without unwanted text clipping across various
+operating systems, web browsers, and desktop publishing applications.
+This guide explains exactly where to find and how to adjust these
+vertical metrics within FontForge.</p>
+<h2 id="accessing-the-font-info-window">Accessing the Font Info
+Window</h2>
+<p>All vertical metric configurations in FontForge are located in the
+Font Info dialog.</p>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Navigate to the top menu and select <strong>Element</strong> &gt;
+<strong>Font Info</strong> (or press <code>Ctrl+Shift+F</code> on
+Windows/Linux, <code>Cmd+Shift+F</code> on macOS).</li>
+</ol>
+<h2 id="configuring-general-metrics-em-square">Configuring General
+Metrics (Em Square)</h2>
+<p>The fundamental baseline for your font's dimensions is determined in
+the <strong>General</strong> category on the left sidebar:</p>
+<ol type="1">
+<li>Click on <strong>General</strong>.</li>
+<li>Locate the <strong>Ascent</strong> and <strong>Descent</strong>
+fields.</li>
+<li>Enter your desired values. By default, standard digital fonts use an
+<strong>Em Size</strong> of 1000 units (common for PostScript/OTF) or
+2048 units (common for TrueType/TTF). The sum of your Ascent and Descent
+must equal the total Em Size. For example, a 1000-unit Em font often
+uses an Ascent of 800 and a Descent of 200.</li>
+</ol>
+<h2 id="configuring-os2-and-windows-metrics">Configuring OS/2 and
+Windows Metrics</h2>
+<p>Operating systems handle line spacing and vertical bounds
+differently. To avoid clipping and inconsistent line heights, you must
+adjust the OpenType OS/2 table:</p>
+<ol type="1">
+<li>In the Font Info window, select the <strong>OS/2</strong> category
+from the sidebar.</li>
+<li>Switch to the <strong>Metrics</strong> sub-tab at the top.</li>
+<li>Configure the following values:
+<ul>
+<li><strong>Win Ascent</strong> and <strong>Win Descent</strong>: These
+values define the clipping boundaries in Windows. If a glyph extends
+beyond these values, it may be visually cut off. Set these high enough
+to encompass your tallest accents and lowest descenders.</li>
+<li><strong>Typo Ascent</strong> and <strong>Typo Descent</strong>:
+These values control the intended typographic line spacing across modern
+applications. Typically, these match your base Ascent and Descent values
+from the General tab.</li>
+<li><strong>Typo Line Gap</strong>: The extra vertical space added
+between lines of text. Setting this to <code>0</code> allows the
+application to rely strictly on the Typo Ascent and Typo Descent.</li>
+</ul></li>
+<li>Check or uncheck <strong>Is Offset</strong> according to your
+preference. Leaving it unchecked allows you to specify absolute values
+directly.</li>
+</ol>
+<h2 id="configuring-apple-hhea-metrics">Configuring Apple (hhea)
+Metrics</h2>
+<p>macOS relies on the horizontal header table (<code>hhea</code>) to
+determine vertical metrics:</p>
+<ol type="1">
+<li>In the Font Info window, open the <strong>General</strong> or look
+under the metrics options for the <strong>hhea</strong> table (depending
+on your FontForge version, this is often synced directly or found under
+the OS/2 / Mac metrics sections).</li>
+<li>Ensure the <strong>Hhea Ascent</strong>, <strong>Hhea
+Descent</strong>, and <strong>Hhea Line Gap</strong> values align with
+your typographic intentions. For consistent cross-platform line spacing,
+make sure the <code>hhea</code> values mirror your <code>Typo</code>
+values (with Hhea Descent entered as a negative number).</li>
+</ol>
+<h2 id="saving-your-changes">Saving Your Changes</h2>
+<p>Once you have entered your vertical metric values:</p>
+<ol type="1">
+<li>Click <strong>OK</strong> at the bottom of the Font Info
+dialog.</li>
+<li>Save your FontForge source file (<code>.sfd</code>).</li>
+<li>Re-generate your font files (<strong>File</strong> &gt;
+<strong>Generate Fonts</strong>) to apply the updated metrics to your
+finalized OTF or TTF binaries.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/set-ascender-and-descender-metrics-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

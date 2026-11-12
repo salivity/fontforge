@@ -1,0 +1,2222 @@
+[
+  [
+    370,
+    "Fix Cross-Platform Font Rendering in FontForge",
+    "Fonts exported from FontForge often render inconsistently across Windows, macOS, and Linux due to divergent font rendering engines, mismatched vertical metrics, and conflicting outline standards. This guide details how to resolve these cross-platform disc",
+    false
+  ],
+  [
+    369,
+    "Unexpected Font Scaling Issues in FontForge",
+    "Opening a font file in FontForge can sometimes cause glyphs to appear dramatically enlarged, shrunken, or distorted relative to their original designs. This unexpected scaling is typically caused by Units Per Em (UPM) discrepancies, conflicting PostScript",
+    false
+  ],
+  [
+    368,
+    "Fix Encoding Mapping Mismatches in FontForge",
+    "Character encoding mapping mismatches in FontForge occur when the internal glyph slots, glyph names, or Unicode code points do not align with standard character maps, causing fonts to display incorrect characters or render as empty tofu boxes. This guide",
+    false
+  ],
+  [
+    367,
+    "Why FontForge Shows Missing Glyph Errors",
+    "FontForge displays missing glyph errors when a font project lacks required character definitions, contains broken composite references, or suffers from encoding mismatches between its internal mapping and target platforms. These errors commonly arise duri",
+    false
+  ],
+  [
+    366,
+    "How to Fix Missing Required Tables in FontForge",
+    "This guide explains how to identify and resolve validation errors related to missing required OpenType and TrueType tables in FontForge. These errors occur when a font lacks mandatory structural data—such as the OS/2, cmap, head, hhea, maxp, or post table",
+    false
+  ],
+  [
+    365,
+    "How to Fix Broken Handles in FontForge",
+    "Importing vector artwork from software like Adobe Illustrator or Inkscape into FontForge frequently causes control handle anomalies, including retracted Bézier handles, misclassified curve points, and extreme handle misalignment. This guide covers direct,",
+    false
+  ],
+  [
+    364,
+    "How to Fix Overlapping Path Holes in FontForge",
+    "When designing glyphs in FontForge, intersecting contours or paths with conflicting directions often cause the rendering engine to create unintended transparent holes. This issue is typically caused by the font’s fill rule interpreting overlapping vector",
+    false
+  ],
+  [
+    363,
+    "Why FontForge Reports a Bounding Box Mismatch",
+    "A bounding box mismatch in FontForge occurs when the actual geometric dimensions of a font’s glyph contours do not align with the coordinate limits defined in the font's metadata tables. This validation warning indicates that one or more glyphs extend bey",
+    false
+  ],
+  [
+    362,
+    "Troubleshooting Bold Weight Rendering in FontForge",
+    "When an exported bold font renders with the wrong thickness, looks identical to the regular weight, or triggers artificial \"faux bolding\" in operating systems and applications, the issue typically stems from misconfigured metadata tables or path geometry",
+    false
+  ],
+  [
+    361,
+    "Why FontForge Simplify Causes Jagged Curves",
+    "Running the Simplify command in FontForge is a standard way to reduce redundant control points along glyph contours, but it frequently results in jagged, uneven, or flattened curves. This issue typically stems from overly aggressive tolerance settings, co",
+    false
+  ],
+  [
+    360,
+    "Fix Missing Metrics for New Glyphs in FontForge",
+    "When you add new glyphs or import vector outlines into FontForge, they often lack proper advance widths and side bearings, causing characters to overlap or display incorrectly. This guide explains how to restore and configure missing metric values for new",
+    false
+  ],
+  [
+    359,
+    "Fix FontForge OpenType Features Ignored by Software",
+    "Designing custom typography in FontForge and exporting it only to find that your ligatures, kerning, or alternate glyphs do not work in target applications is a common issue. This problem typically stems from improper script and language tagging, missing",
+    false
+  ],
+  [
+    358,
+    "How to Fix Unencoded Glyphs in FontForge",
+    "This guide explains how to identify and resolve unencoded glyph warnings in FontForge. Unencoded glyphs are glyph outlines that exist within your font file without an assigned Unicode code point or character slot, frequently appearing after importing SVGs",
+    false
+  ],
+  [
+    357,
+    "FontForge Freezing During Python Batch Scripts",
+    "When executing large batch operations in FontForge using Python, the program can become unresponsive due to memory leaks in its underlying C architecture, hidden graphical user interface prompts, or corrupt glyph outlines causing algorithmic deadlocks. Th",
+    false
+  ],
+  [
+    356,
+    "Fix FontForge Memory Leaks and Crashes with Large Fonts",
+    "Processing large font files—such as CJK fonts, complex OpenType variations, or extensive icon sets—frequently pushes FontForge beyond its operational limits, leading to out-of-memory errors, segmentation faults, and unexpected crashes. This guide provides",
+    false
+  ],
+  [
+    355,
+    "How to Fix FontForge Sticked Points Warning",
+    "The \"Sticked points\" warning in FontForge indicates an error where two or more control handles or path nodes occupy the exact same spatial coordinates, creating collapsed Bézier paths. This article outlines why this geometry error happens during font deve",
+    false
+  ],
+  [
+    354,
+    "How to Fix Duplicate Points in FontForge Glyphs",
+    "Duplicate point errors occur when two or more nodes occupy the exact same coordinate on a glyph's outline, causing rendering glitches, export failures, and validation warnings. This guide provides a straightforward walkthrough on identifying and fixing du",
+    false
+  ],
+  [
+    353,
+    "What Does FontForge Validate Font Check?",
+    "The Validate Font command in FontForge is a diagnostic tool that scans a typeface for technical errors, geometry flaws, and specification violations before compilation. This article explains the primary tests the validation tool performs, including checks",
+    false
+  ],
+  [
+    352,
+    "Fix FontForge Rendering Artifacts at Small Sizes",
+    "Rendering artifacts at small point sizes usually occur when a font's vector paths are improperly aligned to the pixel grid, suffer from winding order errors, or lack proper hinting instructions. This guide outlines how to identify and resolve rasterizatio",
+    false
+  ],
+  [
+    351,
+    "Fix Missing Glyphs When Generating TTF in FontForge",
+    "When exporting a font project to TrueType Font (TTF) format in FontForge, designers frequently find that specific glyphs present in the workspace vanish in the final generated file. This issue typically stems from missing Unicode values, improper contour",
+    false
+  ],
+  [
+    350,
+    "Fix Contour Winding Direction in FontForge",
+    "In digital typography, incorrect contour winding direction causes cutouts and holes in characters (such as the center of an \"O\" or \"B\") to fill in with black or disappear entirely during rendering. This issue occurs when the path directions of outer and i",
+    false
+  ],
+  [
+    349,
+    "How to Fix Points Too Close Together in FontForge",
+    "The \"points too close together\" warning in FontForge occurs when vector nodes or control handles sit within an imperceptible distance of one another, often leading to rasterization glitches, validation failures, and bloated font files. This guide explains",
+    false
+  ],
+  [
+    348,
+    "How to Fix Corrupted SFNT Table Errors in FontForge",
+    "Corrupted SFNT table errors in FontForge typically indicate malformed table lengths, invalid checksums, or unexpected OpenType/TrueType data structures inside the font file. This guide explains why these errors occur and provides actionable, step-by-step",
+    false
+  ],
+  [
+    347,
+    "Why FontForge Shows Red Spline Point Warnings",
+    "FontForge displays red warning highlights on spline points to alert designers to geometry, coordinate, or validation issues that can cause rendering defects or font compilation errors. This article explains the primary causes of these red indicators—such",
+    false
+  ],
+  [
+    346,
+    "Fix Missing Reference Glyph Errors in FontForge",
+    "Missing reference glyph errors in FontForge occur when a composite glyph depends on a base character or accent that has been deleted, emptied, or corrupted. This guide explains why this error happens and provides direct steps to locate the affected glyphs",
+    false
+  ],
+  [
+    345,
+    "FontForge Generation Failure: Bad Point Directions",
+    "When generating a font in FontForge, the process can fail if glyph outlines contain improper path directions or invalid contour orientations. Font rendering engines and output formats rely on consistent path winding directions—specifically clockwise versu",
+    false
+  ],
+  [
+    344,
+    "How to Remove Overlapping Contours in FontForge",
+    "Overlapping contours are a common byproduct of designing glyphs using modular components, intersecting strokes, or imported vector graphics. In FontForge, leaving these overlapping paths unmerged can lead to rendering errors, invalid font files, and impro",
+    false
+  ],
+  [
+    343,
+    "FontForge Non-Integral Coordinates Warning Explained",
+    "FontForge flags non-integral coordinates as a warning primarily because traditional font formats, rendering engines, and hinting mechanisms rely on discrete integer grids. When glyph points or control handles possess fractional coordinates rather than who",
+    false
+  ],
+  [
+    342,
+    "Fix Self-Intersecting Contours in FontForge",
+    "Self-intersecting contour errors in FontForge occur when a glyph's outline crosses over itself, creating rendering glitches and validation failures in modern font engines. This guide provides quick, actionable methods to resolve these errors using FontFor",
+    false
+  ],
+  [
+    341,
+    "FontForge Find Problems Tool Explained",
+    "The Find Problems tool in FontForge is an automated diagnostic utility designed to scan glyphs and identify design flaws, geometry errors, and technical inconsistencies before generating a final font file. Accessing this tool allows type designers to catc",
+    false
+  ],
+  [
+    340,
+    "How to Validate Font Naming Tables in FontForge",
+    "Verifying that font naming tables comply with industry standards is essential for ensuring your font installs, renders, and functions predictably across different operating systems and applications. This guide explains how to inspect OpenType and TrueType",
+    false
+  ],
+  [
+    339,
+    "Add Custom Metadata to Font Headers in FontForge",
+    "FontForge allows you to modify and extend font metadata, but your ability to add completely custom metadata tags to a font header depends on whether you are working within FontForge's native format or exporting to standardized formats like OpenType (OTF)",
+    false
+  ],
+  [
+    338,
+    "How to Set Manufacturer Name in FontForge",
+    "Configuring the Manufacturer Name field in FontForge allows you to embed your foundry or company name directly into a font's metadata. This guide walks you through navigating FontForge's Font Info settings, locating the OpenType/TrueType name records, mod",
+    false
+  ],
+  [
+    337,
+    "How to Add a Trademark Notice in FontForge",
+    "Adding a trademark notice to your font ensures that your brand identity, font family name, and unique stylistic titles are legally associated with your ownership. In FontForge, this metadata is embedded directly into the font's internal naming tables, whi",
+    false
+  ],
+  [
+    336,
+    "FontForge Font Info Names Dialog Structure",
+    "This article provides a comprehensive overview of the naming structures within the Font Info dialog in FontForge. It covers the layout and function of both the PostScript Names (PS Names) and TrueType Names (TTF Names) sections, detailing how standard met",
+    false
+  ],
+  [
+    335,
+    "How to Check Name Table IDs in FontForge",
+    "The OpenType and TrueType name table stores essential metadata, such as font family names, style variants, copyright notices, and designer credits across various operating systems. Checking the compatibility of these Name Table IDs in FontForge ensures th",
+    false
+  ],
+  [
+    334,
+    "Duplicate PostScript Names in FontForge",
+    "Duplicate PostScript glyph names violate core font formatting specifications, causing FontForge to raise validation warnings during the generation process. If these duplicates are ignored, FontForge may automatically rename conflicting glyphs, or it will",
+    false
+  ],
+  [
+    333,
+    "Batch Update Font Metadata Using FontForge",
+    "Yes, you can automate metadata updates across multiple font files using FontForge's built-in Python scripting engine. This guide explains how to programmatically batch-process font files to update key metadata fields—such as family names, copyright notice",
+    false
+  ],
+  [
+    332,
+    "How to Edit Copyright Notice in FontForge",
+    "Editing the copyright notice in FontForge ensures your font files contain legally compliant metadata recognized across all major operating systems. This guide details how to navigate FontForge’s metadata settings, the proper syntax required for standard l",
+    false
+  ],
+  [
+    331,
+    "Set Font Family Names for Windows and Mac in FontForge",
+    "Cross-platform font naming discrepancies occur because Windows and macOS rely on different naming tables within the font binary to categorize and group font families. While macOS primarily looks at PostScript and typographic family definitions, Windows ap",
+    false
+  ],
+  [
+    330,
+    "FontForge Preferred Family and Subfamily Explained",
+    "The Preferred Family and Preferred Subfamily fields in FontForge allow font designers to group large, multi-weight font families under a single family name in modern software while maintaining backward compatibility with legacy applications. This guide ex",
+    false
+  ],
+  [
+    329,
+    "How to Change Vendor ID in FontForge",
+    "This guide explains how to locate and modify the four-letter font vendor ID (achVendID) in FontForge. Changing this identifier ensures your font file correctly attributes the foundry or creator in the OpenType/TrueType OS/2 table. The following steps show",
+    false
+  ],
+  [
+    328,
+    "How to Set a License URL in FontForge Metadata",
+    "You can set a license URL in FontForge's metadata tables by accessing the OpenType name table settings within the application. OpenType specifications designate Name ID 14 specifically for the License Info URL, and FontForge allows you to define this reco",
+    false
+  ],
+  [
+    327,
+    "How to Add Font Notes and Description in FontForge",
+    "Adding metadata, designer credits, and descriptions to a font in FontForge ensures your work is properly attributed and documented when installed on any operating system. This guide walks you through navigating FontForge's Font Info settings to insert des",
+    false
+  ],
+  [
+    326,
+    "Adobe Unique Identifier Format for FontForge",
+    "When creating or modifying fonts in FontForge, configuring the Unique Font Identifier (Name ID 3 in the OpenType name table) is essential to avoid system conflicts and caching errors. Adobe defines a standardized string format for this field, which FontFo",
+    false
+  ],
+  [
+    325,
+    "Checking Font Metadata Naming Errors in FontForge",
+    "This guide explains how to use FontForge's built-in validation and diagnostic tools to identify and resolve font naming conflicts, metadata discrepancies, and OpenType specification violations. By utilizing the automated FontForge validation tool alongsid",
+    false
+  ],
+  [
+    324,
+    "OpenType Name Table Requirements in FontForge",
+    "Configuring a valid OpenType font requires meeting the structural naming standards defined by the OpenType specification to ensure compatibility across operating systems, design applications, and web browsers. In FontForge, these values are managed primar",
+    false
+  ],
+  [
+    323,
+    "Import Metadata from an Existing Font in FontForge",
+    "Yes, you can import and transfer metadata from an existing font into FontForge, though the program handles the process through specific workflows rather than a single dedicated \"import metadata\" button. When you open any supported font format (such as TTF",
+    false
+  ],
+  [
+    322,
+    "How to Reset Font Metadata in FontForge",
+    "Clearing or resetting metadata in FontForge is essential when preparing fonts for public release, removing personal author information, or stripping legacy data from imported font files. While FontForge does not feature a single \"reset all\" button due to",
+    false
+  ],
+  [
+    321,
+    "FontForge SubFamily Name Field Explained",
+    "This article examines the purpose and importance of the SubFamily name field in FontForge, a key parameter within the OpenType name table. It explains how this metadata field defines a font's specific style variant—such as Regular, Bold, or Italic—and how",
+    false
+  ],
+  [
+    320,
+    "How to Edit the Unique Font Identifier in FontForge",
+    "The Unique Font Identifier distinguishes a specific font release from other versions and prevents system-level font caching conflicts. In FontForge, this identifier—commonly stored as Name ID 3 in OpenType tables or as a UniqueID in PostScript data—can be",
+    false
+  ],
+  [
+    319,
+    "FontForge Font Naming for Bold and Italic Styles",
+    "This guide provides an overview of the font naming conventions required in FontForge to build functional Bold, Italic, and Bold Italic styles. Properly configuring these fields ensures that operating systems and design software recognize the fonts as a co",
+    false
+  ],
+  [
+    318,
+    "How to Localize Font Names in FontForge",
+    "Localizing font metadata allows your font's name, style, and copyright information to appear natively in different languages across various operating systems. This guide walks you through the step-by-step process of accessing the TrueType/OpenType Name ta",
+    false
+  ],
+  [
+    317,
+    "Understanding the TTF Names Table in FontForge",
+    "The TTF Names table in FontForge serves as the central repository for critical font metadata, defining how operating systems and software applications identify, group, and display a font. This table contains essential information such as the font family n",
+    false
+  ],
+  [
+    316,
+    "How to Set Font Version Number in FontForge",
+    "Updating the font version number in FontForge is essential for managing releases, tracking revisions, and preventing font-cache conflicts on user systems. This guide explains how to navigate FontForge’s metadata settings to accurately update both the huma",
+    false
+  ],
+  [
+    315,
+    "Update Designer and Vendor URL in FontForge",
+    "Updating the designer and vendor URLs in FontForge is essential for embedding proper metadata and creator attribution directly into OpenType and TrueType fonts. This guide outlines the exact steps to locate and modify the OpenType Name Table fields respon",
+    false
+  ],
+  [
+    314,
+    "How to Add Copyright and Trademark in FontForge",
+    "Adding copyright and trademark notices to a font file embeds essential legal metadata directly into the software, establishing ownership and protecting intellectual property. In FontForge, this information is managed through the Font Info window across sp",
+    false
+  ],
+  [
+    313,
+    "Family Name, Full Name, and Unique ID in FontForge",
+    "When designing or modifying a font in FontForge, correctly configuring the font's metadata is crucial for cross-platform compatibility and proper display in software menus. Navigating to Element > Font Info > PS Names reveals several identifying fields th",
+    false
+  ],
+  [
+    312,
+    "How to Change PostScript Font Name in FontForge",
+    "Changing the PostScript font name in FontForge is essential for ensuring your font identifies properly across various operating systems, design applications, and PDF documents. This guide provides a quick, step-by-step walkthrough explaining where to acce",
+    false
+  ],
+  [
+    311,
+    "How to Change Font Family Name in FontForge",
+    "Changing the font family name in FontForge requires editing the font’s internal metadata rather than simply renaming the file on your computer. This guide provides a straightforward walkthrough on navigating to the Font Info dialog, updating both the Post",
+    false
+  ],
+  [
+    310,
+    "FontForge Python 3 vs Python 2 Limitations",
+    "FontForge's integration with Python enables automated, programmatic font generation and editing, but transitioning from Python 2 to Python 3 introduced notable technical friction. This article examines the core limitations, architectural discrepancies, an",
+    false
+  ],
+  [
+    309,
+    "Rotate All Glyphs by Angle in FontForge Python",
+    "This guide explains how to batch-rotate all glyph outlines by a specific angle using the FontForge Python module. By leveraging FontForge's scripting interface alongside the psMat transformation module, you can programmatically apply affine transformation",
+    false
+  ],
+  [
+    308,
+    "Create Overlapping Shapes with FontForge Python",
+    "Yes, you can create overlapping compound shapes using Python scripts in FontForge. FontForge provides a comprehensive Python API that enables you to programmatically draw vector paths, layer multiple intersecting contours within a single glyph, merge shap",
+    false
+  ],
+  [
+    307,
+    "How to Extract Vector Coordinates in FontForge Python",
+    "Extracting vector path coordinates from glyphs is a common task in font engineering, procedural geometry, and digital fabrication. FontForge provides a built-in Python module that offers full programmatic access to glyph outlines, contours, and individual",
+    false
+  ],
+  [
+    306,
+    "How to Check FontForge Python Module Version",
+    "Checking the installed version of the FontForge Python extension requires only a few basic commands. This guide provides quick, practical methods to determine your FontForge module version directly through Python code, command-line one-liners, and system",
+    false
+  ],
+  [
+    305,
+    "Subset a Font from a Text File with FontForge Python",
+    "Yes, you can generate a font subset based on a text file using FontForge's Python module. This process works by extracting unique characters from your source text file, opening the target font in FontForge, selecting only the glyphs corresponding to those",
+    false
+  ],
+  [
+    304,
+    "Change Em Square Size in FontForge Python",
+    "This article explains how to programmatically adjust the em square (units per em) of a font using FontForge's Python scripting module. You will learn how to scale the em size proportionally—which resizes the glyph outlines along with the font metrics—as w",
+    false
+  ],
+  [
+    303,
+    "Copy Glyphs Between Fonts Using FontForge Python",
+    "This guide explains how to programmatically transfer glyph outlines, metrics, and references between distinct font files using FontForge's Python module. By leveraging the internal clipboard mechanism or manipulating glyph layers directly, you can automat",
+    false
+  ],
+  [
+    302,
+    "How to Auto-Hint All Glyphs in FontForge with Python",
+    "This article explains how to automate the auto-hinting process for an entire font using FontForge's Python scripting module. By writing a short, standalone script, you can load a font, select every glyph, calculate optimized PostScript or TrueType hinting",
+    false
+  ],
+  [
+    301,
+    "Custom Validation Checks with FontForge Python",
+    "FontForge provides a robust Python scripting interface that allows type designers and font developers to automate testing and build custom validation checks. By querying glyph geometry, font metrics, metadata, and OpenType tables directly through the font",
+    false
+  ],
+  [
+    300,
+    "Update Font Version Strings Using FontForge Python",
+    "Updating font version strings is essential for tracking font releases, managing typography projects, and avoiding system font cache conflicts. This guide provides a direct, scriptable method using FontForge's Python API to automate the modification of fon",
+    false
+  ],
+  [
+    299,
+    "FontForge Python Extension API Documentation",
+    "FontForge provides a dedicated Python extension that allows users to programmatically create, edit, inspect, and convert font files. This guide details the primary documentation sources available for navigating the FontForge Python extension API, includin",
+    false
+  ],
+  [
+    298,
+    "Execute Shell Commands in FontForge Python Scripts",
+    "Executing external shell commands from within a FontForge Python script is straightforward because FontForge includes a full-featured standard Python runtime. By leveraging Python's built-in subprocess module, you can invoke command-line utilities, run bu",
+    false
+  ],
+  [
+    297,
+    "Retrieve Unicode Values in FontForge with Python",
+    "FontForge includes a native Python scripting module that allows you to inspect, modify, and automate font generation tasks. When working with glyph metadata, you can easily inspect character encodings through specific glyph attributes. This guide explains",
+    false
+  ],
+  [
+    296,
+    "Create a Font from Scratch Using FontForge Python",
+    "You can build a complete, production-ready font from scratch using only Python scripting in FontForge. FontForge provides a dedicated Python module that exposes virtually all of its core functionality, allowing you to generate new font files, define font",
+    false
+  ],
+  [
+    295,
+    "Add Anchor Points with FontForge Python",
+    "This article explains how to programmatically define and assign OpenType anchor points to glyphs using the FontForge Python module (fontforge). You will learn the required prerequisites, including setting up GPOS lookups and anchor classes, followed by th",
+    false
+  ],
+  [
+    294,
+    "Check If a Glyph Is Empty in FontForge Python",
+    "This guide explains how to determine whether a glyph contains no visual vector data using FontForge's Python scripting interface. Checking for empty glyphs is essential when auditing fonts, cleaning up unused unicode slots, or automating font generation p",
+    false
+  ],
+  [
+    293,
+    "Manipulating Layer Data with Python in FontForge",
+    "Yes, you can fully manipulate layer data using Python in FontForge. FontForge provides robust Python bindings that expose both font-level layer definitions and individual glyph-level layer contents. This guide outlines how the layer architecture works, ho",
+    false
+  ],
+  [
+    292,
+    "Bulk Export Web Fonts Using FontForge Python",
+    "This guide provides a straightforward method for bulk converting desktop font formats (such as TTF and OTF) into modern web formats (WOFF and WOFF2) using FontForge's Python scripting module. By leveraging automated scripting, you can process entire direc",
+    false
+  ],
+  [
+    291,
+    "Query Glyph Bounding Boxes in FontForge Python",
+    "This guide explains how to query glyph bounding boxes using the FontForge Python extension. By loading a font and accessing individual glyph objects, you can retrieve coordinate limits representing the visual boundaries of any character using the built-in",
+    false
+  ],
+  [
+    290,
+    "Automate Kerning in FontForge Using Python",
+    "Yes, you can automate kerning adjustments in FontForge using its built-in Python scripting environment. FontForge exposes a powerful Python module (fontforge) that allows you to manipulate glyph metrics, create OpenType kerning features, and assign specif",
+    false
+  ],
+  [
+    289,
+    "Handling Errors in FontForge Python Scripts",
+    "Automating font operations with FontForge's Python extension often leads to runtime failures caused by corrupt font files, missing glyphs, or invalid OpenType tables. This article explains how to effectively catch and manage exceptions in FontForge script",
+    false
+  ],
+  [
+    288,
+    "How to Import FontForge in an External Script",
+    "This guide explains how to import and use the FontForge module within external Python scripts. While the syntax itself is straightforward, successfully running the script requires ensuring that your Python environment can locate the FontForge C-extension",
+    false
+  ],
+  [
+    287,
+    "How to Scale All Glyphs in FontForge Using Python",
+    "Scaling every glyph in a font manually is tedious and error-prone, but FontForge’s built-in Python scripting environment allows you to automate this task entirely. By iterating through the font’s glyph collection, applying a transformation matrix from the",
+    false
+  ],
+  [
+    286,
+    "Check Contour Intersections in FontForge with Python",
+    "This article explains how to programmatically detect self-intersecting and overlapping contours in font glyphs using FontForge’s built-in Python scripting environment. You will learn how to use native methods like glyph.selfIntersects() to identify offend",
+    false
+  ],
+  [
+    285,
+    "Automating OpenType Features in FontForge with Python",
+    "Automating OpenType feature insertion is fully supported in FontForge through its native Python extension. By leveraging the fontforge Python module, type designers and developers can programmatically define layout tables, create lookups, bind feature tag",
+    false
+  ],
+  [
+    284,
+    "How to Delete a Glyph in FontForge Using Python",
+    "This guide explains how to programmatically remove or clear a glyph from a font file using FontForge’s Python scripting API. Whether you need to strip specific characters from a web font, clean up unwanted contours, or automate batch font modifications, F",
+    false
+  ],
+  [
+    283,
+    "Access Font Metadata Using FontForge Python",
+    "This guide explains how to programmatically extract font metadata—such as the family name, PostScript name, weight, and version—using the FontForge Python module. By leveraging FontForge's built-in Python scripting capabilities, you can automate font insp",
+    false
+  ],
+  [
+    282,
+    "Run Interactive Python in FontForge",
+    "FontForge does not feature a docked, interactive graphical Python REPL directly embedded inside its main user interface, but you can still run Python interactively with FontForge's engine. Depending on your workflow, you can either execute Python commands",
+    false
+  ],
+  [
+    281,
+    "How to Run FontForge Python Scripts from the Command Line",
+    "This guide explains how to execute FontForge Python scripts directly from your terminal or command prompt. Running scripts via the command-line interface (CLI) allows you to automate font conversions, glyph modifications, and metric adjustments in a headl",
+    false
+  ],
+  [
+    280,
+    "How to Save a Font File in FontForge Using Python",
+    "This guide explains how to save and export font files using the Python scripting module in FontForge. Depending on whether you want to save your project in the native FontForge format or export it as a standard font like TrueType or OpenType, FontForge pr",
+    false
+  ],
+  [
+    279,
+    "How to Set Sidebearings in FontForge Using Python",
+    "Setting sidebearings programmatically in FontForge allows type designers to automate the spacing process, apply uniform metrics, and batch-process entire font families efficiently. This article provides a direct guide to accessing glyphs and adjusting Lef",
+    false
+  ],
+  [
+    278,
+    "Add a New Glyph to a Font in FontForge with Python",
+    "FontForge provides a built-in Python module that allows you to automate font manipulation, including programmatically creating and adding new glyphs to existing or new fonts. This guide outlines the steps required to open a font file, create an empty glyp",
+    false
+  ],
+  [
+    277,
+    "Modify Outline Contours with FontForge Python",
+    "Yes, you can modify outline contours programmatically using FontForge's built-in Python module. The scripting interface provides granular access to font structures, allowing you to traverse glyph layers, manipulate existing contour points, generate new ve",
+    false
+  ],
+  [
+    276,
+    "Get Active Glyph in FontForge Python",
+    "This guide explains how to access the currently active glyph object when writing Python scripts within FontForge. Depending on your workflow, you can retrieve the glyph directly using FontForge's built-in GUI inspection methods or extract it through the a",
+    false
+  ],
+  [
+    275,
+    "Iterate Through Glyphs Using FontForge Python",
+    "This guide explains how to iterate through all the glyphs in a font file using FontForge’s built-in Python module (fontforge). You will learn the primary method for accessing glyph objects, how to read glyph attributes during iteration, and how to apply b",
+    false
+  ],
+  [
+    274,
+    "Batch Convert Fonts Using FontForge and Python",
+    "Yes, you can write a Python script to batch convert font formats using FontForge. FontForge includes built-in Python bindings that expose its core font manipulation engine, allowing you to automate the conversion of multiple font files between formats suc",
+    false
+  ],
+  [
+    273,
+    "How to Open a Font File with FontForge Python",
+    "This guide explains how to programmatically open and load a font file using Python within the FontForge environment. You will learn the required fontforge module methods, see a direct code example, and understand how to properly execute the script from th",
+    false
+  ],
+  [
+    272,
+    "FontForge Python Module Guide",
+    "This article provides an overview of the Python module used to interact with FontForge, identifying its official name, installation methods, and practical applications. It covers how developers can use the module to automate font generation, edit typograp",
+    false
+  ],
+  [
+    271,
+    "How to Run a Python Script in FontForge",
+    "Running Python scripts in FontForge allows you to automate repetitive type design tasks, generate font files, and manipulate glyph data programmatically. FontForge comes with its own embedded Python interpreter and API, which means you can execute Python",
+    false
+  ],
+  [
+    270,
+    "Automate FontForge Font Generation via CLI",
+    "FontForge allows complete automation of font generation through its command-line interface. While FontForge does not use dedicated flags for every single export setting (such as --export-ttf), it provides flags that allow you to execute inline commands or",
+    false
+  ],
+  [
+    269,
+    "Export Font Family Hierarchy from FontForge",
+    "Exporting an entire font family hierarchy from FontForge requires configuring standardized naming metadata across all your font files, correctly mapping style flags, and exporting each style so operating systems recognize them as a single family. Because",
+    false
+  ],
+  [
+    268,
+    "FontForge SFNT Structure Format Specifications",
+    "FontForge enforces strict structural rules when generating and parsing Spline Font Numeric Table (SFNT) containers, which serve as the foundation for modern TrueType and OpenType fonts. This article details the core format specifications FontForge mandate",
+    false
+  ],
+  [
+    267,
+    "Fix PostScript Name Collisions in FontForge",
+    "PostScript name collisions occur during font export when two or more glyphs in your font project share the exact same PostScript glyph name. Because the PostScript and OpenType formats require every glyph to have a unique identifier, FontForge halts the g",
+    false
+  ],
+  [
+    266,
+    "Can FontForge Export Variable Fonts?",
+    "FontForge is a widely used open-source font editor, but its support for modern OpenType variable fonts is a frequent source of confusion for type designers. While FontForge has historical support for interpolation technologies like Type 1 Multiple Master",
+    false
+  ],
+  [
+    265,
+    "How to Suppress Generation Warnings in FontForge",
+    "When generating font files in FontForge, the application frequently displays warnings regarding non-integral coordinates, overlapping contours, or missing metadata. While these alerts help catch structural errors before finalizing a typeface, they can dis",
+    false
+  ],
+  [
+    264,
+    "Best FontForge Format for Cross-Platform Fonts",
+    "When exporting typefaces using FontForge, choosing the correct file format ensures your font displays and functions reliably across Windows, macOS, Linux, iOS, and Android. This article identifies the OpenType TrueType format (.ttf) as the most reliable e",
+    false
+  ],
+  [
+    263,
+    "How to Export a Symbol Font from FontForge",
+    "Exporting a symbol or icon font in FontForge requires specific configuration to ensure that non-alphanumeric glyphs render reliably across various operating systems, design applications, and web browsers. This guide covers how to set the proper font encod",
+    false
+  ],
+  [
+    262,
+    "Convert Mac Font Suitcases with FontForge",
+    "FontForge is capable of converting legacy Macintosh font suitcase files into modern, cross-platform formats such as OpenType (OTF) and TrueType (TTF). Although the software natively supports these vintage formats, a successful conversion depends on preser",
+    false
+  ],
+  [
+    261,
+    "Import Multi-Layered Vectors into FontForge",
+    "Importing multi-layered vector graphics into FontForge allows type designers to create complex glyphs, maintain reference sketches, or build chromatic (multi-color) OpenType fonts. This guide explains how to properly configure FontForge’s layer settings,",
+    false
+  ],
+  [
+    260,
+    "Prepare Fonts for the Web Using FontForge",
+    "Preparing a font for web distribution using FontForge involves cleaning vector outlines, validating font metrics, standardizing metadata, and exporting the glyphs into compressed, web-compatible formats like WOFF and WOFF2. Following these steps ensures y",
+    false
+  ],
+  [
+    259,
+    "Export Font Tables to XML or Text in FontForge",
+    "This guide explains how to extract font tables as raw text or XML using FontForge. While FontForge is primarily an outline editor, you can export font table data into human-readable formats by saving the font as a native Spline Font Database (SFD) text fi",
+    false
+  ],
+  [
+    258,
+    "Can FontForge Edit Apple Advanced Typography Fonts?",
+    "FontForge provides robust native support for opening, modifying, and generating fonts that utilize Apple Advanced Typography (AAT), originally known as TrueType GX. While modern font development heavily favors OpenType Layout (OTL), FontForge remains one",
+    false
+  ],
+  [
+    257,
+    "Fix FontForge Export Format Conflicts",
+    "Exporting fonts from FontForge often triggers errors or warnings when internal metadata, outline types, or table structures clash with the requirements of your target output format. Resolving these conflicting format specifications requires identifying wh",
+    false
+  ],
+  [
+    256,
+    "FontForge Generate Font Options Explained",
+    "The Generate Options dialog in FontForge is the configuration hub accessed during the font export process, allowing designers to control the precise technical specifications of the resulting font binary. This article provides a focused breakdown of the di",
+    false
+  ],
+  [
+    255,
+    "Export FontForge Character Maps as HTML",
+    "FontForge does not include a direct one-click button to export character maps to HTML, but you can quickly generate comprehensive, interactive HTML documentation using FontForge's built-in Python scripting engine. This guide explains how to extract glyph",
+    false
+  ],
+  [
+    254,
+    "Can FontForge Import Fonts Embedded in a PDF?",
+    "FontForge is capable of directly opening PDF files and extracting the fonts embedded within them. While this built-in feature allows users to inspect and recover typefaces stored in a document, the completeness and usability of the extracted font depend h",
+    false
+  ],
+  [
+    253,
+    "How to Export a Font Subset Using FontForge",
+    "Subsetting a font allows you to strip away unused glyphs, significantly reducing file sizes for faster web performance and cleaner font management. This guide outlines the straightforward process of importing your font into the free, open-source FontForge",
+    false
+  ],
+  [
+    252,
+    "FontForge Font Compression Options Explained",
+    "FontForge offers several compression methods and format-specific settings to reduce font file sizes during the export process. When exporting through the Generate Fonts interface, compression is achieved either through dedicated compressed web font wrappe",
+    false
+  ],
+  [
+    251,
+    "How to Export Web Compatible WOFF2 in FontForge",
+    "Exporting web-compatible WOFF2 files from FontForge requires preparing clean vector outlines, setting consistent vertical metrics, validating the glyph set, and configuring the correct output options. By resolving geometry errors, standardizing metadata,",
+    false
+  ],
+  [
+    250,
+    "Can FontForge Export CFF or TrueType Outlines?",
+    "FontForge fully supports exporting fonts with both Compact Font Format (CFF) and TrueType outlines. This guide explains how FontForge handles cubic and quadratic curve formats, how to choose between them, and the direct steps required to generate .otf (CF",
+    false
+  ],
+  [
+    249,
+    "How to Embed Copyright Notices in FontForge",
+    "Embedding copyright notices in your font files ensures that your intellectual property and licensing terms remain attached to the font software wherever it is installed. This guide provides a straightforward walkthrough on how to input copyright, trademar",
+    false
+  ],
+  [
+    248,
+    "FontForge Maximum File Size Limit Explained",
+    "FontForge does not enforce an arbitrary or hardcoded maximum file size limit when generating fonts. Instead, the final output size of any font exported from the software is bounded by the architectural limits of the font formats themselves, available syst",
+    false
+  ],
+  [
+    247,
+    "How to Import Illustrator Artwork into FontForge",
+    "Importing your vector designs from Adobe Illustrator directly into FontForge allows you to transform custom lettering and icons into functional, scalable font files. This guide details the essential preparation steps in Illustrator, the direct copy-and-pa",
+    false
+  ],
+  [
+    246,
+    "How to Export Font Metrics from FontForge",
+    "FontForge allows you to export various font metrics files, including Adobe Font Metrics (AFM), Printer Font Metrics (PFM), and TeX Font Metrics (TFM). This guide provides a direct, step-by-step walkthrough on how to generate these metric files alongside o",
+    false
+  ],
+  [
+    245,
+    "Handling Warnings When Generating Fonts in FontForge",
+    "When generating fonts in FontForge, users frequently encounter warning dialogs flagging validation errors such as overlapping paths, missing extrema, or incorrect contour directions. While some warnings can break font rendering across different operating",
+    false
+  ],
+  [
+    244,
+    "FontForge Settings Before Generating Production Fonts",
+    "Before exporting a final production font in FontForge, you must configure critical technical parameters to ensure visual integrity, correct rendering, and cross-platform compatibility. This guide covers the essential pre-flight checklist, including font m",
+    false
+  ],
+  [
+    243,
+    "How to Export a Bitmap Font in FontForge",
+    "Exporting a bitmap font in FontForge involves generating specific pixel sizes known as bitmap strikes and choosing a file format that supports raster data. While FontForge primarily functions as an outline vector editor, its built-in bitmap generation too",
+    false
+  ],
+  [
+    242,
+    "Convert Type 1 Fonts to OpenType with FontForge",
+    "FontForge is a free, open-source font editor that fully supports converting legacy PostScript Type 1 fonts into modern OpenType formats. Because major operating systems and applications like Adobe Creative Cloud have deprecated Type 1 font support, migrat",
+    false
+  ],
+  [
+    241,
+    "How to Save a FontForge Database File",
+    "Saving your work in FontForge as a database file ensures that all font metadata, layers, guides, and kerning pairs are preserved in their native, editable format. Unlike standard font files such as TTF or OTF, FontForge uses the Spline Font Database forma",
+    false
+  ],
+  [
+    240,
+    "FontForge Background Template File Formats",
+    "FontForge allows type designers to import reference artwork directly into a glyph's background layer to assist with manual tracing or automated vectorization. This guide outlines the specific vector, raster, and font file formats accepted by FontForge for",
+    false
+  ],
+  [
+    239,
+    "How to Export Type 1 Fonts from FontForge",
+    "Exporting a font as a Type 1 PostScript font in FontForge involves preparing your glyph outlines, verifying standard PostScript font metrics, and using the \"Generate Fonts\" dialog to output the files. This guide walks you through the exact steps to config",
+    false
+  ],
+  [
+    238,
+    "Batch Export FontForge Glyphs as Images",
+    "Yes, you can batch export all glyphs as images using FontForge, though doing so requires utilizing FontForge’s built-in scripting engine rather than a single menu button in the graphical interface. By running a simple Python script within FontForge, you c",
+    false
+  ],
+  [
+    237,
+    "Export Individual Glyphs as SVG in FontForge",
+    "Exporting individual glyphs as SVG files from FontForge allows you to use your font designs in vector graphic editors, web development, or digital design projects. This guide covers how to export a single glyph directly through FontForge's graphical inter",
+    false
+  ],
+  [
+    236,
+    "FontForge Native Project File Format Explained",
+    "This article provides a concise overview of the native project file format used by FontForge, the open-source font editor. While FontForge can export to standard delivery formats like TrueType (TTF) and OpenType (OTF), it relies on its own proprietary for",
+    false
+  ],
+  [
+    235,
+    "How to Import Existing Fonts into FontForge",
+    "Importing an existing font into FontForge allows you to modify glyphs, adjust metrics, add new characters, or convert between different font formats. This guide outlines the exact steps to open your existing font files—such as TrueType (TTF), OpenType (OT",
+    false
+  ],
+  [
+    234,
+    "Can FontForge Export Fonts in SVG Format?",
+    "Yes, FontForge can export fonts directly into the SVG font format. This guide outlines the straightforward process for generating legacy SVG fonts using FontForge, explains the technical steps required within the software, and clarifies the difference bet",
+    false
+  ],
+  [
+    233,
+    "How to Export WOFF and WOFF2 from FontForge",
+    "Exporting web font formats like WOFF and WOFF2 directly from FontForge allows designers and developers to prepare custom typefaces for fast, modern web rendering. This guide details the step-by-step process of configuring and generating these compressed f",
+    false
+  ],
+  [
+    232,
+    "Generating TrueType vs OpenType in FontForge",
+    "When exporting a font in FontForge, choosing between TrueType (TTF) and OpenType (OTF/CFF) determines how glyph curves are mathematically represented, how hinting instructions are stored, and how the outlines are converted during generation. While modern",
+    false
+  ],
+  [
+    231,
+    "How to Generate a TrueType Font in FontForge",
+    "FontForge is a powerful, open-source font editor that allows designers to build, modify, and export custom typefaces across multiple platforms. This guide provides a straightforward walkthrough on how to prepare your glyphs, configure essential metadata,",
+    false
+  ],
+  [
+    230,
+    "Preview OpenType Features in FontForge Metrics View",
+    "This guide explains how to preview and test OpenType layout features—such as kerning, ligatures, contextual alternates, and small caps—directly within FontForge's Metrics View. By properly configuring your script, language, and lookup tables, you can inte",
+    false
+  ],
+  [
+    229,
+    "Fix OpenType Features Not Working in FontForge",
+    "OpenType features in FontForge can fail due to syntax errors, improperly configured lookup tables, naming discrepancies, or incorrect export settings. This troubleshooting guide provides a step-by-step approach to diagnosing and resolving these failures,",
+    false
+  ],
+  [
+    228,
+    "FontForge Feature Inheritance Across Font Styles",
+    "Managing OpenType feature inheritance across multiple font styles in FontForge requires decoupling your layout logic from individual font files. Because FontForge stores OpenType Layout (GSUB/GPOS) data per .sfd (Spline Font Database) file rather than via",
+    false
+  ],
+  [
+    227,
+    "Can FontForge Parse Complex Adobe Feature Files?",
+    "FontForge provides native support for importing Adobe Feature File (AFDKO .fea) syntax to define OpenType layout rules, but it cannot parse complex feature files reliably without errors. While it handles basic substitutions, simple kerning, and common lig",
+    false
+  ],
+  [
+    226,
+    "Edit Raw OpenType Table Hex Data in FontForge",
+    "Editing raw OpenType table hexadecimal data in FontForge allows font developers and typographers to manipulate low-level binary structures, repair broken metadata, or inject custom OpenType tables directly into a font. This guide covers how to access and",
+    false
+  ],
+  [
+    225,
+    "Glyph Class vs Coverage Table in FontForge",
+    "In font design with FontForge, both glyph class definitions and coverage tables organize glyphs for OpenType layout features such as substitutions and kerning, but they perform fundamentally different roles in font architecture. A coverage table acts as a",
+    false
+  ],
+  [
+    224,
+    "How to Add Titling Alternates in FontForge",
+    "This guide provides a step-by-step walkthrough for creating and configuring the OpenType Titling Alternates (titl) feature in FontForge. Titling alternates are specially designed glyphs intended for display use, headlines, and large-scale typography. By f",
+    false
+  ],
+  [
+    223,
+    "How to Create Fraction Substitutions in FontForge",
+    "Yes, you can create denominator and numerator substitutions for fractions in FontForge by implementing OpenType layout features. By designing dedicated glyph variants for numerators and denominators, you can map them using the standard OpenType feature ta",
+    false
+  ],
+  [
+    222,
+    "How to Create Superscript Figures in FontForge",
+    "This guide outlines the complete process of creating superscript figures in FontForge. You will learn how to locate standard Unicode slots, generate scaled glyphs from existing numerals, adjust their weight and position, set proper metrics, and configure",
+    false
+  ],
+  [
+    221,
+    "Reverse Chaining Substitution in FontForge",
+    "Reverse chaining contextual substitution is an advanced OpenType feature that substitutes a single glyph based on surrounding glyphs while processing text in reverse order. This article explains what reverse chaining contextual substitution is, why type d",
+    false
+  ],
+  [
+    220,
+    "How to Verify OpenType Feature Tags in FontForge",
+    "This guide demonstrates how to verify that your OpenType feature tags comply with official OpenType specifications using FontForge. You will learn how to navigate the Font Info lookups interface, cross-reference feature tags against registered standards,",
+    false
+  ],
+  [
+    219,
+    "Linking Multiple Substitution Rules in FontForge",
+    "FontForge allows you to link multiple substitution rules to a single trigger through OpenType features, primarily by utilizing Contextual Chaining lookups or chaining sequential lookups. While a standard Single Substitution lookup cannot assign conflictin",
+    false
+  ],
+  [
+    218,
+    "How to Add Localized Forms in FontForge",
+    "This guide explains how to implement the OpenType Localized Forms (locl) feature in FontForge. You will learn how to prepare language-specific glyph variants, configure the proper substitution lookups in the Font Info panel, and assign the appropriate scr",
+    false
+  ],
+  [
+    217,
+    "Purpose of the LangSys Tag in FontForge OpenType",
+    "The LangSys (Language System) tag in FontForge's OpenType dialog defines language-specific typographical rules by linking OpenType layout features directly to specific languages within a writing script. This article explains the hierarchy, purpose, and pr",
+    false
+  ],
+  [
+    216,
+    "How to Configure RTL Scripts in FontForge",
+    "Configuring Right-to-Left (RTL) scripts like Arabic, Hebrew, or Persian in FontForge requires establishing proper character encoding, assigning script tags, and setting up OpenType Layout features for glyph shaping and positioning. This guide details the",
+    false
+  ],
+  [
+    215,
+    "FontForge Arabic and Devanagari Shaping Tables",
+    "FontForge can generate the OpenType shaping tables required for complex text layouts such as Arabic and Devanagari. By utilizing FontForge’s OpenType layout tools, type designers can build the necessary Glyph Substitution (GSUB) and Glyph Positioning (GPO",
+    false
+  ],
+  [
+    214,
+    "Zero-Width Characters for Complex Scripts in FontForge",
+    "Configuring zero-width characters in FontForge is essential for designing complex scripts such as Arabic, Devanagari, and Thai, where combining marks, diacritics, and control characters dictate proper text shaping. This guide covers how to accurately assi",
+    false
+  ],
+  [
+    213,
+    "OpenType Baseline Adjustments in FontForge",
+    "Baseline adjustments in OpenType layout tables allow type designers to define how different scripts align with one another along horizontal or vertical axes. In FontForge, these adjustments are primarily managed within the OpenType BASE (Baseline) table,",
+    false
+  ],
+  [
+    212,
+    "Contextual Kerning with GPOS in FontForge",
+    "Contextual kerning allows you to adjust the spacing between characters based on surrounding glyphs rather than relying strictly on two-character pairs. In FontForge, this behavior is implemented using OpenType GPOS (Glyph Positioning) tables through Conte",
+    false
+  ],
+  [
+    211,
+    "Testing OpenType Features in FontForge with External Tools",
+    "This article explains how to test OpenType features when working with FontForge, covering its built-in shaping capabilities, its limitations regarding direct GUI plugin integration, and how to effectively connect third-party testing tools using FontForge'",
+    false
+  ],
+  [
+    210,
+    "Export OpenType Feature Files from FontForge",
+    "Exporting OpenType feature definitions from FontForge into an external file allows you to inspect, back up, or reuse layout logic such as ligatures, kerning, and stylistic alternates across different font projects. FontForge supports saving these definiti",
+    false
+  ],
+  [
+    209,
+    "Glyph Substitution Chaining in FontForge",
+    "Glyph substitution chaining is an advanced OpenType feature that dynamically swaps glyphs based on their surrounding sequence, allowing type designers to handle complex typographic behaviors such as contextual alternates, script joining, and collision avo",
+    false
+  ],
+  [
+    208,
+    "How to Link Stylistic Alternates in FontForge",
+    "Linking stylistic alternates to base glyphs in FontForge requires setting up OpenType Layout tables using the Glyph Substitution (GSUB) mechanism. By creating a Single Substitution lookup assigned to features like Stylistic Alternates (salt) or Stylistic",
+    false
+  ],
+  [
+    207,
+    "How to Set Up Case-Sensitive Forms in FontForge",
+    "Yes, you can set up case-sensitive forms in FontForge by utilizing OpenType layout features. Case-sensitive forms allow fonts to swap standard punctuation marks—such as hyphens, parentheses, brackets, and colons—for vertically shifted variants designed to",
+    false
+  ],
+  [
+    206,
+    "How to Create Historical Ligatures in FontForge",
+    "Creating historical ligatures in FontForge allows modern OpenType fonts to include archaic typographic connections, such as the long s combinations (ſi, ſt) or ct ligatures, accessed via the hlig feature tag. This guide explains how to design the ligature",
+    false
+  ],
+  [
+    205,
+    "FontForge Font Info Lookups Menu Explained",
+    "The Element > Font Info > Lookups menu in FontForge is the central control panel for defining advanced OpenType typographic behavior. This article provides a concise overview of the Lookups interface, explaining how it enables font designers to configure",
+    false
+  ],
+  [
+    204,
+    "How to Add Superscript and Subscript in FontForge",
+    "Implementing superscript and subscript OpenType features in FontForge allows applications to dynamically replace standard numbers and letters with elevated or lowered variants. This tutorial covers the end-to-end process of setting up these substitutions,",
+    false
+  ],
+  [
+    203,
+    "How to Reorder OpenType Lookups in FontForge",
+    "Reordering OpenType lookups in FontForge is entirely possible and often necessary to ensure text shaping engines apply typographic rules—such as ligatures, contextual substitutions, and kerning—in the intended sequence. This guide outlines how to navigate",
+    false
+  ],
+  [
+    202,
+    "How to Delete OpenType Features in FontForge",
+    "Removing unwanted OpenType features in FontForge allows font creators to eliminate unnecessary layout tables, reduce font file sizes, and resolve conflicting glyph behaviors. This step-by-step guide explains how to access FontForge's Font Info panel, loca",
+    false
+  ],
+  [
+    201,
+    "OpenType Lookup Subtables in FontForge",
+    "In digital typography, OpenType features rely on a strict structural hierarchy to transform and position glyphs dynamically. This article explains the role of lookup subtables within FontForge, detailing how they function as the granular execution units b",
+    false
+  ],
+  [
+    200,
+    "How to Verify OpenType Features in FontForge",
+    "Exporting a font from FontForge does not always guarantee that advanced typography features, such as ligatures, kerning, or stylistic alternates, are properly written to the final binary. This guide outlines how to confirm that your OpenType features (GSU",
+    false
+  ],
+  [
+    199,
+    "How to Define Custom OpenType Features in FontForge",
+    "FontForge fully supports creating and applying custom OpenType feature tags, allowing font designers to create specialized layout behavior beyond the default feature lists. While FontForge gives you the interface to input arbitrary four-character tags int",
+    false
+  ],
+  [
+    198,
+    "How to Create Swash Glyphs in FontForge",
+    "This guide provides a straightforward walkthrough on creating swash glyph variants in FontForge and linking them using OpenType features. You will learn how to design the extended decorative glyph, apply standard naming conventions, configure the OpenType",
+    false
+  ],
+  [
+    197,
+    "How to Build Contextual Chaining Lookups in FontForge",
+    "Contextual chaining lookups are advanced OpenType features that trigger glyph substitutions or positioning adjustments only when specific glyphs precede or follow a target character. This guide explains the core mechanics of contextual chaining and provid",
+    false
+  ],
+  [
+    196,
+    "Setup Ligature Carets in FontForge Complex Scripts",
+    "This article outlines how to configure a ligature caret list in FontForge to ensure proper cursor navigation across combined glyphs in complex scripts. Ligature carets define the intermediate positions where a text cursor stops within a single ligature th",
+    false
+  ],
+  [
+    195,
+    "Understanding Anchor Positioning in FontForge",
+    "Anchor positioning in FontForge is an OpenType feature mechanism used to define precise, dynamic alignment points between multiple glyphs, most commonly for attaching diacritical marks, stacking multiple accents, and connecting cursive scripts. Instead of",
+    false
+  ],
+  [
+    194,
+    "Troubleshoot FontForge Feature File Compiling Errors",
+    "Compiling OpenType feature files (.fea) in FontForge can frequently trigger cryptic syntax or parsing errors due to strict specification requirements, missing glyph mappings, or engine-specific limitations. This guide outlines the essential troubleshootin",
+    false
+  ],
+  [
+    193,
+    "How to Import Feature Files into FontForge",
+    "You can import an external Adobe OpenType feature file (.fea) into an existing FontForge project. FontForge natively supports merging these feature definitions into your active font database, allowing you to manage complex OpenType layouts, kerning pairs,",
+    false
+  ],
+  [
+    192,
+    "How to Add Ordinal Indicators in FontForge",
+    "This guide provides a straightforward walkthrough for implementing the OpenType Ordinals (ordn) feature in FontForge. You will learn how to prepare your ordinal glyphs, create a Glyph Substitution (GSUB) lookup, map base characters to their raised ordinal",
+    false
+  ],
+  [
+    191,
+    "How to Create Stylistic Sets in FontForge",
+    "Stylistic sets are OpenType features that allow type designers to package alternate glyph designs—such as a single-story \"a\" or a decorative ampersand—into toggleable groups within a font. This guide explains the function of stylistic sets and provides a",
+    false
+  ],
+  [
+    190,
+    "Set Up Fractions Lookup Rules in FontForge",
+    "Setting up OpenType fraction lookup rules in FontForge enables your font to dynamically replace standard number-slash-number sequences (such as 1/2) with properly proportioned typographic fractions. This guide details the essential requirements for buildi",
+    false
+  ],
+  [
+    189,
+    "How to Create Old-Style Figures in FontForge",
+    "Old-style figures—also known as non-lining or text figures—are numbers designed to harmonize with lowercase body text through varying x-heights, ascenders, and descenders. In FontForge, generating these numbers involves drawing alternate numeral glyphs, p",
+    false
+  ],
+  [
+    188,
+    "Single vs Multiple Substitution in FontForge",
+    "This article explains the fundamental differences between single substitution and multiple substitution in FontForge's OpenType layout tables. While both mechanisms modify how glyphs are displayed during text layout, they serve opposite structural purpose",
+    false
+  ],
+  [
+    187,
+    "How to Compile and Test OpenType Features in FontForge",
+    "OpenType features allow fonts to perform advanced typographic behaviors such as ligatures, kerning, contextual alternates, and small caps. This guide explains how to define, compile, and test OpenType substitutions and positioning tables directly within F",
+    false
+  ],
+  [
+    186,
+    "Write Raw Feature File Syntax in FontForge",
+    "FontForge supports Adobe OpenType Feature File syntax (.fea), but it does not provide an integrated live text editor inside the GUI to write and maintain raw feature code continuously. Instead, FontForge requires you to write your syntax externally and im",
+    false
+  ],
+  [
+    185,
+    "How to Add Small Caps in FontForge",
+    "Adding small caps to a font in FontForge involves two primary processes: designing the reduced-height capital glyphs and configuring the OpenType layout substitutions so design software can display them automatically. By creating uniquely named glyphs (su",
+    false
+  ],
+  [
+    184,
+    "How to Use GPOS Lookup Tables in FontForge",
+    "This article provides a concise overview of OpenType Glyph Positioning (GPOS) lookup tables and explains how to create, configure, and apply them using FontForge. You will learn the fundamental purpose of GPOS within font engineering, the distinction betw",
+    false
+  ],
+  [
+    183,
+    "Contextual Substitutions in FontForge",
+    "Contextual substitutions allow your font to dynamically replace glyphs based on surrounding characters, enabling features like advanced ligatures, script swashes, and alternate styles. This guide explains how to configure OpenType Contextual Chaining Subs",
+    false
+  ],
+  [
+    182,
+    "How to Configure GSUB Lookups in FontForge",
+    "This guide explains what a GSUB (Glyph Substitution) lookup table is and provides step-by-step instructions for configuring one using FontForge. You will learn the role GSUB plays in OpenType typography, the basic hierarchy of OpenType features, and the e",
+    false
+  ],
+  [
+    181,
+    "How to Create Ligature Substitutions in FontForge",
+    "This guide explains how to create standard ligature substitutions (such as \"fi\" and \"fl\") in FontForge using OpenType features. You will learn how to design the combined glyph, configure an OpenType lookup table using the standard ligature (liga) feature",
+    false
+  ],
+  [
+    180,
+    "Check if Glyphs Fit the Em Square in FontForge",
+    "Verifying that all glyphs fit within your defined em square in FontForge is essential for avoiding unexpected clipping, baseline alignment issues, and rendering artifacts across different operating systems. This guide outlines how to determine your font's",
+    false
+  ],
+  [
+    179,
+    "Lock Advance Widths to a Grid in FontForge",
+    "FontForge does not include a real-time constraint toggle that actively forces advance widths to stay locked to arbitrary increments while manually editing, but you can enforce strict width increments using grid settings, batch transformations, or Python a",
+    false
+  ],
+  [
+    178,
+    "Inspect LSB and RSB Simultaneously in FontForge",
+    "Inspecting both the left sidebearing (LSB) and right sidebearing (RSB) values at the same time in FontForge is essential for maintaining consistent spacing across your font. This guide explains how to view and evaluate both metrics simultaneously using th",
+    false
+  ],
+  [
+    177,
+    "What Does Auto Width Do in FontForge?",
+    "The Auto Width function in FontForge is an automated metrics tool designed to calculate and assign balanced horizontal spacing to font glyphs. Spacing individual letters manually is one of the most time-consuming aspects of type design, and Auto Width acc",
+    false
+  ],
+  [
+    176,
+    "Streamline Spacing with FontForge Metrics Wizard",
+    "Proper character spacing and kerning define the readability and professional finish of a typeface, but setting side bearings manually for hundreds of glyphs is time-consuming. FontForge provides automated metrics tools—often referred to collectively as th",
+    false
+  ],
+  [
+    175,
+    "Adjust Punctuation Spacing in FontForge",
+    "FontForge allows you to apply uniform spacing adjustments to all punctuation marks simultaneously through its batch metric transformation tools and Python scripting interface. This guide explains how to select multiple punctuation glyphs at once, uniforml",
+    false
+  ],
+  [
+    174,
+    "How to Fix Negative Advance Width in FontForge",
+    "Negative advance width errors occur in FontForge when a glyph's horizontal advance is set to a value below zero, causing characters to overlap backward and triggering validation failures during font export. This guide explains why this error happens and p",
+    false
+  ],
+  [
+    173,
+    "FontForge Maximum Kerning Pairs Limit",
+    "This article explores the kerning pair capacity of FontForge, detailing how the software handles pair limits internally and when exporting to standard font formats. While FontForge itself does not impose a strict hardcoded maximum on kerning pairs within",
+    false
+  ],
+  [
+    172,
+    "Sort Kerning Pairs by Value in FontForge",
+    "Managing kerning values in FontForge is essential for spotting extreme overlaps, unwanted loose spacing, and typographical inconsistencies. This guide explains how to access your font's kerning lookup data and sort kerning pairs by their numerical value u",
+    false
+  ],
+  [
+    171,
+    "How to Merge Kerning Classes in FontForge",
+    "While FontForge does not provide a direct one-click \"Merge Classes\" command, you can merge two kerning classes into one through the Font Info dialog or by using the FontForge Python scripting API. Merging is achieved by combining the glyph lists of both c",
+    false
+  ],
+  [
+    170,
+    "How to Test Mark Positioning in FontForge",
+    "Testing mark positioning features inside FontForge allows type designers to verify that combining diacritics and accents attach properly to base glyphs and other marks without exporting the font. This guide covers how to set up, preview, and adjust OpenTy",
+    false
+  ],
+  [
+    169,
+    "Create Mark-to-Base Anchors in FontForge",
+    "Creating anchor points for mark-to-base positioning in FontForge allows combining marks, such as diacritics and accents, to align accurately over base glyphs across different font sizes and rendering environments. This guide walks through configuring the",
+    false
+  ],
+  [
+    168,
+    "Anchor-Based Accent Positioning in FontForge",
+    "Anchor-based attachment in FontForge is a typographical mechanism used to position diacritical marks precisely above, below, or through base glyphs using coordinate points rather than static, manual positioning. By assigning corresponding \"base\" and \"mark",
+    false
+  ],
+  [
+    167,
+    "Diacritic Positioning on Base Glyphs in FontForge",
+    "Handling diacritic positioning relative to base characters in FontForge is primarily accomplished through OpenType Mark-to-Base (mark) positioning features using anchor points, or through the assembly of precomposed glyphs. This guide covers how to config",
+    false
+  ],
+  [
+    166,
+    "Adjust Tracking for Font Blocks in FontForge",
+    "Yes, you can adjust tracking across an entire font block or your entire glyph set in FontForge. Tracking refers to the uniform expansion or contraction of letter-spacing across a group of characters. In FontForge, this is achieved by batch-modifying the a",
+    false
+  ],
+  [
+    165,
+    "How to Set Proportional Figures in FontForge",
+    "This guide explains how to configure proportional spacing rules for numeral figures in FontForge. You will learn the difference between tabular and proportional metrics, how to adjust individual side bearings in the Metrics Window, how to configure kernin",
+    false
+  ],
+  [
+    164,
+    "Using FontForge Add Lookup for Metrics and Spacing",
+    "In FontForge, the \"Add Lookup\" window serves as the primary gateway for implementing OpenType Glyph Positioning (GPOS) rules that dictate how glyphs are spaced, kerned, and positioned relative to one another. By configuring lookups through this dialog, ty",
+    false
+  ],
+  [
+    163,
+    "How to Check Zero Advance Width in FontForge",
+    "Checking whether a glyph has an advance width of zero in FontForge is essential when designing combining accents, non-spacing marks, or hidden control characters. This guide explains how to quickly identify zero-width glyphs using the graphical interface",
+    false
+  ],
+  [
+    162,
+    "Bulk Copy Glyph Metrics in FontForge",
+    "Yes, you can copy metrics from one glyph to another in bulk using FontForge. Whether you need to apply the advance width and side bearings of a single glyph across multiple selected characters or batch-transfer metrics between matching sets of glyphs, Fon",
+    false
+  ],
+  [
+    161,
+    "Adjust Font Slope and Italic Angle in FontForge",
+    "Adjusting the slope of a font in FontForge requires two distinct actions: physically slanting the glyph contours to create an oblique or italic design, and updating the font's internal metadata so operating systems recognize the correct slant angle. This",
+    false
+  ],
+  [
+    160,
+    "FontForge OS/2 Metrics Panel Explained",
+    "The OS/2 metrics panel in FontForge is a critical configuration interface used to control how a font behaves, aligns, and renders across different operating systems and applications. It primarily manages vertical font dimensions, line spacing, script posi",
+    false
+  ],
+  [
+    159,
+    "Set Custom Vertical Advance Widths in FontForge",
+    "Configuring vertical advance widths in FontForge is essential for creating fonts that support vertical writing modes, such as CJK (Chinese, Japanese, and Korean) scripts and traditional Mongolian. This guide outlines the exact process to enable vertical m",
+    false
+  ],
+  [
+    158,
+    "Auto Generate FontForge Sidebearings from Bounding Box",
+    "FontForge provides native tools and scripting capabilities to automatically generate and adjust sidebearings based on glyph bounding boxes. While FontForge includes an algorithmic \"Auto Width\" feature in its graphical interface to space glyphs optically,",
+    false
+  ],
+  [
+    157,
+    "How to Fix Overlapping Characters in FontForge",
+    "Overlapping characters in FontForge are typically caused by incorrect horizontal metrics, such as improperly configured side bearings, zero or negative advance widths, or missing kerning pairs. This guide provides a direct, step-by-step approach to diagno",
+    false
+  ],
+  [
+    156,
+    "Kerning Lookup Subtables in FontForge",
+    "Lookup subtables in FontForge play a critical role in organizing, optimizing, and compiling kerning data within OpenType fonts. Kerning information is stored in the Glyph Positioning (GPOS) table, where lookups are divided into one or more subtables to st",
+    false
+  ],
+  [
+    155,
+    "Delete All Kerning Pairs in FontForge",
+    "This guide provides a direct walkthrough on how to completely remove all kerning pairs from a font using FontForge. Whether you need to reset spacing issues, eliminate unwanted OpenType tables, or rebuild your metric pairs from scratch, you will learn the",
+    false
+  ],
+  [
+    154,
+    "How to Preview Kerning Pairs in FontForge",
+    "FontForge provides built-in tools to preview and adjust kerning pairs interactively in real time. By utilizing the dedicated Metrics Window, font designers can input custom character strings, view immediate spatial adjustments between glyphs, and manipula",
+    false
+  ],
+  [
+    153,
+    "How to Adjust Subscript and Superscript in FontForge",
+    "Adjusting subscript and superscript metrics in FontForge ensures that applications render small-scale text with accurate baseline positioning and proportional sizing. This guide explains how to locate the OS/2 metric settings in FontForge and modify the s",
+    false
+  ],
+  [
+    152,
+    "How to Set Strikeout Position in FontForge",
+    "This guide explains the purpose of the strikeout position metric in digital typography and provides step-by-step instructions for locating and configuring it within FontForge. You will learn how this metric controls text strikethrough rendering across ope",
+    false
+  ],
+  [
+    151,
+    "Set Underline Position and Thickness in FontForge",
+    "Configuring the underline position and thickness in FontForge ensures that word processors and web browsers render underlines consistently and proportionally with your typeface design. This guide covers how to access the Font Info window, locate the appro",
+    false
+  ],
+  [
+    150,
+    "Editing Hhea Metrics in FontForge",
+    "This guide explains the function of the Horizontal Header (hhea) table in OpenType and TrueType fonts and provides a clear, step-by-step procedure for editing its metrics using FontForge. You will learn what role this table plays in determining cross-plat",
+    false
+  ],
+  [
+    149,
+    "FontForge Proportional vs Monospaced Metrics",
+    "FontForge handles proportional and monospaced font metrics by altering how advance widths, side bearings, kerning, and metadata flags are assigned across a typeface. While proportional fonts rely on individual, visually balanced character widths and dynam",
+    false
+  ],
+  [
+    148,
+    "Export Kerning Data from FontForge to Text",
+    "FontForge allows you to export kerning information into plain text formats, enabling designers to inspect, backup, or transfer metric data between type design applications. This guide explains how to extract kerning pairs and kerning classes from FontForg",
+    false
+  ],
+  [
+    147,
+    "How to Set Uniform Sidebearings in FontForge",
+    "Setting uniform sidebearings across multiple glyphs in FontForge is a fast way to standardize horizontal spacing across a typeface. By selecting a target range of characters in the main Font View and applying FontForge’s batch metrics commands, you can ap",
+    false
+  ],
+  [
+    146,
+    "FontForge Center in Width Command Explained",
+    "This article provides a direct overview of the \"Center in Width\" command in the open-source font editor FontForge. You will learn what the command does to a glyph's horizontal metrics, how it calculates spacing, when it should be applied during font devel",
+    false
+  ],
+  [
+    145,
+    "View Kerning Values in a Matrix Grid in FontForge",
+    "FontForge provides a built-in matrix view that allows type designers to inspect and edit class-based kerning pairs across an entire font project. This guide outlines the exact steps to locate and open the kerning matrix grid via the GPOS lookups menu, nav",
+    false
+  ],
+  [
+    144,
+    "Automate Optimal Sidebearings in FontForge",
+    "Yes, you can use scripts to automatically calculate and apply optimal sidebearings in FontForge. By leveraging FontForge's built-in Python scripting engine, font developers can bypass tedious manual spacing for large glyph sets. Whether using native auto-",
+    false
+  ],
+  [
+    143,
+    "How to Adjust Cap Height and X-Height in FontForge",
+    "Adjusting the cap height and x-height in FontForge involves updating the font's OS/2 metric tables to ensure operating systems render text lines correctly, as well as setting horizontal guide lines for precise visual design. This guide provides clear, ste",
+    false
+  ],
+  [
+    142,
+    "Understanding Em Square Dimensions in FontForge",
+    "In digital typography, the em square serves as the fundamental design grid upon which all glyphs are constructed and scaled. In FontForge, configuring the em square dimensions establishes the relative coordinate space for your font, directly controlling h",
+    false
+  ],
+  [
+    141,
+    "How to Adjust Baseline Offset in FontForge",
+    "Adjusting the baseline offset for specific characters in FontForge involves shifting the vertical position of individual glyph contours relative to the font's global baseline at the y=0 coordinate. This guide explains how to reposition single or multiple",
+    false
+  ],
+  [
+    140,
+    "Set Ascender and Descender Metrics in FontForge",
+    "FontForge gives you full control over a font's vertical metrics, including the ascender, descender, and line gap values. Setting these metrics properly is essential for ensuring your font displays at a consistent size and without unwanted text clipping ac",
+    false
+  ],
+  [
+    139,
+    "How to Find Conflicting Kerning Rules in FontForge",
+    "Conflicting kerning rules in FontForge typically arise when glyphs are assigned to multiple overlapping kerning classes, when individual glyph-to-glyph pairs conflict with class rules, or when lookup subtable orders cause unexpected overrides. This guide",
+    false
+  ],
+  [
+    138,
+    "OpenType vs Traditional Kerning in FontForge",
+    "Kerning in FontForge can be implemented using either modern OpenType tables or legacy traditional kerning tables. While both methods adjust the horizontal spacing between specific character pairs to achieve optical balance, they differ fundamentally in te",
+    false
+  ],
+  [
+    137,
+    "How to Import a Kerning Table in FontForge",
+    "Importing an external kerning table into FontForge allows you to quickly apply pair-spacing data from other fonts or metric generation tools without manually entering values. This guide explains how to import external metrics files, such as Adobe Font Met",
+    false
+  ],
+  [
+    136,
+    "How to Set Up Kerning Classes in FontForge",
+    "Kerning classes are an essential typographic tool that groups glyphs with identical spacing characteristics together, allowing you to kern entire sets of characters simultaneously rather than adjusting individual pairs one by one. This article explains th",
+    false
+  ],
+  [
+    135,
+    "How to Define Kerning Pairs in FontForge",
+    "Adjusting kerning pairs manually in FontForge ensures that visually awkward character combinations, such as \"AV\" or \"To,\" maintain balanced spacing across all text. This guide covers how to set up the necessary OpenType kerning lookup tables, open the Met",
+    false
+  ],
+  [
+    134,
+    "How to Auto Space a Whole Font in FontForge",
+    "Yes, you can automatically space an entire font using FontForge's built-in metric algorithms. This guide outlines how to use the automated spacing features in FontForge, explains how the underlying algorithm calculates side bearings, and highlights the ne",
+    false
+  ],
+  [
+    133,
+    "Open FontForge Metrics Window to Adjust Spacing",
+    "Adjusting the spacing between characters is a critical part of font design known as kerning and metrics editing. In FontForge, this process is managed inside the Metrics window, which allows you to view multiple characters side-by-side, modify side bearin",
+    false
+  ],
+  [
+    132,
+    "Advance Width vs Sidebearing in FontForge",
+    "In FontForge, understanding the distinction between advance width and sidebearings is fundamental to mastering font spacing and horizontal metrics. Advance width refers to the total horizontal distance the text cursor moves forward when a character is typ",
+    false
+  ],
+  [
+    131,
+    "How to Set Default Sidebearings in FontForge",
+    "Setting consistent left and right sidebearings in FontForge is essential for establishing balanced horizontal spacing across your entire typeface. This guide walks through the exact steps to define, batch-apply, and automate left and right sidebearing val",
+    false
+  ],
+  [
+    130,
+    "Quickest Way to Clear a Glyph in FontForge",
+    "This guide outlines the fastest methods to completely remove all outlines, references, and shapes from a glyph in FontForge. Whether working with a single character or multiple glyphs at once, you can wipe the contents clean within seconds directly from t",
+    false
+  ],
+  [
+    129,
+    "How to Duplicate a Glyph Slot in FontForge",
+    "Duplicating a glyph slot entirely within FontForge allows you to create new variants, accented characters, or backup copies of existing shapes without starting from scratch. This article provides a straightforward walkthrough on how to fully clone an exis",
+    false
+  ],
+  [
+    128,
+    "How to Scale Line Weights Uniformly in FontForge",
+    "Scaling line weights uniformly across all characters in FontForge is entirely possible using the software's automated style transformations and scripting interface. This guide details how to adjust stroke thickness globally using the Change Weight command",
+    false
+  ],
+  [
+    127,
+    "How to Transform Glyphs Using Matrix in FontForge",
+    "This guide explains how to apply mathematical 2D transformation matrices to glyph contours in FontForge. You will learn the mechanics behind FontForge's six-element affine transformation arrays, how to input custom matrix values through the graphical user",
+    false
+  ],
+  [
+    126,
+    "What Does Round to Int Do in FontForge?",
+    "The Round to Int command in FontForge is a utility used to convert fractional coordinate values of glyph outlines into whole integer values. This article covers what the command does, why non-integer coordinates occur during type design, and how executing",
+    false
+  ],
+  [
+    125,
+    "How to Adjust Tracing Threshold in FontForge",
+    "Converting bitmap images into clean vector glyphs in FontForge relies on external tracing utilities, typically Potrace or AutoTrace. This guide explains how to configure and adjust the bitmap-to-vector threshold settings directly within FontForge, allowin",
+    false
+  ],
+  [
+    124,
+    "How to Autotrace Bitmaps in FontForge",
+    "FontForge allows you to automatically convert bitmap images into vector outlines, but it does not contain a fully native, standalone tracing engine. Instead, it provides a built-in interface that relies on external tracing utilities like Potrace or AutoTr",
+    false
+  ],
+  [
+    123,
+    "Extract Foreground from Background in FontForge",
+    "Extracting a foreground vector layer from a background reference image in FontForge is a standard workflow for converting scanned sketches or raster graphics into scalable font glyphs. This process requires importing your bitmap graphic into the glyph's b",
+    false
+  ],
+  [
+    122,
+    "How to Check Glyph Path Winding Order in FontForge",
+    "Glyph path winding direction determines which areas of a font character are treated as solid shapes and which are treated as hollow cutouts. In FontForge, incorrect path orientation can cause glyphs to render inverted or create fill errors when compiling",
+    false
+  ],
+  [
+    121,
+    "Cubic vs Quadratic Splines in FontForge",
+    "In digital typography, outline curves are mathematically defined as either cubic or quadratic Bézier splines. FontForge supports both types natively, allowing type designers to create, edit, and convert between them depending on whether the target output",
+    false
+  ],
+  [
+    120,
+    "Convert TrueType to PostScript Curves in FontForge",
+    "Converting TrueType curves (quadratic) to PostScript curves (cubic) in FontForge is a straightforward process that changes the underlying mathematical representation of your font's outlines. This conversion is mathematically lossless because every quadrat",
+    false
+  ],
+  [
+    119,
+    "Grid Fitting Tools in FontForge",
+    "FontForge provides built-in tools for grid fitting, allowing type designers to align vector outlines to pixel grids for optimal legibility at low screen resolutions. This article explains how FontForge handles grid fitting, how to preview rasterized glyph",
+    false
+  ],
+  [
+    118,
+    "Merge Contours into Compound Path in FontForge",
+    "Merging multiple separate contours in FontForge depends on whether you want to combine overlapping shapes into a single outline, cut inner shapes out of outer shapes to create a compound path, or connect open path segments at their endpoints. In digital t",
+    false
+  ],
+  [
+    117,
+    "What Happens with Open Paths in FontForge Export",
+    "When you export a font with open paths from FontForge, the resulting font files will typically suffer from rendering errors, unexpected visual artifacts, or validation failures. Standard outline font formats such as TrueType (TTF) and OpenType (OTF) requi",
+    false
+  ],
+  [
+    116,
+    "FontForge Contour Direction: PostScript vs TrueType",
+    "Contour direction, or winding order, determines how rendering engines identify solid shapes versus cutouts in digital typography. PostScript and TrueType formats rely on opposite winding conventions to display letterforms correctly. This guide outlines th",
+    false
+  ],
+  [
+    115,
+    "Batch Import Multiple SVGs into FontForge",
+    "While FontForge does not allow you to select and import multiple SVG files at once through its standard graphical user interface, you can import them simultaneously using FontForge's built-in scripting capabilities. By utilizing a simple Python script, yo",
+    false
+  ],
+  [
+    114,
+    "Snap Control Handles to 45 Degrees in FontForge",
+    "In FontForge, aligning Bezier control handles to precise angles is essential for creating clean, mathematically sound glyph outlines. This guide explains how to constrain control handles to 45-degree angles using standard keyboard shortcuts, numerical coo",
+    false
+  ],
+  [
+    113,
+    "Understanding Correct Direction in FontForge",
+    "The Correct Direction feature in FontForge is a utility that automates path orientation to ensure glyphs render accurately across different operating systems and applications. This article explains the technical necessity of contour winding orders, how fo",
+    false
+  ],
+  [
+    112,
+    "How to Add Shadow and Extrusion Effects in FontForge",
+    "FontForge includes built-in styling tools and vector manipulation features that allow type designers to generate shadows, perspective blocks, and extruded 3D effects directly on glyphs without relying on external vector software. This guide covers how to",
+    false
+  ],
+  [
+    111,
+    "Scale Stroke Thicknesses Independently in FontForge",
+    "Yes, you can scale stroke thicknesses independently in FontForge, but the method depends on whether your glyph is made of open skeletal paths or finalized, closed outlines. FontForge provides dedicated tools to adjust horizontal and vertical weights indep",
+    false
+  ],
+  [
+    110,
+    "How to Clear Hints in FontForge",
+    "Font hinting aligns vector outlines to a pixel grid to ensure text renders crisply at small sizes, but corrupted, conflicting, or outdated hints often cause severe visual distortion and uneven stroke weights. This guide provides step-by-step instructions",
+    false
+  ],
+  [
+    109,
+    "FontForge Auto-Hinting: Definition and Setup Guide",
+    "Auto-hinting is an automated process in digital typography that aligns vector outlines to pixel grids to ensure legible, crisp text at low resolutions. This guide explains what auto-hinting accomplishes in type design and provides step-by-step instruction",
+    false
+  ],
+  [
+    108,
+    "How to Edit TrueType Instructions in FontForge",
+    "This guide explains how to view, modify, and compile TrueType bytecode instructions (hinting) directly within FontForge. FontForge provides built-in tools to edit both glyph-level instructions and global font programs (fpgm and prep tables), allowing you",
+    false
+  ],
+  [
+    107,
+    "Generate PostScript Hints Automatically in FontForge",
+    "FontForge provides built-in tools to automate the hinting process, ensuring PostScript fonts render crisply on low-resolution displays without requiring manual stem adjustments. This guide explains how to automatically generate PostScript horizontal and v",
+    false
+  ],
+  [
+    106,
+    "FontForge Hint Layer Guide for Glyph Design",
+    "The Hint layer in FontForge is a specialized workspace dedicated to managing rasterization instructions that preserve a typeface's clarity, consistency, and legibility on digital displays. This article explains the technical purpose of the Hint layer, how",
+    false
+  ],
+  [
+    105,
+    "How to Create a Doughnut Shape in FontForge",
+    "Creating a hollow ring or doughnut shape in FontForge involves generating two concentric circular paths and defining their winding directions so the center cuts out. This guide explains how to draw the necessary shapes, align them, and use path direction",
+    false
+  ],
+  [
+    104,
+    "Measuring Distance Between Points in FontForge",
+    "FontForge provides a dedicated Ruler tool specifically designed to measure the distance, angle, and coordinate offsets between points within glyph outlines. This guide explains how to access and use the Ruler tool to verify precise metrics, check stem wid",
+    false
+  ],
+  [
+    103,
+    "How to Invert Contour Direction in FontForge",
+    "Inverting the direction of a path contour in FontForge is an essential step in digital font design to ensure proper rendering and cutout behavior. The winding direction of a path—whether clockwise or counter-clockwise—determines whether a shape is filled",
+    false
+  ],
+  [
+    102,
+    "How to Copy Paths Between Glyphs in FontForge",
+    "Yes, you can easily copy paths between different glyph windows in FontForge using standard clipboard operations. This article covers the step-by-step process of copying and pasting vector outlines across multiple glyph windows, how coordinate positioning",
+    false
+  ],
+  [
+    101,
+    "How to Use the Perspective Tool in FontForge",
+    "The Perspective tool in FontForge allows type designers to apply three-dimensional distortions and vanishing-point scaling directly to glyph outlines. This guide walks you through locating the tool in the Glyph View, selecting the target vector paths, man",
+    false
+  ],
+  [
+    100,
+    "How to Clean Up Jagged Vector Traces in FontForge",
+    "Autotracing bitmap images in FontForge often produces contours with excessive control points, uneven bezier handles, and jagged edges. This guide explains the best workflow to clean up these messy outlines, focusing on automated simplification, manual nod",
+    false
+  ],
+  [
+    99,
+    "How to Handle Counter-Spaces in FontForge",
+    "Managing counter-spaces and negative shapes—the open or enclosed white areas inside glyphs such as \"e,\" \"o,\" and \"n\"—is fundamental to creating balanced, readable typefaces. This guide explains how to properly construct, orient, and adjust negative spaces",
+    false
+  ],
+  [
+    98,
+    "FontForge Overlapping Paths During Font Generation",
+    "When generating a font in FontForge, leaving overlapping black paths unresolved can lead to unexpected rendering bugs, inverted transparent spaces, and rasterization errors in target applications. Font renderers rely on mathematical fill rules and contour",
+    false
+  ],
+  [
+    97,
+    "How to Rotate a Glyph by Decimal Degrees in FontForge",
+    "Yes, you can rotate a glyph by an exact decimal degree in FontForge. This guide explains how to apply fractional rotation values through FontForge's graphical user interface using the Transform tool, as well as how to perform precision rotations using Pyt",
+    false
+  ],
+  [
+    96,
+    "Distribute Points Evenly on a Path in FontForge",
+    "FontForge does not feature a single native button to automatically distribute anchor points equidistant along an existing Bézier curve. However, you can achieve an even distribution of points by using built-in path discretization tools, FontForge's integr",
+    false
+  ],
+  [
+    95,
+    "Align Points Horizontally or Vertically in FontForge",
+    "Aligning points horizontally or vertically in FontForge is essential for maintaining consistent stem widths, flat baselines, and sharp geometric curves. This guide explains how to quickly align multiple points using FontForge's built-in direction commands",
+    false
+  ],
+  [
+    94,
+    "Decomposing vs Keeping References in FontForge",
+    "In FontForge, composite glyphs like accented letters often use components from other glyphs rather than duplicating paths from scratch. The primary difference between keeping a reference and decomposing it lies in whether the glyph maintains a dynamic lin",
+    false
+  ],
+  [
+    93,
+    "How to Join Open Contours in FontForge",
+    "Joining open contours in FontForge is a crucial step to ensure glyph outlines are completely closed, valid, and ready for rendering and exporting. This guide provides direct, step-by-step instructions on how to locate disconnected endpoints and combine th",
+    false
+  ],
+  [
+    92,
+    "Custom Brushes and Stroke Widths in FontForge",
+    "While FontForge does not feature a dynamic, raster-style brush engine like digital painting software, you can create custom stroke widths and simulate custom brushes using its vector stroke expansion tools. FontForge allows you to apply precise stroke thi",
+    false
+  ],
+  [
+    91,
+    "How to Remove Redundant Points in FontForge",
+    "Complex vector shapes imported into FontForge often contain extraneous anchor points that bloat file sizes and cause rendering errors. This guide covers how to clean up these vectors efficiently using FontForge’s automated simplification commands, precisi",
+    false
+  ],
+  [
+    90,
+    "FontForge Find Problems Tool Outline Checks Explained",
+    "The Find Problems tool in FontForge automatically audits glyph outlines to identify structural, geometric, and technical defects before exporting a font. By scanning paths, coordinates, and Bezier control points, this utility detects common drawing errors",
+    false
+  ],
+  [
+    89,
+    "Adjust Control Handle Lengths Symmetrically in FontForge",
+    "Adjusting control handle lengths symmetrically in FontForge ensures smooth, balanced curves across your glyph outlines. While FontForge maintains collinear angles on smooth curve points by default, keeping both handles at identical lengths requires design",
+    false
+  ],
+  [
+    88,
+    "Using FontForge Freehand Tool for Organic Drawing",
+    "FontForge includes a built-in Freehand tool that allows designers to draw organic, expressive shapes directly on the glyph canvas. While it provides an intuitive way to sketch with a mouse or graphics tablet, freehand input naturally generates an excessiv",
+    false
+  ],
+  [
+    87,
+    "Link Accents to Base Characters in FontForge",
+    "Creating accented glyphs using references in FontForge allows you to build diacritics efficiently without duplicating outlines. This guide explains how to link diacritic marks to base characters using FontForge's reference architecture and anchor point sy",
+    false
+  ],
+  [
+    86,
+    "How to Create Composite Glyphs in FontForge",
+    "Creating composite glyphs in FontForge allows font designers to efficiently build complex characters—such as accented letters or ligatures—by referencing existing base glyphs rather than redrawing them from scratch. This article outlines the step-by-step",
+    false
+  ],
+  [
+    85,
+    "Round Coordinates to Whole Numbers in FontForge",
+    "During font design, scaling, rotating, or importing vector outlines can create points with fractional coordinates. Font formats like TrueType and OpenType generally expect outlines to align to an integer grid, making it essential to clean up point data be",
+    false
+  ],
+  [
+    84,
+    "What Does Add Extrema Do in FontForge?",
+    "The Add Extrema function in FontForge is an automated outline-editing tool that inserts on-curve points at the local mathematical maximums and minimums (horizontal and vertical peaks) of a glyph's Bézier curves. Using this function ensures that curves rea",
+    false
+  ],
+  [
+    83,
+    "How to Fix Self-Intersections in FontForge",
+    "Self-intersection errors occur in FontForge when a glyph's contour crosses over itself, leading to rendering glitches, rasterization failures, and validation warnings in font compilation. This guide explains how to identify, automatically repair, and manu",
+    false
+  ],
+  [
+    82,
+    "How to Paste Illustrator Vectors into FontForge",
+    "Directly pasting vector data from Adobe Illustrator into FontForge is possible, but it depends heavily on your operating system and clipboard configuration. While direct copy-and-paste can work under specific settings, it frequently causes formatting erro",
+    false
+  ],
+  [
+    81,
+    "How to Flip a Glyph in FontForge",
+    "Flipping a glyph horizontally or vertically in FontForge allows font designers to quickly create mirrored shapes, adjust directional components, or build symmetrical character sets. This guide explains how to use FontForge's built-in transformation tools",
+    false
+  ],
+  [
+    80,
+    "Purpose of the Knife Tool in FontForge",
+    "The Knife tool in FontForge is a specialized vector-editing utility designed to slice contours and separate glyph paths. This article explains the primary function of the Knife tool, how it alters vector outlines, common typographic use cases such as crea",
+    false
+  ],
+  [
+    79,
+    "How to Scale Glyphs Proportionally in FontForge",
+    "Scaling multiple glyphs at once while maintaining their exact proportions is an essential workflow in FontForge for adjusting weight, optical size, or matching different font designs. This guide provides a straightforward, step-by-step method to select a",
+    false
+  ],
+  [
+    78,
+    "Using Boolean Operations in FontForge",
+    "FontForge provides full support for Boolean operations such as union, intersection, and difference to manipulate vector contours. This guide explains how to locate and use these path-combining tools within the FontForge interface, detailing the core comma",
+    false
+  ],
+  [
+    77,
+    "Fix Contour Direction Errors in FontForge",
+    "In digital typography, incorrect contour directions cause font rendering bugs, resulting in cutouts filling in or overlapping areas disappearing entirely. This guide explains how to identify contour direction issues, resolve overlapping paths, and apply F",
+    false
+  ],
+  [
+    76,
+    "FontForge Simplify Command Explained",
+    "The Simplify command in FontForge is an optimization tool designed to reduce the total number of points on a glyph's contour while preserving its original shape as closely as possible. This article explains how the command functions, why point reduction i",
+    false
+  ],
+  [
+    75,
+    "How to Add Extrema Points in FontForge",
+    "Adding extrema points to curves in FontForge is essential for optimal font hinting, predictable rasterization, and standard PostScript or TrueType compliance. Extrema are the on-curve points positioned at the absolute horizontal (leftmost and rightmost) a",
+    false
+  ],
+  [
+    74,
+    "FontForge Spline Math Architecture Explained",
+    "FontForge utilizes a flexible vector architecture primarily built around piecewise Bézier splines to represent font outlines. While its foundational internal engine operates using cubic Bézier mathematics, it features a dual-mode system that natively supp",
+    false
+  ],
+  [
+    73,
+    "Convert Curve Point to Corner Point in FontForge",
+    "In FontForge, switching a point from a smooth curve to an angular corner is an essential step for refining glyph outlines and controlling path direction. This guide explains how to identify curve points, change them to corner points using multiple quick m",
+    false
+  ],
+  [
+    72,
+    "Smooth Points vs Corner Points in FontForge",
+    "In FontForge, vector outlines are defined by on-curve points and their associated control handles, with smooth points and corner points serving as the primary building blocks. Smooth points ensure continuous, seamless curvature across a contour by locking",
+    false
+  ],
+  [
+    71,
+    "Draw a Straight Line Segment in FontForge",
+    "Drawing straight line segments in FontForge is a fundamental step in designing glyphs and building custom typefaces. This guide covers how to select the Pen tool, place corner points to generate flat lines, constrain line angles for perfect horizontal and",
+    false
+  ],
+  [
+    70,
+    "How to Reset FontForge Layout to Default",
+    "If your FontForge workspace has become cluttered, windows have disappeared off-screen, or toolbars are misplaced, you can restore the interface to its original state. FontForge does not include a single \"Reset Layout\" button within the application, but yo",
+    false
+  ],
+  [
+    69,
+    "Understanding the FontForge Main Menu Bar",
+    "This guide provides an overview of the primary menus located on the main menu bar of FontForge, the open-source font editor. Navigating the main Font View window is essential for managing font projects, modifying glyphs, and configuring technical font par",
+    false
+  ],
+  [
+    68,
+    "Inspect Glyph Metrics Visually in FontForge",
+    "Inspecting glyph metrics visually in FontForge allows you to evaluate and adjust character spacing, advance widths, side bearings, and kerning in real time. Rather than relying solely on numerical tables, FontForge provides dedicated graphical environment",
+    false
+  ],
+  [
+    67,
+    "FontForge Outline View vs Filled View Mode",
+    "In FontForge, switching between outline view and filled view allows type designers to balance technical vector precision with visual legibility. While outline view exposes the underlying structural paths, control points, and contour directions that define",
+    false
+  ],
+  [
+    66,
+    "How to Change FontForge Interface Language",
+    "You can change the interface language in FontForge to match your preferred localization. Because FontForge relies on the GNU gettext library for localization rather than a traditional in-app dropdown menu, the interface language is typically determined by",
+    false
+  ],
+  [
+    65,
+    "Toggle Point Coordinates in FontForge",
+    "This guide explains how to toggle the visual display of point coordinates in FontForge's Glyph Outline view. You will learn the exact menu option to show or hide numeric X and Y values directly on the canvas, how to read coordinates dynamically from the i",
+    false
+  ],
+  [
+    64,
+    "Default Glyph Grid Size in FontForge",
+    "This guide explains the default glyph grid size in the FontForge font editor, detailing the standard Em unit measurements, ascent and descent splits, and how to adjust these settings for different font formats. When you create a new font in FontForge, the",
+    false
+  ],
+  [
+    63,
+    "How to Find a Glyph by Name in FontForge",
+    "Finding a specific glyph in a massive font file can be tedious when scrolling manually. FontForge provides a built-in search tool called the \"Goto\" function, allowing you to instantly locate and highlight any character by typing its PostScript glyph name.",
+    false
+  ],
+  [
+    62,
+    "FontForge Visual Cues for Unencoded Glyphs",
+    "This guide covers the distinct visual cues FontForge uses to help type designers identify unencoded glyphs within its workspace. By observing specific indicators in the main Font View window, such as grid positioning, cell header labels, and glyph informa",
+    false
+  ],
+  [
+    61,
+    "Using Multi-Monitors with FontForge Efficiently",
+    "FontForge’s traditional multi-window architecture makes it exceptionally well-suited for multi-monitor workstations. Unlike modern unified-window applications, FontForge relies on independent, floating top-level windows for its primary workspaces, allowin",
+    false
+  ],
+  [
+    60,
+    "How to Check the Active Encoding in FontForge",
+    "Checking the active encoding table in FontForge ensures your glyphs map properly to standard character sets like Unicode or legacy ASCII variations. This article explains how to quickly identify the currently loaded encoding slot directly from the FontFor",
+    false
+  ],
+  [
+    59,
+    "FontForge Metrics View Purpose and Usage",
+    "The Metrics View window in FontForge is a dedicated workspace designed for adjusting horizontal spacing, setting side bearings, and fine-tuning kerning pairs. This guide explains the primary purpose of the Metrics View, how it allows type designers to eva",
+    false
+  ],
+  [
+    58,
+    "How to Show or Hide Tool Palettes in FontForge",
+    "This guide explains how to toggle and manage floating tool palettes in FontForge, allowing you to customize your workspace to suit your font design needs. Whether you accidentally closed your primary drawing tools or need to clear screen space by hiding t",
+    false
+  ],
+  [
+    57,
+    "FontForge Arrows and Direction Handles Explained",
+    "This article explains the function and meaning of path arrows and direction handles within FontForge's glyph editing window. Readers will discover how contour arrows dictate path direction and shape fills, as well as how Bézier direction handles control c",
+    false
+  ],
+  [
+    56,
+    "Adjust Snap-to-Grid Distance in FontForge",
+    "Adjusting the snap-to-grid distance in FontForge allows font designers to control how aggressively points, handles, and paths align with coordinate lines and other anchor points. This guide covers how to modify FontForge's snapping sensitivity by changing",
+    false
+  ],
+  [
+    55,
+    "How to View FontForge Logs and Action History",
+    "FontForge does not feature a dedicated, real-time GUI \"history\" panel like some modern design suites, but you can view comprehensive action summaries, execution logs, and operation warnings through alternative built-in methods. Depending on whether you ne",
+    false
+  ],
+  [
+    54,
+    "How to Use the FontForge Info Palette for Coordinates",
+    "The Info palette in FontForge is an essential floating tool for tracking real-time cursor positions, vector displacements, and point metrics. This guide explains how to enable the Info palette in the Glyph Outline window, interpret its coordinate readouts",
+    false
+  ],
+  [
+    53,
+    "What Gray Blank Slots Mean in FontForge",
+    "In FontForge, encountering a blank slot with a gray background indicates that a character code exists in your current encoding mapping, but no glyph has been created or defined for it yet in the font file. This visual indicator helps designers immediately",
+    false
+  ],
+  [
+    52,
+    "Filter Glyphs by Encoding or Script in FontForge",
+    "Managing large fonts in FontForge can be overwhelming when viewing thousands of characters at once, but you can streamline your workspace by filtering displayed glyphs using encoding sets and script-specific views. This guide explains how to switch the fo",
+    false
+  ],
+  [
+    51,
+    "FontForge Font View Modes Explained",
+    "FontForge’s Font View functions as the main dashboard for navigating, organizing, and inspecting every glyph in a font project. This article provides a comprehensive overview of the different view modes and display configurations available in FontForge's",
+    false
+  ],
+  [
+    50,
+    "Save Custom Workspace Layouts in FontForge",
+    "FontForge does not feature a dedicated system for saving and switching between named custom workspace presets. However, the application automatically remembers your last-used window sizes, positions, and active panels across sessions. Users can achieve la",
+    false
+  ],
+  [
+    49,
+    "How to Change the FontForge UI Display Font",
+    "This guide explains how to change the interface display font in FontForge. Because FontForge utilizes an internal resource system rather than an in-app visual theme selector for its UI typography, modifying the user interface font requires adding or updat",
+    false
+  ],
+  [
+    48,
+    "FontForge Black Square Next to Glyph Explained",
+    "When working in FontForge, seeing a small black square icon next to or inside a glyph cell typically indicates that the glyph has been modified and contains unsaved changes. This article explains the primary function of this visual marker, why it renders",
+    false
+  ],
+  [
+    47,
+    "Jump to a Unicode Codepoint in FontForge",
+    "Navigating directly to a specific Unicode codepoint in FontForge eliminates the need to scroll through thousands of glyph slots in large fonts. This guide outlines how to use FontForge’s built-in \"Goto\" tool to jump immediately to any character using its",
+    false
+  ],
+  [
+    46,
+    "FontForge Character Info Box Explained",
+    "The Character Info box in FontForge—commonly accessed as Glyph Info—serves as the primary control center for inspecting and modifying the metadata, encoding, and typographic properties of an individual character. This dialog allows font designers to manag",
+    false
+  ],
+  [
+    45,
+    "Customize Keyboard Shortcuts in FontForge",
+    "FontForge does not feature a dedicated, built-in graphical interface for remapping its default keyboard shortcuts. However, you can still customize or add shortcuts by utilizing operating system-level key remapping, writing custom Python scripts with assi",
+    false
+  ],
+  [
+    44,
+    "How to Toggle Grid Visibility in FontForge",
+    "This guide explains how to toggle the visibility of the grid and guideline system within the FontForge glyph editing workspace. Whether you need to hide distracting reference lines to evaluate glyph shapes clearly or enable them for precise alignment, Fon",
+    false
+  ],
+  [
+    43,
+    "FontForge Element Info Dialog Explained",
+    "The Element Info dialogs in FontForge—most notably the Font Info window accessed via the Element menu—serve as the central control panel for defining a font's metadata, metrics, encodings, and typographic behaviors. This guide provides a clear, structured",
+    false
+  ],
+  [
+    42,
+    "Set Thumbnail Layout in FontForge Overview Window",
+    "The FontForge Overview window (also known as the Font View) acts as the primary workspace for viewing and organizing all the glyphs in a font file. By default, it presents characters in an organized matrix, but you can quickly customize this space into an",
+    false
+  ],
+  [
+    41,
+    "Understanding the Background Layer in FontForge",
+    "In FontForge's glyph editing window, the background layer serves as a non-rendering reference and drafting workspace. Unlike the foreground layer, any artwork, vector paths, or imported images placed in the background layer are completely excluded from th",
+    false
+  ],
+  [
+    40,
+    "How to Open Multiple Font Windows in FontForge",
+    "Working with multiple fonts simultaneously in FontForge is essential for comparing glyph sets, transferring vector outlines, and maintaining consistency across different weights and styles. This guide provides a straightforward overview of how to display",
+    false
+  ],
+  [
+    39,
+    "FontForge Shortcut Keys for Quick Navigation",
+    "FontForge provides a comprehensive set of keyboard shortcuts designed to accelerate navigation across your font project. Utilizing these hotkeys allows type designers to jump between glyphs, pan and zoom editing canvases, and traverse control points witho",
+    false
+  ],
+  [
+    38,
+    "How to Dock and Undock Toolbars in FontForge",
+    "FontForge allows users to switch between docked and undocked interface elements, specifically for primary editing components like the Tools and Layers palettes. While FontForge utilizes a distinct user interface toolkit that lacks modern drag-and-drop sna",
+    false
+  ],
+  [
+    37,
+    "How to Zoom In and Out in FontForge",
+    "Zooming in and out of a specific glyph in FontForge is essential for inspecting Bezier curves and adjusting fine typographic details. This guide covers how to navigate to a glyph's outline editor and use mouse controls, keyboard shortcuts, the toolbar, an",
+    false
+  ],
+  [
+    36,
+    "Find the Layers Palette in FontForge Glyph View",
+    "This guide explains the exact location of the Layers palette within FontForge’s Glyph View, how to restore it if it has gone missing, and how to use it to manage your font design workflow. By understanding its interface placement and menu controls, you ca",
+    false
+  ],
+  [
+    35,
+    "Use FontForge Metrics View to Adjust Character Spacing",
+    "Adjusting character spacing is a critical step in type design to ensure text is legible, balanced, and aesthetically pleasing. In FontForge, this process is managed primarily through the Metrics View, an interactive workspace where you can inspect and mod",
+    false
+  ],
+  [
+    34,
+    "FontForge Font View Color Indicator Bars Explained",
+    "When working in the FontForge Font View, small colored indicator bars appear above or across glyph cells to provide real-time feedback on glyph status, outline integrity, and instructions. This guide explains what the red, green, and blue indicator bars r",
+    false
+  ],
+  [
+    33,
+    "How to Customize the FontForge Color Scheme",
+    "FontForge allows you to customize its interface color scheme, though it does not provide an integrated, one-click color picker in the primary settings menu. Because FontForge relies on its own custom UI toolkit called Gdraw, styling is handled through res",
+    false
+  ],
+  [
+    32,
+    "Switch Between Font View and Glyph View in FontForge",
+    "Navigating between the Font View and the Glyph View in FontForge is an essential part of the type design workflow. The Font View acts as the main dashboard displaying the full character grid of your font, while the Glyph View provides the drawing canvas f",
+    false
+  ],
+  [
+    31,
+    "What Is the Main Window in FontForge?",
+    "When you first launch FontForge and create or open a font file, the primary interface that appears is called the Font View. This article provides a concise overview of what the Font View is, how it serves as the central hub of the application, and the ess",
+    false
+  ],
+  [
+    30,
+    "FontForge Hardware Acceleration Options Explained",
+    "FontForge does not utilize modern hardware acceleration such as GPU rendering, OpenGL, Vulkan, or OpenCL. As a legacy open-source outline font editor, FontForge relies almost entirely on CPU-based software rendering for its user interface, spline calculat",
+    false
+  ],
+  [
+    29,
+    "Running FontForge in Docker for Font Builds",
+    "Running FontForge inside a Docker container is entirely feasible and serves as an industry best practice for automated, reproducible font building. Containerizing FontForge isolates its complex dependencies and Python bindings from your host system, ensur",
+    false
+  ],
+  [
+    28,
+    "Saving Fonts to System Directories in FontForge",
+    "When generating or saving font files, FontForge operates strictly within the security context of the user account running the application, meaning it cannot natively elevate privileges to write directly into protected system directories. Attempting to out",
+    false
+  ],
+  [
+    27,
+    "What GUI Toolkit Does FontForge Use?",
+    "FontForge is a widely used open-source font editor, but unlike many standard desktop applications that rely on GTK or Qt, it primarily utilizes a custom-built widget toolkit called Gdraw. This article explains the technical foundation of FontForge's graph",
+    false
+  ],
+  [
+    26,
+    "How to Set Up Portable FontForge on a USB Drive",
+    "Running FontForge as a portable application allows you to edit, convert, and design typography directly from a USB flash drive on any compatible Windows PC without local installation or administrator rights. This guide provides a direct, step-by-step walk",
+    false
+  ],
+  [
+    25,
+    "Build FontForge Using CMake Instead of Configure",
+    "Yes, you can build FontForge using CMake, and it is now the officially recommended and supported method. Modern versions of FontForge have replaced the legacy Autotools (./configure and make) build system entirely with CMake. This article outlines the pre",
+    false
+  ],
+  [
+    24,
+    "Active FontForge Forums and Mailing Lists",
+    "FontForge users seeking troubleshooting help, font creation advice, and software updates can connect through several active online spaces. While traditional email lists originally served as the core support channels, modern community interaction has large",
+    false
+  ],
+  [
+    23,
+    "How to Report a FontForge Bug or Crash",
+    "This guide provides a straightforward walkthrough on how to properly document and report bugs or application crashes to the FontForge development team. You will learn where FontForge issues are tracked, what essential system and diagnostic information you",
+    false
+  ],
+  [
+    22,
+    "FontForge Documentation and User Manuals",
+    "Finding the official documentation and user manuals for FontForge is essential for both novice type designers and experienced font developers. This guide outlines the primary sources for official FontForge documentation, including the primary website docu",
+    false
+  ],
+  [
+    21,
+    "Does FontForge Only Support 64-Bit Systems?",
+    "FontForge does not support 64-bit architectures exclusively, although 64-bit has become the primary target for modern releases. While modern pre-compiled packages for operating systems like Windows and macOS are predominantly distributed as 64-bit applica",
+    false
+  ],
+  [
+    20,
+    "Troubleshoot FontForge Segmentation Fault on Launch",
+    "A segmentation fault when opening FontForge usually indicates that the program attempted to access an unauthorized memory location, causing the operating system to terminate it immediately. This crash is most commonly triggered by corrupted user preferenc",
+    false
+  ],
+  [
+    19,
+    "Environment Variables That Affect FontForge",
+    "FontForge relies on several standard and application-specific environment variables to control its execution, user interface behavior, scripting environment, and system integration. Understanding these variables allows developers and typographers to custo",
+    false
+  ],
+  [
+    18,
+    "How to Install FontForge Plugins and Scripts",
+    "FontForge extends its core font-editing functionality primarily through Python scripts and native dynamic libraries rather than a traditional add-on marketplace. This guide details how to locate your FontForge configuration directories, install custom Pyt",
+    false
+  ],
+  [
+    17,
+    "Can Multiple Versions of FontForge Coexist?",
+    "Yes, multiple versions of FontForge can coexist on the same computer across Windows, macOS, and Linux. While standard installers typically overwrite previous installations by default, you can isolate distinct releases using portable builds, custom install",
+    false
+  ],
+  [
+    16,
+    "What Python Version Does FontForge Use?",
+    "FontForge relies on Python to handle complex typography automation, batch processing, and custom script execution. In modern standard releases, FontForge packages or links to Python 3—predominantly Python 3.10 or Python 3.11 in recent releases—having comp",
+    false
+  ],
+  [
+    15,
+    "Fix FontForge Missing DLL Errors on Windows",
+    "Missing Dynamic Link Library (DLL) errors when launching FontForge on Windows typically occur due to absent Microsoft Visual C++ Redistributable packages, corrupted installation files, or architecture mismatches between the application and your operating",
+    false
+  ],
+  [
+    14,
+    "Why FontForge Triggers Antivirus Warnings",
+    "Users downloading the open-source font editor FontForge may occasionally see their antivirus software or Windows Defender flag the installer as potentially malicious. This article explains the technical reasons behind these security alerts, focusing on co",
+    false
+  ],
+  [
+    13,
+    "FontForge Binaries for Older Operating Systems",
+    "Pre-compiled binaries of FontForge are indeed available for older operating systems, including legacy versions of Windows, macOS, and Linux. Because FontForge has been continuously developed since the early 2000s, older releases targeting platforms such a",
+    false
+  ],
+  [
+    12,
+    "How to Completely Uninstall FontForge on Windows",
+    "This guide provides a straightforward, step-by-step method to completely remove FontForge from your Windows computer. While standard uninstallation removes the core executable files, FontForge often leaves behind user configuration files, cache directorie",
+    false
+  ],
+  [
+    11,
+    "Recommended Compiler for Building FontForge",
+    "Building FontForge directly from its GitHub repository requires a modern C and C++ compiler compatible with the project's CMake build system. This guide covers the recommended compilers across supported operating systems, the required standards, and the o",
+    false
+  ],
+  [
+    10,
+    "How to Run FontForge Headless on Cloud Servers",
+    "FontForge can run entirely in a headless mode on cloud servers, making it an effective tool for automated font generation, conversion, and modification pipelines. This guide explains how FontForge operates without a graphical user interface (GUI), how to",
+    false
+  ],
+  [
+    9,
+    "Where FontForge Stores User Configuration Files",
+    "FontForge stores its user preferences, shortcut mappings, and custom scripts in specific configuration directories that vary depending on your operating system. This guide outlines the exact file paths for Linux, macOS, and Windows, detailing where to fin",
+    false
+  ],
+  [
+    8,
+    "How to Check Your FontForge Version",
+    "Checking the installed version of FontForge is essential for verifying feature compatibility, reporting bugs, or ensuring your font-design environment is up to date. Depending on your operating system and workflow, you can determine your version number di",
+    false
+  ],
+  [
+    7,
+    "Why FontForge Needs X11 or XQuartz on macOS",
+    "FontForge is a powerful open-source font editor originally developed for Unix-like environments, which often causes it to rely on an external display server to function on Apple computers. On macOS, running certain builds of FontForge requires X11 or XQua",
+    false
+  ],
+  [
+    6,
+    "How to Install FontForge on macOS Using Homebrew",
+    "This guide explains how to install the open-source font editor FontForge on macOS using Homebrew. Homebrew serves as the primary third-party package manager for macOS, automating the download, compilation, and configuration of FontForge and its required d",
+    false
+  ],
+  [
+    5,
+    "Update FontForge to the Latest Version on Ubuntu",
+    "Updating FontForge to the latest version on Ubuntu ensures you have access to the newest typographic tools, bug fixes, and file format compatibilities. Because the default Ubuntu repositories often feature older, frozen releases, getting the most up-to-da",
+    false
+  ],
+  [
+    4,
+    "Dependencies for Compiling FontForge from Source",
+    "Compiling FontForge from source code allows you to access the latest development features and tailor the font editor to your specific system, but it requires a comprehensive set of build utilities, core graphics libraries, and interface toolkits. This gui",
+    false
+  ],
+  [
+    3,
+    "Can You Install FontForge Natively on Windows 10?",
+    "FontForge is a widely used open-source font editor, but its Unix origins have historically created confusion regarding its compatibility with Windows. This article clarifies whether FontForge can be installed directly on Windows 10 without external depend",
+    false
+  ],
+  [
+    2,
+    "FontForge System Requirements for macOS",
+    "FontForge is a free, open-source font editor that allows designers to create and modify vector fonts directly on Apple computers. This guide details the essential system requirements, supported macOS versions, hardware specifications, and installation pre",
+    false
+  ],
+  [
+    1,
+    "How to Install FontForge on Linux",
+    "FontForge is a powerful, open-source font editor that allows you to create, edit, and convert outline and bitmap fonts. This guide provides direct, step-by-step instructions to install FontForge across various Linux distributions using native package mana",
+    false
+  ]
+]

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Ligature Carets in FontForge Complex Scripts - fontforge</title>
+    <meta name="description" content="This article outlines how to configure a ligature caret list in FontForge to ensure proper cursor navigation across combined glyphs in complex scripts. Ligature carets define the intermediate positions where a text cursor stops within a single ligature th">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/setup-ligature-carets-in-font-forge-complex-scripts">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Setup Ligature Carets in FontForge Complex Scripts - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/setup-ligature-carets-in-font-forge-complex-scripts" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article outlines how to configure a ligature caret list in FontForge to ensure proper cursor navigation across combined glyphs in complex scripts. Ligature carets define the intermediate positions where a text cursor stops within a single ligature th" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="setup-ligature-carets-in-fontforge-complex-scripts">Setup
+Ligature Carets in FontForge Complex Scripts</h1>
+<p>This article outlines how to configure a ligature caret list in
+FontForge to ensure proper cursor navigation across combined glyphs in
+complex scripts. Ligature carets define the intermediate positions where
+a text cursor stops within a single ligature that represents multiple
+logical characters. By adding these entry points to the OpenType GDEF
+table via FontForge, you ensure correct text selection, editing, and
+caret positioning in layout engines handling complex scripts like
+Arabic, Devanagari, or contextual Latin scripts.</p>
+<h3 id="1-understand-ligature-caret-requirements">1. Understand Ligature
+Caret Requirements</h3>
+<p>A ligature composed of <em>N</em> individual characters requires
+<em>N - 1</em> caret positions. For example, a three-component ligature
+requires two caret split points.</p>
+<p>FontForge supports two methods for defining ligature carets:</p>
+<ul>
+<li><strong>Pixel/Unit Offsets:</strong> Absolute horizontal design-unit
+coordinates relative to the glyph's origin (x = 0).</li>
+<li><strong>Contour Point Anchors:</strong> The index number of a
+specific contour point on the glyph, which preserves position if
+outlines are modified or scaled.</li>
+</ul>
+<h3 id="2-access-the-ligature-caret-interface">2. Access the Ligature
+Caret Interface</h3>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>In the font view, double-click the ligature glyph to open it, or
+select it and navigate to the menu.</li>
+<li>Choose <strong>Element</strong> &gt; <strong>Glyph
+Info</strong>.</li>
+<li>In the dialog sidebar, select <strong>Ligature Caret</strong>.</li>
+</ol>
+<h3 id="3-add-caret-positions">3. Add Caret Positions</h3>
+<ol type="1">
+<li>Click the <strong>New</strong> button to create a caret entry.</li>
+<li>Choose the positioning format:
+<ul>
+<li><strong>Coordinate:</strong> Enter the exact X-axis design unit
+coordinate where the cursor should appear. Measure the logical division
+points between script components in the glyph edit window
+beforehand.</li>
+<li><strong>Point:</strong> Enter the index number of an on-curve point
+situated at the junction between the combined shapes.</li>
+</ul></li>
+<li>Repeat the process for each subsequent boundary inside the
+ligature.</li>
+<li>Arrange the values in ascending order from left to right along the
+X-axis. For right-to-left (RTL) scripts such as Arabic, layout engines
+automatically handle the visual order based on the script direction, but
+the coordinate values themselves must still align with the physical
+layout of the glyph coordinate space.</li>
+</ol>
+<h3 id="4-configure-gdef-table-export">4. Configure GDEF Table
+Export</h3>
+<p>Ligature caret data resides in the OpenType <code>GDEF</code> (Glyph
+Definition) table.</p>
+<ol type="1">
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font Info</strong>
+&gt; <strong>Lookups</strong>.</li>
+<li>Ensure that your ligature substitution rules are properly configured
+under <strong>GSUB</strong> so the rendering engine recognizes the
+target glyph as a ligature.</li>
+<li>Open <strong>File</strong> &gt; <strong>Generate
+Fonts</strong>.</li>
+<li>Click the <strong>Options</strong> button in the file export
+window.</li>
+<li>Verify that <strong>OpenType</strong> is checked and ensure there
+are no options selected that strip GDEF tables upon export.</li>
+<li>Generate the font file (<code>.otf</code> or
+<code>.ttf</code>).</li>
+</ol>
+<h3 id="5-validate-the-output">5. Validate the Output</h3>
+<p>Test the generated font in a rendering environment that supports the
+OpenType GDEF table:</p>
+<ul>
+<li>Use text layout tools like <code>hb-view</code> or
+<code>hb-shape</code> (from the HarfBuzz suite) with caret query flags
+to verify that cursor stops register at the specified units.</li>
+<li>Test in text editors that support complex scripts to confirm that
+arrow keys navigate cleanly through each sub-character of the ligature
+without skipping components.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/setup-ligature-carets-in-font-forge-complex-scripts';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

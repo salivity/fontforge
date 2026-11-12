@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Metadata from an Existing Font in FontForge - fontforge</title>
+    <meta name="description" content="Yes, you can import and transfer metadata from an existing font into FontForge, though the program handles the process through specific workflows rather than a single dedicated &quot;import metadata&quot; button. When you open any supported font format (such as TTF">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/import-metadata-from-an-existing-font-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Import Metadata from an Existing Font in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/import-metadata-from-an-existing-font-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Yes, you can import and transfer metadata from an existing font into FontForge, though the program handles the process through specific workflows rather than a single dedicated &quot;import metadata&quot; button. When you open any supported font format (such as TTF" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="import-metadata-from-an-existing-font-in-fontforge">Import
+Metadata from an Existing Font in FontForge</h1>
+<p>Yes, you can import and transfer metadata from an existing font into
+FontForge, though the program handles the process through specific
+workflows rather than a single dedicated "import metadata" button. When
+you open any supported font format (such as TTF, OTF, or WOFF),
+FontForge automatically reads and extracts all associated metadata into
+its database. To apply that existing metadata to a new or different font
+project, you can use FontForge's native font merging feature, OpenType
+feature files, or its built-in Python scripting environment.</p>
+<h3 id="viewing-extracted-metadata-directly">Viewing Extracted Metadata
+Directly</h3>
+<p>When you open an existing font file via <strong>File &gt;
+Open</strong>, FontForge immediately parses all metadata tables
+(including name records, OS/2 values, copyright details, and OpenType
+features).</p>
+<p>To inspect this data:</p>
+<ol type="1">
+<li>Navigate to <strong>Element &gt; Font Info</strong>.</li>
+<li>Browse categories such as <strong>PS Names</strong>, <strong>TTF
+Names</strong>, and <strong>OS/2</strong> to view the exact metadata
+values stored inside the file.</li>
+</ol>
+<h3 id="transferring-metadata-using-the-merge-method">Transferring
+Metadata Using the Merge Method</h3>
+<p>If you want an existing font's complete metadata applied to a new set
+of glyphs without writing code, use the donor font as a template:</p>
+<ol type="1">
+<li>Open the font containing the desired metadata (<strong>File &gt;
+Open</strong>).</li>
+<li>Select all glyphs (<strong>Edit &gt; Select &gt; Select
+All</strong>) and delete their outlines (<strong>Edit &gt;
+Clear</strong>).</li>
+<li>Go to <strong>Element &gt; Merge Fonts</strong>.</li>
+<li>Select the font file containing your actual glyph outlines.</li>
+<li>When prompted, preserve the base font's properties. FontForge will
+populate the empty slots with your new glyphs while keeping the original
+font's naming, metrics, and metadata intact.</li>
+</ol>
+<h3 id="transferring-metadata-via-python-scripting">Transferring
+Metadata via Python Scripting</h3>
+<p>For precise control or automation, FontForge's Python scripting
+interface provides the cleanest way to copy metadata attributes directly
+from one font file to another.</p>
+<p>You can run the following script inside FontForge's Python console
+(<strong>File &gt; Execute Script</strong>):</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the donor font and the target font</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>donor <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;donor_font.ttf&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;target_font.sfd&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy basic naming metadata</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>target.fontname <span class="op">=</span> donor.fontname</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>target.familyname <span class="op">=</span> donor.familyname</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>target.fullname <span class="op">=</span> donor.fullname</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>target.weight <span class="op">=</span> donor.weight</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>target.copyright <span class="op">=</span> donor.copyright</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>target.version <span class="op">=</span> donor.version</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy OS/2 table data</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>target.os2_vendor <span class="op">=</span> donor.os2_vendor</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>target.os2_weight <span class="op">=</span> donor.os2_weight</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>target.os2_width <span class="op">=</span> donor.os2_width</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Save changes to the target font</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>target.save()</span></code></pre></div>
+<h3 id="importing-specific-metadata-tables">Importing Specific Metadata
+Tables</h3>
+<p>If your metadata includes custom OpenType layout tables (lookups,
+ligatures, kerning pairs), you can export and import them
+independently:</p>
+<ol type="1">
+<li>In the donor font, open <strong>Element &gt; Font Info &gt;
+Lookups</strong>.</li>
+<li>Select <strong>Save Feature File</strong> to generate an Adobe
+OpenType Feature (<code>.fea</code>) file.</li>
+<li>Open your target font, return to the <strong>Lookups</strong> pane,
+and click <strong>Load Feature File</strong> to apply those rules and
+metadata directly to your project.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/import-metadata-from-an-existing-font-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Point Coordinates in FontForge - fontforge</title>
+    <meta name="description" content="This guide explains how to toggle the visual display of point coordinates in FontForge&#39;s Glyph Outline view. You will learn the exact menu option to show or hide numeric X and Y values directly on the canvas, how to read coordinates dynamically from the i">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/toggle-point-coordinates-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Toggle Point Coordinates in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/toggle-point-coordinates-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to toggle the visual display of point coordinates in FontForge&#39;s Glyph Outline view. You will learn the exact menu option to show or hide numeric X and Y values directly on the canvas, how to read coordinates dynamically from the i" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="toggle-point-coordinates-in-fontforge">Toggle Point Coordinates
+in FontForge</h1>
+<p>This guide explains how to toggle the visual display of point
+coordinates in FontForge's Glyph Outline view. You will learn the exact
+menu option to show or hide numeric X and Y values directly on the
+canvas, how to read coordinates dynamically from the info bar, and how
+to inspect individual point coordinates with precision using the Point
+Info dialog.</p>
+<h3 id="displaying-coordinates-on-the-canvas">Displaying Coordinates on
+the Canvas</h3>
+<p>To display coordinate labels next to every on-curve point and
+off-curve control handle directly in the glyph design window:</p>
+<ol type="1">
+<li>Open your font project and double-click any glyph to enter the
+<strong>Glyph Outline View</strong>.</li>
+<li>Click the <strong>View</strong> menu in the top menu bar.</li>
+<li>Click <strong>Show Point Coordinates</strong> to toggle the feature
+on. A checkmark will appear next to the item when it is active.</li>
+</ol>
+<p>When enabled, the canvas renders the exact integer (or decimal) <span
+class="math inline">\((X, Y)\)</span> location beside each point. To
+hide the numbers again and reduce visual clutter, click
+<strong>View</strong> &gt; <strong>Show Point Coordinates</strong> a
+second time to uncheck it.</p>
+<h3 id="alternative-ways-to-check-coordinates">Alternative Ways to Check
+Coordinates</h3>
+<p>If having numbers displayed next to every point crowds your
+workspace, FontForge provides less intrusive alternatives to inspect
+point positions:</p>
+<ul>
+<li><strong>The Coordinate Status Bar:</strong> Look at the top or
+bottom status bar of the Glyph Outline View. When you hover your cursor
+over the canvas, move a handle, or select a node, FontForge displays the
+active <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> coordinates in real time alongside
+displacement values <span class="math inline">\((\Delta X, \Delta
+Y)\)</span>.</li>
+<li><strong>Point Info Dialog:</strong> Select any specific point,
+right-click it, and select <strong>Get Info</strong> (or press
+<strong>Ctrl + I</strong> on Windows/Linux, <strong>Cmd + I</strong> on
+macOS). This opens a window showing the point's exact base coordinates,
+incoming control points, and outgoing control points, where values can
+also be edited manually.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/toggle-point-coordinates-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

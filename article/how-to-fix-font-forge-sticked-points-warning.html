@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Fix FontForge Sticked Points Warning - fontforge</title>
+    <meta name="description" content="The &quot;Sticked points&quot; warning in FontForge indicates an error where two or more control handles or path nodes occupy the exact same spatial coordinates, creating collapsed Bézier paths. This article outlines why this geometry error happens during font deve">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-fix-font-forge-sticked-points-warning">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Fix FontForge Sticked Points Warning - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-fix-font-forge-sticked-points-warning" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The &quot;Sticked points&quot; warning in FontForge indicates an error where two or more control handles or path nodes occupy the exact same spatial coordinates, creating collapsed Bézier paths. This article outlines why this geometry error happens during font deve" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-fix-fontforge-sticked-points-warning">How to Fix
+FontForge Sticked Points Warning</h1>
+<p>The "Sticked points" warning in FontForge indicates an error where
+two or more control handles or path nodes occupy the exact same spatial
+coordinates, creating collapsed Bézier paths. This article outlines why
+this geometry error happens during font development and provides
+practical, step-by-step methods to resolve it both automatically and
+manually to ensure clean font compilation.</p>
+<h3 id="why-the-sticked-points-warning-appears">Why the "Sticked Points"
+Warning Appears</h3>
+<p>In vector typography, outlines are defined by on-curve anchor points
+and off-curve control points (handles). A "sticked points" warning
+occurs when:</p>
+<ol type="1">
+<li><strong>Zero-Length Handles:</strong> An off-curve control handle is
+pulled directly onto its associated on-curve point, giving the handle a
+length of zero.</li>
+<li><strong>Coincident Control Points:</strong> Two handles for adjacent
+curves sit precisely at the same coordinates.</li>
+<li><strong>Overlapping Anchor Points:</strong> Two distinct on-curve
+points share the exact same X and Y position on the grid.</li>
+</ol>
+<p>Rendering engines and font format specifications (OpenType, TrueType,
+and PostScript) struggle to calculate curvature mathematically when
+control vectors have no length or direction. This can cause rendering
+artifacts, hinting failures, or compilation errors when exporting to OTF
+or TTF formats.</p>
+<h3 id="method-1-automatic-fix-via-fontforge-validation">Method 1:
+Automatic Fix via FontForge Validation</h3>
+<p>FontForge includes built-in tools to detect and repair geometry
+issues automatically:</p>
+<ol type="1">
+<li>Open your font and navigate to the glyph producing the error, or
+select all glyphs in the font view with <code>Ctrl+A</code>
+(<code>Cmd+A</code> on macOS).</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Validation</strong> &gt;
+<strong>Find Problems...</strong></li>
+<li>In the dialog box, go to the <strong>Paths</strong> tab.</li>
+<li>Check the box for <strong>Check for control points which are stuck
+to points</strong>.</li>
+<li>Choose <strong>Fix</strong> instead of <strong>Error</strong> if you
+want FontForge to attempt an automatic repair, then click
+<strong>OK</strong>.</li>
+</ol>
+<h3 id="method-2-merge-overlapping-nodes-with-simplify">Method 2: Merge
+Overlapping Nodes with Simplify</h3>
+<p>If the stuck points are redundant anchor nodes:</p>
+<ol type="1">
+<li>Open the affected glyph in the Glyph Edit window.</li>
+<li>Select the entire outline by pressing <code>Ctrl+A</code>.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Simplify</strong> &gt;
+<strong>Simplify</strong> (or press <code>Ctrl+Shift+M</code>).</li>
+<li>To remove stubborn micro-segments, run <strong>Element</strong> &gt;
+<strong>Simplify</strong> &gt; <strong>Simplify More</strong> to merge
+duplicate coordinates into single, clean nodes.</li>
+</ol>
+<h3 id="method-3-manual-adjustment">Method 3: Manual Adjustment</h3>
+<p>For high-precision design work where automatic tools might alter the
+shape of the curve:</p>
+<ol type="1">
+<li>Open the glyph in the Glyph Edit window.</li>
+<li>Zoom in closely to the flagged coordinates indicated by the
+validation tool.</li>
+<li>If an anchor has a zero-length handle, click and drag the handle
+away from the node to give it direction, or right-click the point and
+change its type to a <strong>Corner</strong> point or a
+<strong>Line</strong> segment to eliminate the unnecessary Bézier handle
+entirely.</li>
+<li>If two on-curve points overlap, select one of the nodes and press
+<code>Delete</code> to remove the redundant point while maintaining the
+closed path.</li>
+</ol>
+<p>Once adjusted, run <strong>Element</strong> &gt;
+<strong>Validation</strong> &gt; <strong>Validate</strong> to confirm
+the warning has cleared before generating your final font files.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-fix-font-forge-sticked-points-warning';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

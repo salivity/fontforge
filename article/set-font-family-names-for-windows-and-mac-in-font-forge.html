@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Font Family Names for Windows and Mac in FontForge - fontforge</title>
+    <meta name="description" content="Cross-platform font naming discrepancies occur because Windows and macOS rely on different naming tables within the font binary to categorize and group font families. While macOS primarily looks at PostScript and typographic family definitions, Windows ap">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/set-font-family-names-for-windows-and-mac-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Set Font Family Names for Windows and Mac in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/set-font-family-names-for-windows-and-mac-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Cross-platform font naming discrepancies occur because Windows and macOS rely on different naming tables within the font binary to categorize and group font families. While macOS primarily looks at PostScript and typographic family definitions, Windows ap" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="set-font-family-names-for-windows-and-mac-in-fontforge">Set Font
+Family Names for Windows and Mac in FontForge</h1>
+<p>Cross-platform font naming discrepancies occur because Windows and
+macOS rely on different naming tables within the font binary to
+categorize and group font families. While macOS primarily looks at
+PostScript and typographic family definitions, Windows applications
+often enforce the legacy four-style (Regular, Italic, Bold, Bold Italic)
+model. This guide outlines how to correctly configure FontForge’s
+metadata settings so your font family displays consistently across both
+operating systems.</p>
+<h3 id="1-configure-the-ps-names-postscript-names">1. Configure the PS
+Names (PostScript Names)</h3>
+<p>Open your font in FontForge and navigate to <strong>Element &gt; Font
+Info &gt; PS Names</strong>. Set the following standard parameters:</p>
+<ul>
+<li><strong>Fontname</strong>: The PostScript name used internally by
+printers and PDF engines. It must contain no spaces and use only
+standard ASCII characters (e.g., <code>MyFamily-Bold</code>).</li>
+<li><strong>Family Name</strong>: The base name of your family (e.g.,
+<code>MyFamily</code>). This groups the family in many macOS
+environments.</li>
+<li><strong>Name for Humans</strong>: The full, readable name of the
+specific font style (e.g., <code>MyFamily Bold</code>).</li>
+<li><strong>Weight</strong>: Specify the design weight (e.g.,
+<code>Bold</code>, <code>Light</code>, <code>Regular</code>).</li>
+</ul>
+<h3 id="2-configure-ttf-names-for-cross-platform-support">2. Configure
+TTF Names for Cross-Platform Support</h3>
+<p>The <code>TTF Names</code> table (located at <strong>Element &gt;
+Font Info &gt; TTF Names</strong>) governs how Windows and macOS display
+font names in application menus. To ensure compatibility, provide values
+for both <strong>Macintosh</strong> and <strong>Windows</strong>
+platforms.</p>
+<h4
+id="for-standard-4-style-families-regular-italic-bold-bold-italic">For
+Standard 4-Style Families (Regular, Italic, Bold, Bold Italic):</h4>
+<ul>
+<li><strong>Family (Name ID 1)</strong>: Enter your common family name
+(e.g., <code>MyFamily</code>).</li>
+<li><strong>SubFamily (Name ID 2)</strong>: Enter only one of the four
+standard styles: <code>Regular</code>, <code>Italic</code>,
+<code>Bold</code>, or <code>Bold Italic</code>.</li>
+<li><strong>Fullname (Name ID 4)</strong>: Enter the complete name
+(e.g., <code>MyFamily Bold</code>).</li>
+<li><strong>PostScript Name (Name ID 6)</strong>: Must match the
+<strong>Fontname</strong> from the PS Names tab (e.g.,
+<code>MyFamily-Bold</code>).</li>
+</ul>
+<h4 id="for-extended-families-thin-medium-black-condensed-etc">For
+Extended Families (Thin, Medium, Black, Condensed, etc.):</h4>
+<p>Windows software adhering to the legacy model cannot group more than
+four styles under a single ID 1 entry without breaking menus. To resolve
+this for modern applications across both operating systems:</p>
+<ul>
+<li><strong>Family (Name ID 1)</strong>: Group your styles into
+synthetic 4-style clusters. For example, for a "SemiBold" style, set ID
+1 to <code>MyFamily SemiBold</code>.</li>
+<li><strong>SubFamily (Name ID 2)</strong>: Set to <code>Regular</code>
+(or <code>Italic</code> if it is a slanted variant).</li>
+<li><strong>Preferred Family / Typographic Family (Name ID 16)</strong>:
+Set this to the true base family name (e.g., <code>MyFamily</code>).
+Both macOS and modern Windows applications read this to keep all weights
+together under one menu.</li>
+<li><strong>Preferred Subfamily / Typographic Subfamily (Name ID
+17)</strong>: Set this to the exact style name (e.g.,
+<code>SemiBold</code> or <code>SemiBold Italic</code>).</li>
+<li><strong>WWS Family (Name ID 21)</strong> and <strong>WWS Subfamily
+(Name ID 22)</strong>: Set these identical to Name IDs 16 and 17 if your
+font family uses standard weight, width, and slope variants.</li>
+</ul>
+<h3 id="3-ensure-platform-duplication">3. Ensure Platform
+Duplication</h3>
+<p>Inside the TTF Names panel, verify that every defined Name ID has two
+entries:</p>
+<ol type="1">
+<li><strong>Platform</strong>: <code>Windows</code>,
+<strong>Language</strong>: <code>English (US)</code></li>
+<li><strong>Platform</strong>: <code>Macintosh</code>,
+<strong>Language</strong>: <code>English</code></li>
+</ol>
+<p>If an entry is missing, click <strong>Add</strong>, select the target
+platform, assign the corresponding Name ID, and enter the identical
+string value.</p>
+<h3 id="4-generate-the-font">4. Generate the Font</h3>
+<p>When exporting via <strong>File &gt; Generate Fonts</strong>:</p>
+<ol type="1">
+<li>Choose <strong>OpenType (CFF)</strong> (<code>.otf</code>) or
+<strong>TrueType</strong> (<code>.ttf</code>).</li>
+<li>Click the <strong>Options</strong> button in the file dialog.</li>
+<li>Ensure <strong>OpenType</strong> is checked and <strong>Validate
+Before Saving</strong> is run to confirm there are no syntax errors in
+the name tables.</li>
+<li>Export the files and test the family simultaneously in a macOS app
+(such as TextEdit) and a Windows app (such as Microsoft Word or Adobe
+applications) to ensure consistent grouping.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/set-font-family-names-for-windows-and-mac-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

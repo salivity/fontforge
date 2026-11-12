@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Designer and Vendor URL in FontForge - fontforge</title>
+    <meta name="description" content="Updating the designer and vendor URLs in FontForge is essential for embedding proper metadata and creator attribution directly into OpenType and TrueType fonts. This guide outlines the exact steps to locate and modify the OpenType Name Table fields respon">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/update-designer-and-vendor-url-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Update Designer and Vendor URL in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/update-designer-and-vendor-url-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Updating the designer and vendor URLs in FontForge is essential for embedding proper metadata and creator attribution directly into OpenType and TrueType fonts. This guide outlines the exact steps to locate and modify the OpenType Name Table fields respon" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="update-designer-and-vendor-url-in-fontforge">Update Designer and
+Vendor URL in FontForge</h1>
+<p>Updating the designer and vendor URLs in FontForge is essential for
+embedding proper metadata and creator attribution directly into OpenType
+and TrueType fonts. This guide outlines the exact steps to locate and
+modify the OpenType Name Table fields responsible for the designer URL
+(Name ID 12) and vendor URL (Name ID 11) within the application's Font
+Info settings.</p>
+<h3 id="step-1-open-the-font-info-window">Step 1: Open the Font Info
+Window</h3>
+<ol type="1">
+<li>Launch FontForge and open your font file (<code>.sfd</code>,
+<code>.ttf</code>, or <code>.otf</code>).</li>
+<li>In the top menu bar, click on <strong>Element</strong>.</li>
+<li>Select <strong>Font Info</strong> from the drop-down menu (or use
+the shortcut <code>Ctrl+Shift+F</code> on Windows/Linux or
+<code>Cmd+Shift+F</code> on macOS).</li>
+</ol>
+<h3 id="step-2-navigate-to-ttf-names">Step 2: Navigate to TTF Names</h3>
+<ol type="1">
+<li>In the left-hand navigation pane of the <strong>Font Info</strong>
+dialog, locate the category titled <strong>TTF Names</strong>.</li>
+<li>Click on <strong>TTF Names</strong> to view the table of OpenType
+name records assigned to the font.</li>
+</ol>
+<h3 id="step-3-locate-or-add-the-url-records">Step 3: Locate or Add the
+URL Records</h3>
+<p>FontForge stores web metadata using standard OpenType Name IDs:</p>
+<ul>
+<li><strong>Vendor URL:</strong> Name ID 11 (labeled as <strong>URL
+Vendor</strong>)</li>
+<li><strong>Designer URL:</strong> Name ID 12 (labeled as <strong>URL
+Designer</strong>)</li>
+</ul>
+<p>To update existing entries:</p>
+<ol type="1">
+<li>Scroll through the list in the TTF Names panel and find <strong>URL
+Vendor</strong> or <strong>URL Designer</strong>.</li>
+<li>Double-click the field value or select the row and click the
+<strong>Edit</strong> button.</li>
+<li>Enter your full website address (including
+<code>https://</code>).</li>
+<li>Click <strong>OK</strong> to save the value.</li>
+</ol>
+<p>To add entries if they do not exist:</p>
+<ol type="1">
+<li>Click the <strong>Add</strong> button at the bottom of the TTF Names
+panel.</li>
+<li>In the configuration dialog, set the language (typically
+<strong>English (US)</strong>).</li>
+<li>Choose the appropriate field name (<strong>URL Vendor</strong> or
+<strong>URL Designer</strong>) from the Name ID drop-down list.</li>
+<li>Input the desired URL into the string field.</li>
+<li>Click <strong>OK</strong> to add the entry to the list.</li>
+</ol>
+<h3 id="step-4-apply-and-save">Step 4: Apply and Save</h3>
+<ol type="1">
+<li>Click <strong>OK</strong> at the bottom of the main <strong>Font
+Info</strong> window to commit the metadata changes.</li>
+<li>Save your FontForge source file (<strong>File &gt;
+Save</strong>).</li>
+<li>Export the updated font binary by navigating to <strong>File &gt;
+Generate Fonts...</strong> so the new metadata is compiled into your
+final <code>.ttf</code> or <code>.otf</code> file.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/update-designer-and-vendor-url-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

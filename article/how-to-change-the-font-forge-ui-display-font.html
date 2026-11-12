@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Change the FontForge UI Display Font - fontforge</title>
+    <meta name="description" content="This guide explains how to change the interface display font in FontForge. Because FontForge utilizes an internal resource system rather than an in-app visual theme selector for its UI typography, modifying the user interface font requires adding or updat">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-change-the-font-forge-ui-display-font">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Change the FontForge UI Display Font - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-change-the-font-forge-ui-display-font" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to change the interface display font in FontForge. Because FontForge utilizes an internal resource system rather than an in-app visual theme selector for its UI typography, modifying the user interface font requires adding or updat" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-change-the-fontforge-ui-display-font">How to Change the
+FontForge UI Display Font</h1>
+<p>This guide explains how to change the interface display font in
+FontForge. Because FontForge utilizes an internal resource system rather
+than an in-app visual theme selector for its UI typography, modifying
+the user interface font requires adding or updating specific font rules
+inside FontForge's <code>XResources</code> configuration file.</p>
+<h3 id="step-1-locate-the-xresources-configuration-file">Step 1: Locate
+the XResources Configuration File</h3>
+<p>FontForge reads its interface layout, colors, and fonts from an
+<code>XResources</code> file stored in your user profile:</p>
+<ul>
+<li><strong>Linux / BSD:</strong> <code>~/.FontForge/XResources</code>
+(or occasionally <code>~/.config/fontforge/XResources</code>)</li>
+<li><strong>macOS:</strong> <code>~/.FontForge/XResources</code>
+(accessible via Terminal or Finder via <code>Go to Folder</code>)</li>
+<li><strong>Windows:</strong>
+<code>%APPDATA%\FontForge\XResources</code> (usually
+<code>C:\Users\&lt;YourUsername&gt;\AppData\Roaming\FontForge\XResources</code>)</li>
+</ul>
+<p>If this file does not exist, you can create a plain text file named
+<code>XResources</code> inside that directory.</p>
+<h3 id="step-2-define-the-interface-fonts">Step 2: Define the Interface
+Fonts</h3>
+<p>Open the <code>XResources</code> file in any plain-text editor (such
+as Notepad, TextEdit, or Nano). Add the following directives to define
+the UI fonts:</p>
+<pre class="text"><code>FontForge.DefaultFont: DejaVu Sans,11
+FontForge.DefaultBoldFont: DejaVu Sans,11,bold
+FontForge.SmallFont: DejaVu Sans,9</code></pre>
+<p>Replace <code>DejaVu Sans</code> with the name of any font installed
+on your operating system (for example, <code>Segoe UI</code>,
+<code>SF Pro Display</code>, <code>Ubuntu</code>, or
+<code>Cantarell</code>). Adjust the integer following the font name to
+change the font size.</p>
+<h3 id="key-font-directives-explained">Key Font Directives
+Explained</h3>
+<p>You can control specific interface elements by adding additional
+directives:</p>
+<ul>
+<li><strong><code>FontForge.DefaultFont</code></strong>: Controls
+general menu text, dialog boxes, and button labels.</li>
+<li><strong><code>FontForge.DefaultBoldFont</code></strong>: Controls
+emphasized text, active selections, and title labels.</li>
+<li><strong><code>FontForge.SmallFont</code></strong>: Controls small
+indicators, metrics labels, and subtext.</li>
+<li><strong><code>FontForge.MonoFont</code></strong>: Controls code
+blocks, scripting windows, and text fields where fixed-width characters
+are required (e.g.,
+<code>FontForge.MonoFont: DejaVu Sans Mono,10</code>).</li>
+</ul>
+<h3 id="step-3-save-and-relaunch">Step 3: Save and Relaunch</h3>
+<ol type="1">
+<li>Save the changes to the <code>XResources</code> file.</li>
+<li>Ensure the file has no hidden extension (such as
+<code>.txt</code>).</li>
+<li>Fully close and restart FontForge.</li>
+</ol>
+<p>FontForge will parse the new resource rules during initialization and
+render the user interface using your chosen fonts.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-change-the-font-forge-ui-display-font';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

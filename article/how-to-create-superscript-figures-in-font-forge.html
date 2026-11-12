@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create Superscript Figures in FontForge - fontforge</title>
+    <meta name="description" content="This guide outlines the complete process of creating superscript figures in FontForge. You will learn how to locate standard Unicode slots, generate scaled glyphs from existing numerals, adjust their weight and position, set proper metrics, and configure">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-create-superscript-figures-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Create Superscript Figures in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-create-superscript-figures-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide outlines the complete process of creating superscript figures in FontForge. You will learn how to locate standard Unicode slots, generate scaled glyphs from existing numerals, adjust their weight and position, set proper metrics, and configure" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-create-superscript-figures-in-fontforge">How to Create
+Superscript Figures in FontForge</h1>
+<p>This guide outlines the complete process of creating superscript
+figures in FontForge. You will learn how to locate standard Unicode
+slots, generate scaled glyphs from existing numerals, adjust their
+weight and position, set proper metrics, and configure OpenType features
+so software can automatically substitute regular numbers with
+superscripts.</p>
+<h3 id="step-1-locate-the-unicode-slots">Step 1: Locate the Unicode
+Slots</h3>
+<p>Superscript numbers are split across two separate blocks in standard
+Unicode:</p>
+<ul>
+<li><strong>Superscript 1, 2, and 3:</strong> <code>U+00B9</code>,
+<code>U+00B2</code>, and <code>U+00B3</code> (Latin-1 Supplement)</li>
+<li><strong>Superscript 0 and 4 through 9:</strong> <code>U+2070</code>
+and <code>U+2074</code> through <code>U+2079</code> (Superscripts and
+Subscripts block)</li>
+</ul>
+<p>To navigate to these slots:</p>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Go to <strong>View</strong> &gt; <strong>Goto</strong> (or press
+<code>Ctrl+Shift+&gt;</code>).</li>
+<li>Enter the Unicode value (for example, <code>U+2070</code> for
+superscript zero) and click <strong>OK</strong>.</li>
+</ol>
+<h3 id="step-2-copy-and-scale-existing-numerals">Step 2: Copy and Scale
+Existing Numerals</h3>
+<p>Rather than drawing superscripts from scratch, derive them from your
+base figures:</p>
+<ol type="1">
+<li>Select your standard figures (<code>0</code> through <code>9</code>)
+in the font view.</li>
+<li>Press <code>Ctrl+C</code> to copy them.</li>
+<li>Paste each figure into its matching superscript slot.</li>
+<li>Select all pasted superscript glyphs.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Transformations</strong>
+&gt; <strong>Transform</strong>.</li>
+<li>Set the dropdown to <strong>Scale Uniformly</strong>.</li>
+<li>Enter a scale factor between <strong>55%</strong> and
+<strong>65%</strong> (60% is standard) and click
+<strong>OK</strong>.</li>
+</ol>
+<h3 id="step-3-compensate-for-stroke-weight">Step 3: Compensate for
+Stroke Weight</h3>
+<p>Directly scaling glyphs makes the strokes too thin compared to the
+surrounding text. To fix this:</p>
+<ol type="1">
+<li>Select the scaled glyphs.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Styles</strong> &gt;
+<strong>Change Weight</strong>.</li>
+<li>Add a small stroke value (typically 5 to 20 font units, depending on
+your em size) to restore visual balance with the base font.</li>
+<li>Run <strong>Element</strong> &gt; <strong>Correct Direction</strong>
+(<code>Ctrl+Shift+D</code>) to resolve any overlapping contours or
+inverted paths.</li>
+</ol>
+<h3 id="step-4-reposition-to-superscript-height">Step 4: Reposition to
+Superscript Height</h3>
+<p>Superscript figures generally align with the font's cap-height or
+ascender:</p>
+<ol type="1">
+<li>Open a superscript glyph alongside a standard capital letter in the
+<strong>Metrics</strong> window to determine the target height.</li>
+<li>Select all superscript glyphs in the font view.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Transformations</strong>
+&gt; <strong>Transform</strong>.</li>
+<li>Select <strong>Move</strong> from the dropdown.</li>
+<li>Enter a positive value in the <strong>Y</strong> field (typically
+300 to 450 units on a 1000-unit em square) so the tops of the figures
+align with the cap height.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<h3 id="step-5-adjust-metrics-and-side-bearings">Step 5: Adjust Metrics
+and Side Bearings</h3>
+<p>Scaled figures require proportionally reduced left and right side
+bearings:</p>
+<ol type="1">
+<li>Select the superscript figures.</li>
+<li>Go to <strong>Metrics</strong> &gt; <strong>Set Width</strong> or
+manually drag bearings in the Metrics window.</li>
+<li>Tighten the left and right side bearings to match the spacing
+density of the primary numerals.</li>
+</ol>
+<h3 id="step-6-map-to-the-opentype-sups-feature">Step 6: Map to the
+OpenType <code>sups</code> Feature</h3>
+<p>To make superscripts functional in modern layout software via
+OpenType:</p>
+<ol type="1">
+<li>Go to <strong>Element</strong> &gt; <strong>Font Info</strong>.</li>
+<li>Click <strong>Lookups</strong> in the left sidebar, then select the
+<strong>GSUB</strong> (Glyph Substitution) tab.</li>
+<li>Click <strong>Add Lookup</strong>.</li>
+<li>Set the Type to <strong>Single Substitution</strong>, and add the
+Feature tag <code>sups</code> (Superscript).</li>
+<li>Click <strong>OK</strong>, then select the newly created lookup and
+click <strong>Add Subtable</strong>.</li>
+<li>In the subtable mapping list, assign each regular numeral
+(<code>zero</code> through <code>nine</code>) to its corresponding
+superscript glyph (<code>zerosuperior</code>, <code>onesuperior</code>,
+etc.).</li>
+<li>Click <strong>OK</strong> to save and apply your OpenType
+tables.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-create-superscript-figures-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

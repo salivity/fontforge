@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Fix Negative Advance Width in FontForge - fontforge</title>
+    <meta name="description" content="Negative advance width errors occur in FontForge when a glyph&#39;s horizontal advance is set to a value below zero, causing characters to overlap backward and triggering validation failures during font export. This guide explains why this error happens and p">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-fix-negative-advance-width-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Fix Negative Advance Width in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-fix-negative-advance-width-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Negative advance width errors occur in FontForge when a glyph&#39;s horizontal advance is set to a value below zero, causing characters to overlap backward and triggering validation failures during font export. This guide explains why this error happens and p" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-fix-negative-advance-width-in-fontforge">How to Fix
+Negative Advance Width in FontForge</h1>
+<p>Negative advance width errors occur in FontForge when a glyph's
+horizontal advance is set to a value below zero, causing characters to
+overlap backward and triggering validation failures during font export.
+This guide explains why this error happens and provides straightforward,
+step-by-step methods to identify the affected glyphs, correct their
+horizontal metrics manually or in batches, and resolve flipped outline
+issues to ensure clean font compilation.</p>
+<h3 id="why-negative-advance-width-errors-occur">Why Negative Advance
+Width Errors Occur</h3>
+<p>In digital typography, the advance width dictates how far the cursor
+moves forward horizontally after rendering a character. A negative
+advance width means the cursor moves backward instead of forward. This
+typically happens due to:</p>
+<ul>
+<li>Accidentally dragging side bearings past the glyph origin in the
+Glyph View.</li>
+<li>Importing reversed or negatively transformed vectors from external
+vector software (like Adobe Illustrator or Inkscape).</li>
+<li>Outlines drawn outside the baseline and origin boundaries.</li>
+<li>Metric calculation errors during automated spacing operations.</li>
+</ul>
+<h3 id="step-1-locate-the-offending-glyphs">Step 1: Locate the Offending
+Glyphs</h3>
+<p>Before you can fix the issue, you must find which glyphs contain the
+error.</p>
+<ol type="1">
+<li>Open your font file in FontForge.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Validation</strong> &gt;
+<strong>Find Problems</strong>.</li>
+<li>In the dialog box, navigate to the <strong>BB &amp; Advance</strong>
+tab.</li>
+<li>Check the box for <strong>Advance width is negative</strong>.</li>
+<li>Click <strong>OK</strong>. FontForge will scan the font and select
+or highlight all glyphs violating this metric constraint.</li>
+</ol>
+<p>Alternatively, you can open the Font View, go to
+<strong>View</strong> &gt; <strong>Show Metric Titles</strong>, and sort
+your font by advance width to immediately see values below zero.</p>
+<h3 id="step-2-fix-advance-width-via-glyph-metrics">Step 2: Fix Advance
+Width via Glyph Metrics</h3>
+<p>Once the problematic glyphs are identified, you can manually restore
+a positive advance width.</p>
+<ol type="1">
+<li>Double-click the affected glyph to open the <strong>Glyph Edit
+Window</strong>.</li>
+<li>Go to the top menu and select <strong>Metrics</strong> &gt;
+<strong>Set Width</strong>.</li>
+<li>Enter a positive numerical value suitable for the character (for
+example, matching typical characters like <code>500</code> or
+<code>600</code> units depending on your UPM scale).</li>
+<li>Click <strong>OK</strong>.</li>
+<li>Check the Left Side Bearing (LSB) and Right Side Bearing (RSB).
+Ensure the LSB marker (the vertical dashed line at <code>x = 0</code>)
+sits to the left of the outline, and the RSB marker sits to the right of
+the outline. You can drag the RSB line to adjust the total width
+visually.</li>
+</ol>
+<h3 id="step-3-resolve-flipped-or-inverted-outlines">Step 3: Resolve
+Flipped or Inverted Outlines</h3>
+<p>If an advance width turns negative automatically after importing
+paths or applying transformations, the glyph outline might be
+horizontally flipped or drawn with inverted direction.</p>
+<ol type="1">
+<li>Select the affected glyph in the Font View or Glyph Edit
+Window.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Correct
+Direction</strong> (or press <code>Ctrl + Shift + D</code> /
+<code>Cmd + Shift + D</code>). This ensures standard clockwise or
+counterclockwise winding paths.</li>
+<li>If the entire glyph is mirrored, go to <strong>Element</strong> &gt;
+<strong>Transformations</strong> &gt; <strong>Transform</strong>.</li>
+<li>Choose <strong>Flip</strong> horizontally, or correct any negative
+scaling factor applied to the horizontal axis (<code>X</code>).</li>
+<li>Re-check the width using <strong>Metrics</strong> &gt; <strong>Set
+Width</strong>.</li>
+</ol>
+<h3 id="step-4-batch-fix-multiple-glyphs">Step 4: Batch Fix Multiple
+Glyphs</h3>
+<p>If hundreds of glyphs suffer from negative widths due to an improper
+global metric calculation or bulk import error:</p>
+<ol type="1">
+<li>Select the affected glyphs in the main <strong>Font View</strong>
+(hold <code>Shift</code> or <code>Ctrl</code>/<code>Cmd</code> to
+multi-select, or use <code>Ctrl + A</code> to select all).</li>
+<li>Go to <strong>Metrics</strong> &gt; <strong>Set Width</strong>.</li>
+<li>Input a standard default width, or choose <strong>Metrics</strong>
+&gt; <strong>Auto Width</strong> to let FontForge calculate spacing
+based on the bounding boxes.</li>
+<li>If you want to retain existing side bearings while forcing positive
+metrics, navigate to <strong>Metrics</strong> &gt; <strong>Set
+LSB</strong> or <strong>Set RSB</strong> and normalize the values.</li>
+</ol>
+<h3 id="step-5-validate-and-export">Step 5: Validate and Export</h3>
+<p>After applying corrections, run the validation tool once more to
+confirm the errors are resolved:</p>
+<ol type="1">
+<li>Go to <strong>Element</strong> &gt; <strong>Validation</strong> &gt;
+<strong>Validate</strong>.</li>
+<li>Ensure that no "Advance width is negative" warnings appear in the
+report.</li>
+<li>Save your database file (<code>.sfd</code>) and generate your final
+font binaries via <strong>File</strong> &gt; <strong>Generate
+Fonts</strong>.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-fix-negative-advance-width-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

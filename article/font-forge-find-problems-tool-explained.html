@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Find Problems Tool Explained - fontforge</title>
+    <meta name="description" content="The Find Problems tool in FontForge is an automated diagnostic utility designed to scan glyphs and identify design flaws, geometry errors, and technical inconsistencies before generating a final font file. Accessing this tool allows type designers to catc">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-find-problems-tool-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Find Problems Tool Explained - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-find-problems-tool-explained" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Find Problems tool in FontForge is an automated diagnostic utility designed to scan glyphs and identify design flaws, geometry errors, and technical inconsistencies before generating a final font file. Accessing this tool allows type designers to catc" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-find-problems-tool-explained">FontForge Find Problems
+Tool Explained</h1>
+<p>The Find Problems tool in FontForge is an automated diagnostic
+utility designed to scan glyphs and identify design flaws, geometry
+errors, and technical inconsistencies before generating a final font
+file. Accessing this tool allows type designers to catch subtle
+defects—such as self-intersecting contours, non-integral coordinates,
+missing extrema points, and improper path directions—that could cause
+rendering artifacts or validation failures in operating systems and
+rasterizers.</p>
+<h3 id="path-and-contour-errors">Path and Contour Errors</h3>
+<p>The tool thoroughly inspects outline paths to ensure they meet
+standard digital typography formats (PostScript and TrueType). It
+reports:</p>
+<ul>
+<li><strong>Self-intersecting Paths:</strong> Contours that cross over
+themselves, which can cause erratic rendering or fill errors in
+different text engines.</li>
+<li><strong>Open Paths:</strong> Incomplete contours that are not
+closed, which can prevent proper filling of the glyph.</li>
+<li><strong>Incorrect Path Direction:</strong> Clockwise or
+counter-clockwise paths that do not conform to the winding rules
+required by the target font format (e.g., PostScript requires outer
+contours to be counter-clockwise, while TrueType requires them to be
+clockwise).</li>
+<li><strong>Intersecting Contours:</strong> Distinct contours that
+overlap one another, which should ideally be removed using union
+operations prior to exporting.</li>
+</ul>
+<h3 id="point-and-coordinate-discrepancies">Point and Coordinate
+Discrepancies</h3>
+<p>Precise point placement is critical for hint generation and crisp
+screen rendering. The tool flags:</p>
+<ul>
+<li><strong>Missing Extrema:</strong> Segments that reach a vertical or
+horizontal maximum or minimum without having an on-curve point located
+exactly at that extreme.</li>
+<li><strong>Non-Integral Coordinates:</strong> Points and control
+handles that rest on fractional coordinates rather than whole integer
+values, which can introduce rounding errors when exporting to
+integer-based formats like TrueType.</li>
+<li><strong>Overlapping Points:</strong> Multiple points placed directly
+on top of one another or within an imperceptible distance, creating
+unnecessary control data.</li>
+<li><strong>Control Points Out of Bounds:</strong> Bézier control points
+that extend unreasonably far away from their respective on-curve
+anchors.</li>
+</ul>
+<h3 id="reference-and-component-issues">Reference and Component
+Issues</h3>
+<p>For glyphs constructed using components (such as accented characters
+built from base letters and diacritics), the tool checks:</p>
+<ul>
+<li><strong>Flipped References:</strong> Components that have been
+mirrored or inverted, which can cause rasterizer calculation issues or
+invert path directions.</li>
+<li><strong>Nested or Recursive References:</strong> Glyphs that
+reference themselves, directly or indirectly, creating infinite loops
+during rendering.</li>
+<li><strong>Unlinked References:</strong> Missing or broken links to
+base glyphs that have been deleted or renamed elsewhere in the font
+database.</li>
+</ul>
+<h3 id="hinting-and-metric-inconsistencies">Hinting and Metric
+Inconsistencies</h3>
+<p>The tool also identifies metadata and rendering aid problems:</p>
+<ul>
+<li><strong>Hint Conflicts:</strong> Overlapping horizontal or vertical
+stem hints that violate hinting specifications.</li>
+<li><strong>Missing Hints:</strong> Stems or critical visual features
+that lack hinting data altogether in formats where hints are
+expected.</li>
+<li><strong>Anchor and Metric Errors:</strong> Mismatched anchor points
+used for mark-to-base positioning, duplicate anchors, or discrepancies
+in glyph advance widths across related variants.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-find-problems-tool-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

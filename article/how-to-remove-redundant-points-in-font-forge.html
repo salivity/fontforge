@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Remove Redundant Points in FontForge - fontforge</title>
+    <meta name="description" content="Complex vector shapes imported into FontForge often contain extraneous anchor points that bloat file sizes and cause rendering errors. This guide covers how to clean up these vectors efficiently using FontForge’s automated simplification commands, precisi">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-remove-redundant-points-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Remove Redundant Points in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-remove-redundant-points-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Complex vector shapes imported into FontForge often contain extraneous anchor points that bloat file sizes and cause rendering errors. This guide covers how to clean up these vectors efficiently using FontForge’s automated simplification commands, precisi" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-remove-redundant-points-in-fontforge">How to Remove
+Redundant Points in FontForge</h1>
+<p>Complex vector shapes imported into FontForge often contain
+extraneous anchor points that bloat file sizes and cause rendering
+errors. This guide covers how to clean up these vectors efficiently
+using FontForge’s automated simplification commands, precision clean-up
+utilities, and non-destructive manual point merging.</p>
+<h2 id="using-the-simplify-tool">Using the Simplify Tool</h2>
+<p>The fastest way to reduce excess nodes automatically across an entire
+shape or specific path is the <strong>Simplify</strong> function.</p>
+<ol type="1">
+<li>Double-click the glyph containing the complex shape to open the
+<strong>Glyph Edit Window</strong>.</li>
+<li>Select the paths you want to optimize. Press <strong>Ctrl+A</strong>
+(or <strong>Cmd+A</strong> on macOS) to select the entire shape, or use
+the Pointer tool to drag-select specific sections.</li>
+<li>Navigate to the top menu and select <strong>Element &gt; Simplify
+&gt; Simplify</strong> (shortcut: <strong>Ctrl+Shift+M</strong> or
+<strong>Cmd+Shift+M</strong>).</li>
+</ol>
+<p>FontForge will remove points along flat lines and smooth curves where
+the shape can be described accurately with fewer Bézier control
+handles.</p>
+<h3 id="adjusting-simplification-parameters">Adjusting Simplification
+Parameters</h3>
+<p>If the default simplify command distorts your curves, adjust the
+tolerance:</p>
+<ol type="1">
+<li>Go to <strong>Element &gt; Simplify &gt; Simplify
+More...</strong></li>
+<li>In the dialog box, adjust the <strong>Error Bound</strong> (measured
+in font units). A lower number preserves exact geometry, while a higher
+number aggressively strips out points.</li>
+<li>Check <strong>Allow removal of extreme points</strong> only if you
+plan to regenerate font extrema later.</li>
+<li>Click <strong>OK</strong> to apply.</li>
+</ol>
+<h2 id="merging-points-manually">Merging Points Manually</h2>
+<p>When you need to remove individual nodes without breaking or opening
+the contour, use the <strong>Merge</strong> command rather than deleting
+them.</p>
+<ol type="1">
+<li>Click directly on the redundant point using the <strong>Pointer
+tool</strong>.</li>
+<li>Press <strong>Ctrl+M</strong> (or <strong>Cmd+M</strong>) or select
+<strong>Element &gt; Merge</strong>.</li>
+</ol>
+<p>Unlike pressing the <strong>Delete</strong> or
+<strong>Backspace</strong> key—which cuts the path open—merging removes
+the selected point and recalculates the surrounding Bézier handles to
+keep the contour closed and intact.</p>
+<h2 id="removing-overlapping-and-coincident-points">Removing Overlapping
+and Coincident Points</h2>
+<p>Imported vectors frequently contain duplicate points resting on the
+exact same coordinates.</p>
+<ol type="1">
+<li>Select the entire shape.</li>
+<li>Go to <strong>Element &gt; Clean Up</strong>.</li>
+<li>FontForge will evaluate the path and merge zero-length segments,
+remove overlapping points, and eliminate obsolete control handles.</li>
+</ol>
+<h2 id="post-optimization-adding-extrema">Post-Optimization: Adding
+Extrema</h2>
+<p>After stripping redundant points, font formats (such as OpenType and
+TrueType) render best when anchor points exist at the vertical and
+horizontal extremes of every curve.</p>
+<ol type="1">
+<li>Select the cleaned shape.</li>
+<li>Choose <strong>Element &gt; Add Extrema</strong> (shortcut:
+<strong>Ctrl+Shift+X</strong> or <strong>Cmd+Shift+X</strong>).</li>
+<li>Check the paths to ensure the geometry is optimized, stable, and
+ready for font generation.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-remove-redundant-points-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Freezing During Python Batch Scripts - fontforge</title>
+    <meta name="description" content="When executing large batch operations in FontForge using Python, the program can become unresponsive due to memory leaks in its underlying C architecture, hidden graphical user interface prompts, or corrupt glyph outlines causing algorithmic deadlocks. Th">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-freezing-during-python-batch-scripts">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Freezing During Python Batch Scripts - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-freezing-during-python-batch-scripts" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When executing large batch operations in FontForge using Python, the program can become unresponsive due to memory leaks in its underlying C architecture, hidden graphical user interface prompts, or corrupt glyph outlines causing algorithmic deadlocks. Th" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-freezing-during-python-batch-scripts">FontForge
+Freezing During Python Batch Scripts</h1>
+<p>When executing large batch operations in FontForge using Python, the
+program can become unresponsive due to memory leaks in its underlying C
+architecture, hidden graphical user interface prompts, or corrupt glyph
+outlines causing algorithmic deadlocks. This guide outlines the exact
+causes of these freezes and provides actionable solutions—such as
+running FontForge headlessly, isolating tasks with multiprocessing,
+managing memory explicitly, and logging file progression—to ensure your
+automated font conversions and modifications run to completion without
+manual intervention.</p>
+<h3 id="run-in-headless-cli-mode">Run in Headless CLI Mode</h3>
+<p>FontForge often hangs if it attempts to render UI elements or display
+error dialogs in an environment that expects them. Never run batch
+scripts through the FontForge GUI interface. Instead, run the script
+from the command line using the standalone binary or as a direct Python
+module import:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-script</span> your_script.py</span></code></pre></div>
+<p>If you installed FontForge via system package managers that include
+the Python extension (e.g., <code>python3-fontforge</code> on Ubuntu),
+run the script directly through standard Python:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> your_script.py</span></code></pre></div>
+<p>Running in headless mode ensures that non-fatal font warnings do not
+trigger interactive blocking pop-ups.</p>
+<h3 id="isolate-fonts-using-subprocesses">Isolate Fonts Using
+Subprocesses</h3>
+<p>FontForge's internal C-bindings do not always release memory back to
+the operating system when processing hundreds of files sequentially
+inside a single loop. Over time, the memory footprint balloons, leading
+to severe slowdowns or a complete freeze.</p>
+<p>To prevent this, use Python's <code>subprocess</code> module to spawn
+an isolated, fresh FontForge process for each font or small batch:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>font_files <span class="op">=</span> glob.glob(<span class="st">&quot;path/to/fonts/*.ttf&quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> font_path <span class="kw">in</span> font_files:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs an isolated script for a single font file</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> subprocess.run(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        [<span class="st">&quot;fontforge&quot;</span>, <span class="st">&quot;-script&quot;</span>, <span class="st">&quot;process_single_font.py&quot;</span>, font_path],</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        capture_output<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        text<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        timeout<span class="op">=</span><span class="dv">120</span> <span class="co"># Kill the process if it hangs longer than 2 minutes</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> result.returncode <span class="op">!=</span> <span class="dv">0</span>:</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Failed processing </span><span class="sc">{</span>font_path<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>result<span class="sc">.</span>stderr<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>Setting a <code>timeout</code> parameter ensures that if an
+individual font causes an infinite calculation loop, the runner
+terminates it and proceeds to the next file instead of hanging
+indefinitely.</p>
+<h3 id="force-memory-cleanup-explicitly">Force Memory Cleanup
+Explicitly</h3>
+<p>If you must process files within a single long-running Python script,
+explicitly close the font objects and invoke Python's garbage collector
+after every iteration. Merely letting a variable fall out of scope often
+fails to free the C-level font data:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gc</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> font_path <span class="kw">in</span> font_list:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    font <span class="op">=</span> fontforge.<span class="bu">open</span>(font_path)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Perform font operations here</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        font.generate(<span class="st">&quot;output/&quot;</span> <span class="op">+</span> font.fontname <span class="op">+</span> <span class="st">&quot;.otf&quot;</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        font.close()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">del</span> font</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        gc.collect()</span></code></pre></div>
+<h3 id="bypass-problematic-path-operations">Bypass Problematic Path
+Operations</h3>
+<p>Complex operations such as <code>font.removeOverlap()</code> or
+automatic hint generation (<code>font.autoHint()</code>) can enter
+endless loops when processing malformed Bezier curves or
+self-intersecting contours.</p>
+<ol type="1">
+<li><p><strong>Wrap High-Risk Calls:</strong> Isolate calls like
+<code>removeOverlap()</code> or <code>simplify()</code> within standard
+<code>try...except</code> blocks.</p></li>
+<li><p><strong>Set Validation Flags:</strong> When saving, disable
+extensive validation checks that can freeze on corrupted glyphs:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>font.generate(<span class="st">&quot;output.ttf&quot;</span>, flags<span class="op">=</span>(<span class="st">&#39;opentype&#39;</span>, <span class="st">&#39;omit-instructions&#39;</span>))</span></code></pre></div></li>
+<li><p><strong>Skip Broken Glyphs:</strong> If a specific glyph is
+locking the thread, iterate through <code>font.glyphs()</code>
+individually so you can catch errors per glyph rather than failing the
+entire file.</p></li>
+</ol>
+<h3 id="implement-verbose-logging">Implement Verbose Logging</h3>
+<p>Determine whether the script is genuinely frozen or simply working
+slowly through heavy outline calculations by writing timestamps to a log
+file or terminal before and after critical milestones:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log(message):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(message, <span class="bu">file</span><span class="op">=</span>sys.stderr, flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>log(<span class="ss">f&quot;Opening </span><span class="sc">{</span>font_path<span class="sc">}</span><span class="ss">...&quot;</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(font_path)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>log(<span class="st">&quot;Generating outlines...&quot;</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>font.generate(output_path)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>log(<span class="st">&quot;Done.&quot;</span>)</span></code></pre></div>
+<p>Using <code>flush=True</code> prevents print buffers from delaying
+status updates, allowing you to see the exact file and operation that
+triggered the freeze.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-freezing-during-python-batch-scripts';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

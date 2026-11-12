@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Python Extension API Documentation - fontforge</title>
+    <meta name="description" content="FontForge provides a dedicated Python extension that allows users to programmatically create, edit, inspect, and convert font files. This guide details the primary documentation sources available for navigating the FontForge Python extension API, includin">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-python-extension-api-documentation">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Python Extension API Documentation - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-python-extension-api-documentation" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge provides a dedicated Python extension that allows users to programmatically create, edit, inspect, and convert font files. This guide details the primary documentation sources available for navigating the FontForge Python extension API, includin" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-python-extension-api-documentation">FontForge Python
+Extension API Documentation</h1>
+<p>FontForge provides a dedicated Python extension that allows users to
+programmatically create, edit, inspect, and convert font files. This
+guide details the primary documentation sources available for navigating
+the FontForge Python extension API, including the official online
+reference manuals, built-in interactive shell helpers, underlying source
+code, and community-maintained examples.</p>
+<h3 id="official-online-documentation">Official Online
+Documentation</h3>
+<p>The primary documentation for the FontForge Python module is
+published as part of the official FontForge manual. It is structured
+into multiple functional sections:</p>
+<ul>
+<li><strong>Module Overview:</strong> Explains how to import and
+initialize the <code>fontforge</code> module both within the FontForge
+graphical interface and inside external standalone Python scripts.</li>
+<li><strong>Core Object References:</strong> Detailed pages covering the
+primary classes used in font manipulation, including
+<code>fontforge.font</code>, <code>fontforge.glyph</code>,
+<code>fontforge.contour</code>, <code>fontforge.point</code>, and
+<code>fontforge.layer</code>.</li>
+<li><strong>Methods and Attributes:</strong> Exhaustive listings of
+properties (such as metrics, Unicode values, and glyph names) and
+functions (such as auto-tracing, generating output formats, and applying
+transformations).</li>
+<li><strong>Constants and Enums:</strong> Tables defining font flags,
+lookup types, OpenType table tags, and validation states.</li>
+</ul>
+<h3 id="built-in-python-introspection">Built-in Python
+Introspection</h3>
+<p>Because the extension exposes compiled Python C bindings, complete
+runtime documentation is accessible directly through the Python
+interpreter. Developers can use Python's built-in inspection utilities
+to review functions, signatures, and docstrings without leaving the
+terminal:</p>
+<ul>
+<li><strong>Interactive Help:</strong> Running
+<code>help(fontforge)</code> provides a comprehensive index of the
+module's exposed classes, functions, and documentation strings.</li>
+<li><strong>Class Inspection:</strong> Inspecting individual components
+using commands like <code>help(fontforge.font)</code> or
+<code>help(fontforge.glyph)</code> displays available methods, expected
+parameters, and attribute behaviors.</li>
+<li><strong>Namespace Enumeration:</strong> Executing
+<code>dir(fontforge)</code> returns all accessible attributes,
+constants, and sub-objects present in the specific compiled version in
+use.</li>
+</ul>
+<h3 id="transition-documentation-from-legacy-scripting">Transition
+Documentation from Legacy Scripting</h3>
+<p>FontForge originally used a proprietary scripting language
+(<code>.pe</code> scripts). The official documentation includes
+dedicated transition guides that map legacy scripting commands to their
+modern Python equivalents. This section is particularly useful for
+translating older FontForge scripts and workflows into standard Python 3
+code.</p>
+<h3 id="c-source-code-and-header-files">C Source Code and Header
+Files</h3>
+<p>When online documentation lacks details regarding edge cases, default
+parameters, or return values, the FontForge source code serves as the
+ultimate reference. The Python API bindings are primarily implemented in
+C within the FontForge source tree:</p>
+<ul>
+<li><code>fontforge/python.c</code>: Implements the main module
+functions and glue logic between Python and FontForge's internal data
+structures.</li>
+<li>Class-specific files: Files such as <code>fontforge/pyfont.c</code>
+and <code>fontforge/pyglyph.c</code> define the exact method tables,
+parameter parsing logic, and exception-raising conditions for the
+respective API objects.</li>
+</ul>
+<h3 id="example-scripts-and-developer-resources">Example Scripts and
+Developer Resources</h3>
+<p>The FontForge source repository maintains an <code>examples</code>
+directory featuring complete automation scripts. These show real-world
+implementations of tasks such as batch font conversion, automated metric
+adjustments, OpenType feature file merging, and glyph generation.
+Additionally, type design forums and public open-source font
+repositories frequently maintain functional boilerplate scripts
+demonstrating standard API usage patterns.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-python-extension-api-documentation';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lock Advance Widths to a Grid in FontForge - fontforge</title>
+    <meta name="description" content="FontForge does not include a real-time constraint toggle that actively forces advance widths to stay locked to arbitrary increments while manually editing, but you can enforce strict width increments using grid settings, batch transformations, or Python a">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/lock-advance-widths-to-a-grid-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Lock Advance Widths to a Grid in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/lock-advance-widths-to-a-grid-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge does not include a real-time constraint toggle that actively forces advance widths to stay locked to arbitrary increments while manually editing, but you can enforce strict width increments using grid settings, batch transformations, or Python a" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="lock-advance-widths-to-a-grid-in-fontforge">Lock Advance Widths
+to a Grid in FontForge</h1>
+<p>FontForge does not include a real-time constraint toggle that
+actively forces advance widths to stay locked to arbitrary increments
+while manually editing, but you can enforce strict width increments
+using grid settings, batch transformations, or Python automation. This
+guide explains the native mechanisms available to snap advance widths
+during design and how to quantize advance widths to specific increments
+across an entire font.</p>
+<h3 id="enable-grid-snapping-during-manual-editing">Enable Grid Snapping
+During Manual Editing</h3>
+<p>FontForge allows you to snap points and metrics lines to your font
+coordinate grid, which helps maintain consistent metric increments while
+dragging glyph boundaries.</p>
+<ol type="1">
+<li>Open FontForge and navigate to <strong>File &gt;
+Preferences</strong>.</li>
+<li>Select <strong>Editing</strong> under the Generic section.</li>
+<li>Ensure <strong>Snap Distance</strong> is set to your preferred pixel
+threshold (typically between <code>8</code> and <code>12</code>).</li>
+<li>In the main font view, open the <strong>View</strong> menu and
+verify that <strong>Snap to Grid</strong> is checked.</li>
+</ol>
+<p>When working in the Glyph window with Snap to Grid enabled, dragging
+the right side bearing (advance width line) will automatically align to
+whole coordinate units.</p>
+<h3 id="quantize-advance-widths-using-python">Quantize Advance Widths
+Using Python</h3>
+<p>The most precise and reliable way to lock advance widths to a custom
+increment (such as multiples of 8, 10, or 16 font units) is through
+FontForge's built-in Python scripting engine. This automatically rounds
+the advance width of every selected glyph to your chosen step size.</p>
+<ol type="1">
+<li>Select the glyphs you want to constrain in the Font View.</li>
+<li>Go to <strong>File &gt; Execute Script</strong>.</li>
+<li>Choose the <strong>Python</strong> radio button.</li>
+<li>Enter the following script, replacing <code>GRID_STEP</code> with
+your desired increment:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>GRID_STEP <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Set your desired increment in font units</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.activeFont()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> glyph <span class="kw">in</span> font.selection.byGlyphs:</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    current_width <span class="op">=</span> glyph.width</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Round to the nearest increment</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    new_width <span class="op">=</span> <span class="bu">int</span>(<span class="bu">round</span>(<span class="bu">float</span>(current_width) <span class="op">/</span> GRID_STEP) <span class="op">*</span> GRID_STEP)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    glyph.width <span class="op">=</span> new_width</span></code></pre></div>
+<ol start="5" type="1">
+<li>Click <strong>OK</strong>. FontForge will immediately update the
+advance widths of all selected glyphs to conform to the specified
+increment.</li>
+</ol>
+<h3 id="set-fixed-widths-for-monospace-fonts">Set Fixed Widths for
+Monospace Fonts</h3>
+<p>If your goal is to lock all advance widths to a single uniform value
+rather than variable increments:</p>
+<ol type="1">
+<li>Select all glyphs in the font window (<strong>Edit &gt; Select &gt;
+Select All</strong>).</li>
+<li>Go to <strong>Metrics &gt; Set Width...</strong>.</li>
+<li>Enter your target width (for example, <code>600</code>) and select
+<strong>Set width to</strong>.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<p>To ensure the font is recognized correctly by operating systems as a
+fixed-pitch font, navigate to <strong>Element &gt; Font Info &gt; OS/2
+&gt; Panose</strong> and set <strong>Proportion</strong> to
+<strong>Monospaced</strong>.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/lock-advance-widths-to-a-grid-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

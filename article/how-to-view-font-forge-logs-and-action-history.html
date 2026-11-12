@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to View FontForge Logs and Action History - fontforge</title>
+    <meta name="description" content="FontForge does not feature a dedicated, real-time GUI &quot;history&quot; panel like some modern design suites, but you can view comprehensive action summaries, execution logs, and operation warnings through alternative built-in methods. Depending on whether you ne">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-view-font-forge-logs-and-action-history">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to View FontForge Logs and Action History - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-view-font-forge-logs-and-action-history" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge does not feature a dedicated, real-time GUI &quot;history&quot; panel like some modern design suites, but you can view comprehensive action summaries, execution logs, and operation warnings through alternative built-in methods. Depending on whether you ne" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-view-fontforge-logs-and-action-history">How to View
+FontForge Logs and Action History</h1>
+<p>FontForge does not feature a dedicated, real-time GUI "history" panel
+like some modern design suites, but you can view comprehensive action
+summaries, execution logs, and operation warnings through alternative
+built-in methods. Depending on whether you need a technical audit trail,
+a validation summary, or an edit history, you can access FontForge's
+output through the terminal console, the internal warnings window, or
+the per-glyph undo stack.</p>
+<h3 id="1-launch-from-the-terminal-for-full-action-logging">1. Launch
+from the Terminal for Full Action Logging</h3>
+<p>The most effective way to view a continuous summary of actions, font
+loading events, and internal operations is to run FontForge from your
+operating system's command line interface:</p>
+<ul>
+<li><strong>macOS / Linux:</strong> Open a terminal and run
+<code>fontforge</code>.</li>
+<li><strong>Windows:</strong> Open Command Prompt or PowerShell and
+launch <code>fontforge.exe</code> from its installation directory
+(typically
+<code>C:\Program Files (x86)\FontForgeBuilds\bin\fontforge.exe</code>).</li>
+</ul>
+<p>When launched via the command line, FontForge streams its operational
+logs, background processes, memory notices, and action output directly
+to standard output (<code>stdout</code>) and standard error
+(<code>stderr</code>). You can redirect this output to a persistent text
+log file by running:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="op">&gt;</span> fontforge_actions.log <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code></pre></div>
+<h3 id="2-view-validation-and-generation-warnings">2. View Validation
+and Generation Warnings</h3>
+<p>If you need a summary log of font errors, geometry conflicts, or
+export issues, FontForge provides a built-in Warnings log window:</p>
+<ul>
+<li>Navigate to <strong>Element &gt; Validation &gt; Find
+Problems</strong> to run a diagnostic across the font.</li>
+<li>When exporting via <strong>File &gt; Generate Fonts</strong>, any
+errors or missing tables automatically trigger a pop-up log detailing
+the issues encountered during compilation.</li>
+<li>If closed, error output dialogs cannot always be reopened
+retroactively, making terminal logging the safer alternative for
+persistent tracking.</li>
+</ul>
+<h3 id="3-tracking-individual-edit-actions">3. Tracking Individual Edit
+Actions</h3>
+<p>For standard glyph modifications (such as path transformations, point
+additions, or metric shifts), FontForge does not log edits in a single
+global list. Instead, actions are tracked locally:</p>
+<ul>
+<li>Action history is restricted to the <strong>Edit &gt; Undo</strong>
+and <strong>Edit &gt; Redo</strong> buffers, which function
+independently inside each glyph editing window.</li>
+<li>FontForge does not maintain an application-wide "History Panel"
+showing consecutive click-by-click UI actions across multiple glyphs
+simultaneously.</li>
+</ul>
+<h3 id="4-logging-actions-via-python-scripting">4. Logging Actions via
+Python Scripting</h3>
+<p>If you run batch actions or automate font modifications, you can
+generate your own custom summary log using FontForge's Python
+interpreter. Running scripts via <strong>File &gt; Execute
+Script</strong> allows you to leverage Python's built-in
+<code>logging</code> module to capture, format, and save exact operation
+summaries to an external file.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-view-font-forge-logs-and-action-history';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

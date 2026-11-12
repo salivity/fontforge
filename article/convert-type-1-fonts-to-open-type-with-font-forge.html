@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert Type 1 Fonts to OpenType with FontForge - fontforge</title>
+    <meta name="description" content="FontForge is a free, open-source font editor that fully supports converting legacy PostScript Type 1 fonts into modern OpenType formats. Because major operating systems and applications like Adobe Creative Cloud have deprecated Type 1 font support, migrat">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/convert-type-1-fonts-to-open-type-with-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Convert Type 1 Fonts to OpenType with FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/convert-type-1-fonts-to-open-type-with-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge is a free, open-source font editor that fully supports converting legacy PostScript Type 1 fonts into modern OpenType formats. Because major operating systems and applications like Adobe Creative Cloud have deprecated Type 1 font support, migrat" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="convert-type-1-fonts-to-opentype-with-fontforge">Convert Type 1
+Fonts to OpenType with FontForge</h1>
+<p>FontForge is a free, open-source font editor that fully supports
+converting legacy PostScript Type 1 fonts into modern OpenType formats.
+Because major operating systems and applications like Adobe Creative
+Cloud have deprecated Type 1 font support, migrating legacy typefaces to
+OpenType is necessary for continued use. This article explains how
+FontForge handles this conversion, the steps to perform it, and the
+technical settings required to maintain outline quality and spacing.</p>
+<p>To convert a Type 1 font successfully, you need the outline file
+(typically <code>.pfb</code> on Windows or <code>.pfa</code> on
+Unix/Mac) and its matching metrics file (<code>.pfm</code> or
+<code>.afm</code>). Keep both files in the same directory under the same
+base name. When FontForge opens the outline file, it automatically reads
+the associated metrics file to preserve critical kerning, tracking, and
+character width data.</p>
+<p>To perform the conversion using the FontForge graphical interface,
+follow these steps:</p>
+<ol type="1">
+<li>Launch FontForge and select <strong>File &gt; Open</strong>. Browse
+to your folder and open the <code>.pfb</code> or <code>.pfa</code>
+file.</li>
+<li>Check the character map to verify that all glyphs have imported
+properly and that encoding matches the original design.</li>
+<li>Open <strong>Element &gt; Font Info</strong> to verify and update
+metadata such as the Font Name, Family Name, and Version, ensuring
+modern software recognizes the family structure correctly.</li>
+<li>Go to <strong>File &gt; Generate Fonts</strong>.</li>
+<li>Select <strong>OpenType (CFF)</strong> from the format drop-down
+list. This generates an <code>.otf</code> file.</li>
+<li>Choose a destination folder and click <strong>Generate</strong>. If
+FontForge displays a warning about non-standard glyph names or minor
+self-intersections, review the issues or proceed with generation if the
+source font was already functioning properly.</li>
+</ol>
+<p>Choosing <strong>OpenType (CFF)</strong> rather than OpenType
+(TrueType) is the recommended route for Type 1 fonts. Both Type 1 and
+OpenType-CFF use cubic Bézier curves to define outlines. Selecting
+OpenType (CFF) allows FontForge to transfer the mathematical outlines
+directly into the new format without recalculating or approximating the
+curves. Converting to TrueType (<code>.ttf</code>) forces FontForge to
+convert cubic curves into quadratic curves, which can introduce subtle
+rounding changes to glyph geometry and require new hinting.</p>
+<p>For users with extensive font libraries, FontForge also supports
+automated batch conversion via its Python scripting interface or native
+command-line tool. A basic script can loop through a directory of
+<code>.pfb</code> files, open each font, and execute the
+<code>generate()</code> method, enabling rapid migration of entire font
+collections to the OpenType format without manual user intervention.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/convert-type-1-fonts-to-open-type-with-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

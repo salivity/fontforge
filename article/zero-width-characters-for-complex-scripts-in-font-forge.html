@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero-Width Characters for Complex Scripts in FontForge - fontforge</title>
+    <meta name="description" content="Configuring zero-width characters in FontForge is essential for designing complex scripts such as Arabic, Devanagari, and Thai, where combining marks, diacritics, and control characters dictate proper text shaping. This guide covers how to accurately assi">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/zero-width-characters-for-complex-scripts-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Zero-Width Characters for Complex Scripts in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/zero-width-characters-for-complex-scripts-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Configuring zero-width characters in FontForge is essential for designing complex scripts such as Arabic, Devanagari, and Thai, where combining marks, diacritics, and control characters dictate proper text shaping. This guide covers how to accurately assi" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="zero-width-characters-for-complex-scripts-in-fontforge">Zero-Width
+Characters for Complex Scripts in FontForge</h1>
+<p>Configuring zero-width characters in FontForge is essential for
+designing complex scripts such as Arabic, Devanagari, and Thai, where
+combining marks, diacritics, and control characters dictate proper text
+shaping. This guide covers how to accurately assign Unicode values, set
+advance metrics to zero, configure OpenType Glyph Definition (GDEF)
+tables, and establish anchor positioning for seamless script rendering
+in modern text shaping engines.</p>
+<h3 id="1-create-the-glyph-and-assign-the-unicode-codepoint">1. Create
+the Glyph and Assign the Unicode Codepoint</h3>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Navigate to <strong>View &gt; Go to</strong> and enter the specific
+hex codepoint for your character. For invisible control characters, use
+standard codes such as <code>U+200C</code> (Zero-Width Non-Joiner /
+ZWNJ) or <code>U+200D</code> (Zero-Width Joiner / ZWJ). For combining
+marks or vowel signs (matras), locate the script-specific Unicode slot
+(e.g., <code>U+094D</code> for Devanagari Virama).</li>
+<li>If the slot is empty, double-click to open the glyph canvas, or
+right-click and select <strong>Glyph Info</strong> to confirm the
+correct name and Unicode mapping.</li>
+</ol>
+<h3 id="2-set-the-advance-width-to-zero">2. Set the Advance Width to
+Zero</h3>
+<p>A zero-width character must not advance the text cursor horizontally
+when rendered.</p>
+<ol type="1">
+<li>Select the glyph in the font matrix or open it in the glyph editor
+window.</li>
+<li>Go to <strong>Metrics &gt; Set Width...</strong> from the top
+menu.</li>
+<li>In the dialog box, enter <code>0</code> and click
+<strong>OK</strong>.</li>
+<li>Alternatively, open the <strong>Metrics Window</strong>
+(<strong>Metrics &gt; New Metrics Window</strong>), type the character,
+and manually drag the right side bearing (RSB) line until the width
+displays as <code>0</code>.</li>
+</ol>
+<p><em>Note for invisible control characters (ZWJ/ZWNJ):</em> The glyph
+should contain no outlines or contours—only a width of
+<code>0</code>.</p>
+<p><em>Note for combining marks:</em> The glyph should contain your
+drawn outline. The advance width remains <code>0</code>, while the
+visual contours will sit outside the zero-width boundary (often
+requiring negative left side bearings) so they overlap correctly with
+the base glyph.</p>
+<h3 id="3-classify-the-glyph-in-the-gdef-table">3. Classify the Glyph in
+the GDEF Table</h3>
+<p>Complex text shapers (such as HarfBuzz and DirectWrite) rely on
+OpenType Glyph Definition (GDEF) tables to determine whether a glyph is
+a base, a mark, or a ligature.</p>
+<ol type="1">
+<li>Go to <strong>Element &gt; Font Info</strong>.</li>
+<li>Select <strong>Lookups</strong> from the left-hand panel, then
+switch to the <strong>GDEF</strong> tab.</li>
+<li>Under <strong>Glyph Class Def</strong>, ensure your zero-width
+combining marks are categorized as <strong>Mark</strong>.</li>
+<li>If using a mark attachment class, assign the glyphs to their
+respective mark sets so the shaping engine correctly skips or includes
+them during contextual lookups.</li>
+</ol>
+<h3 id="4-implement-anchor-points-for-mark-positioning-gpos">4.
+Implement Anchor Points for Mark Positioning (GPOS)</h3>
+<p>For visible zero-width marks, you must define anchor points to
+position them relative to base consonants:</p>
+<ol type="1">
+<li>In <strong>Element &gt; Font Info &gt; Lookups</strong>, navigate to
+the <strong>GPOS</strong> tab.</li>
+<li>Click <strong>Add Lookup</strong>, choose <strong>Mark-to-Base
+Positioning</strong> (<code>mark</code>), and add a subtable.</li>
+<li>Open the base glyph canvas and place an anchor point via
+<strong>Point &gt; Add Anchor</strong>, designating it as a "Base" point
+(e.g., <code>top</code>).</li>
+<li>Open the zero-width mark canvas, add an anchor point with the
+matching name (<code>top</code>), and set its type to "Mark".</li>
+<li>Align the mark anchor to the exact connection coordinate relative to
+the base glyph. Repeat this process for <strong>Mark-to-Mark</strong>
+(<code>mkmk</code>) lookups if diacritics stack vertically.</li>
+</ol>
+<h3 id="5-configure-contextual-substitutions-for-zwjzwnj-gsub">5.
+Configure Contextual Substitutions for ZWJ/ZWNJ (GSUB)</h3>
+<p>If the zero-width character is an invisible joiner used to force or
+suppress ligatures:</p>
+<ol type="1">
+<li>Go to <strong>Element &gt; Font Info &gt; Lookups &gt;
+GSUB</strong>.</li>
+<li>Create a <strong>Chaining Contextual Substitution</strong> or a
+standard <strong>Ligature</strong> lookup under features like
+<code>akhn</code> (Akhand), <code>half</code> (Half Forms), or
+<code>ccmp</code> (Glyph Composition/Decomposition).</li>
+<li>Define lookup rules where the presence of <code>U+200D</code>
+substitutes a base character with its half-form or explicit conjunct,
+and rules where <code>U+200C</code> blocks standard script
+ligation.</li>
+</ol>
+<h3 id="6-verify-and-export">6. Verify and Export</h3>
+<ol type="1">
+<li>Open <strong>Metrics &gt; New Metrics Window</strong> to test the
+character sequences.</li>
+<li>Input combinations of base characters, joiners, and zero-width marks
+to ensure the cursor does not advance unnecessarily and that attachments
+snap to the defined anchor points.</li>
+<li>Export the font as OpenType (<code>.otf</code> or <code>.ttf</code>)
+via <strong>File &gt; Generate Fonts</strong>, and validate the compiled
+OpenType layout using external shaper tools such as <code>hb-view</code>
+or <code>hb-shape</code>.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/zero-width-characters-for-complex-scripts-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What GUI Toolkit Does FontForge Use? - fontforge</title>
+    <meta name="description" content="FontForge is a widely used open-source font editor, but unlike many standard desktop applications that rely on GTK or Qt, it primarily utilizes a custom-built widget toolkit called Gdraw. This article explains the technical foundation of FontForge&#39;s graph">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/what-gui-toolkit-does-font-forge-use">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What GUI Toolkit Does FontForge Use? - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/what-gui-toolkit-does-font-forge-use" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge is a widely used open-source font editor, but unlike many standard desktop applications that rely on GTK or Qt, it primarily utilizes a custom-built widget toolkit called Gdraw. This article explains the technical foundation of FontForge&#39;s graph" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-gui-toolkit-does-fontforge-use">What GUI Toolkit Does
+FontForge Use?</h1>
+<p>FontForge is a widely used open-source font editor, but unlike many
+standard desktop applications that rely on GTK or Qt, it primarily
+utilizes a custom-built widget toolkit called Gdraw. This article
+explains the technical foundation of FontForge's graphical user
+interface, why it does not natively run on standard modern toolkits, and
+the ongoing modernization efforts surrounding its interface.</p>
+<h3 id="the-primary-toolkit-gdraw">The Primary Toolkit: Gdraw</h3>
+<p>The standard FontForge interface is rendered using
+<strong>Gdraw</strong> (part of the internal <code>gutils</code> and
+<code>gdraw</code> libraries). George Williams, the original creator of
+FontForge, developed Gdraw from scratch in the early 2000s specifically
+for the application (then known as PfaEdit).</p>
+<p>At the time of FontForge's inception, mainstream toolkits like GTK+
+and Qt lacked robust support for complex Unicode text rendering,
+advanced typographic features, and the precise vector spline
+manipulation that font design demands. To achieve complete control over
+input handling, rendering speed, and custom vector drawing surfaces,
+Williams implemented his own custom windowing and widget system.</p>
+<h3 id="how-gdraw-operates-across-platforms">How Gdraw Operates Across
+Platforms</h3>
+<p>Gdraw is a lightweight abstraction layer designed to draw directly
+onto low-level graphics subsystems rather than using modern desktop
+widget libraries:</p>
+<ul>
+<li><strong>Linux and Unix-like Systems:</strong> Gdraw communicates
+directly with the X Window System via <strong>Xlib</strong>. It manages
+its own windows, menus, dialog boxes, and canvas redraws without
+depending on GTK or Qt.</li>
+<li><strong>macOS:</strong> Because Gdraw depends heavily on X11
+architecture, FontForge historically ran through XQuartz. Recent
+versions wrap the application to feel more integrated, but the
+underlying rendering remains tied to the X11 drawing model.</li>
+<li><strong>Windows:</strong> FontForge is typically compiled using
+MinGW/MSYS2, relying on a compatibility layer or local X server
+implementation to bridge Gdraw calls to the native Windows display
+system.</li>
+</ul>
+<h3 id="cairo-integration">Cairo Integration</h3>
+<p>While Gdraw manages the widgets, windows, and event loops, modern
+versions of FontForge integrate the <strong>Cairo</strong> 2D graphics
+library. Cairo handles anti-aliased vector rendering within the font
+glyph canvas and preview panes, giving the drawing view crisp lines and
+smooth curves that the original pure-Xlib rendering lacked.</p>
+<h3 id="gtk-transition-efforts">GTK Transition Efforts</h3>
+<p>Over the years, developers have attempted to replace Gdraw with
+modern toolkits, most notably <strong>GTK+ 3</strong>. A major porting
+initiative began around 2012 to make FontForge look like a native
+desktop application, improve accessibility, and eliminate the legacy X11
+dependency.</p>
+<p>While significant progress was made in prototyping a GTK-based
+interface, a full transition was never completed. Gdraw is deeply
+coupled with FontForge's core data structures, undo/redo stacks, and
+outline editing tools. Fully decoupling the editor canvas from Gdraw
+requires rewriting vast portions of the codebase. As a result, the
+official releases of FontForge continue to rely on the custom Gdraw
+toolkit as their primary graphical engine.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/what-gui-toolkit-does-font-forge-use';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

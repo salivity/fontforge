@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Install FontForge Plugins and Scripts - fontforge</title>
+    <meta name="description" content="FontForge extends its core font-editing functionality primarily through Python scripts and native dynamic libraries rather than a traditional add-on marketplace. This guide details how to locate your FontForge configuration directories, install custom Pyt">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-install-font-forge-plugins-and-scripts">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Install FontForge Plugins and Scripts - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-install-font-forge-plugins-and-scripts" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge extends its core font-editing functionality primarily through Python scripts and native dynamic libraries rather than a traditional add-on marketplace. This guide details how to locate your FontForge configuration directories, install custom Pyt" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-install-fontforge-plugins-and-scripts">How to Install
+FontForge Plugins and Scripts</h1>
+<p>FontForge extends its core font-editing functionality primarily
+through Python scripts and native dynamic libraries rather than a
+traditional add-on marketplace. This guide details how to locate your
+FontForge configuration directories, install custom Python extensions to
+add new menu tools, and configure native plugins across Windows, macOS,
+and Linux.</p>
+<h3 id="understanding-fontforge-extensions">Understanding FontForge
+Extensions</h3>
+<p>FontForge utilizes Python as its primary scripting and extension
+engine. Custom extensions are typically written as <code>.py</code>
+files that register new menu items in the graphical user interface (GUI)
+or automate font processing tasks. FontForge executes these scripts
+automatically at launch if they are placed in the correct system
+directory.</p>
+<hr />
+<h3 id="step-1-locate-the-fontforge-user-directory">Step 1: Locate the
+FontForge User Directory</h3>
+<p>To install a custom script so that it runs every time FontForge
+opens, place the script inside your personal FontForge configuration
+directory. Create the <code>python</code> folder if it does not already
+exist.</p>
+<ul>
+<li><p><strong>Linux:</strong><br />
+<code>~/.config/fontforge/python/</code><br />
+<em>(Older installations may use
+<code>~/.FontForge/python/</code>)</em></p></li>
+<li><p><strong>macOS:</strong><br />
+<code>~/Library/Application Support/FontForge/python/</code><br />
+<em>(Or <code>~/.config/fontforge/python/</code> depending on how
+FontForge was installed, such as via Homebrew)</em></p></li>
+<li><p><strong>Windows:</strong><br />
+<code>C:\Users\&lt;YourUsername&gt;\AppData\Roaming\FontForge\python\</code></p></li>
+</ul>
+<hr />
+<h3 id="step-2-add-your-custom-python-extension">Step 2: Add Your Custom
+Python Extension</h3>
+<ol type="1">
+<li>Download or write your custom Python script (e.g.,
+<code>my_custom_tool.py</code>).</li>
+<li>Move the <code>.py</code> file into the <code>python</code> folder
+identified in Step 1.</li>
+<li>Ensure the script registers itself to the FontForge UI using the
+built-in module. A standard extension script includes a hook similar
+to:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_tool_function(data, font):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Your custom font manipulation logic here</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    font.generate(<span class="st">&quot;output.otf&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Register the script in the FontForge &quot;Tools&quot; menu</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>fontforge.registerMenuItem(my_tool_function, <span class="va">None</span>, <span class="va">None</span>, <span class="st">&quot;Font&quot;</span>, <span class="va">None</span>, <span class="st">&quot;My Custom Tool&quot;</span>)</span></code></pre></div>
+<p>Any valid Python file placed in this folder executes automatically
+when FontForge boots.</p>
+<hr />
+<h3 id="step-3-installing-native-c-plugins-advanced">Step 3: Installing
+Native C Plugins (Advanced)</h3>
+<p>For high-performance or low-level tasks, FontForge supports compiled
+dynamic libraries (<code>.so</code> on Linux, <code>.dylib</code> on
+macOS, or <code>.dll</code> on Windows):</p>
+<ol type="1">
+<li>Compile the plugin source against FontForge's header files
+(<code>fontforge/plugins.h</code>).</li>
+<li>Copy the compiled library into FontForge's system plugin directory:
+<ul>
+<li><strong>Linux:</strong> <code>/usr/local/lib/fontforge/</code> or
+<code>/usr/lib/fontforge/</code></li>
+<li><strong>macOS:</strong>
+<code>/Applications/FontForge.app/Contents/Resources/opt/local/lib/fontforge/</code></li>
+<li><strong>Windows:</strong> The installation directory alongside the
+main executable (e.g.,
+<code>C:\Program Files (x86)\FontForgeBuilds\lib\fontforge\</code>).</li>
+</ul></li>
+<li>Relaunch FontForge to load the shared library.</li>
+</ol>
+<hr />
+<h3 id="step-4-verify-the-installation">Step 4: Verify the
+Installation</h3>
+<ol type="1">
+<li>Launch FontForge.</li>
+<li>Open an existing font or create a new font project.</li>
+<li>Look for your custom entries under the <strong>Tools</strong> menu
+or the specific menu defined in the script's
+<code>registerMenuItem</code> function.</li>
+<li>If the tool does not appear, check for syntax errors by launching
+FontForge from your terminal or command prompt to inspect the standard
+output for Python error tracebacks.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-install-font-forge-plugins-and-scripts';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

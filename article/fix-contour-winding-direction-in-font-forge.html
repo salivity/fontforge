@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Contour Winding Direction in FontForge - fontforge</title>
+    <meta name="description" content="In digital typography, incorrect contour winding direction causes cutouts and holes in characters (such as the center of an &quot;O&quot; or &quot;B&quot;) to fill in with black or disappear entirely during rendering. This issue occurs when the path directions of outer and i">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/fix-contour-winding-direction-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fix Contour Winding Direction in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/fix-contour-winding-direction-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In digital typography, incorrect contour winding direction causes cutouts and holes in characters (such as the center of an &quot;O&quot; or &quot;B&quot;) to fill in with black or disappear entirely during rendering. This issue occurs when the path directions of outer and i" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fix-contour-winding-direction-in-fontforge">Fix Contour Winding
+Direction in FontForge</h1>
+<p>In digital typography, incorrect contour winding direction causes
+cutouts and holes in characters (such as the center of an "O" or "B") to
+fill in with black or disappear entirely during rendering. This issue
+occurs when the path directions of outer and inner paths fail to follow
+font format standards, such as PostScript (Counter-Clockwise outer,
+Clockwise inner) or TrueType (Clockwise outer, Counter-Clockwise inner).
+This guide explains how to identify, automatically repair, and manually
+invert contour winding directions across single glyphs or an entire font
+using FontForge.</p>
+<h3 id="why-contour-direction-matters">Why Contour Direction
+Matters</h3>
+<p>Font rendering engines use the non-zero winding rule to determine
+which areas of a vector glyph should be filled with solid color and
+which areas should remain empty:</p>
+<ul>
+<li><strong>PostScript / OpenType (CFF):</strong> Outer boundaries must
+run counter-clockwise; inner boundaries (counters/holes) must run
+clockwise.</li>
+<li><strong>TrueType:</strong> Outer boundaries must run clockwise;
+inner boundaries must run counter-clockwise.</li>
+</ul>
+<p>If nested contours share the same direction, rendering engines treat
+them both as solid shapes, obscuring hollow areas.</p>
+<h3 id="method-1-automatic-correction-across-the-entire-font">Method 1:
+Automatic Correction Across the Entire Font</h3>
+<p>FontForge provides an automated function that analyzes nested paths
+and resets them to the proper conventions based on your font format
+settings.</p>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Select the glyphs you want to fix. To select every glyph in the
+font, press <code>Ctrl + A</code> (or <code>Cmd + A</code> on
+macOS).</li>
+<li>Navigate to the top menu and select <strong>Element</strong> &gt;
+<strong>Correct Direction</strong>.</li>
+<li>Alternatively, use the keyboard shortcut
+<code>Ctrl + Shift + D</code> (or <code>Cmd + Shift + D</code> on
+macOS).</li>
+</ol>
+<p>FontForge will inspect all selected glyphs, detect nested shapes, and
+automatically orient the outer and inner paths correctly.</p>
+<h3 id="method-2-manual-inversion-in-the-glyph-window">Method 2: Manual
+Inversion in the Glyph Window</h3>
+<p>If automatic correction fails on complex or overlapping paths, you
+can manually reverse the direction of individual contours.</p>
+<ol type="1">
+<li>Double-click the affected glyph in the Font View to open it in the
+Glyph Outline window.</li>
+<li>Turn on direction indicators by going to <strong>View</strong> &gt;
+<strong>Show</strong> &gt; <strong>Path Direction</strong> to see the
+arrows marking path flow.</li>
+<li>Use the <strong>Pointer tool</strong> (keyboard shortcut
+<code>V</code>) to click on a point on the specific contour you need to
+reverse.</li>
+<li>Select the whole contour by double-clicking one of its points, or by
+choosing <strong>Edit</strong> &gt; <strong>Select</strong> &gt;
+<strong>Contours</strong>.</li>
+<li>Reverse the path direction using either of the following steps:
+<ul>
+<li>Go to <strong>Element</strong> &gt; <strong>Clockwise</strong> or
+<strong>Element</strong> &gt; <strong>Counter-Clockwise</strong>,
+depending on the desired direction.</li>
+<li>Right-click the selected path and choose <strong>Reverse
+Direction</strong>.</li>
+</ul></li>
+<li>Check that the directional arrows on outer and inner contours now
+point in opposite directions.</li>
+</ol>
+<h3 id="method-3-finding-direction-problems-with-the-validator">Method
+3: Finding Direction Problems with the Validator</h3>
+<p>To ensure no glyphs with winding errors were missed before
+exporting:</p>
+<ol type="1">
+<li>Select all glyphs using <code>Ctrl + A</code>.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Find
+Problems...</strong>.</li>
+<li>In the dialog box, click on the <strong>Paths</strong> tab.</li>
+<li>Check the box labeled <strong>Check paths are oriented
+correctly</strong> (and optionally <strong>Check
+self-intersecting</strong>).</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<p>FontForge will scan the glyphs and highlight any remaining contour
+errors, allowing you to review and fix them directly.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/fix-contour-winding-direction-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

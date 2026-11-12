@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Font Family Hierarchy from FontForge - fontforge</title>
+    <meta name="description" content="Exporting an entire font family hierarchy from FontForge requires configuring standardized naming metadata across all your font files, correctly mapping style flags, and exporting each style so operating systems recognize them as a single family. Because">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/export-font-family-hierarchy-from-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Export Font Family Hierarchy from FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/export-font-family-hierarchy-from-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Exporting an entire font family hierarchy from FontForge requires configuring standardized naming metadata across all your font files, correctly mapping style flags, and exporting each style so operating systems recognize them as a single family. Because" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="export-font-family-hierarchy-from-fontforge">Export Font Family
+Hierarchy from FontForge</h1>
+<p>Exporting an entire font family hierarchy from FontForge requires
+configuring standardized naming metadata across all your font files,
+correctly mapping style flags, and exporting each style so operating
+systems recognize them as a single family. Because FontForge edits one
+font master at a time, establishing a cohesive hierarchy relies on
+defining OpenType and PostScript naming tables properly before batch
+generating the final binaries manually or via scripting.</p>
+<h3 id="step-1-standardize-postscript-names">Step 1: Standardize
+PostScript Names</h3>
+<p>For operating systems to group fonts, every style must share the same
+base family name while having unique individual identifiers.</p>
+<ol type="1">
+<li>Open the font file in FontForge.</li>
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font Info</strong>
+&gt; <strong>PS Names</strong>.</li>
+<li>Fill out the fields consistently:
+<ul>
+<li><strong>Family Name</strong>: The base name of your family (e.g.,
+<code>MyFont</code>). This must be identical across every weight and
+style.</li>
+<li><strong>Fontname</strong>: The PostScript identifier with no spaces
+(e.g., <code>MyFont-BoldItalic</code>).</li>
+<li><strong>Name for Humans</strong>: The full readable name (e.g.,
+<code>MyFont Bold Italic</code>).</li>
+<li><strong>Weight</strong>: The specific weight label (e.g.,
+<code>Bold</code>).</li>
+</ul></li>
+</ol>
+<h3 id="step-2-configure-opentype-and-ttf-names">Step 2: Configure
+OpenType and TTF Names</h3>
+<p>The TTF Names table dictates how software displays the hierarchy in
+font pickers.</p>
+<ol type="1">
+<li>In the <strong>Font Info</strong> dialog, select <strong>TTF
+Names</strong>.</li>
+<li>Set the standard 4-style (RIBBI) entries:
+<ul>
+<li><strong>Family (ID 1)</strong>: For standard styles (Regular,
+Italic, Bold, Bold Italic), use the main family name (e.g.,
+<code>MyFont</code>). For weights outside the core four (like Light,
+Thin, or Black), older systems require a separate family name (e.g.,
+<code>MyFont Light</code>).</li>
+<li><strong>SubFamily (ID 2)</strong>: Must only be
+<code>Regular</code>, <code>Italic</code>, <code>Bold</code>, or
+<code>Bold Italic</code>.</li>
+</ul></li>
+<li>Set the extended family hierarchy for modern software:
+<ul>
+<li><strong>Preferred Family (ID 16)</strong>: Set this to the true base
+family name (e.g., <code>MyFont</code>) across all weights.</li>
+<li><strong>Preferred Styles (ID 17)</strong>: Set the precise style
+(e.g., <code>Thin Italic</code>, <code>Black</code>,
+<code>SemiBold</code>).</li>
+<li><strong>WWS Family (ID 21)</strong> and <strong>WWS Subfamily (ID
+22)</strong>: Set these if using extended widths or optical sizes to
+ensure complete typographic grouping.</li>
+</ul></li>
+</ol>
+<h3 id="step-3-set-os2-weight-and-style-flags">Step 3: Set OS/2 Weight
+and Style Flags</h3>
+<p>System font grouping depends on matching OS/2 metrics to the chosen
+hierarchy.</p>
+<ol type="1">
+<li>Go to <strong>Element</strong> &gt; <strong>Font Info</strong> &gt;
+<strong>OS/2</strong>.</li>
+<li>Under the <strong>Misc</strong> tab, set <strong>Weight
+Class</strong> (e.g., 100 for Thin, 400 for Regular, 700 for Bold, 900
+for Black).</li>
+<li>Under the <strong>Sub-Family</strong> tab, verify the
+<strong>fsSelection</strong> flags:
+<ul>
+<li>Check <strong>Bold</strong> only for weights 700 and higher that
+serve as bold counterparts.</li>
+<li>Check <strong>Italic</strong> or <strong>Oblique</strong> for
+slanted variants.</li>
+<li>Check <strong>Regular</strong> only for the standard 400-weight
+upright style.</li>
+</ul></li>
+</ol>
+<h3 id="step-4-export-the-hierarchy">Step 4: Export the Hierarchy</h3>
+<p>Once metadata is standardized across each <code>.sfd</code> source
+file, generate the family:</p>
+<h4 id="manual-export">Manual Export</h4>
+<ol type="1">
+<li>Go to <strong>File</strong> &gt; <strong>Generate
+Fonts</strong>.</li>
+<li>Select your desired format (<code>OpenType (CFF)</code> for
+<code>.otf</code> or <code>TrueType</code> for <code>.ttf</code>).</li>
+<li>Save all styles into the same target directory.</li>
+</ol>
+<h4 id="automated-batch-export">Automated Batch Export</h4>
+<p>If your family contains numerous weights, use a FontForge Python
+script to export all files while preserving the hierarchy settings:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>source_dir <span class="op">=</span> <span class="st">&quot;./sources/*.sfd&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>output_dir <span class="op">=</span> <span class="st">&quot;./build/&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(output_dir):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    os.makedirs(output_dir)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file_path <span class="kw">in</span> glob.glob(source_dir):</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    font <span class="op">=</span> fontforge.<span class="bu">open</span>(file_path)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    output_filename <span class="op">=</span> os.path.splitext(os.path.basename(file_path))[<span class="dv">0</span>] <span class="op">+</span> <span class="st">&quot;.otf&quot;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    font.generate(os.path.join(output_dir, output_filename))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    font.close()</span></code></pre></div>
+<p>Run this script through the command line using
+<code>fontforge -script export_family.py</code>. The generated files
+will be packaged with matching metadata tables, enabling operating
+systems and design software to group the files under a unified font
+family menu.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/export-font-family-hierarchy-from-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

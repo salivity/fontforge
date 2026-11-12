@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why FontForge Simplify Causes Jagged Curves - fontforge</title>
+    <meta name="description" content="Running the Simplify command in FontForge is a standard way to reduce redundant control points along glyph contours, but it frequently results in jagged, uneven, or flattened curves. This issue typically stems from overly aggressive tolerance settings, co">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/why-font-forge-simplify-causes-jagged-curves">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why FontForge Simplify Causes Jagged Curves - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/why-font-forge-simplify-causes-jagged-curves" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Running the Simplify command in FontForge is a standard way to reduce redundant control points along glyph contours, but it frequently results in jagged, uneven, or flattened curves. This issue typically stems from overly aggressive tolerance settings, co" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-fontforge-simplify-causes-jagged-curves">Why FontForge
+Simplify Causes Jagged Curves</h1>
+<p>Running the Simplify command in FontForge is a standard way to reduce
+redundant control points along glyph contours, but it frequently results
+in jagged, uneven, or flattened curves. This issue typically stems from
+overly aggressive tolerance settings, coordinate rounding on the font
+grid, and the accidental removal of structural extrema or smooth tangent
+constraints. Understanding how FontForge recalculates Bézier splines
+during simplification allows you to diagnose why curves degrade and
+apply the proper settings to preserve smooth outlines.</p>
+<h3 id="1-excessive-error-tolerance">1. Excessive Error Tolerance</h3>
+<p>The core engine behind the Simplify command
+(<code>Element &gt; Simplify &gt; Simplify</code>) relies on a
+user-defined error threshold. This value defines how far the new spline
+can deviate from the original path. If the error tolerance is set too
+high, the algorithm eliminates necessary points and stretches the
+remaining Bézier handles across spans they cannot naturally bridge. This
+results in flat sections paired with sudden, sharp turns where adjacent
+curve segments meet at harsh angles.</p>
+<h3 id="2-loss-of-extrema-and-inflection-points">2. Loss of Extrema and
+Inflection Points</h3>
+<p>Smooth digital curves require on-curve points at their local
+horizontal and vertical extrema (the highest, lowest, and widest points
+of a contour), as well as at points of inflection where a curve changes
+direction. The standard Simplify algorithm evaluates paths purely
+through mathematical approximation rather than typographical structure.
+If it deletes an extremum or an inflection point, the adjacent handles
+must compensate at unnatural angles, introducing noticeable kinks and
+asymmetrical humps.</p>
+<h3 id="3-point-type-mutation-and-broken-tangents">3. Point Type
+Mutation and Broken Tangents</h3>
+<p>FontForge classifies points as curve, corner, or tangent points. For
+a junction between two Bézier curves to be visually continuous, the
+incoming handle, the on-curve point, and the outgoing handle must remain
+collinear (aligned in a straight line). Simplifying an outline often
+misinterprets subtle transitions, converting smooth curve points into
+corner points. When the handles on either side of a point are freed from
+collinearity, they shift independently, breaking the curvature
+continuity and creating an abrupt, jagged point.</p>
+<h3 id="4-integer-coordinate-snapping">4. Integer Coordinate
+Snapping</h3>
+<p>Font outlines in standard formats (such as PostScript/CFF and
+TrueType) store point positions using integer coordinates on an Em
+square grid. FontForge snaps point locations and Bézier control handles
+to the nearest whole integer. When Simplify computes new control handles
+over long spans, tiny rounding adjustments can severely alter the angle
+of a trajectory. On shallow curves, moving a handle by just one integer
+unit can introduce visible stepping or a jagged ripple.</p>
+<h3 id="5-noisy-source-geometry">5. Noisy Source Geometry</h3>
+<p>Simplification algorithms perform poorly on geometry originating from
+scanned or auto-traced artwork. These paths often contain clusters of
+microscopic segments with conflicting handle directions. When FontForge
+attempts to merge these erratic vectors, the algorithmic solver can
+produce overlapping segments or extreme handle extensions that cross
+over one another, producing jagged loops and sharp spikes along the
+contour.</p>
+<h3 id="how-to-prevent-jagged-results">How to Prevent Jagged
+Results</h3>
+<p>To maintain clean curves when reducing point counts:</p>
+<ul>
+<li><strong>Use "Simplify More":</strong> Navigate to
+<code>Element &gt; Simplify &gt; Simplify More</code> to open advanced
+controls. Lower the error threshold to make the fitting stricter.</li>
+<li><strong>Lock Tangents:</strong> In the Simplify settings, enable
+options that preserve point types and retain tangency along existing
+smooth points.</li>
+<li><strong>Add Extrema First:</strong> Run
+<code>Element &gt; Add Extrema</code> before simplifying so the
+algorithm recognizes critical structural coordinates.</li>
+<li><strong>Clean Up Manually:</strong> For display typefaces or
+delicate curves, manually delete unnecessary points using the Delete
+key, which allows FontForge to heal the curve while keeping existing
+point constraints intact.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/why-font-forge-simplify-causes-jagged-curves';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

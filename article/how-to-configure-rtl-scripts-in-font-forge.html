@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Configure RTL Scripts in FontForge - fontforge</title>
+    <meta name="description" content="Configuring Right-to-Left (RTL) scripts like Arabic, Hebrew, or Persian in FontForge requires establishing proper character encoding, assigning script tags, and setting up OpenType Layout features for glyph shaping and positioning. This guide details the">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-configure-rtl-scripts-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Configure RTL Scripts in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-configure-rtl-scripts-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Configuring Right-to-Left (RTL) scripts like Arabic, Hebrew, or Persian in FontForge requires establishing proper character encoding, assigning script tags, and setting up OpenType Layout features for glyph shaping and positioning. This guide details the" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-configure-rtl-scripts-in-fontforge">How to Configure RTL
+Scripts in FontForge</h1>
+<p>Configuring Right-to-Left (RTL) scripts like Arabic, Hebrew, or
+Persian in FontForge requires establishing proper character encoding,
+assigning script tags, and setting up OpenType Layout features for glyph
+shaping and positioning. This guide details the essential steps to
+prepare your font for RTL support, create OpenType substitution lookups,
+and verify bidirectional text flow using FontForge's built-in tools.</p>
+<h2 id="1-set-font-encoding-and-properties">1. Set Font Encoding and
+Properties</h2>
+<p>To ensure the font supports RTL characters properly:</p>
+<ol type="1">
+<li>Open your project in FontForge.</li>
+<li>Navigate to <strong>Encoding</strong> &gt; <strong>Reencode</strong>
+and select an encoding system that includes your target script (such as
+<strong>Unicode BMP</strong> or <strong>ISO 10646-1</strong>).</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Font Info</strong> &gt;
+<strong>General</strong>.</li>
+<li>Set the <strong>Em Size</strong> (typically 1000 or 2048) and verify
+that <strong>Ascent</strong> and <strong>Descent</strong> accommodate
+script diacritics and ascenders.</li>
+</ol>
+<h2 id="2-configure-opentype-gsub-features">2. Configure OpenType GSUB
+Features</h2>
+<p>RTL scripts like Arabic rely on contextual glyph substitution based
+on a character's position within a word (isolated, initial, medial, or
+final).</p>
+<ol type="1">
+<li>Go to <strong>Element</strong> &gt; <strong>Font Info</strong>.</li>
+<li>Select <strong>Lookups</strong> from the left-hand panel, then click
+the <strong>GSUB</strong> tab at the top.</li>
+<li>Click <strong>Add Lookup</strong>.</li>
+<li>In the dialog, set the <strong>Type</strong> to <strong>Single
+Substitution</strong>.</li>
+<li>Assign the appropriate OpenType feature tag depending on the shaping
+stage:
+<ul>
+<li><code>isol</code> for Isolated forms</li>
+<li><code>init</code> for Initial forms</li>
+<li><code>medi</code> for Medial forms</li>
+<li><code>fina</code> for Final forms</li>
+<li><code>rlig</code> or <code>liga</code> for required ligatures</li>
+</ul></li>
+<li>Click the script/language button (usually marked
+<code>&lt;New&gt;</code>), and select your script tag (e.g.,
+<code>arab</code> for Arabic or <code>hebr</code> for Hebrew) and
+language <code>dflt</code> (Default).</li>
+<li>Click <strong>OK</strong>, then click <strong>Add Subtable</strong>
+to map your base characters to their shaped variants (e.g., mapping
+<code>uni0628</code> to <code>uni0628.init</code>).</li>
+</ol>
+<h2 id="3-set-up-gpos-lookups-for-cursive-attachment-and-marks">3. Set
+Up GPOS Lookups for Cursive Attachment and Marks</h2>
+<p>Scripts with continuous baselines or complex vowel markings require
+Glyph Positioning (GPOS) data:</p>
+<ol type="1">
+<li>In the <strong>Lookups</strong> panel, switch to the
+<strong>GPOS</strong> tab.</li>
+<li>Click <strong>Add Lookup</strong>.</li>
+<li>For connected scripts like Arabic, select <strong>Cursive
+Attachment</strong> (<code>curs</code>) under <strong>Type</strong> to
+define entry and exit anchor points on each glyph.</li>
+<li>For diacritics and vowel marks, select <strong>Mark to Base</strong>
+(<code>mark</code>) under <strong>Type</strong> and configure mark
+anchors to ensure accents align properly above or below consonants.</li>
+</ol>
+<h2 id="4-adjust-the-metrics-window-for-rtl-preview">4. Adjust the
+Metrics Window for RTL Preview</h2>
+<p>To preview and edit glyph interactions in their natural reading
+order:</p>
+<ol type="1">
+<li>Open the Metrics window by navigating to <strong>Metrics</strong>
+&gt; <strong>New Metrics Window</strong>.</li>
+<li>In the text input area at the top, paste or type a sample string in
+your RTL script.</li>
+<li>In the top menu of the Metrics window, choose <strong>View</strong>
+&gt; <strong>Right to Left</strong> to switch the visual reading
+direction.</li>
+<li>Ensure <strong>Features</strong> in the Metrics menu has your newly
+created GSUB and GPOS features enabled to verify that substitutions and
+attachments render automatically.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-configure-rtl-scripts-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

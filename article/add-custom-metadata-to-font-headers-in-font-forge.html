@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Custom Metadata to Font Headers in FontForge - fontforge</title>
+    <meta name="description" content="FontForge allows you to modify and extend font metadata, but your ability to add completely custom metadata tags to a font header depends on whether you are working within FontForge&#39;s native format or exporting to standardized formats like OpenType (OTF)">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/add-custom-metadata-to-font-headers-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Add Custom Metadata to Font Headers in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/add-custom-metadata-to-font-headers-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge allows you to modify and extend font metadata, but your ability to add completely custom metadata tags to a font header depends on whether you are working within FontForge&#39;s native format or exporting to standardized formats like OpenType (OTF)" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="add-custom-metadata-to-font-headers-in-fontforge">Add Custom
+Metadata to Font Headers in FontForge</h1>
+<p>FontForge allows you to modify and extend font metadata, but your
+ability to add completely custom metadata tags to a font header depends
+on whether you are working within FontForge's native format or exporting
+to standardized formats like OpenType (OTF) or TrueType (TTF). While
+TrueType and OpenType specifications enforce strict table schemas that
+prevent arbitrary key-value pairs in the primary header, FontForge
+provides specific mechanisms—such as custom name IDs and user-defined
+tables—to embed custom data directly into the font file.</p>
+<h3 id="how-opentype-and-truetype-headers-handle-metadata">How OpenType
+and TrueType Headers Handle Metadata</h3>
+<p>In OpenType and TrueType fonts, metadata is not stored as freeform
+header text. Instead, it is distributed across predefined tables such as
+<code>head</code> (Font Header), <code>OS/2</code> (OS/2 and Windows
+Metrics), and <code>name</code> (Naming Table). The actual
+<code>head</code> table contains fixed-length, strictly defined
+technical fields such as font revision, creation date, and bounding box
+flags. You cannot directly inject arbitrary custom tags into the
+<code>head</code> table itself without corrupting the font structure and
+causing it to fail validation checks in operating systems and web
+browsers.</p>
+<h3 id="adding-custom-entries-to-the-name-table">Adding Custom Entries
+to the Name Table</h3>
+<p>The most common and compliant way to store custom metadata in
+FontForge is through the <code>name</code> table. The <code>name</code>
+table contains predefined Name IDs (such as 0 for Copyright, 1 for Font
+Family, and 7 for Trademark), but it also permits custom user-defined
+IDs.</p>
+<p>To add a custom entry using the graphical interface:</p>
+<ol type="1">
+<li>Open your font in FontForge.</li>
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font
+Info</strong>.</li>
+<li>Select <strong>TTF Names</strong> from the left-hand menu.</li>
+<li>Click <strong>Append</strong> or edit an unused record.</li>
+<li>Set the Name ID to an integer above 255 (values from 256 to 32767
+are generally reserved for custom or font-specific strings).</li>
+<li>Enter your custom string value alongside the appropriate platform
+and language IDs.</li>
+</ol>
+<h3 id="embedding-custom-tables-via-python-scripting">Embedding Custom
+Tables via Python Scripting</h3>
+<p>If you need to store structured metadata (such as JSON, XML, or
+proprietary tracking records) that does not fit into standard strings,
+you can embed an entire custom table into the font. OpenType allows
+four-letter custom table tags (typically written in lowercase or
+containing specific non-standard identifiers) that parsers will ignore
+if they do not recognize them.</p>
+<p>This cannot be done through the basic GUI fields alone, but it can be
+implemented using FontForge’s integrated Python scripting engine.
+Through the Python API, you can define arbitrary binary data or text and
+map it to a custom four-character table tag prior to generating the
+binary font file:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;MyFont.sfd&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>custom_data <span class="op">=</span> <span class="st">b&quot;CustomMetadataKey: Value12345&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>font.setTableData(<span class="st">&quot;cust&quot;</span>, custom_data)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>font.generate(<span class="st">&quot;MyFont.otf&quot;</span>)</span></code></pre></div>
+<h3 id="saving-metadata-in-native-sfd-files">Saving Metadata in Native
+SFD Files</h3>
+<p>If you only need to preserve metadata during font development and do
+not require it to exist in the compiled <code>.otf</code> or
+<code>.ttf</code> output, use FontForge’s native SFD (Spline Font
+Database) format. SFD files are plain-text files. You can use the
+<strong>Comments</strong> section in the <strong>Font Info</strong>
+dialog to retain notes, version control keys, or configuration tags.
+These comments persist inside the development project without violating
+compiled font standards.</p>
+<h3 id="compatibility-and-limitations">Compatibility and
+Limitations</h3>
+<p>While custom Name IDs and arbitrary tables can be successfully
+generated by FontForge, be aware that downstream font processing tools
+(such as web font compressors, subsetters, or Google OTS) may flag or
+strip non-standard tables and metadata during optimization. To guarantee
+that external systems read your metadata, place essential information
+within standard predefined fields like the <strong>Notice</strong> (Name
+ID 0), <strong>Description</strong> (Name ID 10), or <strong>Sample
+Text</strong> (Name ID 19) strings.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/add-custom-metadata-to-font-headers-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

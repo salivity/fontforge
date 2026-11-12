@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Check the Active Encoding in FontForge - fontforge</title>
+    <meta name="description" content="Checking the active encoding table in FontForge ensures your glyphs map properly to standard character sets like Unicode or legacy ASCII variations. This article explains how to quickly identify the currently loaded encoding slot directly from the FontFor">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-check-the-active-encoding-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Check the Active Encoding in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-check-the-active-encoding-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Checking the active encoding table in FontForge ensures your glyphs map properly to standard character sets like Unicode or legacy ASCII variations. This article explains how to quickly identify the currently loaded encoding slot directly from the FontFor" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-check-the-active-encoding-in-fontforge">How to Check the
+Active Encoding in FontForge</h1>
+<p>Checking the active encoding table in FontForge ensures your glyphs
+map properly to standard character sets like Unicode or legacy ASCII
+variations. This article explains how to quickly identify the currently
+loaded encoding slot directly from the FontForge interface and through
+its scripting environment.</p>
+<h3 id="1-inspect-the-encoding-menu">1. Inspect the Encoding Menu</h3>
+<p>The most direct way to see your current encoding vector is through
+the primary menu bar in the Font View window:</p>
+<ol type="1">
+<li>Open your font file in FontForge to open the main <strong>Font
+View</strong> grid.</li>
+<li>Click on <strong>Encoding</strong> in the top menu bar.</li>
+<li>Look through the drop-down list. FontForge displays standard
+encodings (such as <em>ISO 8859-1</em>, <em>Unicode, BMP</em>, or
+<em>Adobe Standard</em>).</li>
+<li>The currently active encoding table is marked with a checkmark or
+filled radio button next to its name.</li>
+</ol>
+<p>If you are working with an uncommon or user-defined standard, check
+under <strong>Encoding &gt; User Defined</strong> or look for custom
+encodings listed at the bottom of the menu.</p>
+<h3 id="2-view-the-window-title-bar">2. View the Window Title Bar</h3>
+<p>In most desktop environments, FontForge includes the active encoding
+name in the title bar of the Font View window. The title bar typically
+follows this structure:</p>
+<p><code>FontName - CurrentEncoding</code></p>
+<p>For example, if your font is named "MyCustomFont" mapped to standard
+Unicode, the window header often reads:
+<code>MyCustomFont - Unicode</code></p>
+<h3 id="3-verify-via-the-python-scripting-engine">3. Verify via the
+Python Scripting Engine</h3>
+<p>If you are running FontForge headless or automating font production,
+you can query the active encoding programmatically using the built-in
+Python API:</p>
+<ol type="1">
+<li>Open <strong>File &gt; Execute Script...</strong> or launch the
+FontForge interactive Python shell.</li>
+<li>Run the following commands:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.activeFont()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(font.encoding)</span></code></pre></div>
+<p>The terminal will return the exact string name of the active encoding
+scheme (e.g., <code>UnicodeBmp</code>, <code>ISO8859-1</code>, or
+<code>Compact</code>).</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-check-the-active-encoding-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

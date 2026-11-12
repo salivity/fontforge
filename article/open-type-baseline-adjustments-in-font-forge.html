@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenType Baseline Adjustments in FontForge - fontforge</title>
+    <meta name="description" content="Baseline adjustments in OpenType layout tables allow type designers to define how different scripts align with one another along horizontal or vertical axes. In FontForge, these adjustments are primarily managed within the OpenType BASE (Baseline) table,">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/open-type-baseline-adjustments-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="OpenType Baseline Adjustments in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/open-type-baseline-adjustments-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Baseline adjustments in OpenType layout tables allow type designers to define how different scripts align with one another along horizontal or vertical axes. In FontForge, these adjustments are primarily managed within the OpenType BASE (Baseline) table," />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="opentype-baseline-adjustments-in-fontforge">OpenType Baseline
+Adjustments in FontForge</h1>
+<p>Baseline adjustments in OpenType layout tables allow type designers
+to define how different scripts align with one another along horizontal
+or vertical axes. In FontForge, these adjustments are primarily managed
+within the OpenType <code>BASE</code> (Baseline) table, which stores
+precise alignment metrics for multiscript fonts—such as combining Latin,
+Devanagari, and Chinese characters. By setting up these adjustments, a
+font ensures that rendering engines position text consistently across
+mixed-script environments without manual intervention from end
+users.</p>
+<h3 id="the-role-of-the-opentype-base-table">The Role of the OpenType
+BASE Table</h3>
+<p>Standard fonts typically rely on a single baseline, such as the Roman
+baseline used for Latin, Cyrillic, and Greek alphabets. However, global
+writing systems use different visual anchors:</p>
+<ul>
+<li><strong>Roman Baseline:</strong> The traditional alignment line at
+or near the bottom of lowercase letters without descenders.</li>
+<li><strong>Hanging Baseline:</strong> Used in Brahmic scripts like
+Devanagari and Tibetan, where characters align along a top structural
+line.</li>
+<li><strong>Ideographic Baseline:</strong> Used in CJK (Chinese,
+Japanese, Korean) characters, typically aligning the bottom of the
+ideographic character frame.</li>
+<li><strong>Central Baseline:</strong> Positioned at the vertical center
+of the em-square, commonly used for mathematical symbols and vertical
+Asian text.</li>
+</ul>
+<p>The OpenType <code>BASE</code> table bridges these diverse systems by
+recording relative offsets between each script's natural baseline and
+the common font metrics.</p>
+<h3 id="managing-baseline-adjustments-in-fontforge">Managing Baseline
+Adjustments in FontForge</h3>
+<p>In FontForge, baseline adjustments are accessed through the font's
+metadata and table management settings:</p>
+<ol type="1">
+<li>Open your project and navigate to <strong>Element &gt; Font
+Info</strong>.</li>
+<li>Select the <strong>BASE</strong> section (or the OpenType layout
+table panel, depending on the FontForge build).</li>
+<li>Choose the writing direction to configure: the <strong>Horizontal
+Axis</strong> (for left-to-right and right-to-left scripts) or the
+<strong>Vertical Axis</strong> (for top-to-bottom scripts).</li>
+</ol>
+<p>Within this interface, you designate baseline tags
+(<code>romn</code>, <code>hang</code>, <code>ideo</code>,
+<code>math</code>) and specify their coordinates in font units relative
+to the font's origin point (<span
+class="math inline">\(0,0\)</span>).</p>
+<h3 id="defining-script-and-language-specifics">Defining Script and
+Language Specifics</h3>
+<p>Baseline adjustments in FontForge can be assigned globally or mapped
+per script:</p>
+<ul>
+<li><strong>Base Script List:</strong> Identifies which scripts exist in
+the font and assigns a default baseline tag to each. For example, the
+<code>latn</code> (Latin) script defaults to <code>romn</code>, while
+<code>deva</code> (Devanagari) defaults to <code>hang</code>.</li>
+<li><strong>Base Values:</strong> For each defined script, numerical
+values (based on the Units Per Em, or UPM) establish the position of
+other baselines relative to that script. If a Latin font at 1000 UPM has
+an ideographic baseline at -120 units, that offset is recorded here so
+text engines can calculate correct vertical positions when Latin and Han
+characters appear on the same line.</li>
+<li><strong>MinMax Extents:</strong> Optional tables that set minimum
+and maximum coordinate limits for glyphs within specific scripts or
+OpenType features, preventing unexpected vertical clipping during
+complex script rendering.</li>
+</ul>
+<p>Properly configuring these adjustments in FontForge eliminates the
+vertical misalignment that occurs when complex, multiscript typography
+is rendered in OpenType-compliant software.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/open-type-baseline-adjustments-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

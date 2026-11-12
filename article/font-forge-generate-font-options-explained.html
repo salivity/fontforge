@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Generate Font Options Explained - fontforge</title>
+    <meta name="description" content="The Generate Options dialog in FontForge is the configuration hub accessed during the font export process, allowing designers to control the precise technical specifications of the resulting font binary. This article provides a focused breakdown of the di">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-generate-font-options-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Generate Font Options Explained - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-generate-font-options-explained" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Generate Options dialog in FontForge is the configuration hub accessed during the font export process, allowing designers to control the precise technical specifications of the resulting font binary. This article provides a focused breakdown of the di" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-generate-font-options-explained">FontForge Generate
+Font Options Explained</h1>
+<p>The Generate Options dialog in FontForge is the configuration hub
+accessed during the font export process, allowing designers to control
+the precise technical specifications of the resulting font binary. This
+article provides a focused breakdown of the dialog's primary functions,
+including table generation, hinting parameters, format compatibility,
+and error handling, ensuring that your exported fonts render reliably
+across modern and legacy operating systems.</p>
+<h3 id="format-compatibility-and-specifications">Format Compatibility
+and Specifications</h3>
+<p>The primary purpose of the Generate Options dialog is to bridge the
+gap between FontForge's internal design database and standardized output
+formats such as TrueType (TTF), OpenType (OTF), and Web Open Font Format
+(WOFF/WOFF2).</p>
+<p>Through this dialog, users can select specific platform rules, such
+as:</p>
+<ul>
+<li><strong>Apple vs. OpenType (Microsoft):</strong> Dictates how tables
+are structured, particularly for features like ligatures, kerning, and
+contextual alternates. You can enforce strict OpenType layout tables or
+include Apple Advanced Typography (AAT) tables.</li>
+<li><strong>PostScript Type 1 vs. TrueType Outlines:</strong> Controls
+whether cubic (PostScript/CFF) or quadratic (TrueType) Bézier curves are
+calculated and stored.</li>
+</ul>
+<h3 id="outline-and-hinting-controls">Outline and Hinting Controls</h3>
+<p>Rendering engines on platforms like Windows, macOS, and Linux process
+font outlines differently at low resolutions. The Generate Options
+dialog controls how hinting data is preserved or converted:</p>
+<ul>
+<li><strong>Preserving Hints:</strong> Allows existing PostScript hints
+or TrueType bytecode instructions to be embedded into the generated
+font.</li>
+<li><strong>Auto-hinting:</strong> Instructs FontForge to generate new
+hints automatically for unhinted glyphs upon export.</li>
+<li><strong>Instructed Generation:</strong> Controls the inclusion of
+TrueType-specific hinting tables, such as <code>fpgm</code> (Font
+Program) and <code>prep</code> (Control Value Program), which optimize
+display crispness on pixel grids.</li>
+</ul>
+<h3 id="opentype-table-management">OpenType Table Management</h3>
+<p>FontForge stores a wide array of metadata and behavioral rules that
+may not all be necessary for every export. The dialog allows you to
+include, exclude, or customize specific OpenType tables:</p>
+<ul>
+<li><strong>Kerning Formats:</strong> Select between standard OpenType
+GPOS (Glyph Positioning) tables or legacy <code>kern</code> tables for
+older software that does not support advanced OpenType features.</li>
+<li><strong>Lookup Feature Pruning:</strong> Excludes unreferenced
+layout features, reducing file size and avoiding compilation
+errors.</li>
+<li><strong>Glyph ID Ordering:</strong> Determines how glyphs are
+indexed within the font file, which can be critical for legacy system
+compatibility.</li>
+</ul>
+<h3 id="validation-and-error-handling">Validation and Error
+Handling</h3>
+<p>Exporting a font with topological or mathematical errors can crash
+text engines or cause visual glitches. The Generate Options dialog lets
+users configure how FontForge behaves when encountering design flaws
+during export:</p>
+<ul>
+<li><strong>Self-Intersecting Paths:</strong> Automatically detects and
+resolves overlapping paths or warns the designer.</li>
+<li><strong>Flipped Directions:</strong> Flags or automatically corrects
+clockwise vs. counter-clockwise path orientations, which define what is
+solid and what is transparent.</li>
+<li><strong>Missing Extremities:</strong> Checks for control points that
+do not fall on curve inflection extrema, a requirement for clean
+rasterization.</li>
+</ul>
+<p>By configuring these options, you ensure that the font compilation
+process matches the target environment, strikes the right balance
+between file size and feature support, and adheres strictly to industry
+specifications.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-generate-font-options-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

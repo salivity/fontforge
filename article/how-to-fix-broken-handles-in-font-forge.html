@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Fix Broken Handles in FontForge - fontforge</title>
+    <meta name="description" content="Importing vector artwork from software like Adobe Illustrator or Inkscape into FontForge frequently causes control handle anomalies, including retracted Bézier handles, misclassified curve points, and extreme handle misalignment. This guide covers direct,">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-fix-broken-handles-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Fix Broken Handles in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-fix-broken-handles-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Importing vector artwork from software like Adobe Illustrator or Inkscape into FontForge frequently causes control handle anomalies, including retracted Bézier handles, misclassified curve points, and extreme handle misalignment. This guide covers direct," />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-fix-broken-handles-in-fontforge">How to Fix Broken
+Handles in FontForge</h1>
+<p>Importing vector artwork from software like Adobe Illustrator or
+Inkscape into FontForge frequently causes control handle anomalies,
+including retracted Bézier handles, misclassified curve points, and
+extreme handle misalignment. This guide covers direct, practical steps
+to diagnose, restore, and optimize broken curve handles in FontForge to
+ensure smooth glyph contours and proper font rendering.</p>
+<h2 id="1-inspect-the-imported-splines">1. Inspect the Imported
+Splines</h2>
+<p>Begin by opening the affected glyph in the Glyph View (double-click
+the glyph in the font matrix). Zoom in close to inspect the outlines.
+Broken handles usually manifest in two ways:</p>
+<ul>
+<li><strong>Zero-length handles:</strong> An off-curve handle is
+collapsed directly onto the on-curve node.</li>
+<li><strong>Mismatched point types:</strong> Points meant to be smooth
+curves have been converted to sharp corner points, causing handles to
+act independently rather than collinear.</li>
+</ul>
+<p>Enable control point visibility via <strong>View &gt; Show &gt;
+Control Points</strong> to ensure all handles are visible on the
+canvas.</p>
+<h2 id="2-restore-collapsed-handles">2. Restore Collapsed Handles</h2>
+<p>When an imported vector collapses a handle into its base point,
+standard dragging will move the entire node rather than the handle.</p>
+<ol type="1">
+<li>Select the <strong>Pointer Tool</strong> (<code>V</code> or from the
+tool palette).</li>
+<li>Hold down the <strong>Alt</strong> key (or <strong>Option</strong>
+on macOS) and click-and-drag away from the on-curve point. This manually
+extracts the zero-length handle from the node.</li>
+<li>Reposition the handle along your desired Bézier curve
+trajectory.</li>
+</ol>
+<h2 id="3-convert-corner-points-to-smooth-or-tangent-points">3. Convert
+Corner Points to Smooth or Tangent Points</h2>
+<p>FontForge marks points with different shapes: squares for corner
+points, circles for smooth curve points, and triangles for tangent
+points. If your handles are bending curves unnaturally:</p>
+<ol type="1">
+<li>Select the problematic on-curve point.</li>
+<li>Go to <strong>Point &gt; Make Smooth</strong> (or right-click the
+point and select <strong>Smooth Point</strong>). Alternatively, press
+<strong>Ctrl + Alt + M</strong> (or <strong>Cmd + Option + M</strong> on
+macOS).</li>
+<li>FontForge will automatically align the two off-curve handles 180
+degrees opposite each other, restoring continuous curvature across the
+node.</li>
+</ol>
+<h2 id="4-run-the-simplify-command">4. Run the Simplify Command</h2>
+<p>Imported vectors often carry far more points than necessary, which
+causes tiny, conflicting handle segments.</p>
+<ol type="1">
+<li>Select the entire contour by double-clicking it, or press
+<strong>Ctrl + A</strong> to select all points.</li>
+<li>Navigate to <strong>Element &gt; Simplify &gt; Simplify</strong>
+(Shortcut: <strong>Ctrl + Shift + M</strong>).</li>
+<li>For more control, use <strong>Element &gt; Simplify &gt; Simplify
+Further</strong> to adjust error tolerances. This tool removes redundant
+nodes and recalculates handles to match the original curve shape using
+fewer, cleaner points.</li>
+</ol>
+<h2 id="5-add-missing-extrema">5. Add Missing Extrema</h2>
+<p>In digital typography, curves must have nodes at their highest,
+lowest, leftmost, and rightmost points (the extrema). Missing extrema
+often force handles to span diagonally across long distances, increasing
+the likelihood of handle clipping.</p>
+<ol type="1">
+<li>Select your contours.</li>
+<li>Choose <strong>Element &gt; Add Extrema</strong> (Shortcut:
+<strong>Ctrl + Shift + X</strong>).</li>
+<li>FontForge will place new points at the mathematical extrema and
+split the existing handles into horizontal and vertical constraints,
+eliminating wild handle angles.</li>
+</ol>
+<h2 id="6-correct-contour-direction-and-round-to-integer-coordinates">6.
+Correct Contour Direction and Round to Integer Coordinates</h2>
+<p>Misaligned handles frequently stem from inverted winding directions
+or non-integer coordinates introduced during import.</p>
+<ol type="1">
+<li>Go to <strong>Element &gt; Correct Direction</strong> (Shortcut:
+<strong>Ctrl + Shift + D</strong>) to normalize internal and external
+path orientations.</li>
+<li>Select all points and run <strong>Element &gt; Round &gt; To
+Int</strong> to snap floating-point coordinate errors from the vector
+import to exact integer grid units. This prevents micro-handle offsets
+that disrupt smooth curves.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-fix-broken-handles-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

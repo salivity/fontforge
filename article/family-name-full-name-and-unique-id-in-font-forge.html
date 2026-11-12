@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Name, Full Name, and Unique ID in FontForge - fontforge</title>
+    <meta name="description" content="When designing or modifying a font in FontForge, correctly configuring the font&#39;s metadata is crucial for cross-platform compatibility and proper display in software menus. Navigating to Element &gt; Font Info &gt; PS Names reveals several identifying fields th">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/family-name-full-name-and-unique-id-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Family Name, Full Name, and Unique ID in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/family-name-full-name-and-unique-id-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When designing or modifying a font in FontForge, correctly configuring the font&#39;s metadata is crucial for cross-platform compatibility and proper display in software menus. Navigating to Element &gt; Font Info &gt; PS Names reveals several identifying fields th" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="family-name-full-name-and-unique-id-in-fontforge">Family Name,
+Full Name, and Unique ID in FontForge</h1>
+<p>When designing or modifying a font in FontForge, correctly
+configuring the font's metadata is crucial for cross-platform
+compatibility and proper display in software menus. Navigating to
+<strong>Element &gt; Font Info &gt; PS Names</strong> reveals several
+identifying fields that sound similar but serve distinct technical
+roles. This article explains the clear differences and specific purposes
+of the <strong>Family Name</strong>, <strong>Full Name</strong>, and
+<strong>Unique ID</strong> in FontForge.</p>
+<hr />
+<h3 id="family-name">Family Name</h3>
+<p>The <strong>Family Name</strong> represents the broad collection or
+design umbrella to which a specific font style belongs.</p>
+<ul>
+<li><strong>Purpose:</strong> It groups individual styles—such as
+Regular, Italic, Bold, and Bold Italic—together inside the font
+selection menus of design applications, word processors, and operating
+systems.</li>
+<li><strong>Format:</strong> It should contain only the base name of the
+typeface, without style or weight descriptors.</li>
+<li><strong>Example:</strong> <code>Open Sans</code> or
+<code>Merriweather</code>.</li>
+<li><strong>Behavior:</strong> When users select "Open Sans" in a
+program like Microsoft Word or Adobe InDesign, the software uses the
+Family Name to associate all weight and slope variations under a single
+menu entry.</li>
+</ul>
+<hr />
+<h3 id="full-name">Full Name</h3>
+<p>The <strong>Full Name</strong> is the complete, human-readable name
+of the specific font file, combining the family name with its particular
+weight or style variant.</p>
+<ul>
+<li><strong>Purpose:</strong> It provides users and operating systems
+with a clear, descriptive label for the exact typeface instance being
+inspected or selected.</li>
+<li><strong>Format:</strong> It typically follows the format
+<code>[Family Name] [Style/Weight]</code>. In FontForge, this field is
+often generated automatically by combining the Family Name and the
+Weight string.</li>
+<li><strong>Example:</strong> <code>Open Sans Bold</code> or
+<code>Merriweather Light Italic</code>.</li>
+<li><strong>Behavior:</strong> This name often appears in font
+management utilities (such as macOS Font Book or Windows Font Viewer) to
+identify the specific font variant.</li>
+</ul>
+<hr />
+<h3 id="unique-id">Unique ID</h3>
+<p>The <strong>Unique ID</strong> (often corresponding to the PostScript
+<code>UniqueID</code> or the OpenType <code>Name ID 3</code>) is a
+machine-readable string intended to globally distinguish that specific
+font file from any other font installed on a system or sent to an output
+device.</p>
+<ul>
+<li><strong>Purpose:</strong> It prevents collisions and caching issues
+in operating system font caches and PostScript raster image processors
+(RIPs). If two different fonts share the same name but have distinct
+Unique IDs, rendering engines can differentiate between them.</li>
+<li><strong>Format:</strong> It typically consists of a combination of
+the creator name, font version, family name, style, and sometimes a
+timestamp or random identifier.</li>
+<li><strong>Example:</strong>
+<code>FontForge 2.0 : Open Sans Bold : 12-4-2024</code> or
+<code>1.000;VENDOR;OpenSans-Bold</code>.</li>
+<li><strong>Behavior:</strong> FontForge can automatically generate this
+value. Unlike the Family Name and Full Name, the Unique ID is rarely
+seen by end users; it is strictly evaluated by system-level software and
+print hardware.</li>
+</ul>
+<hr />
+<h3 id="summary-of-differences">Summary of Differences</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Primary Audience</th>
+<th style="text-align: left;">Scope</th>
+<th style="text-align: left;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Family Name</strong></td>
+<td style="text-align: left;">Software menus and end users</td>
+<td style="text-align: left;">The entire typeface collection</td>
+<td style="text-align: left;"><code>Roboto</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Full Name</strong></td>
+<td style="text-align: left;">Operating systems and end users</td>
+<td style="text-align: left;">The specific style/weight instance</td>
+<td style="text-align: left;"><code>Roboto Bold</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Unique ID</strong></td>
+<td style="text-align: left;">Font caches, OS internals, and
+printers</td>
+<td style="text-align: left;">The distinct file build/version</td>
+<td style="text-align: left;"><code>1.000;GOOG;Roboto-Bold</code></td>
+</tr>
+</tbody>
+</table></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/family-name-full-name-and-unique-id-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

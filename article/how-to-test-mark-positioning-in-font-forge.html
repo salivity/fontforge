@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Test Mark Positioning in FontForge - fontforge</title>
+    <meta name="description" content="Testing mark positioning features inside FontForge allows type designers to verify that combining diacritics and accents attach properly to base glyphs and other marks without exporting the font. This guide covers how to set up, preview, and adjust OpenTy">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-test-mark-positioning-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Test Mark Positioning in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-test-mark-positioning-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Testing mark positioning features inside FontForge allows type designers to verify that combining diacritics and accents attach properly to base glyphs and other marks without exporting the font. This guide covers how to set up, preview, and adjust OpenTy" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-test-mark-positioning-in-fontforge">How to Test Mark
+Positioning in FontForge</h1>
+<p>Testing mark positioning features inside FontForge allows type
+designers to verify that combining diacritics and accents attach
+properly to base glyphs and other marks without exporting the font. This
+guide covers how to set up, preview, and adjust OpenType GPOS
+mark-to-base (<code>mark</code>) and mark-to-mark (<code>mkmk</code>)
+lookups directly within FontForge using built-in preview and metrics
+tools.</p>
+<h3 id="1-verify-lookups-and-anchor-classes">1. Verify Lookups and
+Anchor Classes</h3>
+<p>Before testing, ensure your font has the appropriate GPOS features
+and anchor classes defined:</p>
+<ol type="1">
+<li>Go to <strong>Element &gt; Font Info &gt; Lookups</strong>.</li>
+<li>Select the <strong>GPOS</strong> tab.</li>
+<li>Confirm that you have a <strong>Mark-to-Base Attachment</strong>
+(<code>mark</code>) or <strong>Mark-to-Mark Attachment</strong>
+(<code>mkmk</code>) lookup configured.</li>
+<li>Verify that an anchor class is assigned to that lookup and that base
+characters and diacritics share matching anchor names (for example, a
+base glyph containing <code>top</code> and a diacritic containing
+<code>_top</code>).</li>
+</ol>
+<h3 id="2-use-the-metrics-window-for-live-previews">2. Use the Metrics
+Window for Live Previews</h3>
+<p>The Metrics Window is the primary environment for live feature
+testing:</p>
+<ol type="1">
+<li>Open the window by navigating to <strong>Metrics &gt; New Metrics
+Window</strong> (or press <code>Ctrl+K</code> /
+<code>Cmd+K</code>).</li>
+<li>Type or paste the sequence of characters you want to test (for
+example, type the base letter <code>a</code> followed by the combining
+mark <code>acutecomb</code>).</li>
+<li>Ensure OpenType features are active by selecting
+<strong>Features</strong> in the Metrics Window menu bar. Verify that
+the relevant mark positioning features (such as <code>mark</code> and
+<code>mkmk</code>) are checked.</li>
+<li>If configured correctly, the mark will automatically snap to the
+base glyph according to your anchor rules rather than rendering
+side-by-side.</li>
+</ol>
+<h3 id="3-adjust-positions-using-the-anchor-control-dialog">3. Adjust
+Positions Using the Anchor Control Dialog</h3>
+<p>If an accent is misaligned, you can test and correct the placement
+interactively:</p>
+<ol type="1">
+<li>Double-click the base glyph or mark in the font view to open the
+<strong>Glyph Window</strong>.</li>
+<li>Right-click the anchor point you wish to test and select
+<strong>Anchor Control</strong>. Alternatively, go to <strong>Point &gt;
+Anchor Control</strong>.</li>
+<li>In the Anchor Control window, choose the matching glyph combination
+from the list.</li>
+<li>Drag the mark to the desired position or use the arrow keys for fine
+adjustments. The numerical offsets for the anchor points will update
+automatically.</li>
+<li>Close the window to save the updated anchor placement.</li>
+</ol>
+<h3 id="4-test-multiple-script-and-language-combinations">4. Test
+Multiple Script and Language Combinations</h3>
+<p>Anchor behaviors can vary depending on language systems:</p>
+<ol type="1">
+<li>In the <strong>Metrics Window</strong>, go to <strong>View &gt;
+Complex Script</strong>.</li>
+<li>Set the appropriate <strong>Script</strong> and
+<strong>Language</strong> tags corresponding to your GPOS lookup
+rules.</li>
+<li>Test right-to-left (RTL) or cursive behavior alongside mark
+positioning if working with scripts like Arabic or Hebrew by toggling
+text direction under the <strong>Metrics</strong> menu.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-test-mark-positioning-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

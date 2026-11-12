@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anchor-Based Accent Positioning in FontForge - fontforge</title>
+    <meta name="description" content="Anchor-based attachment in FontForge is a typographical mechanism used to position diacritical marks precisely above, below, or through base glyphs using coordinate points rather than static, manual positioning. By assigning corresponding &quot;base&quot; and &quot;mark">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/anchor-based-accent-positioning-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Anchor-Based Accent Positioning in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/anchor-based-accent-positioning-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Anchor-based attachment in FontForge is a typographical mechanism used to position diacritical marks precisely above, below, or through base glyphs using coordinate points rather than static, manual positioning. By assigning corresponding &quot;base&quot; and &quot;mark" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="anchor-based-accent-positioning-in-fontforge">Anchor-Based
+Accent Positioning in FontForge</h1>
+<p>Anchor-based attachment in FontForge is a typographical mechanism
+used to position diacritical marks precisely above, below, or through
+base glyphs using coordinate points rather than static, manual
+positioning. By assigning corresponding "base" and "mark" anchor points
+to individual glyphs, font designers can ensure that accents
+automatically align across various letterforms and contexts through
+OpenType GPOS (Glyph Positioning) tables. This method eliminates the
+need for hardcoding complex manual shifts, drastically reduces design
+errors, and enables seamless dynamic text rendering for international
+writing systems.</p>
+<h3 id="understanding-anchor-points">Understanding Anchor Points</h3>
+<p>Anchor points are invisible x- and y-coordinate markers placed inside
+a glyph's design canvas. They work in matching pairs:</p>
+<ul>
+<li><strong>Base Anchors:</strong> Placed on base characters (such as
+vowels or consonants) to mark where an accent should sit. A typical base
+glyph might have a <code>top</code> anchor for accents like acutes and
+umlauts, and a <code>bottom</code> anchor for cedillas and ogoneks.</li>
+<li><strong>Mark Anchors:</strong> Placed on diacritics (the accents
+themselves). A mark anchor uses an underscore prefix (e.g.,
+<code>_top</code>) to signify that it is designed to snap to a
+corresponding base anchor.</li>
+</ul>
+<p>When a layout engine processes a base character followed by a
+combining mark, it shifts the mark glyph so that the <code>_top</code>
+anchor aligns precisely with the <code>top</code> anchor of the base
+glyph.</p>
+<h3 id="opentype-tables-mark-and-mkmk">OpenType Tables:
+<code>mark</code> and <code>mkmk</code></h3>
+<p>Anchor-based positioning generates OpenType GPOS data, primarily
+using two layout features:</p>
+<ol type="1">
+<li><strong>Mark-to-Base (<code>mark</code>):</strong> Connects a
+diacritic to a standard glyph (e.g., snapping an acute accent to the
+letter "e").</li>
+<li><strong>Mark-to-Mark (<code>mkmk</code>):</strong> Connects a
+secondary accent to a primary accent (e.g., stacking a tilde over an
+acute accent in Vietnamese typography). In this case, the first accent
+has both an incoming attachment anchor (<code>_top</code>) and an
+outgoing attachment anchor (<code>top</code>) for the stacked mark.</li>
+</ol>
+<h3 id="setting-up-anchors-in-fontforge">Setting Up Anchors in
+FontForge</h3>
+<p>Implementing anchor-based attachment in FontForge follows a
+standardized workflow:</p>
+<ol type="1">
+<li><strong>Create the Lookup Class:</strong> Open <strong>Element &gt;
+Font Info &gt; Lookups &gt; GPOS</strong>. Add a new lookup, set the
+feature to <code>mark</code> (Mark-to-Base Attachment), and define an
+Anchor Class (such as <code>TopAccent</code>).</li>
+<li><strong>Assign Base Points:</strong> Open a base glyph window (e.g.,
+<code>a</code>). Select <strong>Point &gt; Add Anchor</strong>. Select
+the <code>TopAccent</code> class, set the type to <strong>Base</strong>,
+and move the anchor to the desired coordinate above the glyph.</li>
+<li><strong>Assign Mark Points:</strong> Open the corresponding
+diacritic (e.g., <code>acutecomb</code>). Select <strong>Point &gt; Add
+Anchor</strong>, choose <code>TopAccent</code>, set the type to
+<strong>Mark</strong>, and position it at the attachment point (often
+near the lower baseline of the floating mark).</li>
+<li><strong>Preview the Alignment:</strong> Use the Metrics window
+(<strong>Metrics &gt; New Metrics Window</strong>) and type the sequence
+(e.g., base glyph + combining mark) to test real-time snapping.</li>
+</ol>
+<h3 id="advantages-over-precomposed-glyphs">Advantages Over Precomposed
+Glyphs</h3>
+<p>While traditional fonts rely heavily on hardcoded precomposed glyphs
+(like <code>U+00E9</code> for "é"), anchor-based attachment offers
+superior flexibility:</p>
+<ul>
+<li><strong>Italic Correction:</strong> Slanted letterforms place
+accents at different visual centers. Anchors allow exact custom
+placement per glyph without shifting the bounding box.</li>
+<li><strong>Stacking Accents:</strong> Complex scripts such as Arabic,
+Hebrew, and Vietnamese require stacking multiple marks. Anchors handle
+multi-tier stacking predictably.</li>
+<li><strong>Arbitrary Combinations:</strong> Non-standard academic,
+phonetic (IPA), or minority-language diacritic combinations render
+accurately even if a precomposed character does not exist in
+Unicode.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/anchor-based-accent-positioning-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

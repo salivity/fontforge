@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can FontForge Export Fonts in SVG Format? - fontforge</title>
+    <meta name="description" content="Yes, FontForge can export fonts directly into the SVG font format. This guide outlines the straightforward process for generating legacy SVG fonts using FontForge, explains the technical steps required within the software, and clarifies the difference bet">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/can-font-forge-export-fonts-in-svg-format">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Can FontForge Export Fonts in SVG Format? - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/can-font-forge-export-fonts-in-svg-format" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Yes, FontForge can export fonts directly into the SVG font format. This guide outlines the straightforward process for generating legacy SVG fonts using FontForge, explains the technical steps required within the software, and clarifies the difference bet" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="can-fontforge-export-fonts-in-svg-format">Can FontForge Export
+Fonts in SVG Format?</h1>
+<p>Yes, FontForge can export fonts directly into the SVG font format.
+This guide outlines the straightforward process for generating legacy
+SVG fonts using FontForge, explains the technical steps required within
+the software, and clarifies the difference between standalone SVG fonts
+and modern color font formats like OpenType-SVG.</p>
+<h3 id="how-to-export-svg-fonts-in-fontforge">How to Export SVG Fonts in
+FontForge</h3>
+<p>Exporting an SVG font in FontForge requires only a few steps through
+the standard font generation menu:</p>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Click on <strong>File</strong> in the top menu and select
+<strong>Generate Fonts...</strong> (or press <code>Ctrl+Shift+G</code>
+on Windows/Linux, <code>Cmd+Shift+G</code> on macOS).</li>
+<li>In the export dialog, locate the file type dropdown menu situated
+below the file name field.</li>
+<li>Select <strong>SVG Font</strong> from the list of available
+formats.</li>
+<li>Choose your output directory, name your file, and click
+<strong>Generate</strong>.</li>
+</ol>
+<p>FontForge will then compile your glyph vectors into a standalone
+XML-based <code>.svg</code> font file.</p>
+<h3 id="important-considerations-for-svg-fonts">Important Considerations
+for SVG Fonts</h3>
+<p>While FontForge reliably exports SVG fonts, it is essential to
+understand how this format fits into modern workflows:</p>
+<ul>
+<li><strong>Browser Deprecation:</strong> The classic SVG font
+specification (<code>.svg</code>) was originally created for mobile and
+early web browsers, but modern web standards have largely deprecated it.
+Modern web development favors <strong>WOFF</strong> and
+<strong>WOFF2</strong> formats for standard text rendering due to better
+compression and broader support.</li>
+<li><strong>SVG Fonts vs. OpenType-SVG:</strong> A standalone SVG font
+is not the same as an OpenType-SVG font. OpenType-SVG embeds SVG
+graphics inside standard OpenType (<code>.otf</code> or
+<code>.ttf</code>) containers to enable multi-color, textured, or
+animated glyphs. FontForge has limited capabilities for building complex
+color OpenType-SVG fonts natively, but it excels at exporting the pure,
+single-color vector XML SVG font format.</li>
+<li><strong>Use Cases:</strong> Despite web deprecation, SVG font files
+remain useful for specialized vector workflows, embedded systems, custom
+SVG-based renderers, and certain CNC or digital cutting software.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/can-font-forge-export-fonts-in-svg-format';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

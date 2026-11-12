@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Kerning Data from FontForge to Text - fontforge</title>
+    <meta name="description" content="FontForge allows you to export kerning information into plain text formats, enabling designers to inspect, backup, or transfer metric data between type design applications. This guide explains how to extract kerning pairs and kerning classes from FontForg">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/export-kerning-data-from-font-forge-to-text">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Export Kerning Data from FontForge to Text - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/export-kerning-data-from-font-forge-to-text" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FontForge allows you to export kerning information into plain text formats, enabling designers to inspect, backup, or transfer metric data between type design applications. This guide explains how to extract kerning pairs and kerning classes from FontForg" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="export-kerning-data-from-fontforge-to-text">Export Kerning Data
+from FontForge to Text</h1>
+<p>FontForge allows you to export kerning information into plain text
+formats, enabling designers to inspect, backup, or transfer metric data
+between type design applications. This guide explains how to extract
+kerning pairs and kerning classes from FontForge into Adobe Feature
+files (.fea), Adobe Font Metrics files (.afm), or custom delimited text
+files using Python scripting.</p>
+<h3 id="method-1-exporting-as-an-adobe-feature-file-fea">Method 1:
+Exporting as an Adobe Feature File (.fea)</h3>
+<p>The most comprehensive way to export modern OpenType kerning pairs
+and classes into a plain text format is via an Adobe OpenType Feature
+file.</p>
+<ol type="1">
+<li>Open your font file in FontForge.</li>
+<li>Go to <strong>File</strong> &gt; <strong>Merge Feature
+Info...</strong> or directly open <strong>Element</strong> &gt;
+<strong>Font Info</strong>.</li>
+<li>In the <strong>Font Info</strong> window, navigate to
+<strong>Lookups</strong> on the left menu, then select the
+<strong>GPOS</strong> (Glyph Positioning) tab.</li>
+<li>Select your kerning lookup table (usually labeled <code>kern</code>
+or <code>Horizontal Kerning</code>).</li>
+<li>Click <strong>Save Feature File...</strong> on the right-hand
+panel.</li>
+<li>Choose a file name with the <code>.fea</code> extension and click
+<strong>Save</strong>.</li>
+</ol>
+<p>The resulting <code>.fea</code> file is a plain text file readable by
+any standard text editor. It contains definitions of all your kerning
+pairs, class-to-class kerning groups, and value offsets formatted
+according to the Adobe OpenType feature specification.</p>
+<h3 id="method-2-exporting-as-an-afm-adobe-font-metrics-file">Method 2:
+Exporting as an AFM (Adobe Font Metrics) File</h3>
+<p>If you only need traditional pair-wise kerning without complex
+OpenType classes, the AFM format stores kerning values in clean,
+human-readable ASCII text.</p>
+<ol type="1">
+<li>Open your font in FontForge.</li>
+<li>Go to <strong>File</strong> &gt; <strong>Generate
+Fonts...</strong>.</li>
+<li>Choose <strong>PostScript Type 1</strong> or <strong>OpenType
+(CFF)</strong> from the format dropdown.</li>
+<li>Click the <strong>Options</strong> button in the dialog.</li>
+<li>Check the box for <strong>AFM</strong> (Adobe Font Metrics) to
+ensure an AFM file is generated alongside the font file.</li>
+<li>Click <strong>Generate</strong>.</li>
+</ol>
+<p>Open the generated <code>.afm</code> file in a text editor and locate
+the <code>StartKernPairs</code> section. Each kerning pair will be
+listed in a clear format:</p>
+<pre class="text"><code>KPX glyph1 glyph2 offset</code></pre>
+<h3 id="method-3-exporting-to-csv-or-txt-via-python-scripting">Method 3:
+Exporting to CSV or TXT via Python Scripting</h3>
+<p>For tailored exports directly to plain text or spreadsheet-compatible
+formats like CSV, you can run a script via FontForge's built-in Python
+interpreter.</p>
+<ol type="1">
+<li>Open your font in FontForge.</li>
+<li>Go to <strong>File</strong> &gt; <strong>Execute
+Script...</strong>.</li>
+<li>Paste the following script to export all flat pair kerning to a
+comma-separated text file:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.activeFont()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>output_path <span class="op">=</span> <span class="st">&quot;kerning_export.csv&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(output_path, <span class="st">&quot;w&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    f.write(<span class="st">&quot;First,Second,Offset</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> glyph <span class="kw">in</span> font.glyphs():</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        subtable_list <span class="op">=</span> glyph.getPosSub(<span class="st">&quot;*&quot;</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> entry <span class="kw">in</span> subtable_list:</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Check for pair kerning types</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> entry[<span class="dv">1</span>] <span class="op">==</span> <span class="st">&quot;Pair&quot;</span>:</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                f.write(<span class="ss">f&quot;</span><span class="sc">{</span>glyph<span class="sc">.</span>glyphname<span class="sc">}</span><span class="ss">,</span><span class="sc">{</span>entry[<span class="dv">2</span>]<span class="sc">}</span><span class="ss">,</span><span class="sc">{</span>entry[<span class="dv">5</span>]<span class="sc">}</span><span class="ch">\n</span><span class="ss">&quot;</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Kerning data exported successfully.&quot;</span>)</span></code></pre></div>
+<ol start="4" type="1">
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<p>FontForge will generate a <code>kerning_export.csv</code> file in
+your working directory containing all detected pairs in a plain, easily
+readable row-by-row structure.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/export-kerning-data-from-font-forge-to-text';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

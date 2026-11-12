@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotate All Glyphs by Angle in FontForge Python - fontforge</title>
+    <meta name="description" content="This guide explains how to batch-rotate all glyph outlines by a specific angle using the FontForge Python module. By leveraging FontForge&#39;s scripting interface alongside the psMat transformation module, you can programmatically apply affine transformation">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/rotate-all-glyphs-by-angle-in-font-forge-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Rotate All Glyphs by Angle in FontForge Python - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/rotate-all-glyphs-by-angle-in-font-forge-python" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to batch-rotate all glyph outlines by a specific angle using the FontForge Python module. By leveraging FontForge&#39;s scripting interface alongside the psMat transformation module, you can programmatically apply affine transformation" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="rotate-all-glyphs-by-angle-in-fontforge-python">Rotate All
+Glyphs by Angle in FontForge Python</h1>
+<p>This guide explains how to batch-rotate all glyph outlines by a
+specific angle using the FontForge Python module. By leveraging
+FontForge's scripting interface alongside the <code>psMat</code>
+transformation module, you can programmatically apply affine
+transformation matrices across every glyph in a font file and export the
+modified font.</p>
+<h2 id="the-fontforge-python-script">The FontForge Python Script</h2>
+<p>To rotate glyphs, FontForge provides the <code>transform()</code>
+method on glyph objects, which accepts a 2D transformation matrix. The
+<code>psMat</code> module provides the <code>rotate()</code> function to
+generate this matrix using radians.</p>
+<p>Below is the complete script to open a font, rotate every glyph
+outline by a designated angle, and save the result:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psMat</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rotate_font_glyphs(input_font_path, output_font_path, angle_degrees):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open the font file</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    font <span class="op">=</span> fontforge.<span class="bu">open</span>(input_font_path)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert angle to radians</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    angle_radians <span class="op">=</span> math.radians(angle_degrees)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the rotation matrix</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    rotation_matrix <span class="op">=</span> psMat.rotate(angle_radians)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Iterate through all glyphs in the font</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> glyph <span class="kw">in</span> font.glyphs():</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Apply the rotation transformation to the glyph outline</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        glyph.transform(rotation_matrix)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate the updated font file</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    font.generate(output_font_path)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    font.close()</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage: Rotate all glyphs 45 degrees counterclockwise</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>rotate_font_glyphs(<span class="st">&quot;input.ttf&quot;</span>, <span class="st">&quot;output_rotated.ttf&quot;</span>, <span class="dv">45</span>)</span></code></pre></div>
+<h2 id="how-it-works">How It Works</h2>
+<ol type="1">
+<li><strong><code>fontforge.open(input_font_path)</code></strong>: Loads
+the source font into memory. FontForge supports formats including TTF,
+OTF, and SFD.</li>
+<li><strong><code>psMat.rotate(angle_radians)</code></strong>:
+Constructs a <span class="math inline">\(2 \times 3\)</span> affine
+transformation matrix representing rotation. FontForge expects the angle
+in radians, so <code>math.radians()</code> is used to convert standard
+degree values.</li>
+<li><strong><code>font.glyphs()</code></strong>: Returns a generator
+covering every glyph defined within the font.</li>
+<li><strong><code>glyph.transform(matrix)</code></strong>: Multiplies
+all coordinate points and control handles of the glyph's paths by the
+transformation matrix.</li>
+<li><strong><code>font.generate(output_font_path)</code></strong>:
+Compiles and writes the modified outlines into a new font file.</li>
+</ol>
+<h2 id="rotating-around-the-glyph-center">Rotating Around the Glyph
+Center</h2>
+<p>By default, <code>psMat.rotate()</code> rotates outlines around the
+font origin point <code>(0, 0)</code>. To rotate each glyph around its
+individual visual center instead of the font origin, compose a
+transformation that shifts the glyph center to <code>(0,0)</code>,
+rotates, and shifts it back:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rotate_glyphs_around_center(glyph, angle_radians):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get bounding box: (xmin, ymin, xmax, ymax)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    bbox <span class="op">=</span> glyph.boundingBox()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate visual center</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    cx <span class="op">=</span> (bbox[<span class="dv">0</span>] <span class="op">+</span> bbox[<span class="dv">2</span>]) <span class="op">/</span> <span class="fl">2.0</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    cy <span class="op">=</span> (bbox[<span class="dv">1</span>] <span class="op">+</span> bbox[<span class="dv">3</span>]) <span class="op">/</span> <span class="fl">2.0</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compose: translate to origin -&gt; rotate -&gt; translate back</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    transform <span class="op">=</span> psMat.compose(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        psMat.translate(<span class="op">-</span>cx, <span class="op">-</span>cy),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        psMat.rotate(angle_radians),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        psMat.translate(cx, cy)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    glyph.transform(transform)</span></code></pre></div>
+<p>Replace <code>glyph.transform(rotation_matrix)</code> in the main
+loop with <code>rotate_glyphs_around_center(glyph, angle_radians)</code>
+if you require in-place rotation for each character.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/rotate-all-glyphs-by-angle-in-font-forge-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

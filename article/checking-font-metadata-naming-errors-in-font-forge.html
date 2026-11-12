@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checking Font Metadata Naming Errors in FontForge - fontforge</title>
+    <meta name="description" content="This guide explains how to use FontForge&#39;s built-in validation and diagnostic tools to identify and resolve font naming conflicts, metadata discrepancies, and OpenType specification violations. By utilizing the automated FontForge validation tool alongsid">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/checking-font-metadata-naming-errors-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Checking Font Metadata Naming Errors in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/checking-font-metadata-naming-errors-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to use FontForge&#39;s built-in validation and diagnostic tools to identify and resolve font naming conflicts, metadata discrepancies, and OpenType specification violations. By utilizing the automated FontForge validation tool alongsid" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="checking-font-metadata-naming-errors-in-fontforge">Checking Font
+Metadata Naming Errors in FontForge</h1>
+<p>This guide explains how to use FontForge's built-in validation and
+diagnostic tools to identify and resolve font naming conflicts, metadata
+discrepancies, and OpenType specification violations. By utilizing the
+automated FontForge validation tool alongside font information panels,
+you can ensure your font files conform to cross-platform operating
+system standards and avoid rendering or installation errors.</p>
+<h3 id="1-open-the-font-information-panel">1. Open the Font Information
+Panel</h3>
+<p>Before running automated validation, verify that your base naming
+tables are synchronized:</p>
+<ol type="1">
+<li>Open your font project in FontForge.</li>
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font Info</strong>
+(or press <code>Ctrl+Shift+F</code> / <code>Cmd+Shift+F</code>).</li>
+<li>Check the <strong>PS Names</strong> tab to confirm the following
+fields:
+<ul>
+<li><strong>Fontname</strong>: Must be a single PostScript name without
+spaces, typically under 31 characters, using only ASCII characters.</li>
+<li><strong>Family Name</strong>: The human-readable name of the font
+family.</li>
+<li><strong>Weight</strong>: Standard weights such as Regular, Bold, or
+Italic.</li>
+</ul></li>
+<li>Navigate to the <strong>TTF Names</strong> tab to ensure that the
+generated Windows and Macintosh platform strings match the PostScript
+specifications. Inconsistencies here are the most frequent source of
+metadata validation warnings.</li>
+</ol>
+<h3 id="2-run-the-fontforge-validation-tool">2. Run the FontForge
+Validation Tool</h3>
+<p>FontForge includes an automated validator that audits both glyph
+outlines and font metadata against standard specifications:</p>
+<ol type="1">
+<li>Go to the top menu and select <strong>Element</strong> &gt;
+<strong>Validation</strong> &gt; <strong>Validate</strong>.</li>
+<li>A progress bar will appear while FontForge inspects the entire font
+file.</li>
+<li>Once the process completes, the <strong>Validation Errors</strong>
+dialog box will appear.</li>
+<li>Review the top section of the window, which highlights font-wide and
+metadata issues. Common metadata errors flagged here include:
+<ul>
+<li>Non-ASCII characters in PostScript strings.</li>
+<li>Duplicate or missing platform-specific name records in the
+<code>name</code> table.</li>
+<li>Missing required TrueType/OpenType tables (such as <code>OS/2</code>
+or <code>head</code>).</li>
+<li>Invalid font vendor IDs or invalid license URLs.</li>
+</ul></li>
+</ol>
+<h3 id="3-diagnose-issues-using-the-find-problems-tool">3. Diagnose
+Issues Using the "Find Problems" Tool</h3>
+<p>To scan for specific naming and glyph-level metadata issues:</p>
+<ol type="1">
+<li>Select all glyphs in your font (<code>Ctrl+A</code> or
+<code>Cmd+A</code>).</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Find
+Problems</strong>.</li>
+<li>Click on the <strong>Components</strong> and <strong>Misc</strong>
+tabs.</li>
+<li>Check the options for checking non-standard glyph names or duplicate
+unicode code points.</li>
+<li>Click <strong>OK</strong> to run the scan. FontForge will flag
+glyphs where metadata names deviate from the Adobe Glyph Naming (AGN)
+standard.</li>
+</ol>
+<h3 id="4-resolve-common-metadata-errors">4. Resolve Common Metadata
+Errors</h3>
+<p>When FontForge reports metadata issues, apply the following fixes
+within <strong>Element</strong> &gt; <strong>Font Info</strong>:</p>
+<ul>
+<li><strong>PostScript Name Exceeds Length Limit</strong>: Truncate the
+<strong>Fontname</strong> field to 31 characters or fewer and remove any
+spaces or special punctuation.</li>
+<li><strong>Mismatched Subfamily Strings</strong>: In the <strong>TTF
+Names</strong> section, select <strong>Styles</strong> and ensure the
+<strong>Typographic Family/Subfamily</strong> (Name IDs 16 and 17) align
+logically with the standard <strong>Family/Style</strong> (Name IDs 1
+and 2).</li>
+<li><strong>Missing OS/2 Metrics or Panose Information</strong>: Open
+the <strong>OS/2</strong> tab, verify the <strong>Weight</strong>,
+<strong>Width</strong>, and <strong>Vendor ID</strong>, and ensure that
+<strong>Panose</strong> digits are assigned or set to legitimate
+fallback values.</li>
+</ul>
+<h3 id="5-validate-metadata-during-font-generation">5. Validate Metadata
+During Font Generation</h3>
+<p>FontForge runs a final sanity check upon export:</p>
+<ol type="1">
+<li>Navigate to <strong>File</strong> &gt; <strong>Generate
+Fonts</strong>.</li>
+<li>Select your desired output format (such as OpenType CFF or
+TrueType).</li>
+<li>Click <strong>Generate</strong>.</li>
+<li>If unresolved metadata errors exist, FontForge displays a prompt
+listing remaining issues. Review this warning dialog carefully to ensure
+no critical <code>name</code> or <code>OS/2</code> table warnings remain
+before finalizing the font.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/checking-font-metadata-naming-errors-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

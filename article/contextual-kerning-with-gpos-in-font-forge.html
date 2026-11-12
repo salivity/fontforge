@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contextual Kerning with GPOS in FontForge - fontforge</title>
+    <meta name="description" content="Contextual kerning allows you to adjust the spacing between characters based on surrounding glyphs rather than relying strictly on two-character pairs. In FontForge, this behavior is implemented using OpenType GPOS (Glyph Positioning) tables through Conte">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/contextual-kerning-with-gpos-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Contextual Kerning with GPOS in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/contextual-kerning-with-gpos-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Contextual kerning allows you to adjust the spacing between characters based on surrounding glyphs rather than relying strictly on two-character pairs. In FontForge, this behavior is implemented using OpenType GPOS (Glyph Positioning) tables through Conte" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="contextual-kerning-with-gpos-in-fontforge">Contextual Kerning
+with GPOS in FontForge</h1>
+<p>Contextual kerning allows you to adjust the spacing between
+characters based on surrounding glyphs rather than relying strictly on
+two-character pairs. In FontForge, this behavior is implemented using
+OpenType GPOS (Glyph Positioning) tables through Contextual Chaining
+lookups. This guide details how to configure the necessary base
+positioning lookups, build contextual chaining rules using backtrack,
+input, and lookahead sequences, and test the resulting metrics inside
+FontForge.</p>
+<h3 id="understanding-the-structure-of-contextual-kerning">Understanding
+the Structure of Contextual Kerning</h3>
+<p>In OpenType, contextual lookups do not shift glyphs directly.
+Instead, a contextual rule identifies a specific sequence of characters
+and calls a secondary, standard positioning lookup to adjust the target
+glyph.</p>
+<p>Implementing contextual kerning in FontForge requires two
+components:</p>
+<ol type="1">
+<li><strong>A nested positioning subtable:</strong> A standard Single
+Positioning or Pair Positioning lookup that defines the actual value of
+the metric adjustment.</li>
+<li><strong>A contextual chaining subtable:</strong> The master rule
+that checks the environment (preceding, current, and succeeding glyphs)
+and applies the nested positioning subtable when a match occurs.</li>
+</ol>
+<hr />
+<h3 id="step-1-create-the-nested-positioning-lookup">Step 1: Create the
+Nested Positioning Lookup</h3>
+<p>Before defining the context, you must create the lookup that applies
+the physical spacing offset.</p>
+<ol type="1">
+<li>Open your font in FontForge.</li>
+<li>Navigate to <strong>Element</strong> &gt; <strong>Font
+Info</strong>.</li>
+<li>In the sidebar, select <strong>Lookups</strong>, then click the
+<strong>GPOS</strong> tab at the top.</li>
+<li>Click <strong>Add Lookup</strong>.</li>
+<li>Set the <strong>Type</strong> to <strong>Pair Position
+(kerning)</strong> or <strong>Single Position</strong>.</li>
+<li>Set the <strong>Feature</strong> to none, or leave it blank, because
+this lookup will be triggered exclusively by the contextual rule, not
+directly by the layout engine.</li>
+<li>Click <strong>OK</strong>, select the newly created lookup, and
+click <strong>Add Subtable</strong>.</li>
+<li>Populate this subtable with the specific adjustment. For instance,
+define an adjustment for the target glyph (e.g., shifting the letter
+<code>L</code> to the left by <code>-50</code> units).</li>
+</ol>
+<hr />
+<h3 id="step-2-create-the-contextual-chaining-lookup">Step 2: Create the
+Contextual Chaining Lookup</h3>
+<p>Once the adjustment lookup exists, configure the parent rule that
+defines the trigger conditions.</p>
+<ol type="1">
+<li>Still inside <strong>Font Info</strong> &gt;
+<strong>Lookups</strong> &gt; <strong>GPOS</strong>, click <strong>Add
+Lookup</strong>.</li>
+<li>Set the <strong>Type</strong> to <strong>Contextual
+Chaining</strong>.</li>
+<li>In the <strong>Feature</strong> column, select or type
+<code>kern</code> (Kerning).</li>
+<li>Assign a descriptive name to the lookup.</li>
+<li>Click <strong>OK</strong>.</li>
+<li>Select the new contextual lookup and click <strong>Add
+Subtable</strong>.</li>
+</ol>
+<hr />
+<h3 id="step-3-define-context-classes-or-glyph-lists">Step 3: Define
+Context Classes or Glyph Lists</h3>
+<p>FontForge will present the Contextual Chaining dialog. You can write
+rules using glyph lists, glyph classes, or coverage tables. For specific
+character chains, glyph lists are the most straightforward.</p>
+<p>A contextual sequence contains three areas:</p>
+<ul>
+<li><strong>Backtrack:</strong> The glyphs that must appear immediately
+<em>before</em> the target glyphs.</li>
+<li><strong>Match (Input):</strong> The glyphs that are actually being
+evaluated and modified.</li>
+<li><strong>Lookahead:</strong> The glyphs that must appear immediately
+<em>after</em> the target glyphs.</li>
+</ul>
+<p>To set up the rule:</p>
+<ol type="1">
+<li>Choose <strong>By Glyphs</strong> or <strong>By Classes</strong>
+(use <strong>By Glyphs</strong> for simple individual character
+matches).</li>
+<li>Enter the glyph names into the respective fields:
+<ul>
+<li><strong>Backtrack:</strong> Enter any preceding characters (e.g.,
+<code>quotedblleft</code>).</li>
+<li><strong>Match:</strong> Enter the active character being
+repositioned (e.g., <code>A</code>).</li>
+<li><strong>Lookahead:</strong> Enter any trailing characters (e.g.,
+<code>T</code>).</li>
+</ul></li>
+<li>Under the <strong>Sequence Position</strong> section, specify which
+glyph in the "Match" sequence receives the adjustment. Sequence position
+<code>0</code> corresponds to the first glyph in the Match list.</li>
+<li>Assign the nested lookup you created in <strong>Step 1</strong> to
+that position.</li>
+<li>Click <strong>OK</strong> to save the subtable.</li>
+</ol>
+<hr />
+<h3 id="step-4-validate-and-test-the-contextual-rules">Step 4: Validate
+and Test the Contextual Rules</h3>
+<p>After saving the lookups, test the behavior directly within FontForge
+to ensure the rules fire correctly without conflicts.</p>
+<ol type="1">
+<li>Navigate to <strong>Metrics</strong> &gt; <strong>New Metrics
+Window</strong>.</li>
+<li>Type the character sequence matching your rule (for example, the
+combination of your backtrack, match, and lookahead characters).</li>
+<li>Ensure that the <strong>Features</strong> panel in the Metrics
+Window has the <code>kern</code> feature enabled.</li>
+<li>Verify that the target glyph moves according to the defined nested
+lookup when the full sequence is typed, and remains in its standard
+position when adjacent characters differ.</li>
+<li>Go to <strong>File</strong> &gt; <strong>Generate Fonts</strong> and
+compile the font as an OpenType font (<code>.otf</code> or
+<code>.ttf</code>) to preserve the GPOS table structures.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/contextual-kerning-with-gpos-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

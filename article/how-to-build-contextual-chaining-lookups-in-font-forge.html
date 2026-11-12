@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build Contextual Chaining Lookups in FontForge - fontforge</title>
+    <meta name="description" content="Contextual chaining lookups are advanced OpenType features that trigger glyph substitutions or positioning adjustments only when specific glyphs precede or follow a target character. This guide explains the core mechanics of contextual chaining and provid">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-build-contextual-chaining-lookups-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Build Contextual Chaining Lookups in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-build-contextual-chaining-lookups-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Contextual chaining lookups are advanced OpenType features that trigger glyph substitutions or positioning adjustments only when specific glyphs precede or follow a target character. This guide explains the core mechanics of contextual chaining and provid" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-build-contextual-chaining-lookups-in-fontforge">How to
+Build Contextual Chaining Lookups in FontForge</h1>
+<p>Contextual chaining lookups are advanced OpenType features that
+trigger glyph substitutions or positioning adjustments only when
+specific glyphs precede or follow a target character. This guide
+explains the core mechanics of contextual chaining and provides a clear,
+step-by-step process for creating and configuring these lookups inside
+the open-source FontForge font editor.</p>
+<hr />
+<h3 id="what-are-contextual-chaining-lookups">What Are Contextual
+Chaining Lookups?</h3>
+<p>In OpenType typography, a standard substitution replaces a glyph or
+group of glyphs unconditionally. A contextual chaining lookup (GSUB
+Lookup Type 6 or GPOS Lookup Type 8) adds conditional rules based on
+surrounding text.</p>
+<p>A contextual chain divides a sequence of characters into three
+distinct components:</p>
+<ol type="1">
+<li><strong>Backtrack:</strong> The glyphs that must appear immediately
+<em>before</em> the target glyph.</li>
+<li><strong>Input:</strong> The target glyph or glyphs that will
+actually be transformed or repositioned.</li>
+<li><strong>Lookahead:</strong> The glyphs that must appear immediately
+<em>after</em> the target glyph.</li>
+</ol>
+<p>Contextual chaining lookups do not execute transformations directly.
+Instead, when the engine matches the combined Backtrack, Input, and
+Lookahead sequence, the lookup calls a secondary, standard lookup (such
+as a Single Substitution) to apply changes strictly to the Input
+sequence.</p>
+<p>Common use cases include:</p>
+<ul>
+<li>Replacing standard characters with terminal swashes at the end of
+words.</li>
+<li>Swapping an 'f' for a short-armed alternate when followed by a tall
+ascender (e.g., 'b', 'h', or 'k').</li>
+<li>Managing non-standard ligatures in complex scripts like Arabic or
+Devanagari.</li>
+</ul>
+<hr />
+<h3 id="step-1-create-the-base-substitution-lookup">Step 1: Create the
+Base Substitution Lookup</h3>
+<p>Because a contextual lookup only points to other transformations, you
+must first create the simple lookup that performs the actual
+replacement.</p>
+<ol type="1">
+<li>Open your project in FontForge.</li>
+<li>Go to <strong>Element</strong> &gt; <strong>Font Info</strong>.</li>
+<li>Select <strong>Lookups</strong> from the left navigation panel, then
+click the <strong>GSUB</strong> tab.</li>
+<li>Click <strong>Add Lookup</strong>.</li>
+<li>Set the <strong>Type</strong> to <strong>Single
+Substitution</strong>.</li>
+<li>Provide a descriptive name for your lookup (e.g.,
+<code>lookup_f_alt_sub</code>).</li>
+<li>Click <strong>OK</strong>, then select the newly created lookup and
+click <strong>Add Subtable</strong>.</li>
+<li>In the subtable mapping list, map the default glyph to its alternate
+(for example, map <code>f</code> to <code>f.short</code>).</li>
+<li>Click <strong>OK</strong> to save the subtable.</li>
+</ol>
+<hr />
+<h3 id="step-2-create-the-contextual-chaining-lookup">Step 2: Create the
+Contextual Chaining Lookup</h3>
+<p>With the base replacement ready, create the rule that defines when it
+should trigger.</p>
+<ol type="1">
+<li>In the <strong>GSUB</strong> tab of the <strong>Lookups</strong>
+panel, click <strong>Add Lookup</strong>.</li>
+<li>Set the <strong>Type</strong> to <strong>Contextual
+Chaining</strong>.</li>
+<li>Choose the OpenType feature tag under which this should operate,
+typically <strong>Contextual Alternates
+(<code>calt</code>)</strong>.</li>
+<li>Name the lookup (e.g., <code>lookup_contextual_f</code>).</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<hr />
+<h3 id="step-3-configure-the-context-matching-method">Step 3: Configure
+the Context Matching Method</h3>
+<ol type="1">
+<li>Select your new contextual chaining lookup and click <strong>Add
+Subtable</strong>.</li>
+<li>FontForge will present formatting options for specifying your rules:
+<ul>
+<li><strong>By Glyphs:</strong> Useful for simple, specific rules with
+individual characters.</li>
+<li><strong>By Classes:</strong> Recommended for rules applying to
+groups of characters (e.g., vowels, ascenders).</li>
+<li><strong>By Coverage:</strong> An advanced, compact method matching
+arrays of glyph sets.</li>
+</ul></li>
+<li>For general use, select <strong>By Classes</strong> or <strong>By
+Glyphs</strong>. (The following steps assume <strong>By Glyphs</strong>
+for straightforward individual rules).</li>
+</ol>
+<hr />
+<h3 id="step-4-define-the-sequences">Step 4: Define the Sequences</h3>
+<p>In the rule configuration window:</p>
+<ol type="1">
+<li><strong>Set Backtrack (Optional):</strong> Enter any glyphs that
+must precede your target. Leave this blank if your rule only depends on
+what follows the input.</li>
+<li><strong>Set Input:</strong> Enter the target glyph being acted upon
+(e.g., <code>f</code>).</li>
+<li><strong>Set Lookahead:</strong> Enter the glyphs that must follow
+the target (e.g., <code>b</code>, <code>h</code>, <code>l</code>).</li>
+</ol>
+<hr />
+<h3 id="step-5-assign-the-nested-lookup-to-the-input">Step 5: Assign the
+Nested Lookup to the Input</h3>
+<p>Once the sequence is structured, link the rule to the substitution
+created in Step 1.</p>
+<ol type="1">
+<li>In the <strong>Lookup References</strong> section of the subtable
+window, locate the <strong>Sequence Index</strong> (the position of the
+target glyph inside your Input list, starting at index 0).</li>
+<li>Set the position index corresponding to your target glyph.</li>
+<li>Assign your base substitution (<code>lookup_f_alt_sub</code>) to
+that position index.</li>
+<li>Click <strong>OK</strong> to save the rule, then click
+<strong>OK</strong> to exit the Font Info dialog.</li>
+</ol>
+<hr />
+<h3 id="step-6-test-the-implementation">Step 6: Test the
+Implementation</h3>
+<p>Verify that the contextual substitution triggers accurately without
+affecting other text:</p>
+<ol type="1">
+<li>Open the Metrics window by navigating to <strong>Metrics</strong>
+&gt; <strong>New Metrics Window</strong>.</li>
+<li>Type a string containing your sequence (e.g., <code>fb</code>,
+<code>fh</code>, <code>fl</code>).</li>
+<li>Confirm that the input character switches to its specified
+alternate.</li>
+<li>Type an unaffected sequence (e.g., <code>fa</code>, <code>fo</code>)
+to verify that the alternate does not trigger when the lookahead
+conditions are not met.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-build-contextual-chaining-lookups-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

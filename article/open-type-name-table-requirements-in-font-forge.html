@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenType Name Table Requirements in FontForge - fontforge</title>
+    <meta name="description" content="Configuring a valid OpenType font requires meeting the structural naming standards defined by the OpenType specification to ensure compatibility across operating systems, design applications, and web browsers. In FontForge, these values are managed primar">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/open-type-name-table-requirements-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="OpenType Name Table Requirements in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/open-type-name-table-requirements-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Configuring a valid OpenType font requires meeting the structural naming standards defined by the OpenType specification to ensure compatibility across operating systems, design applications, and web browsers. In FontForge, these values are managed primar" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="opentype-name-table-requirements-in-fontforge">OpenType Name
+Table Requirements in FontForge</h1>
+<p>Configuring a valid OpenType font requires meeting the structural
+naming standards defined by the OpenType specification to ensure
+compatibility across operating systems, design applications, and web
+browsers. In FontForge, these values are managed primarily through the
+font metadata dialogs and written directly to the font's
+<code>name</code> table upon export. This guide details the mandatory
+Name IDs required for an OpenType <code>name</code> table to pass
+validation in FontForge, explains what each field represents, and
+outlines the formatting rules necessary for cross-platform
+compatibility.</p>
+<h2 id="mandatory-name-ids-in-the-opentype-specification">Mandatory Name
+IDs in the OpenType Specification</h2>
+<p>The OpenType specification requires six primary Name IDs (IDs 1
+through 6) for any valid font. When generating an OpenType font (.otf or
+.ttf) in FontForge, these fields must be present and correctly
+formatted:</p>
+<ul>
+<li><strong>Name ID 1: Font Family Name</strong><br />
+The family name used to group related styles together (e.g., "MyFont").
+This is the name displayed in standard font menus.</li>
+<li><strong>Name ID 2: Font Subfamily Name</strong><br />
+The style variant of the font within the family (e.g., "Regular",
+"Bold", "Italic", or "Bold Italic"). Standard 4-style families rely
+heavily on this field for style linking.</li>
+<li><strong>Name ID 3: Unique Font Identifier</strong><br />
+A unique string that identifies this specific build of the font. It
+often combines the manufacturer/creator, font name, and version (e.g.,
+<code>1.000;NONE;MyFont-Regular</code>). FontForge can auto-generate
+this value based on your settings.</li>
+<li><strong>Name ID 4: Full Font Name</strong><br />
+The complete human-readable name of the font, typically formed by
+concatenating the Family Name and Subfamily Name (e.g., "MyFont
+Regular"). An exception applies when the subfamily is "Regular," where
+some implementations use only the family name, but FontForge usually
+combines them.</li>
+<li><strong>Name ID 5: Version String</strong><br />
+A human-readable version string indicating the release version of the
+font file. To pass validation, it must begin with the word "Version "
+followed by the version number and build metadata (e.g.,
+<code>Version 1.000;build 001</code>).</li>
+<li><strong>Name ID 6: PostScript Name</strong><br />
+The technical name used by PostScript interpreters, PDF generators, and
+system font caches. This name must strictly contain only printable ASCII
+characters excluding spaces, brackets, parentheses, slashes, and percent
+signs. It must not exceed 63 characters (e.g.,
+<code>MyFont-Regular</code>).</li>
+</ul>
+<h2 id="configuring-required-fields-in-fontforge">Configuring Required
+Fields in FontForge</h2>
+<p>FontForge divides these required fields between two main sections in
+the <strong>Element &gt; Font Info</strong> menu:</p>
+<h3 id="1-the-ps-names-panel">1. The "PS Names" Panel</h3>
+<p>FontForge maps several core metadata fields directly from the
+<strong>PS Names</strong> tab into the generated <code>name</code>
+table:</p>
+<ul>
+<li><strong>Fontname:</strong> Populates Name ID 6 (PostScript Name).
+Ensure this contains no spaces.</li>
+<li><strong>Family Name:</strong> Populates Name ID 1 (Font Family
+Name).</li>
+<li><strong>Weight:</strong> Informs the style weight and helps populate
+Name ID 2 (Subfamily Name).</li>
+<li><strong>Version:</strong> Automatically formatted to create the
+required string for Name ID 5.</li>
+</ul>
+<h3 id="2-the-ttf-names-panel">2. The "TTF Names" Panel</h3>
+<p>The <strong>TTF Names</strong> tab provides direct access to the raw
+entries of the OpenType <code>name</code> table for both Macintosh and
+Windows platforms:</p>
+<ul>
+<li>FontForge automatically synchronizes the entries in this panel with
+the fields set in the "PS Names" panel.</li>
+<li>If any of the required IDs (1 through 6) are missing, click
+<strong>Add</strong> or edit existing entries to ensure platforms
+targeting both Windows (Unicode BMP) and Macintosh (Roman) contain valid
+strings.</li>
+<li>For typographic font families containing more than the standard four
+styles (Regular, Italic, Bold, Bold Italic), <strong>Name ID 16
+(Typographic Family Name)</strong> and <strong>Name ID 17 (Typographic
+Subfamily Name)</strong> should also be defined to prevent style
+collision in modern applications.</li>
+</ul>
+<h2 id="validation-and-export-checks">Validation and Export Checks</h2>
+<p>Before generating the final font file, verify your metadata using
+FontForge's built-in validator:</p>
+<ol type="1">
+<li>Navigate to <strong>Element &gt; Validate Font</strong>.</li>
+<li>Review the output to ensure there are no warnings regarding missing
+<code>name</code> table entries or invalid PostScript name
+formatting.</li>
+<li>When navigating to <strong>File &gt; Generate Fonts</strong>, ensure
+that OpenType (CFF) or TrueType output is selected so that FontForge
+builds the proper <code>name</code> table structure adhering to the
+specified parameters.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/open-type-name-table-requirements-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

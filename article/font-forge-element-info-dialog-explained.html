@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Element Info Dialog Explained - fontforge</title>
+    <meta name="description" content="The Element Info dialogs in FontForge—most notably the Font Info window accessed via the Element menu—serve as the central control panel for defining a font&#39;s metadata, metrics, encodings, and typographic behaviors. This guide provides a clear, structured">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-element-info-dialog-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Element Info Dialog Explained - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-element-info-dialog-explained" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Element Info dialogs in FontForge—most notably the Font Info window accessed via the Element menu—serve as the central control panel for defining a font&#39;s metadata, metrics, encodings, and typographic behaviors. This guide provides a clear, structured" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-element-info-dialog-explained">FontForge Element Info
+Dialog Explained</h1>
+<p>The Element Info dialogs in FontForge—most notably the Font Info
+window accessed via the Element menu—serve as the central control panel
+for defining a font's metadata, metrics, encodings, and typographic
+behaviors. This guide provides a clear, structured breakdown of the
+specific categories of information displayed within this dialog,
+detailing how technical properties, TrueType/OpenType tables, PostScript
+metrics, and OpenType layout features are organized and configured.</p>
+<h3 id="ps-names-postscript-names">PS Names (PostScript Names)</h3>
+<p>The PS Names section contains core identification properties required
+by PostScript-based formats and general rendering engines:</p>
+<ul>
+<li><strong>Fontname:</strong> The internal PostScript identifier
+(contains no spaces).</li>
+<li><strong>Family Name:</strong> The typographical family name grouping
+related weights and styles.</li>
+<li><strong>Weight:</strong> The style descriptor (e.g., Regular, Bold,
+Italic, Light).</li>
+<li><strong>Copyright &amp; Version:</strong> Legal ownership statements
+and semantic font revision numbers.</li>
+</ul>
+<h3 id="general-metrics">General Metrics</h3>
+<p>The General panel establishes the basic coordinate grid and global
+geometric bounds:</p>
+<ul>
+<li><strong>Ascent and Descent:</strong> The vertical space allocated
+above and below the baseline.</li>
+<li><strong>Em Size:</strong> The total design unit size for the Em
+square (commonly 1000 for PostScript or 2048 for TrueType).</li>
+<li><strong>Italic Angle:</strong> The slant angle (in degrees off
+vertical) used for italic or oblique designs.</li>
+<li><strong>Underline:</strong> Specifications for the vertical position
+and thickness of underline strokes.</li>
+</ul>
+<h3 id="truetype-ttf-names">TrueType (TTF) Names</h3>
+<p>This section manages multilingual, human-readable name records
+written to the OpenType/TrueType <code>name</code> table:</p>
+<ul>
+<li><strong>Name Records:</strong> Fields for standard naming
+conventions across platforms (Windows and Mac), including Full Name,
+Unique Font Identifier, Subfamily, Designer Name, Vendor URL, and
+License Description.</li>
+<li><strong>Language Support:</strong> Enables localization of font
+names for specific language systems.</li>
+</ul>
+<h3 id="os2-metrics-and-classifications">OS/2 Metrics and
+Classifications</h3>
+<p>The OS/2 panel controls how Windows and other modern operating
+systems interpret and render the font:</p>
+<ul>
+<li><strong>PANOSE Classification:</strong> A 10-digit numerical system
+detailing visual characteristics (seriffed, weight, proportion,
+etc.).</li>
+<li><strong>Weight &amp; Width Classes:</strong> Standardized numerical
+scales (e.g., Weight Class 400 for Regular, 700 for Bold).</li>
+<li><strong>Metrics:</strong> Distinct vertical metrics including
+<code>WinAscent</code>, <code>WinDescent</code>,
+<code>TypoAscender</code>, <code>TypoDescender</code>, and
+<code>TypoLineGap</code> to control cross-platform line spacing.</li>
+<li><strong>Code Page and Unicode Ranges:</strong> Checkbox arrays
+designating which script blocks and character sets the font officially
+supports.</li>
+</ul>
+<h3 id="lookups-gsub-and-gpos">Lookups (GSUB and GPOS)</h3>
+<p>The Lookups section configures advanced OpenType typographical
+features:</p>
+<ul>
+<li><strong>GSUB (Glyph Substitution):</strong> Definitions for features
+like standard ligatures (<code>liga</code>), discretionary ligatures
+(<code>dlig</code>), small capitals (<code>smcp</code>), and localized
+forms (<code>locl</code>).</li>
+<li><strong>GPOS (Glyph Positioning):</strong> Rules for pairwise
+kerning (<code>kern</code>), mark-to-base attachment
+(<code>mark</code>), and cursive connections.</li>
+<li><strong>Subtable Settings:</strong> Granular control over the order
+of execution, scripts, and language tags mapped to each feature.</li>
+</ul>
+<h3 id="layers-and-glyphs">Layers and Glyphs</h3>
+<p>This section manages outline structure and internal rendering
+modes:</p>
+<ul>
+<li><strong>Spline Types:</strong> Settings to toggle between Cubic
+(Bézier curves used in PostScript/CFF) and Quadratic (curves used in
+native TrueType).</li>
+<li><strong>Active Layers:</strong> Visibility, foreground/background
+status, and editing permissions for design layers.</li>
+</ul>
+<h3 id="related-element--glyph-info">Related: Element &gt; Glyph
+Info</h3>
+<p>When inspecting a single character rather than the entire font, the
+Element menu also provides the Glyph Info dialog, displaying:</p>
+<ul>
+<li><strong>Unicode Data:</strong> Assigned Unicode value, glyph name,
+and character script.</li>
+<li><strong>Metrics:</strong> Left side bearing, horizontal advance
+width, right side bearing, and vertical advance.</li>
+<li><strong>Components:</strong> References and transformation matrices
+for composite glyphs (such as accented characters).</li>
+<li><strong>Color and Comments:</strong> User-defined labels and notes
+used for internal production tracking.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-element-info-dialog-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

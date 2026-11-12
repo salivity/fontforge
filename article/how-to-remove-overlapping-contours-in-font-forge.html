@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Remove Overlapping Contours in FontForge - fontforge</title>
+    <meta name="description" content="Overlapping contours are a common byproduct of designing glyphs using modular components, intersecting strokes, or imported vector graphics. In FontForge, leaving these overlapping paths unmerged can lead to rendering errors, invalid font files, and impro">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/how-to-remove-overlapping-contours-in-font-forge">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Remove Overlapping Contours in FontForge - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/how-to-remove-overlapping-contours-in-font-forge" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Overlapping contours are a common byproduct of designing glyphs using modular components, intersecting strokes, or imported vector graphics. In FontForge, leaving these overlapping paths unmerged can lead to rendering errors, invalid font files, and impro" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-remove-overlapping-contours-in-fontforge">How to Remove
+Overlapping Contours in FontForge</h1>
+<p>Overlapping contours are a common byproduct of designing glyphs using
+modular components, intersecting strokes, or imported vector graphics.
+In FontForge, leaving these overlapping paths unmerged can lead to
+rendering errors, invalid font files, and improper hinting. This guide
+explains how to automatically resolve and merge intersecting paths
+across individual glyphs or an entire typeface using FontForge's
+built-in vector union tools and automated scripting.</p>
+<h3 id="method-1-batch-removal-via-the-font-view-interface">Method 1:
+Batch Removal via the Font View Interface</h3>
+<p>FontForge allows you to apply its Boolean union algorithm across
+every glyph in your font file simultaneously through the main graphical
+interface.</p>
+<ol type="1">
+<li><strong>Open Your Font:</strong> Launch FontForge and load your font
+project (<code>.sfd</code>, <code>.otf</code>, or
+<code>.ttf</code>).</li>
+<li><strong>Select the Glyphs:</strong> In the main Font View window,
+select the glyphs you want to process. To process the entire font at
+once, press <strong>Ctrl + A</strong> (Windows/Linux) or <strong>Cmd +
+A</strong> (macOS).</li>
+<li><strong>Correct Path Directions:</strong> Before resolving overlaps,
+ensure all contours have consistent winding rules (counter-clockwise for
+outer paths, clockwise for cutouts). Go to <strong>Element &gt; Correct
+Direction</strong> or press <strong>Ctrl + Shift + D</strong>.</li>
+<li><strong>Execute Remove Overlap:</strong> Navigate to <strong>Element
+&gt; Overlap &gt; Remove Overlap</strong> or press the keyboard shortcut
+<strong>Ctrl + Shift + O</strong> (Windows/Linux) or <strong>Cmd + Shift
++ O</strong> (macOS).</li>
+</ol>
+<p>FontForge will calculate the intersections and automatically merge
+the vector shapes into a single, unified contour perimeter.</p>
+<h3 id="method-2-automated-python-scripting">Method 2: Automated Python
+Scripting</h3>
+<p>If you run automated build pipelines or prefer command-line
+execution, FontForge includes a native Python module to clean contours
+programmatically.</p>
+<p>Save the following code as <code>remove_overlaps.py</code>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fontforge</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the font file</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>font <span class="op">=</span> fontforge.<span class="bu">open</span>(<span class="st">&quot;your-font.sfd&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> glyph <span class="kw">in</span> font.glyphs():</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ensure proper winding before merging</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    glyph.correctDirection()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Merge overlapping paths</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    glyph.removeOverlap()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Clean up redundant control points left by intersection cuts</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    glyph.simplify()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the cleaned font</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>font.save(<span class="st">&quot;cleaned-font.sfd&quot;</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>font.close()</span></code></pre></div>
+<p>Run the script from your terminal using the FontForge
+interpreter:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fontforge</span> <span class="at">-script</span> remove_overlaps.py</span></code></pre></div>
+<h3 id="post-processing-simplifying-extraneous-nodes">Post-Processing:
+Simplifying Extraneous Nodes</h3>
+<p>The overlap removal algorithm frequently creates microscopic line
+segments and extra on-curve points at the exact intersection boundaries.
+To finalize your glyphs:</p>
+<ol type="1">
+<li>Select your glyphs in the Font View.</li>
+<li>Navigate to <strong>Element &gt; Simplify &gt; Simplify</strong> (or
+<strong>Ctrl + Shift + M</strong>).</li>
+<li>Check <strong>Element &gt; Add Extrema</strong> (or <strong>Ctrl +
+Shift + X</strong>) to ensure smooth Bézier curve rendering at standard
+vector poles.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/how-to-remove-overlapping-contours-in-font-forge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

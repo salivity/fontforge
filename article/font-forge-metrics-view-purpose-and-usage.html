@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontForge Metrics View Purpose and Usage - fontforge</title>
+    <meta name="description" content="The Metrics View window in FontForge is a dedicated workspace designed for adjusting horizontal spacing, setting side bearings, and fine-tuning kerning pairs. This guide explains the primary purpose of the Metrics View, how it allows type designers to eva">
+    <link rel="canonical" href="https://salivity.github.io/fontforge/article/font-forge-metrics-view-purpose-and-usage">
+    <link rel="search" type="application/opensearchdescription+xml" title="fontforge" href="/fontforge/opensearch.xml">
+    <link rel="icon" href="/fontforge/favicon.ico">
+    <link rel="stylesheet" href="/fontforge/css/style.css">
+    <link media="print" rel="stylesheet" href="/fontforge/css/print.css">
+    <script src="/fontforge/js/fuse.min.js"></script>
+    <script src="/fontforge/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FontForge Metrics View Purpose and Usage - fontforge" />
+    <meta property="og:url" content="https://salivity.github.io/fontforge/article/font-forge-metrics-view-purpose-and-usage" />
+    <meta property="og:image" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/fontforge/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Metrics View window in FontForge is a dedicated workspace designed for adjusting horizontal spacing, setting side bearings, and fine-tuning kerning pairs. This guide explains the primary purpose of the Metrics View, how it allows type designers to eva" />
+    <link rel="manifest" href="/fontforge/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/fontforge/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>fontforge</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/fontforge/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fontforge-metrics-view-purpose-and-usage">FontForge Metrics View
+Purpose and Usage</h1>
+<p>The Metrics View window in FontForge is a dedicated workspace
+designed for adjusting horizontal spacing, setting side bearings, and
+fine-tuning kerning pairs. This guide explains the primary purpose of
+the Metrics View, how it allows type designers to evaluate text strings
+in real time, and the essential tools it provides to achieve proper
+typographic rhythm and spacing consistency across a font family.</p>
+<h2 id="understanding-the-purpose-of-the-metrics-view">Understanding the
+Purpose of the Metrics View</h2>
+<p>In digital typography, the shape of a glyph is only half of the
+design; the empty space around the glyph is equally critical for
+legibility. While the Glyph Outline window focuses on drawing vector
+contours, the Metrics View allows designers to manage the white space
+between and around characters.</p>
+<p>The primary goal of the Metrics View is to ensure that letters flow
+naturally when assembled into words and sentences, preventing characters
+from colliding or appearing disjointed.</p>
+<h2 id="core-functions-of-the-metrics-view">Core Functions of the
+Metrics View</h2>
+<h3 id="1-adjusting-advance-width-and-side-bearings">1. Adjusting
+Advance Width and Side Bearings</h3>
+<p>Every glyph sits within an invisible bounding box defined by its
+advance width and two side bearings:</p>
+<ul>
+<li><strong>Left Side Bearing (LSB):</strong> The distance between the
+origin (zero point) and the leftmost edge of the glyph contour.</li>
+<li><strong>Right Side Bearing (RSB):</strong> The distance between the
+rightmost edge of the glyph contour and the character's advance
+width.</li>
+<li><strong>Advance Width:</strong> The total horizontal distance the
+text cursor advances after the character is placed.</li>
+</ul>
+<p>In the Metrics View, designers can drag metric lines graphically or
+enter exact numerical values in the table below the viewport. This makes
+it easy to standardize spacing across visually similar characters, such
+as aligning the left side bearing of "H", "B", "D", and "P".</p>
+<h3 id="2-fine-tuning-kerning-pairs">2. Fine-Tuning Kerning Pairs</h3>
+<p>Kerning refers to intentional spacing adjustments between specific
+pairs of glyphs where standard side bearings leave awkward visual gaps
+(such as "AV", "To", or "Wa").</p>
+<p>Within the Metrics View, users can:</p>
+<ul>
+<li>Click and drag the space between any two adjacent characters to
+manually adjust the kerning value.</li>
+<li>Create and manage pair-to-pair kerning or class-based kerning.</li>
+<li>Test kerning across upper- and lowercase transitions, punctuation,
+and numerals.</li>
+</ul>
+<h3 id="3-real-time-text-evaluation">3. Real-Time Text Evaluation</h3>
+<p>The Metrics View functions as an interactive text string viewer.
+Designers can enter custom words, pangrams, or strings of text directly
+into the display buffer. This functionality allows for:</p>
+<ul>
+<li>Proofing rhythm, letter spacing, and balance across complex
+combinations.</li>
+<li>Checking diacritics and accent positioning alongside base
+letters.</li>
+<li>Evaluating how optical weight distributions look at different
+horizontal densities.</li>
+</ul>
+<h3 id="4-vertical-metrics-support">4. Vertical Metrics Support</h3>
+<p>For fonts designed to support scripts with vertical text orientation
+(such as East Asian scripts), the Metrics View can be toggled to display
+top and bottom side bearings and vertical advance values, allowing
+precise control over vertical text flow.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/fontforge/article/font-forge-metrics-view-purpose-and-usage';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/fontforge/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/fontforge/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>
